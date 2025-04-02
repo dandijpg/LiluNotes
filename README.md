@@ -1,0 +1,2 @@
+# LiluNotes
+Aplikasi Catatan Sederhana
