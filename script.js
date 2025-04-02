@@ -90,39 +90,47 @@ function renderCategories() {
 
 function renderPinnedNotes() {
     const container = document.getElementById('pinnedList');
+    const pinnedSection = document.querySelector('.pinned-section');
     container.innerHTML = '';
-    const pinnedNotes = notes
-        .filter(note => note.pinned && (activeCategory === 'All' || note.category === activeCategory))
-        .sort((a, b) => new Date(b.pinnedTimestamp) - new Date(a.pinnedTimestamp)); // Urutkan berdasarkan pinnedTimestamp
     
-    if (pinnedNotes.length === 0) {
-        const noNotesDiv = document.createElement('div');
-        noNotesDiv.className = 'no-notes';
-        noNotesDiv.textContent = 'No pinned notes';
-        container.appendChild(noNotesDiv);
+    // Hanya tampilkan pinned section di kategori "All"
+    if (activeCategory === 'All') {
+        pinnedSection.classList.add('active');
+        const pinnedNotes = notes
+            .filter(note => note.pinned)
+            .sort((a, b) => new Date(b.pinnedTimestamp) - new Date(a.pinnedTimestamp)); // Urutkan berdasarkan pinnedTimestamp
+        
+        if (pinnedNotes.length === 0) {
+            const noNotesDiv = document.createElement('div');
+            noNotesDiv.className = 'no-notes';
+            noNotesDiv.textContent = 'No pinned notes';
+            container.appendChild(noNotesDiv);
+        } else {
+            pinnedNotes.forEach((note, index) => {
+                const div = document.createElement('div');
+                div.className = 'note';
+                const time = new Date(note.timestamp).toLocaleString();
+                div.innerHTML = `
+                    ${note.title}
+                    <span style="font-size: 0.9em; color: #4285f4">(${note.category})</span>
+                    <div style="font-size: 0.8em; color: #888">${time}</div>
+                `;
+                div.addEventListener('click', () => {
+                    const noteIndex = notes.findIndex(n => n === note);
+                    window.location.href = `edit.html?id=${noteIndex}&search=${encodeURIComponent(lastSearchQuery)}`;
+                });
+                div.addEventListener('contextmenu', (e) => showNoteContextMenu(e, notes.indexOf(note)));
+                let touchTimeout;
+                div.addEventListener('touchstart', (e) => {
+                    touchTimeout = setTimeout(() => showNoteContextMenu(e, notes.indexOf(note)), 500);
+                });
+                div.addEventListener('touchend', () => clearTimeout(touchTimeout));
+                div.addEventListener('touchmove', () => clearTimeout(touchTimeout));
+                container.appendChild(div);
+            });
+        }
     } else {
-        pinnedNotes.forEach((note, index) => {
-            const div = document.createElement('div');
-            div.className = 'note';
-            const time = new Date(note.timestamp).toLocaleString();
-            div.innerHTML = `
-                ${note.title}
-                <span style="font-size: 0.9em; color: #4285f4">(${note.category})</span>
-                <div style="font-size: 0.8em; color: #888">${time}</div>
-            `;
-            div.addEventListener('click', () => {
-                const noteIndex = notes.findIndex(n => n === note);
-                window.location.href = `edit.html?id=${noteIndex}&search=${encodeURIComponent(lastSearchQuery)}`;
-            });
-            div.addEventListener('contextmenu', (e) => showNoteContextMenu(e, notes.indexOf(note)));
-            let touchTimeout;
-            div.addEventListener('touchstart', (e) => {
-                touchTimeout = setTimeout(() => showNoteContextMenu(e, notes.indexOf(note)), 500);
-            });
-            div.addEventListener('touchend', () => clearTimeout(touchTimeout));
-            div.addEventListener('touchmove', () => clearTimeout(touchTimeout));
-            container.appendChild(div);
-        });
+        pinnedSection.classList.remove('active');
     }
 }
 
