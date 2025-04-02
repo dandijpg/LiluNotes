@@ -45,6 +45,7 @@ function setupEventListeners() {
     document.getElementById('italicBtn').addEventListener('click', () => document.execCommand('italic', false, null));
     document.getElementById('underlineBtn').addEventListener('click', () => document.execCommand('underline', false, null));
     document.getElementById('highlightBtn').addEventListener('click', toggleHighlight);
+    document.getElementById('linkBtn').addEventListener('click', insertLink);
     document.getElementById('numberedListBtn').addEventListener('click', () => document.execCommand('insertOrderedList', false, null));
     document.getElementById('bulletListBtn').addEventListener('click', () => document.execCommand('insertUnorderedList', false, null));
     document.getElementById('arrowListBtn').addEventListener('click', insertArrowList);
@@ -76,6 +77,24 @@ function toggleHighlight() {
             span.textContent = selectedText;
             range.deleteContents();
             range.insertNode(span);
+        }
+    }
+}
+
+function insertLink() {
+    const url = prompt('Enter the URL:');
+    if (url) {
+        const selection = window.getSelection();
+        if (selection.rangeCount > 0) {
+            const range = selection.getRangeAt(0);
+            const selectedText = range.toString();
+            const a = document.createElement('a');
+            a.href = url;
+            a.target = '_blank';
+            a.textContent = selectedText || url;
+            a.className = 'copyable';
+            range.deleteContents();
+            range.insertNode(a);
         }
     }
 }
