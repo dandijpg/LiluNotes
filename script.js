@@ -134,7 +134,7 @@ function renderPinnedNotes() {
     }
 }
 
-function renderNotes(filteredNotes = notes.filter(note => !note.pinned)) {
+function renderNotes(filteredNotes = notes) { // Ubah default filter, hapus !note.pinned
     const container = document.getElementById('notesList');
     container.innerHTML = '';
     const visibleNotes = filteredNotes
@@ -308,7 +308,7 @@ function deleteNote() {
 }
 
 function filterNotesByCategory(category) {
-    const filtered = notes.filter(note => note.category === category && !note.pinned);
+    const filtered = notes.filter(note => note.category === category); // Hapus filter !note.pinned
     displayedNotes = 0;
     renderNotes(filtered);
 }
@@ -338,9 +338,8 @@ function searchNotes(e) {
         (note.title.toLowerCase().includes(search) || 
         note.content.toLowerCase().includes(search) ||
         note.category.toLowerCase().includes(search) ||
-        new Date(note.timestamp).toLocaleString().toLowerCase().includes(search)) &&
-        !note.pinned
-    );
+        new Date(note.timestamp).toLocaleString().toLowerCase().includes(search))
+    ); // Hapus filter !note.pinned
     displayedNotes = 0;
     renderPinnedNotes();
     renderNotes(filtered);
