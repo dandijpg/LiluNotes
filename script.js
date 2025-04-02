@@ -193,8 +193,14 @@ function showNoteContextMenu(e, index) {
     const pinOption = document.getElementById('pinNote');
     const unpinOption = document.getElementById('unpinNote');
     
-    pinOption.style.display = notes[index].pinned ? 'none' : 'block';
-    unpinOption.style.display = notes[index].pinned ? 'block' : 'none';
+    // Hanya tampilkan opsi pin/unpin jika kategori aktif adalah "All"
+    if (activeCategory === 'All') {
+        pinOption.style.display = notes[index].pinned ? 'none' : 'block';
+        unpinOption.style.display = notes[index].pinned ? 'block' : 'none';
+    } else {
+        pinOption.style.display = 'none';
+        unpinOption.style.display = 'none';
+    }
 
     menu.style.display = 'block';
     menu.style.left = `${e.pageX || e.touches[0].pageX}px`;
@@ -218,6 +224,10 @@ function hideNoteContextMenu(e) {
 }
 
 function pinNote(index) {
+    if (activeCategory !== 'All') {
+        alert('Pinning is only available in the "All" category.');
+        return;
+    }
     const pinnedCount = notes.filter(note => note.pinned).length;
     if (pinnedCount >= MAX_PINNED) {
         alert(`You can only pin up to ${MAX_PINNED} notes. Unpin some notes first.`);
@@ -232,6 +242,10 @@ function pinNote(index) {
 }
 
 function unpinNote(index) {
+    if (activeCategory !== 'All') {
+        alert('Unpinning is only available in the "All" category.');
+        return;
+    }
     notes[index].pinned = false;
     delete notes[index].pinnedTimestamp; // Hapus pinnedTimestamp saat unpin
     saveNotesToStorage();
