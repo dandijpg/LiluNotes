@@ -1,292 +1,277 @@
+let notes = JSON.parse(localStorage.getItem('notes') || '[]');
+let categories = JSON.parse(localStorage.getItem('categories') || '[]');
+const urlParams = new URLSearchParams(window.location.search);
+const noteId = urlParams.get('id');
+const searchQuery = urlParams.get('search') || '';
+
 document.addEventListener('DOMContentLoaded', () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const noteId = urlParams.get('id');
-    const searchQuery = urlParams.get('search') || '';
-    
-    const notes = JSON.parse(localStorage.getItem('notes') || '[]');
-    const categories = JSON.parse(localStorage.getItem('categories') || '[]');
-    const note = notes[noteId] || { title: '', content: '', category: categories[1] || 'Uncategorized', timestamp: new Date().toISOString(), pinned: false };
-    
-    const title = document.getElementById('noteTitle');
-    const content = document.getElementById('noteContent');
-    const categorySelect = document.getElementById('noteCategory');
-    const editBtn = document.getElementById('editBtn');
-    const viewBtn = document.getElementById('viewBtn');
-    const saveBtn = document.getElementById('saveNote');
-    const exitBtn = document.getElementById('exitEditBtn');
-    const toolbar = document.querySelector('.toolbar');
-    const toolbarButtons = document.querySelectorAll('.tool-btn');
-    const colorPicker = document.getElementById('colorPicker');
-
-    let selectedTable = null;
-
-    // Tambahkan tombol tabel ke toolbar
-    const tableTools = `
-        <button class="table-tool-btn add-row-btn" title="Add Row">+ Row</button>
-        <button class="table-tool-btn delete-row-btn" title="Delete Row">− Row</button>
-        <button class="table-tool-btn add-col-btn" title="Add Column">+ Col</button>
-        <button class="table-tool-btn delete-col-btn" title="Delete Column">− Col</button>
-    `;
-    toolbar.insertAdjacentHTML('beforeend', tableTools);
-
-    const tableToolButtons = document.querySelectorAll('.table-tool-btn');
-
-    // Populate category dropdown
-    categories.filter(cat => cat !== 'All').forEach(cat => {
-        const option = document.createElement('option');
-        option.value = cat;
-        option.textContent = cat;
-        if (cat === note.category) option.selected = true;
-        categorySelect.appendChild(option);
-    });
-
-    // Initial view mode
-    title.value = note.title;
-    content.innerHTML = highlightText(note.content, searchQuery);
-    content.contentEditable = false;
-    setupCopyableText(); // Pastikan dipanggil di awal
-
-    // Edit mode
-    editBtn.addEventListener('click', () => {
-        title.readOnly = false;
-        title.style.userSelect = 'text';
-        content.contentEditable = true;
-        content.innerHTML = note.content; // Muat konten asli
-        editBtn.style.display = 'none';
-        viewBtn.style.display = 'inline';
-        saveBtn.style.display = 'inline';
-        categorySelect.style.display = 'inline';
-        toolbarButtons.forEach(btn => btn.style.display = 'inline');
-        colorPicker.style.display = 'inline';
-        setupToolbar();
-        setupTableEditing();
-        setupCopyableText(); // Pastikan copyable tetap berfungsi di mode edit
-    });
-
-    // View mode
-    viewBtn.addEventListener('click', () => {
-        title.readOnly = true;
-        title.style.userSelect = 'none';
-        content.contentEditable = false;
-        content.innerHTML = highlightText(note.content, searchQuery); // Muat konten dengan highlight
-        editBtn.style.display = 'inline';
-        viewBtn.style.display = 'none';
-        saveBtn.style.display = 'none';
-        categorySelect.style.display = 'none';
-        toolbarButtons.forEach(btn => btn.style.display = 'none');
-        tableToolButtons.forEach(btn => btn.style.display = 'none');
-        colorPicker.style.display = 'none';
-        selectedTable = null;
-        setupCopyableText(); // Panggil ulang untuk elemen baru
-    });
-
-    // Exit button
-    exitBtn.addEventListener('click', () => {
-        window.location.href = 'index.html';
-    });
-
-    saveBtn.addEventListener('click', () => saveNote(noteId));
+    setupCategorySelect();
+    setupEditor();
+    setupEventListeners();
 });
 
-function setupToolbar() {
-    const buttons = document.querySelectorAll('.tool-btn');
-    buttons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const action = btn.dataset.action;
-            if (action === 'link') {
-                const url = prompt('Enter URL:');
-                if (url) document.execCommand('createLink', false, url);
-            } else if (action === 'copyable') {
-                document.execCommand('insertHTML', false, '<span class="copyable">' + document.getSelection().toString() + '</span>');
-            } else if (action === 'table') {
-                insertTable();
-            } else {
-                document.execCommand(action, false, null);
-            }
-        });
+function setupCategorySelect() {
+    const select = document.getElementById('categorySelect');
+    categories.forEach(category => {
+        if (category !== 'All') {
+            const option = document.createElement('option');
+            option.value = category;
+            option.textContent = category;
+            select.appendChild(option);
+        }
     });
+}
 
-    document.getElementById('colorPicker').addEventListener('change', (e) => {
-        document.execCommand('foreColor', false, e.target.value);
-    });
+function setupEditor() {
+    const noteTitle = document.getElementById('noteTitle');
+    const noteContent = document.getElementById('noteContent');
+    const categorySelect = document.getElementById('categorySelect');
 
-    const tableToolButtons = document.querySelectorAll('.table-tool-btn');
-    tableToolButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            if (selectedTable) {
-                if (btn.classList.contains('add-row-btn')) addRow(selectedTable);
-                if (btn.classList.contains('delete-row-btn')) deleteRow(selectedTable);
-                if (btn.classList.contains('add-col-btn')) addColumn(selectedTable);
-                if (btn.classList.contains('delete-col-btn')) deleteColumn(selectedTable);
+    if (noteId !== null) {
+        const note = notes[noteId];
+        noteTitle.value = note.title;
+        noteContent.innerHTML = note.content;
+        categorySelect.value = note.category;
+        highlightSearchTerms(noteContent, searchQuery);
+    } else {
+        categorySelect.value = categories[1] || 'Uncategorized';
+    }
+
+    noteContent.focus();
+}
+
+function setupEventListeners() {
+    document.getElementById('boldBtn').addEventListener('click', () => document.execCommand('bold', false, null));
+    document.getElementById('italicBtn').addEventListener('click', () => document.execCommand('italic', false, null));
+    document.getElementById('underlineBtn').addEventListener('click', () => document.execCommand('underline', false, null));
+    document.getElementById('highlightBtn').addEventListener('click', toggleHighlight);
+    document.getElementById('numberedListBtn').addEventListener('click', () => document.execCommand('insertOrderedList', false, null));
+    document.getElementById('bulletListBtn').addEventListener('click', () => document.execCommand('insertUnorderedList', false, null));
+    document.getElementById('arrowListBtn').addEventListener('click', insertArrowList);
+    document.getElementById('alignLeftBtn').addEventListener('click', () => document.execCommand('justifyLeft', false, null));
+    document.getElementById('alignCenterBtn').addEventListener('click', () => document.execCommand('justifyCenter', false, null));
+    document.getElementById('alignRightBtn').addEventListener('click', () => document.execCommand('justifyRight', false, null));
+    document.getElementById('floatLeftBtn').addEventListener('click', () => applyFloat('left'));
+    document.getElementById('floatCenterBtn').addEventListener('click', () => applyFloat('none'));
+    document.getElementById('floatRightBtn').addEventListener('click', () => applyFloat('right'));
+    document.getElementById('tableBtn').addEventListener('click', insertTable);
+    document.getElementById('addRowBtn').addEventListener('click', addRow);
+    document.getElementById('addColBtn').addEventListener('click', addColumn);
+    document.getElementById('deleteRowBtn').addEventListener('click', deleteRow);
+    document.getElementById('deleteColBtn').addEventListener('click', deleteColumn);
+    document.getElementById('saveBtn').addEventListener('click', saveNote);
+    document.getElementById('exitBtn').addEventListener('click', () => window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`);
+    document.getElementById('noteContent').addEventListener('click', toggleTableButtons);
+    document.getElementById('noteContent').addEventListener('keyup', toggleTableButtons);
+}
+
+function toggleHighlight() {
+    const selection = window.getSelection();
+    if (selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        const selectedText = range.toString();
+        if (selectedText) {
+            const span = document.createElement('span');
+            span.className = 'highlight';
+            span.textContent = selectedText;
+            range.deleteContents();
+            range.insertNode(span);
+        }
+    }
+}
+
+function insertArrowList() {
+    const selection = window.getSelection();
+    if (selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        const ul = document.createElement('ul');
+        ul.style.listStyleType = '"➜ "';
+        const li = document.createElement('li');
+        ul.appendChild(li);
+        range.deleteContents();
+        range.insertNode(ul);
+        selection.removeAllRanges();
+        const newRange = document.createRange();
+        newRange.setStart(li, 0);
+        newRange.setEnd(li, 0);
+        selection.addRange(newRange);
+    }
+}
+
+function applyFloat(direction) {
+    const selection = window.getSelection();
+    if (selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        const selectedNode = range.commonAncestorContainer;
+        const parentElement = selectedNode.nodeType === 3 ? selectedNode.parentElement : selectedNode;
+        if (parentElement && parentElement !== document.getElementById('noteContent')) {
+            parentElement.style.float = direction;
+            if (direction === 'none') {
+                parentElement.style.display = 'block';
+                parentElement.style.marginLeft = 'auto';
+                parentElement.style.marginRight = 'auto';
             } else {
-                alert('Please select a table first!');
+                parentElement.style.display = 'inline-block';
+                parentElement.style.marginLeft = direction === 'left' ? '0' : 'auto';
+                parentElement.style.marginRight = direction === 'right' ? '0' : 'auto';
             }
-        });
-    });
+        }
+    }
 }
 
 function insertTable() {
-    const rows = prompt('Enter number of rows:', '2');
-    const cols = prompt('Enter number of columns:', '2');
-    if (!rows || !cols || isNaN(rows) || isNaN(cols) || rows < 1 || cols < 1) {
-        alert('Please enter valid numbers (at least 1) for rows and columns.');
+    const tableHtml = `
+        <div class="table-wrapper">
+            <table>
+                <tr><th>Header 1</th><th>Header 2</th></tr>
+                <tr><td>Cell 1</td><td>Cell 2</td></tr>
+            </table>
+        </div>`;
+    document.execCommand('insertHTML', false, tableHtml);
+    toggleTableButtons();
+}
+
+function addRow() {
+    const table = getSelectedTable();
+    if (table) {
+        const row = table.insertRow(-1);
+        const cellCount = table.rows[0].cells.length;
+        for (let i = 0; i < cellCount; i++) {
+            row.insertCell(-1).textContent = 'New Cell';
+        }
+    }
+}
+
+function addColumn() {
+    const table = getSelectedTable();
+    if (table) {
+        Array.from(table.rows).forEach(row => {
+            const cell = row.insertCell(-1);
+            cell.textContent = row.cells[0].tagName === 'TH' ? 'New Header' : 'New Cell';
+        });
+    }
+}
+
+function deleteRow() {
+    const table = getSelectedTable();
+    if (table && table.rows.length > 1) {
+        const rowIndex = getSelectedRowIndex();
+        if (rowIndex !== -1) table.deleteRow(rowIndex);
+    }
+}
+
+function deleteColumn() {
+    const table = getSelectedTable();
+    if (table && table.rows[0].cells.length > 1) {
+        const colIndex = getSelectedColumnIndex();
+        if (colIndex !== -1) {
+            Array.from(table.rows).forEach(row => row.deleteCell(colIndex));
+        }
+    }
+}
+
+function getSelectedTable() {
+    const selection = window.getSelection();
+    if (selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        let node = range.commonAncestorContainer;
+        while (node && node.tagName !== 'TABLE') {
+            node = node.parentElement;
+        }
+        return node;
+    }
+    return null;
+}
+
+function getSelectedRowIndex() {
+    const table = getSelectedTable();
+    if (table) {
+        const selection = window.getSelection();
+        const range = selection.getRangeAt(0);
+        let cell = range.commonAncestorContainer;
+        while (cell && cell.tagName !== 'TD' && cell.tagName !== 'TH') {
+            cell = cell.parentElement;
+        }
+        if (cell) {
+            const row = cell.parentElement;
+            return Array.from(table.rows).indexOf(row);
+        }
+    }
+    return -1;
+}
+
+function getSelectedColumnIndex() {
+    const table = getSelectedTable();
+    if (table) {
+        const selection = window.getSelection();
+        const range = selection.getRangeAt(0);
+        let cell = range.commonAncestorContainer;
+        while (cell && cell.tagName !== 'TD' && cell.tagName !== 'TH') {
+            cell = cell.parentElement;
+        }
+        if (cell) {
+            return Array.from(cell.parentElement.cells).indexOf(cell);
+        }
+    }
+    return -1;
+}
+
+function toggleTableButtons() {
+    const table = getSelectedTable();
+    document.getElementById('addRowBtn').style.display = table ? 'inline-block' : 'none';
+    document.getElementById('addColBtn').style.display = table ? 'inline-block' : 'none';
+    document.getElementById('deleteRowBtn').style.display = table && table.rows.length > 1 ? 'inline-block' : 'none';
+    document.getElementById('deleteColBtn').style.display = table && table.rows[0].cells.length > 1 ? 'inline-block' : 'none';
+}
+
+function saveNote() {
+    const noteTitle = document.getElementById('noteTitle').value.trim();
+    const noteContent = document.getElementById('noteContent').innerHTML;
+    const category = document.getElementById('categorySelect').value;
+
+    if (!noteTitle || !noteContent) {
+        alert('Title and content cannot be empty!');
         return;
     }
-    const tableHTML = createTableHTML(parseInt(rows), parseInt(cols));
-    document.execCommand('insertHTML', false, tableHTML);
-    setupTableEditing();
-}
 
-function createTableHTML(rows, cols) {
-    let html = '<div class="table-wrapper"><table contenteditable="true">';
-    for (let i = 0; i < rows; i++) {
-        html += '<tr>';
-        for (let j = 0; j < cols; j++) {
-            html += '<td> </td>'; // Gunakan   untuk memastikan sel tidak kosong
-        }
-        html += '</tr>';
+    const note = {
+        title: noteTitle,
+        content: noteContent,
+        category: category,
+        timestamp: new Date().toISOString(),
+        pinned: noteId !== null ? (notes[noteId]?.pinned || false) : false,
+        pinnedTimestamp: noteId !== null ? (notes[noteId]?.pinnedTimestamp || null) : null
+    };
+
+    if (noteId !== null) {
+        notes[noteId] = note;
+    } else {
+        notes.push(note);
     }
-    html += '</table></div><br>'; // Tambah <br> agar bisa lanjut mengetik di luar tabel
-    return html;
+
+    localStorage.setItem('notes', JSON.stringify(notes));
+    window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`;
 }
 
-function setupTableEditing() {
-    const tables = document.querySelectorAll('.note-content table');
-    const tableToolButtons = document.querySelectorAll('.table-tool-btn');
+function highlightSearchTerms(element, query) {
+    if (!query) return;
+    const terms = query.split(/\s+/).filter(term => term.length > 0);
+    const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
+    const nodes = [];
+    let node;
 
-    tables.forEach(table => {
-        table.addEventListener('click', (e) => {
-            if (document.getElementById('noteContent').contentEditable === 'true') {
-                e.stopPropagation();
-                selectedTable = table;
-                tableToolButtons.forEach(btn => btn.style.display = 'inline');
+    while ((node = walker.nextNode())) {
+        nodes.push(node);
+    }
+
+    nodes.forEach(node => {
+        terms.forEach(term => {
+            const regex = new RegExp(`(${term})`, 'gi');
+            if (regex.test(node.textContent)) {
+                const span = document.createElement('span');
+                span.innerHTML = node.textContent.replace(regex, '<span class="highlight">$1</span>');
+                node.parentNode.replaceChild(span, node);
             }
         });
     });
-
-    // Klik di luar tabel untuk menonaktifkan tombol
-    document.getElementById('noteContent').addEventListener('click', (e) => {
-        if (!e.target.closest('table')) {
-            selectedTable = null;
-            tableToolButtons.forEach(btn => btn.style.display = 'none');
-        }
-    });
-}
-
-let selectedTable = null;
-
-function addRow(table) {
-    const newRow = document.createElement('tr');
-    const colCount = table.rows[0] ? table.rows[0].cells.length : 1;
-    for (let i = 0; i < colCount; i++) {
-        const td = document.createElement('td');
-        td.innerHTML = ' ';
-        newRow.appendChild(td);
-    }
-    table.appendChild(newRow);
-}
-
-function deleteRow(table) {
-    if (table.rows.length > 0) {
-        table.deleteRow(-1);
-        if (table.rows.length === 0) {
-            table.parentNode.remove(); // Hapus tabel dan wrapper jika kosong
-            selectedTable = null;
-            document.querySelectorAll('.table-tool-btn').forEach(btn => btn.style.display = 'none');
-        }
-    }
-}
-
-function addColumn(table) {
-    if (table.rows.length === 0) {
-        const newRow = document.createElement('tr');
-        const td = document.createElement('td');
-        td.innerHTML = ' ';
-        newRow.appendChild(td);
-        table.appendChild(newRow);
-    } else {
-        Array.from(table.rows).forEach(row => {
-            const td = document.createElement('td');
-            td.innerHTML = ' ';
-            row.appendChild(td);
-        });
-    }
-}
-
-function deleteColumn(table) {
-    if (table.rows.length > 0 && table.rows[0].cells.length > 0) {
-        Array.from(table.rows).forEach(row => {
-            row.deleteCell(-1);
-        });
-        if (table.rows[0].cells.length === 0) {
-            table.parentNode.remove(); // Hapus tabel dan wrapper jika kosong
-            selectedTable = null;
-            document.querySelectorAll('.table-tool-btn').forEach(btn => btn.style.display = 'none');
-        }
-    }
-}
-
-function setupCopyableText() {
-    const copyableElements = document.querySelectorAll('.copyable');
-    copyableElements.forEach(element => {
-        // Hapus event listener lama untuk mencegah duplikat
-        element.removeEventListener('click', handleCopy);
-        element.removeEventListener('touchstart', handleTouchCopy);
-
-        // Tambahkan event listener baru
-        element.addEventListener('click', handleCopy);
-        element.addEventListener('touchstart', handleTouchCopy);
-    });
-
-    function handleCopy() {
-        const text = this.textContent;
-        navigator.clipboard.writeText(text).then(() => {
-            alert(`Copied to clipboard: "${text}"`);
-        }).catch(err => {
-            console.error('Failed to copy: ', err);
-            alert('Failed to copy text.');
-        });
-    }
-
-    function handleTouchCopy(e) {
-        e.preventDefault();
-        const text = this.textContent;
-        navigator.clipboard.writeText(text).then(() => {
-            alert(`Copied to clipboard: "${text}"`);
-        }).catch(err => {
-            console.error('Failed to copy: ', err);
-            alert('Failed to copy text.');
-        });
-    }
-}
-
-function saveNote(noteId) {
-    const title = document.getElementById('noteTitle').value;
-    const content = document.getElementById('noteContent').innerHTML;
-    const category = document.getElementById('noteCategory').value;
-    let notes = JSON.parse(localStorage.getItem('notes') || '[]');
-    
-    const noteData = { 
-        title, 
-        content, 
-        category, 
-        pinned: noteId ? notes[noteId].pinned : false,
-        pinnedTimestamp: noteId ? notes[noteId].pinnedTimestamp : undefined,
-        timestamp: noteId ? notes[noteId].timestamp : new Date().toISOString()
-    };
-    
-    if (noteId) {
-        notes[noteId] = noteData;
-    } else {
-        notes.push(noteData);
-    }
-    
-    localStorage.setItem('notes', JSON.stringify(notes));
-    window.location.href = 'index.html';
-}
-
-function highlightText(text, query) {
-    if (!query) return text;
-    const regex = new RegExp(`(${query})`, 'gi');
-    return text.replace(regex, '<span class="highlight">$1</span>');
 }
