@@ -3,29 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View/Edit Note - TechNotes</title>
+    <title>Edit Note - TechNotes</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="edit-container">
         <div class="toolbar">
-            <button class="edit-btn" id="editBtn" title="Edit note">✏️</button>
-            <button class="view-btn" id="viewBtn" style="display: none;" title="View note">👁️</button>
-            <button class="tool-btn" data-action="bold" style="display: none;" title="Bold">B</button>
-            <button class="tool-btn" data-action="italic" style="display: none;" title="Italic">I</button>
-            <button class="tool-btn" data-action="strike" style="display: none;" title="Strikethrough">S</button>
-            <button class="tool-btn" data-action="underline" style="display: none;" title="Underline">U</button>
-            <button class="tool-btn" data-action="link" style="display: none;" title="Add link">🔗</button>
-            <button class="tool-btn" data-action="copyable" style="display: none;" title="Copyable Text">📋</button>
-            <button class="tool-btn" data-action="table" style="display: none;" title="Insert Table">📊</button>
-            <input type="color" id="colorPicker" style="display: none;" title="Pick text color">
-            <button class="exit-btn" id="exitEditBtn" title="Back to home">✖</button>
+            <!-- Kelompok Format Teks -->
+            <div class="toolbar-group">
+                <button class="tool-btn" id="boldBtn" title="Bold (Ctrl+B)"><b>B</b></button>
+                <button class="tool-btn" id="italicBtn" title="Italic (Ctrl+I)"><i>I</i></button>
+                <button class="tool-btn" id="underlineBtn" title="Underline (Ctrl+U)"><u>U</u></button>
+                <button class="tool-btn" id="highlightBtn" title="Highlight">H</button>
+            </div>
+            <!-- Kelompok Daftar -->
+            <div class="toolbar-group">
+                <button class="tool-btn" id="numberedListBtn" title="Numbered List">1.</button>
+                <button class="tool-btn" id="bulletListBtn" title="Bullet List">•</button>
+                <button class="tool-btn" id="arrowListBtn" title="Arrow List">➜</button>
+            </div>
+            <!-- Kelompok Penjajaran -->
+            <div class="toolbar-group">
+                <button class="tool-btn" id="alignLeftBtn" title="Align Left">←</button>
+                <button class="tool-btn" id="alignCenterBtn" title="Align Center">↔</button>
+                <button class="tool-btn" id="alignRightBtn" title="Align Right">→</button>
+            </div>
+            <!-- Kelompok Float -->
+            <div class="toolbar-group">
+                <button class="tool-btn" id="floatLeftBtn" title="Float Left">⇤</button>
+                <button class="tool-btn" id="floatCenterBtn" title="Float Center">⇥⇤</button>
+                <button class="tool-btn" id="floatRightBtn" title="Float Right">⇥</button>
+            </div>
+            <!-- Tombol Tabel -->
+            <div class="toolbar-group">
+                <button class="tool-btn" id="tableBtn" title="Insert Table">📋</button>
+                <button class="table-tool-btn add-row-btn" id="addRowBtn" title="Add Row">+ Row</button>
+                <button class="table-tool-btn add-col-btn" id="addColBtn" title="Add Column">+ Col</button>
+                <button class="table-tool-btn delete-row-btn" id="deleteRowBtn" title="Delete Row">- Row</button>
+                <button class="table-tool-btn delete-col-btn" id="deleteColBtn" title="Delete Column">- Col</button>
+            </div>
+            <!-- Tombol Utilitas -->
+            <div class="toolbar-group">
+                <button class="edit-btn" id="saveBtn" title="Save Note">Save</button>
+                <button class="exit-btn" id="exitBtn" title="Exit without Saving">Exit</button>
+            </div>
         </div>
-        <input type="text" id="noteTitle" class="note-title" placeholder="Note Title" readonly>
-        <div id="noteContent" class="note-content"></div>
-        <select id="noteCategory" style="display: none;"></select>
-        <button class="save-btn" id="saveNote" style="display: none;">Save</button>
+        <select id="categorySelect" class="category-select"></select>
+        <input type="text" id="noteTitle" class="note-title" placeholder="Note Title">
+        <div id="noteContent" class="note-content" contenteditable="true"></div>
     </div>
     <script src="edit.js"></script>
 </body>
