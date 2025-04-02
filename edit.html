@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View/Edit Note - TechNotes</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="edit-container">
+        <div class="toolbar">
+            <button class="edit-btn" id="editBtn" title="Edit note">✏️</button>
+            <button class="view-btn" id="viewBtn" style="display: none;" title="View note">👁️</button>
+            <button class="tool-btn" data-action="bold" style="display: none;" title="Bold">B</button>
+            <button class="tool-btn" data-action="italic" style="display: none;" title="Italic">I</button>
+            <button class="tool-btn" data-action="strike" style="display: none;" title="Strikethrough">S</button>
+            <button class="tool-btn" data-action="underline" style="display: none;" title="Underline">U</button>
+            <button class="tool-btn" data-action="link" style="display: none;" title="Add link">🔗</button>
+            <button class="tool-btn" data-action="copyable" style="display: none;" title="Copyable Text">📋</button>
+            <button class="tool-btn" data-action="table" style="display: none;" title="Insert Table">📊</button>
+            <input type="color" id="colorPicker" style="display: none;" title="Pick text color">
+            <button class="exit-btn" id="exitEditBtn" title="Back to home">✖</button>
+        </div>
+        <input type="text" id="noteTitle" class="note-title" placeholder="Note Title" readonly>
+        <div id="noteContent" class="note-content"></div>
+        <select id="noteCategory" style="display: none;"></select>
+        <button class="save-btn" id="saveNote" style="display: none;">Save</button>
+    </div>
+    <script src="edit.js"></script>
+</body>
+</html>
