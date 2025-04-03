@@ -60,6 +60,7 @@ function setupEventListeners() {
     document.getElementById('addColBtn').addEventListener('click', addColumn);
     document.getElementById('deleteRowBtn').addEventListener('click', deleteRow);
     document.getElementById('deleteColBtn').addEventListener('click', deleteColumn);
+    document.getElementById('copyFormattedBtn').addEventListener('click', copyFormattedText);
     document.getElementById('saveBtn').addEventListener('click', saveNote);
     document.getElementById('exitBtn').addEventListener('click', () => window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`);
     document.getElementById('noteContent').addEventListener('click', toggleTableButtons);
@@ -241,6 +242,32 @@ function toggleTableButtons() {
     document.getElementById('addColBtn').style.display = table ? 'inline-block' : 'none';
     document.getElementById('deleteRowBtn').style.display = table && table.rows.length > 1 ? 'inline-block' : 'none';
     document.getElementById('deleteColBtn').style.display = table && table.rows[0].cells.length > 1 ? 'inline-block' : 'none';
+}
+
+function copyFormattedText() {
+    const selection = window.getSelection();
+    if (selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        const htmlContent = range.cloneContents();
+        const div = document.createElement('div');
+        div.appendChild(htmlContent);
+        const htmlText = div.innerHTML;
+        const plainText = range.toString();
+
+        navigator.clipboard.write([
+            new ClipboardItem({
+                'text/html': new Blob([htmlText], { type: 'text/html' }),
+                'text/plain': new Blob([plainText], { type: 'text/plain' })
+            })
+        ]).then(() => {
+            alert('Formatted text copied to clipboard!');
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+            alert('Failed to copy formatted text.');
+        });
+    } else {
+        alert('Please select some text to copy.');
+    }
 }
 
 function saveNote() {
