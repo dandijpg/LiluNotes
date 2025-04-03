@@ -151,6 +151,7 @@ h1:hover {
     gap: 15px;
     justify-content: space-between;
     flex-wrap: wrap;
+    position: relative;
 }
 
 .creation-controls, .utility-controls {
@@ -213,6 +214,47 @@ button {
 .toggle-mode:hover, .toggle-mode:active {
     background: #4285f4;
     color: #fff;
+}
+
+.more-btn {
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: 1px solid #666;
+    background: #fff;
+    color: #666;
+    font-size: 0.9em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.more-btn:hover, .more-btn:active {
+    background: #666;
+    color: #fff;
+}
+
+.more-options {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 10;
+    animation: slideIn 0.3s ease-out;
+}
+
+.more-options.active {
+    display: flex;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .backup-btn {
@@ -688,6 +730,7 @@ button {
 
     .controls {
         justify-content: center;
+        gap: 10px;
     }
 
     .categories {
@@ -699,9 +742,16 @@ button {
         font-size: 0.8em;
     }
 
-    .add-category, .add-note, .toggle-mode, .backup-btn, .restore-btn, .reset-btn {
+    .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .reset-btn {
         padding: 8px 15px;
         font-size: 0.8em;
+    }
+
+    .more-options {
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 200px;
     }
 
     .pinned-section h2, .notes-section h2 {
@@ -765,9 +815,13 @@ button {
         font-size: 0.7em;
     }
 
-    .add-category, .add-note, .toggle-mode, .backup-btn, .restore-btn, .reset-btn {
+    .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .reset-btn {
         padding: 6px 12px;
         font-size: 0.7em;
+    }
+
+    .more-options {
+        width: 150px;
     }
 
     .pinned-section h2, .notes-section h2 {
