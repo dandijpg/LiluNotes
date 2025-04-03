@@ -103,7 +103,7 @@ function createNoteElement(note) {
     const div = document.createElement('div');
     div.className = 'note';
     div.innerHTML = `
-        <strong class="note-title">${note.title}</strong>
+        <div class="note-title">${note.title}</div>
         <div class="note-meta">
             <span class="note-category">${note.category}</span>
             <span class="note-date">${new Date(note.timestamp).toLocaleString()}</span>
