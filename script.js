@@ -7,7 +7,7 @@ let notesPerPage = 10;
 let currentPage = 1;
 let isListMode = false;
 
-// Google Drive API Configuration
+// Google Drive API Configuration (opsional, tetap ada untuk referensi)
 const CLIENT_ID = '383179112314-09lj6kh30oruk0f61khioi8teq6gevpd.apps.googleusercontent.com';
 const API_KEY = 'AIzaSyAt05TP2qmv5ZaamtWPmULPFI9dfMT-9q8';
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
@@ -76,6 +76,9 @@ function setupEventListeners() {
         tokenClient.requestAccessToken();
     });
     document.getElementById('backupGoogleBtn').addEventListener('click', backupToGoogleDrive);
+    document.getElementById('shareDriveBtn').addEventListener('click', shareToDrive);
+    document.getElementById('emailBackupBtn').addEventListener('click', emailBackup);
+    document.getElementById('copyBackupBtn').addEventListener('click', copyBackupToClipboard);
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.more-btn') && !e.target.closest('.more-options')) {
             hideMoreOptions();
@@ -252,6 +255,67 @@ function backupToGoogleDrive() {
         console.error('Error uploading to Google Drive:', error);
         alert('Failed to backup to Google Drive. Please try again.');
     });
+}
+
+function shareToDrive() {
+    const data = { notes, categories };
+    const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+    const file = new File([blob], `technotes-backup-${new Date().toISOString()}.json`, { type: 'application/json' });
+
+    if (navigator.share) {
+        navigator.share({
+            files: [file],
+            title: 'TechNotes Backup',
+            text: 'Backup file for TechNotes',
+        })
+        .then(() => {
+            console.log('File shared successfully');
+            hideMoreOptions();
+        })
+        .catch((error) => {
+            console.error('Error sharing file:', error);
+            fallbackDownload(file);
+        });
+    } else {
+        fallbackDownload(file);
+    }
+}
+
+function emailBackup() {
+    const data = { notes, categories };
+    const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+    const file = new File([blob], `technotes-backup-${new Date().toISOString()}.json`, { type: 'application/json' });
+    const url = URL.createObjectURL(file);
+    const a = document.createElement('a');
+    a.href = `mailto:?subject=TechNotes Backup&body=Please find the backup file attached. You can upload it to Google Drive or another storage service manually.&attachment=${url}`;
+    a.click();
+    URL.revokeObjectURL(url);
+    hideMoreOptions();
+}
+
+function copyBackupToClipboard() {
+    const data = { notes, categories };
+    const jsonString = JSON.stringify(data);
+    navigator.clipboard.writeText(jsonString)
+        .then(() => {
+            alert('Backup copied to clipboard. Paste it into a new file in Google Drive or any text editor.');
+            hideMoreOptions();
+        })
+        .catch(err => {
+            console.error('Error copying to clipboard:', err);
+            alert('Failed to copy to clipboard. Please try again.');
+        });
+}
+
+function fallbackDownload(file) {
+    const url = URL.createObjectURL(file);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = file.name;
+    a.click();
+    URL.revokeObjectURL(url);
+    hideMoreOptions();
+    alert('Web Share not supported. File downloaded locally. You can manually upload it to Google Drive.');
 }
 
 function restoreNotes() {
