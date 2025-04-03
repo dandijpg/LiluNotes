@@ -363,6 +363,8 @@ button {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .note:hover, .note:active {
@@ -377,6 +379,7 @@ button {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    max-width: 100%;
 }
 
 .note .category {
@@ -386,11 +389,19 @@ button {
     padding: 2px 8px;
     border-radius: 10px;
     align-self: flex-start;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
 }
 
 .note .timestamp {
     font-size: 0.8em;
     color: #777;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
 }
 
 .note .preview {
@@ -401,6 +412,8 @@ button {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+    max-width: 100%;
+    word-break: break-word;
 }
 
 .notes-list.list-mode .note {
@@ -408,6 +421,7 @@ button {
     border-radius: 10px;
     padding: 12px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    max-width: 100%;
 }
 
 .view-more {
@@ -804,6 +818,22 @@ button {
         padding: 12px;
     }
 
+    .note .title {
+        font-size: 1em;
+    }
+
+    .note .category {
+        font-size: 0.8em;
+    }
+
+    .note .timestamp {
+        font-size: 0.75em;
+    }
+
+    .note .preview {
+        font-size: 0.85em;
+    }
+
     .view-more {
         padding: 8px 20px;
         font-size: 0.8em;
@@ -862,11 +892,10 @@ button {
 
     .note {
         padding: 10px;
-        font-size: 0.9em;
     }
 
     .note .title {
-        font-size: 1em;
+        font-size: 0.95em;
     }
 
     .note .category {
