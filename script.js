@@ -107,9 +107,7 @@ function createNoteElement(note) {
     div.innerHTML = `
         <strong>${note.title}</strong>
         <span>${new Date(note.timestamp).toLocaleString()}</span>
-        <div>${note.content.slice(0, 100)}${note.content.length > 100 ? '...' : ''}</div>
     `;
-    // Gunakan originalIndex sebagai ID
     div.addEventListener('click', () => window.location.href = `view.html?id=${note.originalIndex}&search=${encodeURIComponent(searchQuery)}`);
     div.addEventListener('contextmenu', (e) => showNoteContextMenu(e, note.originalIndex));
     return div;
