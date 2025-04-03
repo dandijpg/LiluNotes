@@ -938,8 +938,6 @@ button {
 
     .context-menu, .note-context-menu {
         width: 150px;
-        left: auto !important;
-        right: 10px;
     }
 }
 
@@ -1010,7 +1008,6 @@ button {
 
     .context-menu, .note-context-menu {
         width: 140px;
-        right: 5px;
     }
 
     .toolbar {
