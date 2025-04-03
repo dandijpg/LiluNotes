@@ -108,6 +108,113 @@ function setupEventListeners() {
     }
 }
 
+// Fungsi Kalkulator Baru
+function insertCalculator() {
+    const noteContent = document.getElementById('noteContent');
+    if (!noteContent) {
+        console.error('noteContent not found');
+        return;
+    }
+
+    const calcWrapper = document.createElement('div');
+    calcWrapper.className = 'calculator-wrapper';
+
+    const numberLine1 = document.createElement('div');
+    numberLine1.className = 'number-line';
+    const num1 = document.createElement('span');
+    num1.className = 'calc-number';
+    num1.setAttribute('contenteditable', 'true');
+    num1.textContent = '0';
+    const spacer = document.createElement('span');
+    spacer.textContent = '          '; // 10 spasi
+    spacer.setAttribute('contenteditable', 'false');
+    const operator = document.createElement('span');
+    operator.className = 'calc-operator';
+    operator.textContent = '+';
+    operator.setAttribute('contenteditable', 'false');
+    numberLine1.appendChild(num1);
+    numberLine1.appendChild(spacer);
+    numberLine1.appendChild(operator);
+
+    const numberLine2 = document.createElement('div');
+    numberLine2.className = 'number-line';
+    const num2 = document.createElement('span');
+    num2.className = 'calc-number';
+    num2.setAttribute('contenteditable', 'true');
+    num2.textContent = '';
+    numberLine2.appendChild(num2);
+
+    const separator = document.createElement('div');
+    separator.className = 'separator';
+    separator.textContent = '----------=';
+    separator.setAttribute('contenteditable', 'false');
+
+    const result = document.createElement('div');
+    result.className = 'result';
+    result.textContent = '0';
+    result.setAttribute('contenteditable', 'false');
+
+    calcWrapper.appendChild(numberLine1);
+    calcWrapper.appendChild(numberLine2);
+    calcWrapper.appendChild(separator);
+    calcWrapper.appendChild(result);
+
+    noteContent.appendChild(calcWrapper);
+    setupCalculatorListeners();
+    num1.focus();
+}
+
+function setupCalculatorListeners() {
+    const calcWrappers = document.querySelectorAll('.calculator-wrapper');
+    calcWrappers.forEach(wrapper => {
+        const numbers = wrapper.querySelectorAll('.calc-number');
+        numbers.forEach(num => {
+            num.addEventListener('input', () => updateCalculator(wrapper));
+            num.addEventListener('keydown', (e) => handleCalculatorKeydown(e, wrapper));
+        });
+    });
+}
+
+function updateCalculator(wrapper) {
+    const numbers = wrapper.querySelectorAll('.calc-number');
+    const operator = wrapper.querySelector('.calc-operator').textContent;
+    const result = wrapper.querySelector('.result');
+
+    const num1 = parseFloat(numbers[0].textContent.trim()) || 0;
+    const num2 = parseFloat(numbers[1].textContent.trim()) || 0;
+    let total;
+
+    switch (operator) {
+        case '+': total = num1 + num2; break;
+        case '-': total = num1 - num2; break;
+        case '*': total = num1 * num2; break;
+        case '/': total = num2 !== 0 ? num1 / num2 : 'Error'; break;
+        default: total = 'Error';
+    }
+
+    result.textContent = isNaN(total) || total === 'Error' ? 'Error' : total;
+}
+
+function handleCalculatorKeydown(e, wrapper) {
+    const currentNum = e.target;
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        const numbers = wrapper.querySelectorAll('.calc-number');
+        const nextNum = currentNum === numbers[0] ? numbers[1] : numbers[0];
+        nextNum.focus();
+    } else if (e.key.match(/[+\-*/]/)) {
+        e.preventDefault();
+        const operatorSpan = wrapper.querySelector('.calc-operator');
+        operatorSpan.textContent = e.key;
+        updateCalculator(wrapper);
+        const numbers = wrapper.querySelectorAll('.calc-number');
+        numbers[1].focus();
+    } else if (!e.key.match(/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight/)) {
+        e.preventDefault(); // Hanya izinkan angka, titik, dan kontrol navigasi
+    }
+}
+
+// Fungsi Lain (Tidak Berubah)
 function toggleHighlight() {
     const selection = window.getSelection();
     if (selection.rangeCount > 0) {
@@ -307,166 +414,6 @@ function copyFormattedText() {
         range.insertNode(span);
     } else {
         alert('Please select some text to make copyable.');
-    }
-}
-
-function insertCalculator() {
-    const noteContent = document.getElementById('noteContent');
-    if (!noteContent) {
-        console.error('noteContent not found');
-        return;
-    }
-
-    // Membuat elemen kalkulator secara langsung tanpa innerHTML
-    const calcWrapper = document.createElement('div');
-    calcWrapper.className = 'calculator-wrapper';
-    calcWrapper.setAttribute('contenteditable', 'true');
-
-    const numberLine1 = document.createElement('div');
-    numberLine1.className = 'number-line';
-    numberLine1.textContent = '0          +';
-
-    const numberLine2 = document.createElement('div');
-    numberLine2.className = 'number-line';
-
-    const separator = document.createElement('div');
-    separator.className = 'separator';
-    separator.textContent = '----------=';
-
-    const result = document.createElement('div');
-    result.className = 'result';
-    result.textContent = '0';
-
-    calcWrapper.appendChild(numberLine1);
-    calcWrapper.appendChild(numberLine2);
-    calcWrapper.appendChild(separator);
-    calcWrapper.appendChild(result);
-
-    noteContent.appendChild(calcWrapper);
-    setupCalculatorListeners();
-
-    // Fokus ke baris pertama
-    numberLine1.focus();
-}
-
-function setupCalculatorListeners() {
-    const calcWrappers = document.querySelectorAll('.calculator-wrapper');
-    calcWrappers.forEach(wrapper => {
-        wrapper.addEventListener('input', handleCalculatorInput);
-        wrapper.addEventListener('keydown', handleCalculatorKeydown);
-        wrapper.addEventListener('click', positionCursor);
-    });
-}
-
-function handleCalculatorInput(e) {
-    const wrapper = e.target.closest('.calculator-wrapper');
-    if (!wrapper) return;
-
-    const lines = wrapper.querySelectorAll('.number-line');
-    const result = wrapper.querySelector('.result');
-    let total = 0;
-    let valid = true;
-    let operator = '+';
-
-    lines.forEach((line, index) => {
-        const text = line.textContent.trim();
-        if (index === 0) {
-            const match = text.match(/^(\d+)\s*([+\-*/])/);
-            if (match) {
-                total = parseInt(match[1]) || 0;
-                operator = match[2];
-                line.innerHTML = `${match[1]}${' '.repeat(10)}${operator}`;
-                const desc = text.split(operator)[1]?.trim();
-                if (desc) line.innerHTML += ` <span class="description">${desc}</span>`;
-            } else {
-                valid = false;
-            }
-        } else if (text) {
-            const match = text.match(/^(\d+)/);
-            if (match) {
-                const num = parseInt(match[1]) || 0;
-                const desc = text.split(match[1])[1]?.trim();
-                line.innerHTML = match[1];
-                if (desc) line.innerHTML += ` <span class="description">${desc}</span>`;
-                switch (operator) {
-                    case '+': total += num; break;
-                    case '-': total -= num; break;
-                    case '*': total *= num; break;
-                    case '/': total = num !== 0 ? total / num : (valid = false, 'Error'); break;
-                }
-            } else {
-                valid = false;
-            }
-        }
-    });
-
-    result.textContent = valid ? total : 'Error';
-}
-
-function handleCalculatorKeydown(e) {
-    const wrapper = e.target.closest('.calculator-wrapper');
-    if (!wrapper) return;
-
-    const selection = window.getSelection();
-    const range = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
-    const currentLine = range?.commonAncestorContainer.parentElement.closest('.number-line, .result, .separator');
-
-    if (e.key === 'Enter' && currentLine?.className !== 'result') {
-        e.preventDefault();
-        const newLine = document.createElement('div');
-        newLine.className = 'number-line';
-        newLine.setAttribute('contenteditable', 'true');
-        wrapper.insertBefore(newLine, wrapper.querySelector('.separator'));
-        newLine.focus();
-        setupCalculatorListeners();
-    }
-
-    if ((currentLine?.className === 'result' || currentLine?.className === 'separator') && 
-        (e.key === 'Enter' || /[a-zA-Z]/.test(e.key))) {
-        e.preventDefault();
-    }
-
-    if (e.key.match(/[+\-*/]/) && currentLine === wrapper.querySelector('.number-line')) {
-        const text = currentLine.textContent;
-        const num = text.match(/^(\d+)/)?.[1] || '';
-        currentLine.textContent = `${num}${' '.repeat(10)}${e.key}`;
-        e.preventDefault();
-        handleCalculatorInput(e);
-        positionCursorToNextLine(wrapper);
-    }
-}
-
-function positionCursorToNextLine(wrapper) {
-    const nextLine = wrapper.querySelectorAll('.number-line')[1] || document.createElement('div');
-    if (!nextLine.parentElement) {
-        nextLine.className = 'number-line';
-        nextLine.setAttribute('contenteditable', 'true');
-        wrapper.insertBefore(nextLine, wrapper.querySelector('.separator'));
-    }
-    const range = document.createRange();
-    const sel = window.getSelection();
-    range.setStart(nextLine, 0);
-    range.collapse(true);
-    sel.removeAllRanges();
-    sel.addRange(range);
-    nextLine.focus();
-}
-
-function positionCursor(e) {
-    const wrapper = e.target.closest('.calculator-wrapper');
-    if (!wrapper) return;
-
-    const selection = window.getSelection();
-    const range = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
-    const currentLine = range?.commonAncestorContainer.parentElement.closest('.number-line, .result, .separator');
-
-    if (currentLine?.className === 'separator' || currentLine?.className === 'result') {
-        const lastNumLine = wrapper.querySelectorAll('.number-line')[wrapper.querySelectorAll('.number-line').length - 1];
-        const newRange = document.createRange();
-        newRange.setStart(lastNumLine, lastNumLine.childNodes.length);
-        newRange.collapse(true);
-        selection.removeAllRanges();
-        selection.addRange(newRange);
     }
 }
 
