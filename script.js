@@ -31,6 +31,7 @@ function setupEventListeners() {
     document.getElementById('addCategoryBtn').addEventListener('click', addCategory);
     document.getElementById('addNoteBtn').addEventListener('click', () => window.location.href = 'edit.html');
     document.getElementById('toggleModeBtn').addEventListener('click', toggleMode);
+    document.getElementById('moreBtn').addEventListener('click', toggleMoreOptions);
     document.getElementById('backupBtn').addEventListener('click', backupNotes);
     document.getElementById('restoreBtn').addEventListener('click', restoreNotes);
     document.getElementById('resetBtn').addEventListener('click', resetNotes);
@@ -42,7 +43,12 @@ function setupEventListeners() {
         currentPage++;
         renderNotes();
     });
-    document.addEventListener('click', hideContextMenus);
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.more-btn') && !e.target.closest('.more-options')) {
+            hideMoreOptions();
+        }
+        hideContextMenus();
+    });
 }
 
 function renderCategories() {
@@ -129,8 +135,7 @@ function createNoteElement(note) {
 }
 
 function addCategory() {
-    const category = prompt('Enter new category:');
-    if (category && !,我 will not check the validity of the category name since it’s user input
+    const category = prompt('Enter new category:').trim();
     if (category && !categories.includes(category)) {
         categories.push(category);
         localStorage.setItem('categories', JSON.stringify(categories));
@@ -140,13 +145,23 @@ function addCategory() {
 
 function toggleMode() {
     isListMode = !isListMode;
-    document.getElementById('toggleModeBtn').innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            ${isListMode ? '<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/>' : '<rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/>'}
-        </svg>
-        ${isListMode ? 'Grid Mode' : 'List Mode'}
-    `;
+    const toggleBtn = document.getElementById('toggleModeBtn');
+    const modeIcon = toggleBtn.querySelector('.mode-icon');
+    modeIcon.innerHTML = isListMode 
+        ? '<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/>'
+        : '<rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/>';
+    toggleBtn.lastChild.nodeValue = isListMode ? ' Grid Mode' : ' List Mode';
     renderNotes();
+}
+
+function toggleMoreOptions() {
+    const moreOptions = document.getElementById('moreOptions');
+    moreOptions.classList.toggle('active');
+}
+
+function hideMoreOptions() {
+    const moreOptions = document.getElementById('moreOptions');
+    moreOptions.classList.remove('active');
 }
 
 function backupNotes() {
@@ -158,6 +173,7 @@ function backupNotes() {
     a.download = 'technotes-backup.json';
     a.click();
     URL.revokeObjectURL(url);
+    hideMoreOptions();
 }
 
 function restoreNotes() {
@@ -180,6 +196,7 @@ function restoreNotes() {
         reader.readAsText(file);
     };
     input.click();
+    hideMoreOptions();
 }
 
 function resetNotes() {
