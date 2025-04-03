@@ -3,6 +3,7 @@ let categories = JSON.parse(localStorage.getItem('categories') || '[]');
 const urlParams = new URLSearchParams(window.location.search);
 const noteId = urlParams.get('id');
 const searchQuery = urlParams.get('search') || '';
+let isCalculatorMode = false;
 
 document.addEventListener('DOMContentLoaded', () => {
     setupCategorySelect();
@@ -12,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function setupCategorySelect() {
     const select = document.getElementById('categorySelect');
-    if (!select) return;
     categories.forEach(category => {
         if (category !== 'All') {
             const option = document.createElement('option');
@@ -28,11 +28,6 @@ function setupEditor() {
     const noteContent = document.getElementById('noteContent');
     const categorySelect = document.getElementById('categorySelect');
 
-    if (!noteTitle || !noteContent || !categorySelect) {
-        console.error('One or more editor elements not found');
-        return;
-    }
-
     if (noteId !== null) {
         const note = notes[noteId];
         noteTitle.value = note.title;
@@ -44,177 +39,141 @@ function setupEditor() {
     }
 
     noteContent.focus();
-    setupCalculatorListeners();
 }
 
 function setupEventListeners() {
-    const buttons = {
-        boldBtn: () => document.execCommand('bold', false, null),
-        italicBtn: () => document.execCommand('italic', false, null),
-        underlineBtn: () => document.execCommand('underline', false, null),
-        highlightBtn: toggleHighlight,
-        linkBtn: insertLink,
-        numberedListBtn: () => document.execCommand('insertOrderedList', false, null),
-        bulletListBtn: () => document.execCommand('insertUnorderedList', false, null),
-        arrowListBtn: insertArrowList,
-        alignLeftBtn: () => document.execCommand('justifyLeft', false, null),
-        alignCenterBtn: () => document.execCommand('justifyCenter', false, null),
-        alignRightBtn: () => document.execCommand('justifyRight', false, null),
-        floatLeftBtn: () => applyFloat('left'),
-        floatCenterBtn: () => applyFloat('none'),
-        floatRightBtn: () => applyFloat('right'),
-        tableBtn: insertTable,
-        addRowBtn: addRow,
-        addColBtn: addColumn,
-        deleteRowBtn: deleteRow,
-        deleteColBtn: deleteColumn,
-        copyFormattedBtn: copyFormattedText,
-        calcBtn: insertCalculator,
-        saveBtn: saveNote,
-        exitBtn: () => window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`
-    };
+    document.getElementById('boldBtn').addEventListener('click', () => document.execCommand('bold', false, null));
+    document.getElementById('italicBtn').addEventListener('click', () => document.execCommand('italic', false, null));
+    document.getElementById('underlineBtn').addEventListener('click', () => document.execCommand('underline', false, null));
+    document.getElementById('highlightBtn').addEventListener('click', toggleHighlight);
+    document.getElementById('linkBtn').addEventListener('click', insertLink);
+    document.getElementById('numberedListBtn').addEventListener('click', () => document.execCommand('insertOrderedList', false, null));
+    document.getElementById('bulletListBtn').addEventListener('click', () => document.execCommand('insertUnorderedList', false, null));
+    document.getElementById('arrowListBtn').addEventListener('click', insertArrowList);
+    document.getElementById('alignLeftBtn').addEventListener('click', () => document.execCommand('justifyLeft', false, null));
+    document.getElementById('alignCenterBtn').addEventListener('click', () => document.execCommand('justifyCenter', false, null));
+    document.getElementById('alignRightBtn').addEventListener('click', () => document.execCommand('justifyRight', false, null));
+    document.getElementById('floatLeftBtn').addEventListener('click', () => applyFloat('left'));
+    document.getElementById('floatCenterBtn').addEventListener('click', () => applyFloat('none'));
+    document.getElementById('floatRightBtn').addEventListener('click', () => applyFloat('right'));
+    document.getElementById('tableBtn').addEventListener('click', insertTable);
+    document.getElementById('addRowBtn').addEventListener('click', addRow);
+    document.getElementById('addColBtn').addEventListener('click', addColumn);
+    document.getElementById('deleteRowBtn').addEventListener('click', deleteRow);
+    document.getElementById('deleteColBtn').addEventListener('click', deleteColumn);
+    document.getElementById('calculatorBtn').addEventListener('click', insertCalculator);
+    document.getElementById('copyFormattedBtn').addEventListener('click', copyFormattedText);
+    document.getElementById('saveBtn').addEventListener('click', saveNote);
+    document.getElementById('exitBtn').addEventListener('click', () => window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`);
+    document.getElementById('noteContent').addEventListener('click', toggleTableButtons);
+    document.getElementById('noteContent').addEventListener('keyup', toggleTableButtons);
+    document.getElementById('noteContent').addEventListener('input', handleCalculatorInput);
+    document.getElementById('noteContent').addEventListener('keydown', handleCalculatorKeydown);
+    document.getElementById('noteContent').addEventListener('click', (e) => {
+        const target = e.target;
+        if (target.classList.contains('copyable')) {
+            const htmlContent = target.outerHTML;
+            const textContent = target.textContent;
 
-    for (const [id, action] of Object.entries(buttons)) {
-        const btn = document.getElementById(id);
-        if (btn) {
-            btn.addEventListener('click', action);
-        } else {
-            console.warn(`Button with ID "${id}" not found`);
+            navigator.clipboard.write([
+                new ClipboardItem({
+                    'text/html': new Blob([htmlContent], { type: 'text/html' }),
+                    'text/plain': new Blob([textContent], { type: 'text/plain' })
+                })
+            ]).then(() => {
+                alert('Formatted text copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy formatted text.');
+            });
+        } else if (!e.target.closest('.calculator-wrapper')) {
+            isCalculatorMode = false;
         }
-    }
-
-    const noteContent = document.getElementById('noteContent');
-    if (noteContent) {
-        noteContent.addEventListener('click', toggleTableButtons);
-        noteContent.addEventListener('keyup', toggleTableButtons);
-        noteContent.addEventListener('click', (e) => {
-            const target = e.target;
-            if (target.classList.contains('copyable')) {
-                const htmlContent = target.outerHTML;
-                const textContent = target.textContent;
-                navigator.clipboard.write([
-                    new ClipboardItem({
-                        'text/html': new Blob([htmlContent], { type: 'text/html' }),
-                        'text/plain': new Blob([textContent], { type: 'text/plain' })
-                    })
-                ]).then(() => {
-                    alert('Formatted text copied to clipboard!');
-                }).catch(err => {
-                    console.error('Failed to copy: ', err);
-                    alert('Failed to copy formatted text.');
-                });
-            }
-        });
-    }
-}
-
-// Fungsi Kalkulator Baru
-function insertCalculator() {
-    const noteContent = document.getElementById('noteContent');
-    if (!noteContent) {
-        console.error('noteContent not found');
-        return;
-    }
-
-    const calcWrapper = document.createElement('div');
-    calcWrapper.className = 'calculator-wrapper';
-
-    const numberLine1 = document.createElement('div');
-    numberLine1.className = 'number-line';
-    const num1 = document.createElement('span');
-    num1.className = 'calc-number';
-    num1.setAttribute('contenteditable', 'true');
-    num1.textContent = '0';
-    const spacer = document.createElement('span');
-    spacer.textContent = '          '; // 10 spasi
-    spacer.setAttribute('contenteditable', 'false');
-    const operator = document.createElement('span');
-    operator.className = 'calc-operator';
-    operator.textContent = '+';
-    operator.setAttribute('contenteditable', 'false');
-    numberLine1.appendChild(num1);
-    numberLine1.appendChild(spacer);
-    numberLine1.appendChild(operator);
-
-    const numberLine2 = document.createElement('div');
-    numberLine2.className = 'number-line';
-    const num2 = document.createElement('span');
-    num2.className = 'calc-number';
-    num2.setAttribute('contenteditable', 'true');
-    num2.textContent = '';
-    numberLine2.appendChild(num2);
-
-    const separator = document.createElement('div');
-    separator.className = 'separator';
-    separator.textContent = '----------=';
-    separator.setAttribute('contenteditable', 'false');
-
-    const result = document.createElement('div');
-    result.className = 'result';
-    result.textContent = '0';
-    result.setAttribute('contenteditable', 'false');
-
-    calcWrapper.appendChild(numberLine1);
-    calcWrapper.appendChild(numberLine2);
-    calcWrapper.appendChild(separator);
-    calcWrapper.appendChild(result);
-
-    noteContent.appendChild(calcWrapper);
-    setupCalculatorListeners();
-    num1.focus();
-}
-
-function setupCalculatorListeners() {
-    const calcWrappers = document.querySelectorAll('.calculator-wrapper');
-    calcWrappers.forEach(wrapper => {
-        const numbers = wrapper.querySelectorAll('.calc-number');
-        numbers.forEach(num => {
-            num.addEventListener('input', () => updateCalculator(wrapper));
-            num.addEventListener('keydown', (e) => handleCalculatorKeydown(e, wrapper));
-        });
     });
 }
 
-function updateCalculator(wrapper) {
-    const numbers = wrapper.querySelectorAll('.calc-number');
-    const operator = wrapper.querySelector('.calc-operator').textContent;
-    const result = wrapper.querySelector('.result');
-
-    const num1 = parseFloat(numbers[0].textContent.trim()) || 0;
-    const num2 = parseFloat(numbers[1].textContent.trim()) || 0;
-    let total;
-
-    switch (operator) {
-        case '+': total = num1 + num2; break;
-        case '-': total = num1 - num2; break;
-        case '*': total = num1 * num2; break;
-        case '/': total = num2 !== 0 ? num1 / num2 : 'Error'; break;
-        default: total = 'Error';
-    }
-
-    result.textContent = isNaN(total) || total === 'Error' ? 'Error' : total;
+function insertCalculator() {
+    const calculatorHtml = `
+        <div class="calculator-wrapper" contenteditable="true">
+            <div class="calc-line" contenteditable="true"></div>
+        </div>`;
+    document.execCommand('insertHTML', false, calculatorHtml);
+    const wrapper = document.querySelector('.calculator-wrapper');
+    wrapper.focus();
+    isCalculatorMode = true;
 }
 
-function handleCalculatorKeydown(e, wrapper) {
-    const currentNum = e.target;
-    if (e.key === 'Enter') {
-        e.preventDefault();
-        const numbers = wrapper.querySelectorAll('.calc-number');
-        const nextNum = currentNum === numbers[0] ? numbers[1] : numbers[0];
-        nextNum.focus();
-    } else if (e.key.match(/[+\-*/]/)) {
-        e.preventDefault();
-        const operatorSpan = wrapper.querySelector('.calc-operator');
-        operatorSpan.textContent = e.key;
-        updateCalculator(wrapper);
-        const numbers = wrapper.querySelectorAll('.calc-number');
-        numbers[1].focus();
-    } else if (!e.key.match(/[0-9.]|Backspace|Delete|ArrowLeft|ArrowRight/)) {
-        e.preventDefault(); // Hanya izinkan angka, titik, dan kontrol navigasi
+function handleCalculatorInput(e) {
+    if (!isCalculatorMode) return;
+
+    const wrapper = e.target.closest('.calculator-wrapper');
+    if (!wrapper) return;
+
+    const calcLine = wrapper.querySelector('.calc-line');
+    let content = calcLine.textContent.trim();
+    const selection = window.getSelection();
+    const range = selection.getRangeAt(0);
+
+    if (/^\d+[+]$/.test(content)) {
+        const number = parseInt(content.match(/\d+/)[0]);
+        calcLine.innerHTML = `${number}${' '.repeat(10)}+`;
+        const newLine = document.createElement('div');
+        newLine.className = 'calc-line';
+        newLine.setAttribute('contenteditable', 'true');
+        wrapper.appendChild(newLine);
+        const separator = document.createElement('div');
+        separator.innerHTML = '<b>----------=</b>';
+        wrapper.appendChild(separator);
+        const resultLine = document.createElement('div');
+        resultLine.className = 'calc-result';
+        wrapper.appendChild(resultLine);
+        newLine.focus();
+        range.setStart(newLine, 0);
+        range.setEnd(newLine, 0);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    } else if (wrapper.children.length === 4 && /^\d+$/.test(content)) {
+        const firstNumber = parseInt(wrapper.children[0].textContent.match(/\d+/)[0]);
+        const secondNumber = parseInt(content);
+        const result = firstNumber + secondNumber;
+        wrapper.querySelector('.calc-result').textContent = result;
+    }
+
+    const lines = wrapper.children;
+    for (let i = 0; i < lines.length; i++) {
+        if (lines[i].className === 'calc-line' && i === 1 && lines[i].textContent.match(/\d+\s+.+/)) {
+            const [number, ...description] = lines[i].textContent.split(/\s+/);
+            lines[i].innerHTML = `${number} <span class="calc-desc">${description.join(' ')}</span>`;
+        }
     }
 }
 
-// Fungsi Lain (Tidak Berubah)
+function handleCalculatorKeydown(e) {
+    if (!isCalculatorMode) return;
+
+    const wrapper = e.target.closest('.calculator-wrapper');
+    if (!wrapper) return;
+
+    if (wrapper.children.length >= 2) {
+        if (e.key === 'Enter' || /[a-zA-Z]/.test(e.key)) {
+            e.preventDefault();
+            if (/[a-zA-Z]/.test(e.key) && wrapper.children[1].className === 'calc-line') {
+                const content = wrapper.children[1].textContent;
+                if (content.match(/\d+/)) {
+                    wrapper.children[1].innerHTML = `${content} <span class="calc-desc">${e.key}</span>`;
+                    const selection = window.getSelection();
+                    const range = document.createRange();
+                    const descSpan = wrapper.children[1].querySelector('.calc-desc');
+                    range.setStart(descSpan, 1);
+                    range.setEnd(descSpan, 1);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                }
+            }
+        }
+    }
+}
+
 function toggleHighlight() {
     const selection = window.getSelection();
     if (selection.rangeCount > 0) {
@@ -295,13 +254,8 @@ function insertTable() {
                 <tr><td>Cell 1</td><td>Cell 2</td></tr>
             </table>
         </div>`;
-    const noteContent = document.getElementById('noteContent');
-    if (noteContent) {
-        const div = document.createElement('div');
-        div.innerHTML = tableHtml;
-        noteContent.appendChild(div.firstChild);
-        toggleTableButtons();
-    }
+    document.execCommand('insertHTML', false, tableHtml);
+    toggleTableButtons();
 }
 
 function addRow() {
@@ -391,15 +345,10 @@ function getSelectedColumnIndex() {
 
 function toggleTableButtons() {
     const table = getSelectedTable();
-    const addRowBtn = document.getElementById('addRowBtn');
-    const addColBtn = document.getElementById('addColBtn');
-    const deleteRowBtn = document.getElementById('deleteRowBtn');
-    const deleteColBtn = document.getElementById('deleteColBtn');
-
-    if (addRowBtn) addRowBtn.style.display = table ? 'inline-block' : 'none';
-    if (addColBtn) addColBtn.style.display = table ? 'inline-block' : 'none';
-    if (deleteRowBtn) deleteRowBtn.style.display = table && table.rows.length > 1 ? 'inline-block' : 'none';
-    if (deleteColBtn) deleteColBtn.style.display = table && table.rows[0].cells.length > 1 ? 'inline-block' : 'none';
+    document.getElementById('addRowBtn').style.display = table ? 'inline-block' : 'none';
+    document.getElementById('addColBtn').style.display = table ? 'inline-block' : 'none';
+    document.getElementById('deleteRowBtn').style.display = table && table.rows.length > 1 ? 'inline-block' : 'none';
+    document.getElementById('deleteColBtn').style.display = table && table.rows[0].cells.length > 1 ? 'inline-block' : 'none';
 }
 
 function copyFormattedText() {
@@ -418,9 +367,9 @@ function copyFormattedText() {
 }
 
 function saveNote() {
-    const noteTitle = document.getElementById('noteTitle')?.value.trim();
-    const noteContent = document.getElementById('noteContent')?.innerHTML;
-    const category = document.getElementById('categorySelect')?.value;
+    const noteTitle = document.getElementById('noteTitle').value.trim();
+    const noteContent = document.getElementById('noteContent').innerHTML;
+    const category = document.getElementById('categorySelect').value;
 
     if (!noteTitle || !noteContent) {
         alert('Title and content cannot be empty!');
@@ -447,7 +396,7 @@ function saveNote() {
 }
 
 function highlightSearchTerms(element, query) {
-    if (!query || !element) return;
+    if (!query) return;
     const terms = query.split(/\s+/).filter(term => term.length > 0);
     const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
     const nodes = [];
