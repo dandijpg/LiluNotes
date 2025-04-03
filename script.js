@@ -7,7 +7,22 @@ let notesPerPage = 10;
 let currentPage = 1;
 let isListMode = false;
 
+// Perbarui data lama di localStorage agar konsisten (opsional, jalankan sekali)
+function updateExistingNotes() {
+    notes = notes.map(note => ({
+        title: note.title,
+        content: note.content,
+        category: note.category,
+        timestamp: note.timestamp,
+        pinned: note.pinned || false,
+        pinnedTimestamp: note.pinnedTimestamp || null,
+        originalIndex: note.originalIndex // Pertahankan originalIndex jika ada
+    }));
+    localStorage.setItem('notes', JSON.stringify(notes));
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+    updateExistingNotes(); // Panggil sekali untuk memperbarui data lama
     setupEventListeners();
     renderCategories();
     renderNotes();
@@ -56,8 +71,8 @@ function renderNotes() {
     const viewMoreBtn = document.getElementById('viewMoreBtn');
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
 
-    // Selalu gunakan notes asli dengan originalIndex
-    let filteredNotes = notes.map((note, originalIndex) => ({ ...note, originalIndex }))
+    // Tambahkan originalIndex ke setiap catatan untuk konsistensi
+    let filteredNotes = notes.map((note, index) => ({ ...note, originalIndex: index }))
         .filter(note => {
             const matchesCategory = currentCategory === 'All' || note.category === currentCategory;
             const matchesSearch = note.title.toLowerCase().includes(searchTerm) || note.content.toLowerCase().includes(searchTerm);
