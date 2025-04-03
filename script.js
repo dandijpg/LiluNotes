@@ -125,9 +125,15 @@ function renderNotes() {
 function createNoteElement(note) {
     const div = document.createElement('div');
     div.className = 'note';
+    const date = new Date(note.timestamp);
+    const formattedDate = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) + ', ' + 
+                         date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    const previewText = note.content.replace(/<[^>]+>/g, '').substring(0, 50) + (note.content.length > 50 ? '...' : '');
     div.innerHTML = `
-        <strong>${note.title}</strong>
-        <span>${new Date(note.timestamp).toLocaleString()}</span>
+        <div class="title">${note.title}</div>
+        <div class="category">${note.category}</div>
+        <div class="timestamp">${formattedDate}</div>
+        <div class="preview">${previewText || 'No content'}</div>
     `;
     div.addEventListener('click', () => window.location.href = `view.html?id=${note.originalIndex}&search=${encodeURIComponent(searchQuery)}`);
     div.addEventListener('contextmenu', (e) => showNoteContextMenu(e, note.originalIndex));
@@ -215,6 +221,10 @@ function showContextMenu(e, category) {
     if (category === 'All' || category === 'Uncategorized') return;
     const contextMenu = document.getElementById('contextMenu');
     contextMenu.innerHTML = `
+        <div class="menu-item" onclick="editCategory('${category}')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+            Edit
+        </div>
         <div class="menu-item" onclick="deleteCategory('${category}')">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M4 6l1 14a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1l1-14"/></svg>
             Delete
@@ -249,6 +259,22 @@ function showNoteContextMenu(e, originalIndex) {
 function hideContextMenus() {
     document.getElementById('contextMenu').style.display = 'none';
     document.getElementById('noteContextMenu').style.display = 'none';
+}
+
+function editCategory(oldCategory) {
+    const newCategory = prompt('Edit category name:', oldCategory).trim();
+    if (newCategory && newCategory !== oldCategory && !categories.includes(newCategory)) {
+        const index = categories.indexOf(oldCategory);
+        categories[index] = newCategory;
+        notes = notes.map(note => 
+            note.category === oldCategory ? { ...note, category: newCategory } : note
+        );
+        localStorage.setItem('categories', JSON.stringify(categories));
+        localStorage.setItem('notes', JSON.stringify(notes));
+        if (currentCategory === oldCategory) currentCategory = newCategory;
+        renderCategories();
+        renderNotes();
+    }
 }
 
 function deleteCategory(category) {
