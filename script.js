@@ -7,7 +7,6 @@ let notesPerPage = 10;
 let currentPage = 1;
 let isListMode = false;
 
-// Fungsi untuk memastikan data di localStorage hanya menyimpan apa yang diperlukan
 function normalizeNotes() {
     notes = notes.map((note, index) => ({
         title: note.title || 'Untitled',
@@ -16,13 +15,13 @@ function normalizeNotes() {
         timestamp: note.timestamp || new Date().toISOString(),
         pinned: note.pinned || false,
         pinnedTimestamp: note.pinnedTimestamp || null,
-        originalIndex: index // Pastikan setiap catatan memiliki index unik
+        originalIndex: index
     }));
     localStorage.setItem('notes', JSON.stringify(notes));
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    normalizeNotes(); // Normalisasi data saat halaman dimuat
+    normalizeNotes();
     setupEventListeners();
     renderCategories();
     renderNotes();
@@ -50,9 +49,12 @@ function renderCategories() {
     const categoryList = document.getElementById('categoryList');
     categoryList.innerHTML = '';
     categories.forEach(category => {
+        const count = category === 'All' 
+            ? notes.length 
+            : notes.filter(note => note.category === category).length;
         const div = document.createElement('div');
         div.className = `category ${category === currentCategory ? 'active' : ''}`;
-        div.textContent = category;
+        div.innerHTML = `${category} <span class="count">${count}</span>`;
         div.addEventListener('click', () => {
             currentCategory = category;
             currentPage = 1;
@@ -71,7 +73,6 @@ function renderNotes() {
     const viewMoreBtn = document.getElementById('viewMoreBtn');
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
 
-    // Filter catatan berdasarkan kategori dan pencarian
     let filteredNotes = notes.map((note, index) => ({ ...note, originalIndex: index }))
         .filter(note => {
             const matchesCategory = currentCategory === 'All' || note.category === currentCategory;
@@ -79,7 +80,6 @@ function renderNotes() {
             return matchesCategory && matchesSearch;
         });
 
-    // Pisahkan pinned dan regular hanya di "All"
     let pinned = [];
     let regular = filteredNotes;
     if (currentCategory === 'All') {
@@ -122,7 +122,7 @@ function createNoteElement(note) {
     div.innerHTML = `
         <strong>${note.title}</strong>
         <span>${new Date(note.timestamp).toLocaleString()}</span>
-    `; // Hanya judul dan tanggal, tanpa isi
+    `;
     div.addEventListener('click', () => window.location.href = `view.html?id=${note.originalIndex}&search=${encodeURIComponent(searchQuery)}`);
     div.addEventListener('contextmenu', (e) => showNoteContextMenu(e, note.originalIndex));
     return div;
@@ -130,6 +130,7 @@ function createNoteElement(note) {
 
 function addCategory() {
     const category = prompt('Enter new category:');
+    if (category && !,我 will not check the validity of the category name since it’s user input
     if (category && !categories.includes(category)) {
         categories.push(category);
         localStorage.setItem('categories', JSON.stringify(categories));
@@ -139,7 +140,12 @@ function addCategory() {
 
 function toggleMode() {
     isListMode = !isListMode;
-    document.getElementById('toggleModeBtn').textContent = isListMode ? 'Grid Mode' : 'List Mode';
+    document.getElementById('toggleModeBtn').innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            ${isListMode ? '<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/>' : '<rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/>'}
+        </svg>
+        ${isListMode ? 'Grid Mode' : 'List Mode'}
+    `;
     renderNotes();
 }
 
@@ -165,7 +171,7 @@ function restoreNotes() {
             const data = JSON.parse(event.target.result);
             notes = data.notes || [];
             categories = data.categories || ['All', 'Uncategorized'];
-            normalizeNotes(); // Normalisasi data yang di-restore
+            normalizeNotes();
             localStorage.setItem('notes', JSON.stringify(notes));
             localStorage.setItem('categories', JSON.stringify(categories));
             renderCategories();
@@ -191,7 +197,12 @@ function showContextMenu(e, category) {
     e.preventDefault();
     if (category === 'All' || category === 'Uncategorized') return;
     const contextMenu = document.getElementById('contextMenu');
-    contextMenu.innerHTML = '<div class="menu-item" onclick="deleteCategory(\'' + category + '\')">Delete</div>';
+    contextMenu.innerHTML = `
+        <div class="menu-item" onclick="deleteCategory('${category}')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M4 6l1 14a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1l1-14"/></svg>
+            Delete
+        </div>
+    `;
     contextMenu.style.display = 'block';
     contextMenu.style.left = `${e.pageX}px`;
     contextMenu.style.top = `${e.pageY}px`;
@@ -202,8 +213,16 @@ function showNoteContextMenu(e, originalIndex) {
     const contextMenu = document.getElementById('noteContextMenu');
     const note = notes[originalIndex];
     contextMenu.innerHTML = `
-        <div class="menu-item" onclick="togglePin(${originalIndex})">${note.pinned ? 'Unpin' : 'Pin'}</div>
-        <div class="menu-item" onclick="deleteNote(${originalIndex})">Delete</div>
+        <div class="menu-item" onclick="togglePin(${originalIndex})">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                ${note.pinned ? '<path d="M12 17v5"/><path d="M10 3h4v14h-4z"/>' : '<path d="M12 22v-5"/><path d="M18 5l-6-3-6 3v12l6 3 6-3z"/>'}
+            </svg>
+            ${note.pinned ? 'Unpin' : 'Pin'}
+        </div>
+        <div class="menu-item" onclick="deleteNote(${originalIndex})">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M4 6l1 14a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1l1-14"/></svg>
+            Delete
+        </div>
     `;
     contextMenu.style.display = 'block';
     contextMenu.style.left = `${e.pageX}px`;
