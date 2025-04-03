@@ -1,5 +1,6 @@
 let notes = JSON.parse(localStorage.getItem('notes') || '[]');
 let categories = JSON.parse(localStorage.getItem('categories') || '["All", "Uncategorized"]');
+let categoryPins = JSON.parse(localStorage.getItem('categoryPins') || '{}'); // Objek untuk menyimpan PIN kategori
 const urlParams = new URLSearchParams(window.location.search);
 const searchQuery = urlParams.get('search') || '';
 let currentCategory = 'All';
@@ -7,12 +8,11 @@ let notesPerPage = 10;
 let currentPage = 1;
 let isListMode = false;
 
-// Google Drive API Configuration (opsional, tetap ada untuk referensi)
 const CLIENT_ID = '383179112314-09lj6kh30oruk0f61khioi8teq6gevpd.apps.googleusercontent.com';
 const API_KEY = 'AIzaSyAt05TP2qmv5ZaamtWPmULPFI9dfMT-9q8';
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
 let tokenClient;
-let accessToken = null;
+let accessToken = localStorage.getItem('googleAccessToken'); // Ambil token dari localStorage
 
 function normalizeNotes() {
     notes = notes.map((note, index) => ({
@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
     renderCategories();
     renderNotes();
+    checkGoogleAuthStatus(); // Periksa status login saat halaman dimuat
 });
 
 function initGoogleAPI() {
@@ -46,14 +47,29 @@ function initGoogleAPI() {
                 callback: (response) => {
                     if (response.access_token) {
                         accessToken = response.access_token;
-                        document.getElementById('googleAuthBtn').style.display = 'none';
-                        document.getElementById('backupGoogleBtn').style.display = 'block';
+                        localStorage.setItem('googleAccessToken', accessToken); // Simpan token
+                        updateGoogleAuthUI(true);
                         alert('Successfully signed in with Google!');
                     }
                 },
             });
+            checkGoogleAuthStatus();
         });
     });
+}
+
+function checkGoogleAuthStatus() {
+    if (accessToken) {
+        updateGoogleAuthUI(true);
+    } else {
+        updateGoogleAuthUI(false);
+    }
+}
+
+function updateGoogleAuthUI(isSignedIn) {
+    document.getElementById('googleAuthBtn').style.display = isSignedIn ? 'none' : 'block';
+    document.getElementById('backupGoogleBtn').style.display = isSignedIn ? 'block' : 'none';
+    document.getElementById('googleLogoutBtn').style.display = isSignedIn ? 'block' : 'none';
 }
 
 function setupEventListeners() {
@@ -76,9 +92,8 @@ function setupEventListeners() {
         tokenClient.requestAccessToken();
     });
     document.getElementById('backupGoogleBtn').addEventListener('click', backupToGoogleDrive);
-    document.getElementById('shareDriveBtn').addEventListener('click', shareToDrive);
-    document.getElementById('emailBackupBtn').addEventListener('click', emailBackup);
     document.getElementById('copyBackupBtn').addEventListener('click', copyBackupToClipboard);
+    document.getElementById('googleLogoutBtn').addEventListener('click', logoutFromGoogle);
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.more-btn') && !e.target.closest('.more-options')) {
             hideMoreOptions();
@@ -100,6 +115,13 @@ function renderCategories() {
         div.className = `category ${category === currentCategory ? 'active' : ''}`;
         div.innerHTML = `${category} <span class="count">${count}</span>`;
         div.addEventListener('click', () => {
+            if (categoryPins[category]) {
+                const pin = prompt(`Enter PIN for ${category}:`);
+                if (pin !== categoryPins[category]) {
+                    alert('Incorrect PIN!');
+                    return;
+                }
+            }
             currentCategory = category;
             currentPage = 1;
             renderCategories();
@@ -209,7 +231,7 @@ function hideMoreOptions() {
 }
 
 function backupNotes() {
-    const data = { notes, categories };
+    const data = { notes, categories, categoryPins };
     const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -226,7 +248,7 @@ function backupToGoogleDrive() {
         return;
     }
 
-    const data = { notes, categories };
+    const data = { notes, categories, categoryPins };
     const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
     const metadata = {
         name: `technotes-backup-${new Date().toISOString()}.json`,
@@ -257,44 +279,8 @@ function backupToGoogleDrive() {
     });
 }
 
-function shareToDrive() {
-    const data = { notes, categories };
-    const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
-    const file = new File([blob], `technotes-backup-${new Date().toISOString()}.json`, { type: 'application/json' });
-
-    if (navigator.share) {
-        navigator.share({
-            files: [file],
-            title: 'TechNotes Backup',
-            text: 'Backup file for TechNotes',
-        })
-        .then(() => {
-            console.log('File shared successfully');
-            hideMoreOptions();
-        })
-        .catch((error) => {
-            console.error('Error sharing file:', error);
-            fallbackDownload(file);
-        });
-    } else {
-        fallbackDownload(file);
-    }
-}
-
-function emailBackup() {
-    const data = { notes, categories };
-    const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
-    const file = new File([blob], `technotes-backup-${new Date().toISOString()}.json`, { type: 'application/json' });
-    const url = URL.createObjectURL(file);
-    const a = document.createElement('a');
-    a.href = `mailto:?subject=TechNotes Backup&body=Please find the backup file attached. You can upload it to Google Drive or another storage service manually.&attachment=${url}`;
-    a.click();
-    URL.revokeObjectURL(url);
-    hideMoreOptions();
-}
-
 function copyBackupToClipboard() {
-    const data = { notes, categories };
+    const data = { notes, categories, categoryPins };
     const jsonString = JSON.stringify(data);
     navigator.clipboard.writeText(jsonString)
         .then(() => {
@@ -305,17 +291,6 @@ function copyBackupToClipboard() {
             console.error('Error copying to clipboard:', err);
             alert('Failed to copy to clipboard. Please try again.');
         });
-}
-
-function fallbackDownload(file) {
-    const url = URL.createObjectURL(file);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = file.name;
-    a.click();
-    URL.revokeObjectURL(url);
-    hideMoreOptions();
-    alert('Web Share not supported. File downloaded locally. You can manually upload it to Google Drive.');
 }
 
 function restoreNotes() {
@@ -329,9 +304,11 @@ function restoreNotes() {
             const data = JSON.parse(event.target.result);
             notes = data.notes || [];
             categories = data.categories || ['All', 'Uncategorized'];
+            categoryPins = data.categoryPins || {};
             normalizeNotes();
             localStorage.setItem('notes', JSON.stringify(notes));
             localStorage.setItem('categories', JSON.stringify(categories));
+            localStorage.setItem('categoryPins', JSON.stringify(categoryPins));
             renderCategories();
             renderNotes();
         };
@@ -345,11 +322,21 @@ function resetNotes() {
     if (confirm('Are you sure you want to reset all notes and categories?')) {
         notes = [];
         categories = ['All', 'Uncategorized'];
+        categoryPins = {};
         localStorage.setItem('notes', JSON.stringify(notes));
         localStorage.setItem('categories', JSON.stringify(categories));
+        localStorage.setItem('categoryPins', JSON.stringify(categoryPins));
         renderCategories();
         renderNotes();
     }
+}
+
+function logoutFromGoogle() {
+    accessToken = null;
+    localStorage.removeItem('googleAccessToken');
+    updateGoogleAuthUI(false);
+    alert('Signed out from Google.');
+    hideMoreOptions();
 }
 
 function showContextMenu(e, category) {
@@ -364,6 +351,10 @@ function showContextMenu(e, category) {
         <div class="menu-item" onclick="deleteCategory('${category}')">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M4 6l1 14a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1l1-14"/></svg>
             Delete
+        </div>
+        <div class="menu-item" onclick="setCategoryPin('${category}')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5"/><path d="M18 5l-6-3-6 3v12l6 3 6-3z"/></svg>
+            ${categoryPins[category] ? 'Change/Remove PIN' : 'Set PIN'}
         </div>
     `;
     contextMenu.style.display = 'block';
@@ -405,8 +396,13 @@ function editCategory(oldCategory) {
         notes = notes.map(note => 
             note.category === oldCategory ? { ...note, category: newCategory } : note
         );
+        if (categoryPins[oldCategory]) {
+            categoryPins[newCategory] = categoryPins[oldCategory];
+            delete categoryPins[oldCategory];
+        }
         localStorage.setItem('categories', JSON.stringify(categories));
         localStorage.setItem('notes', JSON.stringify(notes));
+        localStorage.setItem('categoryPins', JSON.stringify(categoryPins));
         if (currentCategory === oldCategory) currentCategory = newCategory;
         renderCategories();
         renderNotes();
@@ -416,11 +412,29 @@ function editCategory(oldCategory) {
 function deleteCategory(category) {
     categories = categories.filter(c => c !== category);
     notes = notes.map(note => note.category === category ? { ...note, category: 'Uncategorized' } : note);
+    delete categoryPins[category];
     localStorage.setItem('categories', JSON.stringify(categories));
     localStorage.setItem('notes', JSON.stringify(notes));
+    localStorage.setItem('categoryPins', JSON.stringify(categoryPins));
     currentCategory = 'All';
     renderCategories();
     renderNotes();
+}
+
+function setCategoryPin(category) {
+    const currentPin = categoryPins[category];
+    const action = currentPin ? 'Enter new PIN (leave blank to remove):' : 'Set PIN for category:';
+    const pin = prompt(action, currentPin || '');
+    if (pin === null) return; // User cancelled
+    if (pin.trim() === '') {
+        delete categoryPins[category];
+        alert(`PIN removed from ${category}`);
+    } else {
+        categoryPins[category] = pin.trim();
+        alert(`PIN set for ${category}`);
+    }
+    localStorage.setItem('categoryPins', JSON.stringify(categoryPins));
+    hideContextMenus();
 }
 
 function togglePin(originalIndex) {
