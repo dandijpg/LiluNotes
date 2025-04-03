@@ -188,8 +188,13 @@ function insertTable() {
                 <tr><td>Cell 1</td><td>Cell 2</td></tr>
             </table>
         </div>`;
-    document.execCommand('insertHTML', false, tableHtml);
-    toggleTableButtons();
+    const noteContent = document.getElementById('noteContent');
+    if (noteContent) {
+        const div = document.createElement('div');
+        div.innerHTML = tableHtml;
+        noteContent.appendChild(div.firstChild);
+        toggleTableButtons();
+    }
 }
 
 function addRow() {
@@ -312,24 +317,36 @@ function insertCalculator() {
         return;
     }
 
-    const calcHtml = `
-        <div class="calculator-wrapper" contenteditable="true">
-            <div class="number-line">0          +</div>
-            <div class="number-line"></div>
-            <div class="separator">----------=</div>
-            <div class="result">0</div>
-        </div>`;
-    const div = document.createElement('div');
-    div.innerHTML = calcHtml;
-    const calcWrapper = div.firstChild;
+    // Membuat elemen kalkulator secara langsung tanpa innerHTML
+    const calcWrapper = document.createElement('div');
+    calcWrapper.className = 'calculator-wrapper';
+    calcWrapper.setAttribute('contenteditable', 'true');
+
+    const numberLine1 = document.createElement('div');
+    numberLine1.className = 'number-line';
+    numberLine1.textContent = '0          +';
+
+    const numberLine2 = document.createElement('div');
+    numberLine2.className = 'number-line';
+
+    const separator = document.createElement('div');
+    separator.className = 'separator';
+    separator.textContent = '----------=';
+
+    const result = document.createElement('div');
+    result.className = 'result';
+    result.textContent = '0';
+
+    calcWrapper.appendChild(numberLine1);
+    calcWrapper.appendChild(numberLine2);
+    calcWrapper.appendChild(separator);
+    calcWrapper.appendChild(result);
+
     noteContent.appendChild(calcWrapper);
     setupCalculatorListeners();
 
     // Fokus ke baris pertama
-    const firstLine = calcWrapper.querySelector('.number-line');
-    if (firstLine) {
-        firstLine.focus();
-    }
+    numberLine1.focus();
 }
 
 function setupCalculatorListeners() {
