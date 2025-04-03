@@ -7,6 +7,13 @@ let notesPerPage = 10;
 let currentPage = 1;
 let isListMode = false;
 
+// Google Drive API Configuration
+const CLIENT_ID = '888949651095-505ar9tj8bhstp043p0g2mhtpn7dkgln.apps.googleusercontent.com';
+const API_KEY = 'AIzaSyAm-gHyX0gbA00VGKJDW9knSkW5b6OGCTw';
+const SCOPES = 'https://www.googleapis.com/auth/drive.file';
+let tokenClient;
+let accessToken = null;
+
 function normalizeNotes() {
     notes = notes.map((note, index) => ({
         title: note.title || 'Untitled',
@@ -27,6 +34,28 @@ document.addEventListener('DOMContentLoaded', () => {
     renderNotes();
 });
 
+function initGoogleAPI() {
+    gapi.load('client', () => {
+        gapi.client.init({
+            apiKey: API_KEY,
+            discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
+        }).then(() => {
+            tokenClient = google.accounts.oauth2.initTokenClient({
+                client_id: CLIENT_ID,
+                scope: SCOPES,
+                callback: (response) => {
+                    if (response.access_token) {
+                        accessToken = response.access_token;
+                        document.getElementById('googleAuthBtn').style.display = 'none';
+                        document.getElementById('backupGoogleBtn').style.display = 'block';
+                        alert('Successfully signed in with Google!');
+                    }
+                },
+            });
+        });
+    });
+}
+
 function setupEventListeners() {
     document.getElementById('addCategoryBtn').addEventListener('click', addCategory);
     document.getElementById('addNoteBtn').addEventListener('click', () => window.location.href = 'edit.html');
@@ -43,12 +72,18 @@ function setupEventListeners() {
         currentPage++;
         renderNotes();
     });
+    document.getElementById('googleAuthBtn').addEventListener('click', () => {
+        tokenClient.requestAccessToken();
+    });
+    document.getElementById('backupGoogleBtn').addEventListener('click', backupToGoogleDrive);
     document.addEventListener('click', (e) => {
         if (!e.target.closest('.more-btn') && !e.target.closest('.more-options')) {
             hideMoreOptions();
         }
         hideContextMenus();
     });
+
+    initGoogleAPI();
 }
 
 function renderCategories() {
@@ -180,6 +215,43 @@ function backupNotes() {
     a.click();
     URL.revokeObjectURL(url);
     hideMoreOptions();
+}
+
+function backupToGoogleDrive() {
+    if (!accessToken) {
+        alert('Please sign in with Google first!');
+        return;
+    }
+
+    const data = { notes, categories };
+    const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+    const metadata = {
+        name: `technotes-backup-${new Date().toISOString()}.json`,
+        mimeType: 'application/json',
+    };
+
+    const form = new FormData();
+    form.append('metadata', new Blob([JSON.stringify(metadata)], { type: 'application/json' }));
+    form.append('file', blob);
+
+    fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart', {
+        method: 'POST',
+        headers: new Headers({ 'Authorization': `Bearer ${accessToken}` }),
+        body: form,
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.id) {
+            alert('Backup successfully uploaded to Google Drive!');
+            hideMoreOptions();
+        } else {
+            throw new Error('Upload failed');
+        }
+    })
+    .catch(error => {
+        console.error('Error uploading to Google Drive:', error);
+        alert('Failed to backup to Google Drive. Please try again.');
+    });
 }
 
 function restoreNotes() {
