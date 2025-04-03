@@ -744,6 +744,7 @@ button {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     user-select: none;
     overflow-x: auto;
+    word-wrap: break-word; /* Melipat teks panjang tanpa spasi */
 }
 
 .note-content-view ul,
