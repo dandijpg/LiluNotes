@@ -236,7 +236,7 @@ button {
 .more-options {
     display: none;
     position: absolute;
-    top: 100%;
+    top: calc(100% + 5px);
     right: 0;
     background: #fff;
     border-radius: 15px;
@@ -245,11 +245,15 @@ button {
     flex-direction: column;
     gap: 10px;
     z-index: 10;
-    animation: slideIn 0.3s ease-out;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 
 .more-options.active {
     display: flex;
+    opacity: 1;
+    transform: translateY(0);
 }
 
 @keyframes slideIn {
@@ -305,7 +309,7 @@ button {
 
 .copy-backup-btn:hover, .copy-backup-btn:active {
     background: #357abd;
-    box-shadow: 0 5px 15px rgba(66, 133, 244, 0.3);
+    box  box-shadow: 0 5px 15px rgba(66, 133, 244, 0.3);
 }
 
 .google-auth-btn {
@@ -433,6 +437,11 @@ button {
     gap: 8px;
     max-width: 100%;
     overflow: hidden;
+}
+
+.note.blurred {
+    filter: blur(5px);
+    pointer-events: auto; /* Tetap bisa diklik untuk memasukkan PIN */
 }
 
 .note:hover, .note:active {
@@ -744,7 +753,7 @@ button {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     user-select: none;
     overflow-x: auto;
-    word-wrap: break-word; /* Melipat teks panjang tanpa spasi */
+    word-wrap: break-word;
 }
 
 .note-content-view ul,
@@ -883,6 +892,13 @@ button {
         left: 50%;
         transform: translateX(-50%);
         width: 200px;
+        top: auto;
+        bottom: 0;
+        border-radius: 15px 15px 0 0;
+    }
+
+    .more-options.active {
+        transform: translateX(-50%) translateY(0);
     }
 
     .pinned-section h2, .notes-section h2 {
@@ -968,7 +984,15 @@ button {
     }
 
     .more-options {
-        width: 150px;
+        width: 100%;
+        left: 0;
+        right: 0;
+        transform: none;
+        border-radius: 15px 15px 0 0;
+    }
+
+    .more-options.active {
+        transform: translateY(0);
     }
 
     .pinned-section h2, .notes-section h2 {
