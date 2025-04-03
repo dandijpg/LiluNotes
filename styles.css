@@ -674,7 +674,7 @@ button {
     font-size: 1em;
     font-weight: 400;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    user-select: text;
+    user-select: none; /* Diubah dari user-select: text */
     overflow-x: auto;
 }
 
