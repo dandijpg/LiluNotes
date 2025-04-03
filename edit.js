@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function setupCategorySelect() {
     const select = document.getElementById('categorySelect');
+    if (!select) return;
     categories.forEach(category => {
         if (category !== 'All') {
             const option = document.createElement('option');
@@ -26,6 +27,11 @@ function setupEditor() {
     const noteTitle = document.getElementById('noteTitle');
     const noteContent = document.getElementById('noteContent');
     const categorySelect = document.getElementById('categorySelect');
+
+    if (!noteTitle || !noteContent || !categorySelect) {
+        console.error('One or more editor elements not found');
+        return;
+    }
 
     if (noteId !== null) {
         const note = notes[noteId];
@@ -42,55 +48,64 @@ function setupEditor() {
 }
 
 function setupEventListeners() {
-    document.getElementById('boldBtn').addEventListener('click', () => document.execCommand('bold', false, null));
-    document.getElementById('italicBtn').addEventListener('click', () => document.execCommand('italic', false, null));
-    document.getElementById('underlineBtn').addEventListener('click', () => document.execCommand('underline', false, null));
-    document.getElementById('highlightBtn').addEventListener('click', toggleHighlight);
-    document.getElementById('linkBtn').addEventListener('click', insertLink);
-    document.getElementById('numberedListBtn').addEventListener('click', () => document.execCommand('insertOrderedList', false, null));
-    document.getElementById('bulletListBtn').addEventListener('click', () => document.execCommand('insertUnorderedList', false, null));
-    document.getElementById('arrowListBtn').addEventListener('click', insertArrowList);
-    document.getElementById('alignLeftBtn').addEventListener('click', () => document.execCommand('justifyLeft', false, null));
-    document.getElementById('alignCenterBtn').addEventListener('click', () => document.execCommand('justifyCenter', false, null));
-    document.getElementById('alignRightBtn').addEventListener('click', () => document.execCommand('justifyRight', false, null));
-    document.getElementById('floatLeftBtn').addEventListener('click', () => applyFloat('left'));
-    document.getElementById('floatCenterBtn').addEventListener('click', () => applyFloat('none'));
-    document.getElementById('floatRightBtn').addEventListener('click', () => applyFloat('right'));
-    document.getElementById('tableBtn').addEventListener('click', insertTable);
-    document.getElementById('addRowBtn').addEventListener('click', addRow);
-    document.getElementById('addColBtn').addEventListener('click', addColumn);
-    document.getElementById('deleteRowBtn').addEventListener('click', deleteRow);
-    document.getElementById('deleteColBtn').addEventListener('click', deleteColumn);
-    document.getElementById('copyFormattedBtn').addEventListener('click', copyFormattedText);
-    document.getElementById('calcBtn').addEventListener('click', () => {
-        console.log('Calculator button clicked');
-        insertCalculator();
-    });
-    document.getElementById('saveBtn').addEventListener('click', saveNote);
-    document.getElementById('exitBtn').addEventListener('click', () => window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`);
-    document.getElementById('noteContent').addEventListener('click', toggleTableButtons);
-    document.getElementById('noteContent').addEventListener('keyup', toggleTableButtons);
+    const buttons = {
+        boldBtn: () => document.execCommand('bold', false, null),
+        italicBtn: () => document.execCommand('italic', false, null),
+        underlineBtn: () => document.execCommand('underline', false, null),
+        highlightBtn: toggleHighlight,
+        linkBtn: insertLink,
+        numberedListBtn: () => document.execCommand('insertOrderedList', false, null),
+        bulletListBtn: () => document.execCommand('insertUnorderedList', false, null),
+        arrowListBtn: insertArrowList,
+        alignLeftBtn: () => document.execCommand('justifyLeft', false, null),
+        alignCenterBtn: () => document.execCommand('justifyCenter', false, null),
+        alignRightBtn: () => document.execCommand('justifyRight', false, null),
+        floatLeftBtn: () => applyFloat('left'),
+        floatCenterBtn: () => applyFloat('none'),
+        floatRightBtn: () => applyFloat('right'),
+        tableBtn: insertTable,
+        addRowBtn: addRow,
+        addColBtn: addColumn,
+        deleteRowBtn: deleteRow,
+        deleteColBtn: deleteColumn,
+        copyFormattedBtn: copyFormattedText,
+        calcBtn: insertCalculator,
+        saveBtn: saveNote,
+        exitBtn: () => window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`
+    };
 
-    // Event listener untuk menangani klik pada elemen copyable
-    document.getElementById('noteContent').addEventListener('click', (e) => {
-        const target = e.target;
-        if (target.classList.contains('copyable')) {
-            const htmlContent = target.outerHTML;
-            const textContent = target.textContent;
-
-            navigator.clipboard.write([
-                new ClipboardItem({
-                    'text/html': new Blob([htmlContent], { type: 'text/html' }),
-                    'text/plain': new Blob([textContent], { type: 'text/plain' })
-                })
-            ]).then(() => {
-                alert('Formatted text copied to clipboard!');
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-                alert('Failed to copy formatted text.');
-            });
+    for (const [id, action] of Object.entries(buttons)) {
+        const btn = document.getElementById(id);
+        if (btn) {
+            btn.addEventListener('click', action);
+        } else {
+            console.warn(`Button with ID "${id}" not found`);
         }
-    });
+    }
+
+    const noteContent = document.getElementById('noteContent');
+    if (noteContent) {
+        noteContent.addEventListener('click', toggleTableButtons);
+        noteContent.addEventListener('keyup', toggleTableButtons);
+        noteContent.addEventListener('click', (e) => {
+            const target = e.target;
+            if (target.classList.contains('copyable')) {
+                const htmlContent = target.outerHTML;
+                const textContent = target.textContent;
+                navigator.clipboard.write([
+                    new ClipboardItem({
+                        'text/html': new Blob([htmlContent], { type: 'text/html' }),
+                        'text/plain': new Blob([textContent], { type: 'text/plain' })
+                    })
+                ]).then(() => {
+                    alert('Formatted text copied to clipboard!');
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    alert('Failed to copy formatted text.');
+                });
+            }
+        });
+    }
 }
 
 function toggleHighlight() {
@@ -264,10 +279,15 @@ function getSelectedColumnIndex() {
 
 function toggleTableButtons() {
     const table = getSelectedTable();
-    document.getElementById('addRowBtn').style.display = table ? 'inline-block' : 'none';
-    document.getElementById('addColBtn').style.display = table ? 'inline-block' : 'none';
-    document.getElementById('deleteRowBtn').style.display = table && table.rows.length > 1 ? 'inline-block' : 'none';
-    document.getElementById('deleteColBtn').style.display = table && table.rows[0].cells.length > 1 ? 'inline-block' : 'none';
+    const addRowBtn = document.getElementById('addRowBtn');
+    const addColBtn = document.getElementById('addColBtn');
+    const deleteRowBtn = document.getElementById('deleteRowBtn');
+    const deleteColBtn = document.getElementById('deleteColBtn');
+
+    if (addRowBtn) addRowBtn.style.display = table ? 'inline-block' : 'none';
+    if (addColBtn) addColBtn.style.display = table ? 'inline-block' : 'none';
+    if (deleteRowBtn) deleteRowBtn.style.display = table && table.rows.length > 1 ? 'inline-block' : 'none';
+    if (deleteColBtn) deleteColBtn.style.display = table && table.rows[0].cells.length > 1 ? 'inline-block' : 'none';
 }
 
 function copyFormattedText() {
@@ -286,6 +306,12 @@ function copyFormattedText() {
 }
 
 function insertCalculator() {
+    const noteContent = document.getElementById('noteContent');
+    if (!noteContent) {
+        console.error('noteContent not found');
+        return;
+    }
+
     const calcHtml = `
         <div class="calculator-wrapper" contenteditable="true">
             <div class="number-line">0          +</div>
@@ -293,22 +319,25 @@ function insertCalculator() {
             <div class="separator">----------=</div>
             <div class="result">0</div>
         </div>`;
-    const noteContent = document.getElementById('noteContent');
     const div = document.createElement('div');
     div.innerHTML = calcHtml;
-    noteContent.appendChild(div.firstChild);
+    const calcWrapper = div.firstChild;
+    noteContent.appendChild(calcWrapper);
     setupCalculatorListeners();
-    console.log('Calculator inserted');
+
+    // Fokus ke baris pertama
+    const firstLine = calcWrapper.querySelector('.number-line');
+    if (firstLine) {
+        firstLine.focus();
+    }
 }
 
 function setupCalculatorListeners() {
     const calcWrappers = document.querySelectorAll('.calculator-wrapper');
-    console.log('Found calculator wrappers:', calcWrappers.length);
     calcWrappers.forEach(wrapper => {
         wrapper.addEventListener('input', handleCalculatorInput);
         wrapper.addEventListener('keydown', handleCalculatorKeydown);
         wrapper.addEventListener('click', positionCursor);
-        console.log('Listeners added to wrapper');
     });
 }
 
@@ -324,11 +353,10 @@ function handleCalculatorInput(e) {
 
     lines.forEach((line, index) => {
         const text = line.textContent.trim();
-        console.log(`Line ${index}: ${text}`);
         if (index === 0) {
-            const match = text.match(/^(\d+)\s{10}([+\-*/])/);
+            const match = text.match(/^(\d+)\s*([+\-*/])/);
             if (match) {
-                total = parseInt(match[1]);
+                total = parseInt(match[1]) || 0;
                 operator = match[2];
                 line.innerHTML = `${match[1]}${' '.repeat(10)}${operator}`;
                 const desc = text.split(operator)[1]?.trim();
@@ -339,7 +367,7 @@ function handleCalculatorInput(e) {
         } else if (text) {
             const match = text.match(/^(\d+)/);
             if (match) {
-                const num = parseInt(match[1]);
+                const num = parseInt(match[1]) || 0;
                 const desc = text.split(match[1])[1]?.trim();
                 line.innerHTML = match[1];
                 if (desc) line.innerHTML += ` <span class="description">${desc}</span>`;
@@ -356,7 +384,6 @@ function handleCalculatorInput(e) {
     });
 
     result.textContent = valid ? total : 'Error';
-    console.log(`Result: ${result.textContent}`);
 }
 
 function handleCalculatorKeydown(e) {
@@ -396,6 +423,7 @@ function positionCursorToNextLine(wrapper) {
     const nextLine = wrapper.querySelectorAll('.number-line')[1] || document.createElement('div');
     if (!nextLine.parentElement) {
         nextLine.className = 'number-line';
+        nextLine.setAttribute('contenteditable', 'true');
         wrapper.insertBefore(nextLine, wrapper.querySelector('.separator'));
     }
     const range = document.createRange();
@@ -426,9 +454,9 @@ function positionCursor(e) {
 }
 
 function saveNote() {
-    const noteTitle = document.getElementById('noteTitle').value.trim();
-    const noteContent = document.getElementById('noteContent').innerHTML;
-    const category = document.getElementById('categorySelect').value;
+    const noteTitle = document.getElementById('noteTitle')?.value.trim();
+    const noteContent = document.getElementById('noteContent')?.innerHTML;
+    const category = document.getElementById('categorySelect')?.value;
 
     if (!noteTitle || !noteContent) {
         alert('Title and content cannot be empty!');
@@ -455,7 +483,7 @@ function saveNote() {
 }
 
 function highlightSearchTerms(element, query) {
-    if (!query) return;
+    if (!query || !element) return;
     const terms = query.split(/\s+/).filter(term => term.length > 0);
     const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
     const nodes = [];
