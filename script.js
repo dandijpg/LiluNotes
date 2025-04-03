@@ -56,6 +56,7 @@ function renderNotes() {
     const viewMoreBtn = document.getElementById('viewMoreBtn');
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
 
+    // Tambahkan originalIndex ke setiap catatan
     let filteredNotes = notes.map((note, originalIndex) => ({ ...note, originalIndex }))
         .filter(note => {
             const matchesCategory = currentCategory === 'All' || note.category === currentCategory;
@@ -63,21 +64,28 @@ function renderNotes() {
             return matchesCategory && matchesSearch;
         });
 
-    const pinned = filteredNotes.filter(note => note.pinned);
-    const regular = filteredNotes.filter(note => !note.pinned);
-    pinned.sort((a, b) => new Date(b.pinnedTimestamp) - new Date(a.pinnedTimestamp));
+    // Hanya pisahkan pinned dan regular jika di kategori "All"
+    let pinned = [];
+    let regular = filteredNotes;
+    if (currentCategory === 'All') {
+        pinned = filteredNotes.filter(note => note.pinned);
+        regular = filteredNotes.filter(note => !note.pinned);
+        pinned.sort((a, b) => new Date(b.pinnedTimestamp) - new Date(a.pinnedTimestamp));
+    }
     regular.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
-    pinnedSection.style.display = pinned.length > 0 ? 'block' : 'none';
+    pinnedSection.style.display = (currentCategory === 'All' && pinned.length > 0) ? 'block' : 'none';
     pinnedNotes.innerHTML = '';
     notesList.innerHTML = '';
 
     const start = (currentPage - 1) * notesPerPage;
     const end = start + notesPerPage;
 
-    pinned.forEach(note => {
-        pinnedNotes.appendChild(createNoteElement(note));
-    });
+    if (currentCategory === 'All') {
+        pinned.forEach(note => {
+            pinnedNotes.appendChild(createNoteElement(note));
+        });
+    }
 
     const regularToShow = regular.slice(0, end);
     regularToShow.forEach(note => {
