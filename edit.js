@@ -62,7 +62,10 @@ function setupEventListeners() {
     document.getElementById('deleteRowBtn').addEventListener('click', deleteRow);
     document.getElementById('deleteColBtn').addEventListener('click', deleteColumn);
     document.getElementById('copyFormattedBtn').addEventListener('click', copyFormattedText);
-    document.getElementById('calcBtn').addEventListener('click', insertCalculator);
+    document.getElementById('calcBtn').addEventListener('click', () => {
+        console.log('Calculator button clicked');
+        insertCalculator();
+    });
     document.getElementById('saveBtn').addEventListener('click', saveNote);
     document.getElementById('exitBtn').addEventListener('click', () => window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`);
     document.getElementById('noteContent').addEventListener('click', toggleTableButtons);
@@ -290,16 +293,22 @@ function insertCalculator() {
             <div class="separator">----------=</div>
             <div class="result">0</div>
         </div>`;
-    document.execCommand('insertHTML', false, calcHtml);
+    const noteContent = document.getElementById('noteContent');
+    const div = document.createElement('div');
+    div.innerHTML = calcHtml;
+    noteContent.appendChild(div.firstChild);
     setupCalculatorListeners();
+    console.log('Calculator inserted');
 }
 
 function setupCalculatorListeners() {
     const calcWrappers = document.querySelectorAll('.calculator-wrapper');
+    console.log('Found calculator wrappers:', calcWrappers.length);
     calcWrappers.forEach(wrapper => {
         wrapper.addEventListener('input', handleCalculatorInput);
         wrapper.addEventListener('keydown', handleCalculatorKeydown);
         wrapper.addEventListener('click', positionCursor);
+        console.log('Listeners added to wrapper');
     });
 }
 
@@ -311,19 +320,19 @@ function handleCalculatorInput(e) {
     const result = wrapper.querySelector('.result');
     let total = 0;
     let valid = true;
+    let operator = '+';
 
     lines.forEach((line, index) => {
         const text = line.textContent.trim();
+        console.log(`Line ${index}: ${text}`);
         if (index === 0) {
             const match = text.match(/^(\d+)\s{10}([+\-*/])/);
             if (match) {
                 total = parseInt(match[1]);
-                const operator = match[2];
+                operator = match[2];
                 line.innerHTML = `${match[1]}${' '.repeat(10)}${operator}`;
                 const desc = text.split(operator)[1]?.trim();
-                if (desc) {
-                    line.innerHTML += ` <span class="description">${desc}</span>`;
-                }
+                if (desc) line.innerHTML += ` <span class="description">${desc}</span>`;
             } else {
                 valid = false;
             }
@@ -333,15 +342,12 @@ function handleCalculatorInput(e) {
                 const num = parseInt(match[1]);
                 const desc = text.split(match[1])[1]?.trim();
                 line.innerHTML = match[1];
-                if (desc) {
-                    line.innerHTML += ` <span class="description">${desc}</span>`;
-                }
-                const operator = lines[0].textContent.match(/[+\-*/]/)[0];
+                if (desc) line.innerHTML += ` <span class="description">${desc}</span>`;
                 switch (operator) {
                     case '+': total += num; break;
                     case '-': total -= num; break;
                     case '*': total *= num; break;
-                    case '/': total = total / num; break;
+                    case '/': total = num !== 0 ? total / num : (valid = false, 'Error'); break;
                 }
             } else {
                 valid = false;
@@ -349,11 +355,8 @@ function handleCalculatorInput(e) {
         }
     });
 
-    if (valid) {
-        result.textContent = total;
-    } else {
-        result.textContent = 'Error';
-    }
+    result.textContent = valid ? total : 'Error';
+    console.log(`Result: ${result.textContent}`);
 }
 
 function handleCalculatorKeydown(e) {
