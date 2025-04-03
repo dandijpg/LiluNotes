@@ -46,7 +46,6 @@ function setupEventListeners() {
     document.getElementById('underlineBtn').addEventListener('click', () => document.execCommand('underline', false, null));
     document.getElementById('highlightBtn').addEventListener('click', toggleHighlight);
     document.getElementById('linkBtn').addEventListener('click', insertLink);
-    document.getElementById('copyFormattedBtn').addEventListener('click', copyFormattedText);
     document.getElementById('numberedListBtn').addEventListener('click', () => document.execCommand('insertOrderedList', false, null));
     document.getElementById('bulletListBtn').addEventListener('click', () => document.execCommand('insertUnorderedList', false, null));
     document.getElementById('arrowListBtn').addEventListener('click', insertArrowList);
@@ -97,32 +96,6 @@ function insertLink() {
             range.deleteContents();
             range.insertNode(a);
         }
-    }
-}
-
-function copyFormattedText() {
-    const selection = window.getSelection();
-    if (selection.rangeCount > 0) {
-        const range = selection.getRangeAt(0);
-        const clonedContent = range.cloneContents();
-        const div = document.createElement('div');
-        div.appendChild(clonedContent);
-        const htmlContent = div.innerHTML;
-
-        // Salin ke clipboard sebagai HTML
-        navigator.clipboard.write([
-            new ClipboardItem({
-                'text/html': new Blob([htmlContent], { type: 'text/html' }),
-                'text/plain': new Blob([range.toString()], { type: 'text/plain' })
-            })
-        ]).then(() => {
-            alert('Formatted text copied to clipboard!');
-        }).catch(err => {
-            console.error('Failed to copy: ', err);
-            alert('Failed to copy formatted text.');
-        });
-    } else {
-        alert('Please select some text to copy.');
     }
 }
 
