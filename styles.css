@@ -625,6 +625,14 @@ button {
     overflow-x: auto;
 }
 
+.note-content ul,
+.note-content ol {
+    margin: 0 auto;
+    padding-left: 20px;
+    max-width: 80%;
+    list-style-position: outside;
+}
+
 .note-content[contenteditable="true"] {
     user-select: text;
 }
