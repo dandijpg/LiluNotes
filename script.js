@@ -7,22 +7,22 @@ let notesPerPage = 10;
 let currentPage = 1;
 let isListMode = false;
 
-// Perbarui data lama di localStorage agar konsisten (opsional, jalankan sekali)
-function updateExistingNotes() {
-    notes = notes.map(note => ({
-        title: note.title,
-        content: note.content,
-        category: note.category,
-        timestamp: note.timestamp,
+// Fungsi untuk memastikan data di localStorage hanya menyimpan apa yang diperlukan
+function normalizeNotes() {
+    notes = notes.map((note, index) => ({
+        title: note.title || 'Untitled',
+        content: note.content || '',
+        category: note.category || 'Uncategorized',
+        timestamp: note.timestamp || new Date().toISOString(),
         pinned: note.pinned || false,
         pinnedTimestamp: note.pinnedTimestamp || null,
-        originalIndex: note.originalIndex // Pertahankan originalIndex jika ada
+        originalIndex: index // Pastikan setiap catatan memiliki index unik
     }));
     localStorage.setItem('notes', JSON.stringify(notes));
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    updateExistingNotes(); // Panggil sekali untuk memperbarui data lama
+    normalizeNotes(); // Normalisasi data saat halaman dimuat
     setupEventListeners();
     renderCategories();
     renderNotes();
@@ -71,7 +71,7 @@ function renderNotes() {
     const viewMoreBtn = document.getElementById('viewMoreBtn');
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
 
-    // Tambahkan originalIndex ke setiap catatan untuk konsistensi
+    // Filter catatan berdasarkan kategori dan pencarian
     let filteredNotes = notes.map((note, index) => ({ ...note, originalIndex: index }))
         .filter(note => {
             const matchesCategory = currentCategory === 'All' || note.category === currentCategory;
@@ -85,7 +85,7 @@ function renderNotes() {
     if (currentCategory === 'All') {
         pinned = filteredNotes.filter(note => note.pinned);
         regular = filteredNotes.filter(note => !note.pinned);
-        pinned.sort((a, b) => new Date(b.pinnedTimestamp) - new Date(a.pinnedTimestamp));
+        pinned.sort((a, b) => new Date(b.pinnedTimestamp || b.timestamp) - new Date(a.pinnedTimestamp || a.timestamp));
     }
     regular.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
@@ -122,7 +122,7 @@ function createNoteElement(note) {
     div.innerHTML = `
         <strong>${note.title}</strong>
         <span>${new Date(note.timestamp).toLocaleString()}</span>
-    `;
+    `; // Hanya judul dan tanggal, tanpa isi
     div.addEventListener('click', () => window.location.href = `view.html?id=${note.originalIndex}&search=${encodeURIComponent(searchQuery)}`);
     div.addEventListener('contextmenu', (e) => showNoteContextMenu(e, note.originalIndex));
     return div;
@@ -165,6 +165,7 @@ function restoreNotes() {
             const data = JSON.parse(event.target.result);
             notes = data.notes || [];
             categories = data.categories || ['All', 'Uncategorized'];
+            normalizeNotes(); // Normalisasi data yang di-restore
             localStorage.setItem('notes', JSON.stringify(notes));
             localStorage.setItem('categories', JSON.stringify(categories));
             renderCategories();
