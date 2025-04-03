@@ -371,9 +371,23 @@ function showContextMenu(e, category) {
             ${categoryPins[category] ? 'Change/Remove PIN' : 'Set PIN'}
         </div>
     `;
+
+    // Hitung posisi secara dinamis
+    const categoryElement = e.target.closest('.category');
+    const rect = categoryElement.getBoundingClientRect();
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const viewportHeight = window.innerHeight;
+
     contextMenu.style.display = 'block';
-    contextMenu.style.left = `${e.pageX}px`;
-    contextMenu.style.top = `${e.pageY}px`;
+    contextMenu.style.left = `${rect.left}px`;
+    const topPosition = rect.bottom + scrollTop;
+    const menuHeight = contextMenu.offsetHeight;
+
+    if (topPosition + menuHeight > scrollTop + viewportHeight) {
+        contextMenu.style.top = `${rect.top + scrollTop - menuHeight}px`;
+    } else {
+        contextMenu.style.top = `${topPosition}px`;
+    }
 }
 
 function showNoteContextMenu(e, originalIndex) {
