@@ -1,18 +1,19 @@
 let notes = JSON.parse(localStorage.getItem('notes') || '[]');
 let categories = JSON.parse(localStorage.getItem('categories') || '["All", "Uncategorized"]');
-let categoryPins = JSON.parse(localStorage.getItem('categoryPins') || '{}'); // Objek untuk menyimpan PIN kategori
+let categoryPins = JSON.parse(localStorage.getItem('categoryPins') || '{}');
 const urlParams = new URLSearchParams(window.location.search);
 const searchQuery = urlParams.get('search') || '';
 let currentCategory = 'All';
 let notesPerPage = 10;
 let currentPage = 1;
 let isListMode = false;
+let unlockedNotes = new Set(); // Set untuk melacak notes yang dibuka dalam sesi ini
 
 const CLIENT_ID = '383179112314-09lj6kh30oruk0f61khioi8teq6gevpd.apps.googleusercontent.com';
 const API_KEY = 'AIzaSyAt05TP2qmv5ZaamtWPmULPFI9dfMT-9q8';
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
 let tokenClient;
-let accessToken = localStorage.getItem('googleAccessToken'); // Ambil token dari localStorage
+let accessToken = localStorage.getItem('googleAccessToken');
 
 function normalizeNotes() {
     notes = notes.map((note, index) => ({
@@ -32,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
     renderCategories();
     renderNotes();
-    checkGoogleAuthStatus(); // Periksa status login saat halaman dimuat
+    checkGoogleAuthStatus();
 });
 
 function initGoogleAPI() {
@@ -47,7 +48,7 @@ function initGoogleAPI() {
                 callback: (response) => {
                     if (response.access_token) {
                         accessToken = response.access_token;
-                        localStorage.setItem('googleAccessToken', accessToken); // Simpan token
+                        localStorage.setItem('googleAccessToken', accessToken);
                         updateGoogleAuthUI(true);
                         alert('Successfully signed in with Google!');
                     }
@@ -184,7 +185,8 @@ function renderNotes() {
 
 function createNoteElement(note) {
     const div = document.createElement('div');
-    div.className = `note ${categoryPins[note.category] && currentCategory !== note.category ? 'blurred' : ''}`;
+    const isBlurred = categoryPins[note.category] && currentCategory !== note.category && !unlockedNotes.has(note.originalIndex);
+    div.className = `note ${isBlurred ? 'blurred' : ''}`;
     const date = new Date(note.timestamp);
     const formattedDate = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) + ', ' + 
                          date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
@@ -195,7 +197,19 @@ function createNoteElement(note) {
         <div class="timestamp">${formattedDate}</div>
         <div class="preview">${previewText || 'No content'}</div>
     `;
-    div.addEventListener('click', () => window.location.href = `view.html?id=${note.originalIndex}&search=${encodeURIComponent(searchQuery)}`);
+    div.addEventListener('click', () => {
+        if (isBlurred) {
+            const pin = prompt(`Enter PIN for ${note.category} to view this note:`);
+            if (pin === categoryPins[note.category]) {
+                unlockedNotes.add(note.originalIndex); // Tambahkan ke set unlocked untuk sesi ini
+                window.location.href = `view.html?id=${note.originalIndex}&search=${encodeURIComponent(searchQuery)}`;
+            } else {
+                alert('Incorrect PIN!');
+            }
+        } else {
+            window.location.href = `view.html?id=${note.originalIndex}&search=${encodeURIComponent(searchQuery)}`;
+        }
+    });
     div.addEventListener('contextmenu', (e) => showNoteContextMenu(e, note.originalIndex));
     return div;
 }
@@ -431,11 +445,11 @@ function setCategoryPin(category) {
         alert(`PIN removed from ${category}`);
     } else {
         categoryPins[category] = pin.trim();
-        alert(`PIN set for ${category}`);
+        alert(`PIN ${currentPin ? 'changed for' : 'set for'} ${category}`);
     }
     localStorage.setItem('categoryPins', JSON.stringify(categoryPins));
     hideContextMenus();
-    renderNotes(); // Re-render untuk menerapkan blur
+    renderNotes();
 }
 
 function togglePin(originalIndex) {
