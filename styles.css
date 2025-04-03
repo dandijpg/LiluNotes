@@ -377,53 +377,53 @@ h1:hover {
 .toolbar {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 10px;
     margin-bottom: 20px;
     background: #fafafa;
-    padding: 10px;
+    padding: 8px;
     border-radius: 15px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     justify-content: center;
 }
 
 .toolbar-group {
     display: flex;
-    gap: 8px;
-    padding: 5px;
-    border-radius: 10px;
+    gap: 6px;
+    padding: 4px;
+    border-radius: 8px;
     background: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 .tool-btn, .edit-btn, .view-btn {
-    padding: 8px 12px;
+    padding: 6px 10px;
     background: #4285f4;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     color: #fff;
     font-weight: 500;
-    font-size: 0.9em;
+    font-size: 0.85em;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .tool-btn:hover, .tool-btn:active, .edit-btn:hover, .edit-btn:active, .view-btn:hover, .view-btn:active {
     background: #357abd;
-    box-shadow: 0 5px 15px rgba(66, 133, 244, 0.3);
+    box-shadow: 0 3px 10px rgba(66, 133, 244, 0.3);
 }
 
 .table-tool-btn {
-    padding: 8px 12px;
+    padding: 6px 10px;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     color: #fff;
     font-weight: 500;
-    font-size: 0.9em;
+    font-size: 0.85em;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
     display: none;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .table-tool-btn.add-row-btn, .table-tool-btn.add-col-btn {
@@ -432,7 +432,7 @@ h1:hover {
 
 .table-tool-btn.add-row-btn:hover, .table-tool-btn.add-col-btn:hover {
     background-color: #2f9e44;
-    box-shadow: 0 5px 15px rgba(52, 168, 83, 0.3);
+    box-shadow: 0 3px 10px rgba(52, 168, 83, 0.3);
 }
 
 .table-tool-btn.delete-row-btn, .table-tool-btn.delete-col-btn {
@@ -441,25 +441,25 @@ h1:hover {
 
 .table-tool-btn.delete-row-btn:hover, .table-tool-btn.delete-col-btn:hover {
     background-color: #db4437;
-    box-shadow: 0 5px 15px rgba(234, 67, 53, 0.3);
+    box-shadow: 0 3px 10px rgba(234, 67, 53, 0.3);
 }
 
 .exit-btn {
-    padding: 8px 12px;
+    padding: 6px 10px;
     background: #ea4335;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     color: #fff;
     font-weight: 500;
-    font-size: 0.9em;
+    font-size: 0.85em;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
 .exit-btn:hover, .exit-btn:active {
     background: #db4437;
-    box-shadow: 0 5px 15px rgba(234, 67, 53, 0.3);
+    box-shadow: 0 3px 10px rgba(234, 67, 53, 0.3);
 }
 
 .category-select {
@@ -526,6 +526,41 @@ h1:hover {
     outline: none;
 }
 
+/* View Mode Styles */
+.view-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+}
+
+.note-title-view {
+    width: 100%;
+    padding: 12px;
+    background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    color: #333;
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-bottom: 15px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+.note-content-view {
+    min-height: 400px;
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #eee;
+    border-radius: 15px;
+    color: #333;
+    font-size: 1em;
+    font-weight: 400;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    user-select: text;
+    overflow-x: auto;
+}
+
 .save-btn {
     margin-top: 15px;
     padding: 10px 25px;
@@ -582,26 +617,26 @@ h1:hover {
     max-width: 100%;
 }
 
-.note-content table {
+.note-content table, .note-content-view table {
     border-collapse: collapse;
     margin: 0;
     white-space: nowrap;
     width: auto;
 }
 
-.note-content th, .note-content td {
+.note-content th, .note-content td, .note-content-view th, .note-content-view td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
     min-width: 100px;
 }
 
-.note-content th {
+.note-content th, .note-content-view th {
     background-color: #f5f7fa;
     font-weight: 500;
 }
 
-.note-content table tr:nth-child(even) {
+.note-content table tr:nth-child(even), .note-content-view table tr:nth-child(even) {
     background-color: #fafafa;
 }
 
@@ -684,6 +719,14 @@ h1:hover {
         padding: 6px 10px;
         font-size: 0.8em;
     }
+
+    .note-title-view {
+        font-size: 1.3em;
+    }
+
+    .note-content-view {
+        padding: 15px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -733,17 +776,39 @@ h1:hover {
     }
 
     .toolbar {
-        gap: 8px;
-        flex-direction: column;
-        align-items: center;
+        gap: 6px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 6px;
+        justify-content: flex-start;
     }
 
     .toolbar-group {
-        width: 100%;
+        gap: 4px;
+        padding: 3px;
+        border-radius: 6px;
+        flex-wrap: wrap;
         justify-content: center;
+    }
+
+    .tool-btn, .edit-btn, .exit-btn, .table-tool-btn {
+        padding: 4px 8px;
+        font-size: 0.75em;
+        border-radius: 6px;
+        min-width: 32px;
     }
 
     .category-select {
         width: 100%;
+    }
+
+    .note-title-view {
+        font-size: 1.2em;
+        padding: 10px;
+    }
+
+    .note-content-view {
+        padding: 12px;
+        min-height: 300px;
     }
 }
