@@ -288,7 +288,7 @@ h1:hover {
 
 .note {
     background: #fff;
-    padding: 15px;
+    padding: 12px; /* Dikurangi dari 15px untuk tampilan lebih kompak */
     border-radius: 15px;
     border: 1px solid #eee;
     cursor: pointer;
@@ -306,18 +306,13 @@ h1:hover {
     flex-direction: column;
     width: 100%;
     border-radius: 10px;
-    padding: 12px;
+    padding: 10px; /* Dikurangi dari 12px */
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
 }
 
 .notes-list.list-mode .note span {
     margin-top: 5px;
     font-size: 0.85em;
-}
-
-.notes-list.list-mode .note div {
-    margin-top: 5px;
-    font-size: 0.75em;
 }
 
 .view-more {
