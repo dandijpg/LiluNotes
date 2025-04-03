@@ -7,7 +7,7 @@ let currentCategory = 'All';
 let notesPerPage = 10;
 let currentPage = 1;
 let isListMode = false;
-let unlockedNotes = new Set(); // Set untuk melacak notes yang dibuka dalam sesi ini
+let unlockedNotes = new Set();
 
 const CLIENT_ID = '383179112314-09lj6kh30oruk0f61khioi8teq6gevpd.apps.googleusercontent.com';
 const API_KEY = 'AIzaSyAt05TP2qmv5ZaamtWPmULPFI9dfMT-9q8';
@@ -201,7 +201,7 @@ function createNoteElement(note) {
         if (isBlurred) {
             const pin = prompt(`Enter PIN for ${note.category} to view this note:`);
             if (pin === categoryPins[note.category]) {
-                unlockedNotes.add(note.originalIndex); // Tambahkan ke set unlocked untuk sesi ini
+                unlockedNotes.add(note.originalIndex);
                 window.location.href = `view.html?id=${note.originalIndex}&search=${encodeURIComponent(searchQuery)}`;
             } else {
                 alert('Incorrect PIN!');
@@ -437,8 +437,19 @@ function deleteCategory(category) {
 
 function setCategoryPin(category) {
     const currentPin = categoryPins[category];
+    if (currentPin) {
+        // Minta PIN lama terlebih dahulu
+        const oldPin = prompt(`Enter current PIN for ${category} to change or remove it:`);
+        if (oldPin === null) return; // User cancelled
+        if (oldPin !== currentPin) {
+            alert('Incorrect current PIN!');
+            return;
+        }
+    }
+
+    // Jika PIN lama benar atau tidak ada PIN sebelumnya, lanjutkan ke pengaturan PIN baru
     const action = currentPin ? 'Enter new PIN (leave blank to remove):' : 'Set PIN for category:';
-    const pin = prompt(action, currentPin || '');
+    const pin = prompt(action, '');
     if (pin === null) return; // User cancelled
     if (pin.trim() === '') {
         delete categoryPins[category];
