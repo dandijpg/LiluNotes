@@ -65,6 +65,27 @@ function setupEventListeners() {
     document.getElementById('exitBtn').addEventListener('click', () => window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`);
     document.getElementById('noteContent').addEventListener('click', toggleTableButtons);
     document.getElementById('noteContent').addEventListener('keyup', toggleTableButtons);
+
+    // Event listener untuk menangani klik pada elemen copyable
+    document.getElementById('noteContent').addEventListener('click', (e) => {
+        const target = e.target;
+        if (target.classList.contains('copyable')) {
+            const htmlContent = target.outerHTML;
+            const textContent = target.textContent;
+
+            navigator.clipboard.write([
+                new ClipboardItem({
+                    'text/html': new Blob([htmlContent], { type: 'text/html' }),
+                    'text/plain': new Blob([textContent], { type: 'text/plain' })
+                })
+            ]).then(() => {
+                alert('Formatted text copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy formatted text.');
+            });
+        }
+    });
 }
 
 function toggleHighlight() {
@@ -248,25 +269,14 @@ function copyFormattedText() {
     const selection = window.getSelection();
     if (selection.rangeCount > 0) {
         const range = selection.getRangeAt(0);
-        const htmlContent = range.cloneContents();
-        const div = document.createElement('div');
-        div.appendChild(htmlContent);
-        const htmlText = div.innerHTML;
-        const plainText = range.toString();
-
-        navigator.clipboard.write([
-            new ClipboardItem({
-                'text/html': new Blob([htmlText], { type: 'text/html' }),
-                'text/plain': new Blob([plainText], { type: 'text/plain' })
-            })
-        ]).then(() => {
-            alert('Formatted text copied to clipboard!');
-        }).catch(err => {
-            console.error('Failed to copy: ', err);
-            alert('Failed to copy formatted text.');
-        });
+        const selectedText = range.cloneContents();
+        const span = document.createElement('span');
+        span.className = 'copyable';
+        span.appendChild(selectedText);
+        range.deleteContents();
+        range.insertNode(span);
     } else {
-        alert('Please select some text to copy.');
+        alert('Please select some text to make copyable.');
     }
 }
 
