@@ -184,7 +184,7 @@ function renderNotes() {
 
 function createNoteElement(note) {
     const div = document.createElement('div');
-    div.className = 'note';
+    div.className = `note ${categoryPins[note.category] && currentCategory !== note.category ? 'blurred' : ''}`;
     const date = new Date(note.timestamp);
     const formattedDate = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) + ', ' + 
                          date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
@@ -435,6 +435,7 @@ function setCategoryPin(category) {
     }
     localStorage.setItem('categoryPins', JSON.stringify(categoryPins));
     hideContextMenus();
+    renderNotes(); // Re-render untuk menerapkan blur
 }
 
 function togglePin(originalIndex) {
