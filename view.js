@@ -1,6 +1,7 @@
+// Selalu ambil data terbaru dari localStorage untuk sinkronisasi
 let notes = JSON.parse(localStorage.getItem('notes') || '[]');
 const urlParams = new URLSearchParams(window.location.search);
-const noteId = urlParams.get('id');
+const noteId = parseInt(urlParams.get('id'), 10); // Pastikan noteId adalah integer
 const searchQuery = urlParams.get('search') || '';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -12,14 +13,15 @@ function setupView() {
     const noteTitle = document.getElementById('noteTitle');
     const noteContent = document.getElementById('noteContent');
     
-    if (noteId !== null && notes[noteId]) {
+    // Validasi noteId
+    if (!isNaN(noteId) && noteId >= 0 && noteId < notes.length && notes[noteId]) {
         const note = notes[noteId];
         noteTitle.textContent = note.title;
         noteContent.innerHTML = note.content;
         highlightSearchTerms(noteContent, searchQuery);
     } else {
         noteTitle.textContent = 'Note Not Found';
-        noteContent.innerHTML = '<p>The requested note could not be found.</p>';
+        noteContent.innerHTML = '<p>The requested note could not be found. It may have been deleted or the ID is invalid.</p>';
     }
 }
 
