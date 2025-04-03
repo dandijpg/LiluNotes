@@ -392,9 +392,23 @@ function showNoteContextMenu(e, originalIndex) {
             Delete
         </div>
     `;
+
+    // Hitung posisi secara dinamis
+    const noteElement = e.target.closest('.note');
+    const rect = noteElement.getBoundingClientRect();
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const viewportHeight = window.innerHeight;
+
     contextMenu.style.display = 'block';
-    contextMenu.style.left = `${e.pageX}px`;
-    contextMenu.style.top = `${e.pageY}px`;
+    contextMenu.style.left = `${rect.left}px`;
+    const topPosition = rect.bottom + scrollTop;
+    const menuHeight = contextMenu.offsetHeight;
+
+    if (topPosition + menuHeight > scrollTop + viewportHeight) {
+        contextMenu.style.top = `${rect.top + scrollTop - menuHeight}px`;
+    } else {
+        contextMenu.style.top = `${topPosition}px`;
+    }
 }
 
 function hideContextMenus() {
@@ -438,19 +452,17 @@ function deleteCategory(category) {
 function setCategoryPin(category) {
     const currentPin = categoryPins[category];
     if (currentPin) {
-        // Minta PIN lama terlebih dahulu
         const oldPin = prompt(`Enter current PIN for ${category} to change or remove it:`);
-        if (oldPin === null) return; // User cancelled
+        if (oldPin === null) return;
         if (oldPin !== currentPin) {
             alert('Incorrect current PIN!');
             return;
         }
     }
 
-    // Jika PIN lama benar atau tidak ada PIN sebelumnya, lanjutkan ke pengaturan PIN baru
     const action = currentPin ? 'Enter new PIN (leave blank to remove):' : 'Set PIN for category:';
     const pin = prompt(action, '');
-    if (pin === null) return; // User cancelled
+    if (pin === null) return;
     if (pin.trim() === '') {
         delete categoryPins[category];
         alert(`PIN removed from ${category}`);
