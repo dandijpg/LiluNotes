@@ -12,11 +12,14 @@ function setupView() {
     const noteTitle = document.getElementById('noteTitle');
     const noteContent = document.getElementById('noteContent');
     
-    if (noteId !== null) {
+    if (noteId !== null && notes[noteId]) {
         const note = notes[noteId];
         noteTitle.textContent = note.title;
         noteContent.innerHTML = note.content;
         highlightSearchTerms(noteContent, searchQuery);
+    } else {
+        noteTitle.textContent = 'Note Not Found';
+        noteContent.innerHTML = '<p>The requested note could not be found.</p>';
     }
 }
 
