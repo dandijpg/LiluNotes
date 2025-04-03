@@ -56,11 +56,12 @@ function renderNotes() {
     const viewMoreBtn = document.getElementById('viewMoreBtn');
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
 
-    let filteredNotes = notes.filter(note => {
-        const matchesCategory = currentCategory === 'All' || note.category === currentCategory;
-        const matchesSearch = note.title.toLowerCase().includes(searchTerm) || note.content.toLowerCase().includes(searchTerm);
-        return matchesCategory && matchesSearch;
-    });
+    let filteredNotes = notes.map((note, originalIndex) => ({ ...note, originalIndex }))
+        .filter(note => {
+            const matchesCategory = currentCategory === 'All' || note.category === currentCategory;
+            const matchesSearch = note.title.toLowerCase().includes(searchTerm) || note.content.toLowerCase().includes(searchTerm);
+            return matchesCategory && matchesSearch;
+        });
 
     const pinned = filteredNotes.filter(note => note.pinned);
     const regular = filteredNotes.filter(note => !note.pinned);
@@ -74,13 +75,13 @@ function renderNotes() {
     const start = (currentPage - 1) * notesPerPage;
     const end = start + notesPerPage;
 
-    pinned.forEach((note, index) => {
-        pinnedNotes.appendChild(createNoteElement(note, index));
+    pinned.forEach(note => {
+        pinnedNotes.appendChild(createNoteElement(note));
     });
 
     const regularToShow = regular.slice(0, end);
-    regularToShow.forEach((note, index) => {
-        notesList.appendChild(createNoteElement(note, index));
+    regularToShow.forEach(note => {
+        notesList.appendChild(createNoteElement(note));
     });
 
     viewMoreBtn.style.display = regular.length > end ? 'block' : 'none';
@@ -92,7 +93,7 @@ function renderNotes() {
     pinnedNotes.className = `notes-list ${isListMode ? 'list-mode' : ''}`;
 }
 
-function createNoteElement(note, index) {
+function createNoteElement(note) {
     const div = document.createElement('div');
     div.className = 'note';
     div.innerHTML = `
@@ -100,8 +101,8 @@ function createNoteElement(note, index) {
         <span>${new Date(note.timestamp).toLocaleString()}</span>
         <div>${note.content.slice(0, 100)}${note.content.length > 100 ? '...' : ''}</div>
     `;
-    div.addEventListener('click', () => window.location.href = `view.html?id=${index}&search=${encodeURIComponent(searchQuery)}`);
-    div.addEventListener('contextmenu', (e) => showNoteContextMenu(e, index));
+    div.addEventListener('click', () => window.location.href = `view.html?id=${note.originalIndex}&search=${encodeURIComponent(searchQuery)}`);
+    div.addEventListener('contextmenu', (e) => showNoteContextMenu(e, note.originalIndex));
     return div;
 }
 
@@ -173,13 +174,13 @@ function showContextMenu(e, category) {
     contextMenu.style.top = `${e.pageY}px`;
 }
 
-function showNoteContextMenu(e, index) {
+function showNoteContextMenu(e, originalIndex) {
     e.preventDefault();
     const contextMenu = document.getElementById('noteContextMenu');
-    const note = notes[index];
+    const note = notes[originalIndex];
     contextMenu.innerHTML = `
-        <div class="menu-item" onclick="togglePin(${index})">${note.pinned ? 'Unpin' : 'Pin'}</div>
-        <div class="menu-item" onclick="deleteNote(${index})">Delete</div>
+        <div class="menu-item" onclick="togglePin(${originalIndex})">${note.pinned ? 'Unpin' : 'Pin'}</div>
+        <div class="menu-item" onclick="deleteNote(${originalIndex})">Delete</div>
     `;
     contextMenu.style.display = 'block';
     contextMenu.style.left = `${e.pageX}px`;
@@ -201,15 +202,15 @@ function deleteCategory(category) {
     renderNotes();
 }
 
-function togglePin(index) {
-    notes[index].pinned = !notes[index].pinned;
-    notes[index].pinnedTimestamp = notes[index].pinned ? new Date().toISOString() : null;
+function togglePin(originalIndex) {
+    notes[originalIndex].pinned = !notes[originalIndex].pinned;
+    notes[originalIndex].pinnedTimestamp = notes[originalIndex].pinned ? new Date().toISOString() : null;
     localStorage.setItem('notes', JSON.stringify(notes));
     renderNotes();
 }
 
-function deleteNote(index) {
-    notes.splice(index, 1);
+function deleteNote(originalIndex) {
+    notes.splice(originalIndex, 1);
     localStorage.setItem('notes', JSON.stringify(notes));
     renderNotes();
 }
