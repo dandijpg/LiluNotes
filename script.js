@@ -372,7 +372,6 @@ function showContextMenu(e, category) {
         </div>
     `;
 
-    // Hitung posisi secara dinamis
     const categoryElement = e.target.closest('.category');
     const rect = categoryElement.getBoundingClientRect();
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
@@ -407,17 +406,24 @@ function showNoteContextMenu(e, originalIndex) {
         </div>
     `;
 
-    // Hitung posisi secara dinamis
     const noteElement = e.target.closest('.note');
     const rect = noteElement.getBoundingClientRect();
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
 
     contextMenu.style.display = 'block';
-    contextMenu.style.left = `${rect.left}px`;
+    
+    const menuWidth = contextMenu.offsetWidth;
+    let leftPosition = rect.left;
+    if (leftPosition + menuWidth > viewportWidth) {
+        leftPosition = viewportWidth - menuWidth;
+    }
+    if (leftPosition < 0) leftPosition = 0;
+    contextMenu.style.left = `${leftPosition}px`;
+
     const topPosition = rect.bottom + scrollTop;
     const menuHeight = contextMenu.offsetHeight;
-
     if (topPosition + menuHeight > scrollTop + viewportHeight) {
         contextMenu.style.top = `${rect.top + scrollTop - menuHeight}px`;
     } else {
