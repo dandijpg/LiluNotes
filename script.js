@@ -8,8 +8,8 @@ let currentPage = 1;
 let isListMode = false;
 
 // Google Drive API Configuration
-const CLIENT_ID = '888949651095-505ar9tj8bhstp043p0g2mhtpn7dkgln.apps.googleusercontent.com';
-const API_KEY = 'AIzaSyAm-gHyX0gbA00VGKJDW9knSkW5b6OGCTw';
+const CLIENT_ID = '383179112314-09lj6kh30oruk0f61khioi8teq6gevpd.apps.googleusercontent.com';
+const API_KEY = 'AIzaSyAt05TP2qmv5ZaamtWPmULPFI9dfMT-9q8';
 const SCOPES = 'https://www.googleapis.com/auth/drive.file';
 let tokenClient;
 let accessToken = null;
