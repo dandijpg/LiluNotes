@@ -628,9 +628,9 @@ button {
 .note-content ul,
 .note-content ol {
     margin: 0 auto;
-    padding-left: 20px;
+    padding-left: 0;
     max-width: 80%;
-    list-style-position: outside;
+    list-style-position: inside;
 }
 
 .note-content[contenteditable="true"] {
@@ -676,6 +676,14 @@ button {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     user-select: text;
     overflow-x: auto;
+}
+
+.note-content-view ul,
+.note-content-view ol {
+    margin: 0 auto;
+    padding-left: 0;
+    max-width: 80%;
+    list-style-position: inside;
 }
 
 .save-btn {
