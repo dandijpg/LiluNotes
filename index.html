@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechNotes - Digital Workspace</title>
+    <title>TechNotes</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -15,47 +15,33 @@
                 <input type="text" id="searchInput" placeholder="Search notes...">
             </div>
         </header>
-
-        <div class="categories" id="categories"></div>
+        <div class="categories" id="categoryList"></div>
         <div class="controls-wrapper">
             <div class="controls">
                 <div class="creation-controls">
-                    <button class="add-note" id="addNoteBtn" title="Create a new note">+ Note</button>
-                    <button class="add-category" id="addCategoryBtn" title="Add a new category">+ Category</button>
+                    <button class="add-category" id="addCategoryBtn">Add Category</button>
+                    <button class="add-note" id="addNoteBtn">Add Note</button>
                 </div>
                 <div class="utility-controls">
-                    <button class="toggle-mode" id="toggleModeBtn" title="Switch view mode">Grid</button>
-                    <button class="backup-btn" id="backupBtn" title="Backup notes and categories">Backup</button>
-                    <input type="file" id="restoreInput" accept=".json" style="display: none;">
-                    <button class="restore-btn" id="restoreBtn" title="Restore notes and categories">Restore</button>
-                    <button class="reset-btn" id="resetBtn" title="Reset all notes and categories">Reset</button>
+                    <button class="toggle-mode" id="toggleModeBtn">List Mode</button>
+                    <button class="backup-btn" id="backupBtn">Backup</button>
+                    <button class="restore-btn" id="restoreBtn">Restore</button>
+                    <button class="reset-btn" id="resetBtn">Reset</button>
                 </div>
             </div>
         </div>
-
-        <div class="pinned-section">
-            <h2>Pinned</h2>
-            <div class="notes-list" id="pinnedList"></div>
+        <div class="pinned-section" id="pinnedSection">
+            <h2>Pinned Notes</h2>
+            <div class="notes-list" id="pinnedNotes"></div>
         </div>
-
         <div class="notes-section">
-            <h2>Recent Notes</h2>
+            <h2>All Notes</h2>
             <div class="notes-list" id="notesList"></div>
-            <button class="view-more" id="viewMoreBtn">View More</button>
         </div>
+        <button class="view-more" id="viewMoreBtn" style="display: none;">View More</button>
+        <div id="contextMenu" class="context-menu"></div>
+        <div id="noteContextMenu" class="note-context-menu"></div>
     </div>
-
-    <div class="context-menu" id="contextMenu">
-        <div class="menu-item" id="editCategory">Edit</div>
-        <div class="menu-item" id="deleteCategory">Delete</div>
-    </div>
-
-    <div class="note-context-menu" id="noteContextMenu">
-        <div class="menu-item" id="pinNote">Pin</div>
-        <div class="menu-item" id="unpinNote" style="display: none;">Unpin</div>
-        <div class="menu-item" id="deleteNote">Delete</div>
-    </div>
-
     <script src="script.js"></script>
 </body>
 </html>
