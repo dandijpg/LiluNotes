@@ -56,7 +56,6 @@ function renderNotes() {
     const viewMoreBtn = document.getElementById('viewMoreBtn');
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
 
-    // Selalu gunakan notes asli dengan originalIndex
     let filteredNotes = notes.map((note, originalIndex) => ({ ...note, originalIndex }))
         .filter(note => {
             const matchesCategory = currentCategory === 'All' || note.category === currentCategory;
@@ -64,7 +63,6 @@ function renderNotes() {
             return matchesCategory && matchesSearch;
         });
 
-    // Pisahkan pinned dan regular hanya di "All"
     let pinned = [];
     let regular = filteredNotes;
     if (currentCategory === 'All') {
@@ -105,11 +103,12 @@ function createNoteElement(note) {
     const div = document.createElement('div');
     div.className = 'note';
     div.innerHTML = `
-        <strong>${note.title}</strong>
-        <span>${new Date(note.timestamp).toLocaleString()}</span>
-        <div>${note.content.slice(0, 100)}${note.content.length > 100 ? '...' : ''}</div>
+        <strong class="note-title">${note.title}</strong>
+        <div class="note-meta">
+            <span class="note-category">${note.category}</span>
+            <span class="note-date">${new Date(note.timestamp).toLocaleString()}</span>
+        </div>
     `;
-    // Gunakan originalIndex sebagai ID
     div.addEventListener('click', () => window.location.href = `view.html?id=${note.originalIndex}&search=${encodeURIComponent(searchQuery)}`);
     div.addEventListener('contextmenu', (e) => showNoteContextMenu(e, note.originalIndex));
     return div;
