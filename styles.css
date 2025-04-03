@@ -7,8 +7,8 @@
 
 /* Hilangkan background biru saat klik (tap highlight) */
 button, .note, .category {
-    -webkit-tap-highlight-color: transparent; /* Untuk mobile */
-    tap-highlight-color: transparent; /* Untuk browser lain */
+    -webkit-tap-highlight-color: transparent;
+    tap-highlight-color: transparent;
 }
 
 body {
@@ -98,6 +98,9 @@ h1:hover {
 }
 
 .category {
+    display: flex;
+    align-items: center;
+    gap: 5px;
     padding: 8px 20px;
     background: #e8f0fe;
     border-radius: 20px;
@@ -108,9 +111,20 @@ h1:hover {
     transition: all 0.3s ease-in-out;
 }
 
+.category .count {
+    background: rgba(66, 133, 244, 0.2);
+    border-radius: 10px;
+    padding: 2px 6px;
+    font-size: 0.8em;
+}
+
 .category.active {
     background: #4285f4;
     color: #fff;
+}
+
+.category.active .count {
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .category:hover {
@@ -118,6 +132,10 @@ h1:hover {
     color: #fff;
     transform: scale(1.05);
     box-shadow: 0 5px 15px rgba(66, 133, 244, 0.2);
+}
+
+.category:hover .count {
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .controls-wrapper {
@@ -138,6 +156,12 @@ h1:hover {
 .creation-controls, .utility-controls {
     display: flex;
     gap: 10px;
+}
+
+button {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .add-category {
@@ -244,11 +268,11 @@ h1:hover {
 
 .pinned-section {
     margin-bottom: 20px;
-    display: none; /* Sembunyikan secara default */
+    display: none;
 }
 
 .pinned-section.active {
-    display: block; /* Tampilkan hanya saat aktif */
+    display: block;
 }
 
 .pinned-section h2 {
@@ -288,7 +312,7 @@ h1:hover {
 
 .note {
     background: #fff;
-    padding: 12px; /* Dikurangi dari 15px untuk tampilan lebih kompak */
+    padding: 12px;
     border-radius: 15px;
     border: 1px solid #eee;
     cursor: pointer;
@@ -306,7 +330,7 @@ h1:hover {
     flex-direction: column;
     width: 100%;
     border-radius: 10px;
-    padding: 10px; /* Dikurangi dari 12px */
+    padding: 10px;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
 }
 
@@ -316,7 +340,9 @@ h1:hover {
 }
 
 .view-more {
-    display: block;
+    display: flex;
+    align-items: center;
+    gap: 5px;
     margin: 20px auto 0;
     padding: 10px 25px;
     background: #4285f4;
