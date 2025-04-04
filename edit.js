@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
 });
 
-// Fungsi untuk menyimpan posisi kursor
 function saveCursorPosition(element) {
     const selection = window.getSelection();
     if (selection.rangeCount > 0 && element.contains(selection.anchorNode)) {
@@ -20,7 +19,6 @@ function saveCursorPosition(element) {
     return null;
 }
 
-// Fungsi untuk mengembalikan posisi kursor
 function restoreCursorPosition(range) {
     if (range) {
         const selection = window.getSelection();
@@ -88,6 +86,12 @@ function setupEventListeners() {
     document.getElementById('deleteColBtn').addEventListener('click', deleteColumn);
     document.getElementById('financeBtn').addEventListener('click', insertFinancialTable);
     document.getElementById('calcMode').addEventListener('change', (e) => calcMode = e.target.value);
+    document.getElementById('addIncomeBtn').addEventListener('click', () => addFinanceRow(getSelectedFinanceTableWrapper(), '+'));
+    document.getElementById('subtractExpenseBtn').addEventListener('click', () => addFinanceRow(getSelectedFinanceTableWrapper(), '-'));
+    document.getElementById('multiplyBtn').addEventListener('click', () => addFinanceRow(getSelectedFinanceTableWrapper(), '*'));
+    document.getElementById('divideBtn').addEventListener('click', () => addFinanceRow(getSelectedFinanceTableWrapper(), '/'));
+    document.getElementById('calculateBtn').addEventListener('click', () => calculateTotal(getSelectedFinanceTableWrapper()));
+    document.getElementById('deleteLastRowBtn').addEventListener('click', () => deleteLastRow(getSelectedFinanceTableWrapper()));
     document.getElementById('copyFormattedBtn').addEventListener('click', copyFormattedText);
     document.getElementById('saveBtn').addEventListener('click', saveNote);
     document.getElementById('exitBtn').addEventListener('click', () => window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`);
@@ -104,7 +108,6 @@ function markAsDone() {
         const parentElement = selectedNode.nodeType === 3 ? selectedNode.parentElement : selectedNode;
 
         if (parentElement.classList && parentElement.classList.contains('done')) {
-            // Jika sudah ditandai selesai, hapus tanda
             const textNode = document.createTextNode(parentElement.textContent);
             parentElement.parentNode.replaceChild(textNode, parentElement);
             const newRange = document.createRange();
@@ -112,7 +115,6 @@ function markAsDone() {
             newRange.setEnd(textNode, textNode.length);
             restoreCursorPosition(newRange);
         } else {
-            // Jika belum ditandai, tambahkan tanda selesai
             const selectedText = range.toString();
             if (selectedText) {
                 const span = document.createElement('span');
@@ -222,68 +224,14 @@ function insertFinancialTable() {
                     </tr>
                 </tfoot>
             </table>
-            <button class="finance-options-btn" title="Table Options">⚙️</button>
         </div>`;
     document.execCommand('insertHTML', false, financeHtml);
-    const wrapper = noteContent.querySelector('.finance-table-wrapper:last-child');
-    setupFinanceOptions(wrapper);
     restoreCursorPosition(range);
-}
-
-function setupFinanceOptions(wrapper) {
-    const optionsBtn = wrapper.querySelector('.finance-options-btn');
-    let popup = wrapper.querySelector('.finance-popup');
-
-    if (!popup) {
-        popup = document.createElement('div');
-        popup.className = 'finance-popup';
-        popup.innerHTML = `
-            <button class="finance-btn add-income" title="Add Income">+</button>
-            <button class="finance-btn subtract-expense" title="Add Expense">-</button>
-            <button class="finance-btn multiply" title="Multiply">*</button>
-            <button class="finance-btn divide" title="Divide">/</button>
-            <button class="finance-btn calculate" title="Calculate Total">=</button>
-            <button class="finance-btn delete-last-row" title="Delete Last Row">🗑️</button>
-        `;
-        wrapper.appendChild(popup);
-
-        const buttons = {
-            'add-income': () => addFinanceRow(wrapper, '+'),
-            'subtract-expense': () => addFinanceRow(wrapper, '-'),
-            'multiply': () => addFinanceRow(wrapper, '*'),
-            'divide': () => addFinanceRow(wrapper, '/'),
-            'calculate': () => calculateTotal(wrapper),
-            'delete-last-row': () => deleteLastRow(wrapper)
-        };
-
-        for (const [className, handler] of Object.entries(buttons)) {
-            const btn = popup.querySelector(`.finance-btn.${className}`);
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                handler();
-                popup.classList.remove('active');
-            });
-        }
-    }
-
-    optionsBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const allPopups = document.querySelectorAll('.finance-popup');
-        allPopups.forEach(p => p.classList.remove('active'));
-        popup.classList.toggle('active');
-        const rect = optionsBtn.getBoundingClientRect();
-        popup.style.top = `${rect.bottom + window.scrollY}px`;
-        popup.style.left = `${rect.left}px`;
-    });
-
-    document.addEventListener('click', (e) => {
-        if (!wrapper.contains(e.target)) {
-            popup.classList.remove('active');
-        }
-    });
+    toggleFinanceButtons();
 }
 
 function addFinanceRow(wrapper, operation) {
+    if (!wrapper) return;
     const tbody = wrapper.querySelector('tbody');
     const newRow = document.createElement('tr');
     newRow.className = operation === '+' ? 'income' : operation === '-' ? 'expense' : operation === '*' ? 'multiply' : 'divide';
@@ -305,6 +253,7 @@ function addFinanceRow(wrapper, operation) {
 }
 
 function deleteLastRow(wrapper) {
+    if (!wrapper) return;
     const table = wrapper.querySelector('.finance-table');
     const tbody = table.querySelector('tbody');
     const rows = tbody.querySelectorAll('tr');
@@ -337,6 +286,7 @@ function handleTableClick(event) {
     }
 
     toggleTableButtons();
+    toggleFinanceButtons();
 }
 
 function checkAmountInput(event) {
@@ -359,6 +309,7 @@ function checkAmountInput(event) {
 }
 
 function calculateTotal(wrapper) {
+    if (!wrapper) return;
     const table = wrapper.querySelector('.finance-table');
     const mode = table.dataset.mode;
     const rows = table.querySelectorAll('tbody tr');
@@ -457,6 +408,16 @@ function getSelectedTable() {
     return null;
 }
 
+function getSelectedFinanceTableWrapper() {
+    const selection = window.getSelection();
+    if (selection.rangeCount > 0) {
+        let node = selection.getRangeAt(0).commonAncestorContainer;
+        while (node && !node.classList?.contains('finance-table-wrapper')) node = node.parentElement;
+        return node;
+    }
+    return null;
+}
+
 function getSelectedRowIndex() {
     const table = getSelectedTable();
     if (table) {
@@ -487,6 +448,18 @@ function toggleTableButtons() {
     document.getElementById('addColBtn').style.display = isRegularTable ? 'inline-block' : 'none';
     document.getElementById('deleteRowBtn').style.display = isRegularTable ? 'inline-block' : 'none';
     document.getElementById('deleteColBtn').style.display = isRegularTable ? 'inline-block' : 'none';
+}
+
+function toggleFinanceButtons() {
+    const wrapper = getSelectedFinanceTableWrapper();
+    const isFinanceTable = !!wrapper;
+    
+    document.getElementById('addIncomeBtn').style.display = isFinanceTable ? 'inline-block' : 'none';
+    document.getElementById('subtractExpenseBtn').style.display = isFinanceTable ? 'inline-block' : 'none';
+    document.getElementById('multiplyBtn').style.display = isFinanceTable ? 'inline-block' : 'none';
+    document.getElementById('divideBtn').style.display = isFinanceTable ? 'inline-block' : 'none';
+    document.getElementById('calculateBtn').style.display = isFinanceTable ? 'inline-block' : 'none';
+    document.getElementById('deleteLastRowBtn').style.display = isFinanceTable ? 'inline-block' : 'none';
 }
 
 function copyFormattedText() {
@@ -550,7 +523,6 @@ function highlightSearchTerms(element, query) {
     });
 }
 
-// Handle keyboard shortcuts
 document.addEventListener('keydown', (e) => {
     if (e.ctrlKey) {
         switch (e.key) {
