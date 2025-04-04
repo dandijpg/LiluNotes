@@ -100,14 +100,28 @@ function markAsDone() {
     const noteContent = document.getElementById('noteContent');
     const range = saveCursorPosition(noteContent);
     if (range) {
-        const selectedText = range.toString();
-        if (selectedText) {
-            const span = document.createElement('span');
-            span.className = 'done';
-            span.textContent = selectedText;
-            range.deleteContents();
-            range.insertNode(span);
-            restoreCursorPosition(range);
+        const selectedNode = range.commonAncestorContainer;
+        const parentElement = selectedNode.nodeType === 3 ? selectedNode.parentElement : selectedNode;
+
+        if (parentElement.classList && parentElement.classList.contains('done')) {
+            // Jika sudah ditandai selesai, hapus tanda
+            const textNode = document.createTextNode(parentElement.textContent);
+            parentElement.parentNode.replaceChild(textNode, parentElement);
+            const newRange = document.createRange();
+            newRange.setStart(textNode, 0);
+            newRange.setEnd(textNode, textNode.length);
+            restoreCursorPosition(newRange);
+        } else {
+            // Jika belum ditandai, tambahkan tanda selesai
+            const selectedText = range.toString();
+            if (selectedText) {
+                const span = document.createElement('span');
+                span.className = 'done';
+                span.textContent = selectedText;
+                range.deleteContents();
+                range.insertNode(span);
+                restoreCursorPosition(range);
+            }
         }
     }
 }
@@ -208,40 +222,65 @@ function insertFinancialTable() {
                     </tr>
                 </tfoot>
             </table>
-            <div class="finance-btn-group" contenteditable="false">
-                <button class="finance-btn add-income" title="Add Income">+</button>
-                <button class="finance-btn subtract-expense" title="Add Expense">-</button>
-                <button class="finance-btn multiply" title="Multiply">*</button>
-                <button class="finance-btn divide" title="Divide">/</button>
-                <button class="finance-btn calculate" title="Calculate Total">=</button>
-                <button class="finance-btn delete-last-row" title="Delete Last Row">🗑️</button>
-            </div>
+            <button class="finance-options-btn" title="Table Options">⚙️</button>
         </div>`;
     document.execCommand('insertHTML', false, financeHtml);
     const wrapper = noteContent.querySelector('.finance-table-wrapper:last-child');
-    setupFinanceButtons(wrapper);
+    setupFinanceOptions(wrapper);
     restoreCursorPosition(range);
 }
 
-function setupFinanceButtons(wrapper) {
-    const buttons = {
-        'add-income': () => addFinanceRow(wrapper, '+'),
-        'subtract-expense': () => addFinanceRow(wrapper, '-'),
-        'multiply': () => addFinanceRow(wrapper, '*'),
-        'divide': () => addFinanceRow(wrapper, '/'),
-        'calculate': () => calculateTotal(wrapper),
-        'delete-last-row': () => deleteLastRow(wrapper)
-    };
+function setupFinanceOptions(wrapper) {
+    const optionsBtn = wrapper.querySelector('.finance-options-btn');
+    let popup = wrapper.querySelector('.finance-popup');
 
-    for (const [className, handler] of Object.entries(buttons)) {
-        const btn = wrapper.querySelector(`.finance-btn.${className}`);
-        if (btn) {
-            btn.removeEventListener('click', handler);
-            btn.addEventListener('click', handler);
+    if (!popup) {
+        popup = document.createElement('div');
+        popup.className = 'finance-popup';
+        popup.innerHTML = `
+            <button class="finance-btn add-income" title="Add Income">+</button>
+            <button class="finance-btn subtract-expense" title="Add Expense">-</button>
+            <button class="finance-btn multiply" title="Multiply">*</button>
+            <button class="finance-btn divide" title="Divide">/</button>
+            <button class="finance-btn calculate" title="Calculate Total">=</button>
+            <button class="finance-btn delete-last-row" title="Delete Last Row">🗑️</button>
+        `;
+        wrapper.appendChild(popup);
+
+        const buttons = {
+            'add-income': () => addFinanceRow(wrapper, '+'),
+            'subtract-expense': () => addFinanceRow(wrapper, '-'),
+            'multiply': () => addFinanceRow(wrapper, '*'),
+            'divide': () => addFinanceRow(wrapper, '/'),
+            'calculate': () => calculateTotal(wrapper),
+            'delete-last-row': () => deleteLastRow(wrapper)
+        };
+
+        for (const [className, handler] of Object.entries(buttons)) {
+            const btn = popup.querySelector(`.finance-btn.${className}`);
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                handler();
+                popup.classList.remove('active');
+            });
         }
     }
 
-    wrapper.querySelector('.amount')?.focus();
+    optionsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const allPopups = document.querySelectorAll('.finance-popup');
+        allPopups.forEach(p => p.classList.remove('active'));
+        popup.classList.toggle('active');
+        const rect = optionsBtn.getBoundingClientRect();
+        popup.style.top = `${rect.bottom + window.scrollY}px`;
+        popup.style.left = `${rect.left}px`;
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!wrapper.contains(e.target)) {
+            popup.classList.remove('active');
+        }
+    });
 }
 
 function addFinanceRow(wrapper, operation) {
@@ -283,17 +322,8 @@ function handleTableClick(event) {
     const noteContent = document.getElementById('noteContent');
     const wrapper = event.target.closest('.finance-table-wrapper');
     const table = event.target.closest('.regular-table') || event.target.closest('.finance-table');
-    const allFinanceWrappers = noteContent.querySelectorAll('.finance-table-wrapper');
 
-    allFinanceWrappers.forEach(w => {
-        const btnGroup = w.querySelector('.finance-btn-group');
-        if (btnGroup) btnGroup.style.display = 'none';
-    });
-
-    if (wrapper) {
-        const btnGroup = wrapper.querySelector('.finance-btn-group') || wrapper.appendChild(createFinanceBtnGroup(wrapper));
-        btnGroup.style.display = 'flex';
-    } else if (!table) {
+    if (!wrapper && !table) {
         const range = document.createRange();
         const selection = window.getSelection();
         const target = event.target;
@@ -307,22 +337,6 @@ function handleTableClick(event) {
     }
 
     toggleTableButtons();
-}
-
-function createFinanceBtnGroup(wrapper) {
-    const btnGroup = document.createElement('div');
-    btnGroup.className = 'finance-btn-group';
-    btnGroup.setAttribute('contenteditable', 'false');
-    btnGroup.innerHTML = `
-        <button class="finance-btn add-income" title="Add Income">+</button>
-        <button class="finance-btn subtract-expense" title="Add Expense">-</button>
-        <button class="finance-btn multiply" title="Multiply">*</button>
-        <button class="finance-btn divide" title="Divide">/</button>
-        <button class="finance-btn calculate" title="Calculate Total">=</button>
-        <button class="finance-btn delete-last-row" title="Delete Last Row">🗑️</button>
-    `;
-    setupFinanceButtons(wrapper);
-    return btnGroup;
 }
 
 function checkAmountInput(event) {
@@ -471,24 +485,20 @@ function toggleTableButtons() {
     
     document.getElementById('addRowBtn').style.display = isRegularTable ? 'inline-block' : 'none';
     document.getElementById('addColBtn').style.display = isRegularTable ? 'inline-block' : 'none';
-    document.getElementById('deleteRowBtn').style.display = isRegularTable && table.rows.length > 1 ? 'inline-block' : 'none';
-    document.getElementById('deleteColBtn').style.display = isRegularTable && table.rows[0].cells.length > 1 ? 'inline-block' : 'none';
+    document.getElementById('deleteRowBtn').style.display = isRegularTable ? 'inline-block' : 'none';
+    document.getElementById('deleteColBtn').style.display = isRegularTable ? 'inline-block' : 'none';
 }
 
 function copyFormattedText() {
     const noteContent = document.getElementById('noteContent');
-    const range = saveCursorPosition(noteContent);
-    if (range) {
-        const selectedText = range.cloneContents();
-        const span = document.createElement('span');
-        span.className = 'copyable';
-        span.appendChild(selectedText);
-        range.deleteContents();
-        range.insertNode(span);
-        restoreCursorPosition(range);
-    } else {
-        alert('Please select some text to make copyable.');
-    }
+    const range = document.createRange();
+    range.selectNodeContents(noteContent);
+    const selection = window.getSelection();
+    selection.removeAllRanges();
+    selection.addRange(range);
+    document.execCommand('copy');
+    selection.removeAllRanges();
+    alert('Formatted text copied to clipboard!');
 }
 
 function saveNote() {
@@ -496,8 +506,8 @@ function saveNote() {
     const noteContent = document.getElementById('noteContent').innerHTML;
     const category = document.getElementById('categorySelect').value;
 
-    if (!noteTitle || !noteContent) {
-        alert('Title and content cannot be empty!');
+    if (!noteTitle) {
+        alert('Please enter a title for your note.');
         return;
     }
 
@@ -506,12 +516,14 @@ function saveNote() {
         content: noteContent,
         category: category,
         timestamp: new Date().toISOString(),
-        pinned: noteId !== null ? (notes[noteId]?.pinned || false) : false,
-        pinnedTimestamp: noteId !== null ? (notes[noteId]?.pinnedTimestamp || null) : null
+        pinned: noteId !== null ? notes[noteId]?.pinned || false : false
     };
 
-    if (noteId !== null) notes[noteId] = note;
-    else notes.push(note);
+    if (noteId !== null) {
+        notes[noteId] = note;
+    } else {
+        notes.push(note);
+    }
 
     localStorage.setItem('notes', JSON.stringify(notes));
     window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`;
@@ -519,21 +531,33 @@ function saveNote() {
 
 function highlightSearchTerms(element, query) {
     if (!query) return;
-    const terms = query.split(/\s+/).filter(term => term.length > 0);
+
+    const regex = new RegExp(`(${query.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&')})`, 'gi');
     const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
-    const nodes = [];
-    let node;
+    const nodesToReplace = [];
 
-    while ((node = walker.nextNode())) nodes.push(node);
+    while (walker.nextNode()) {
+        const node = walker.currentNode;
+        if (regex.test(node.nodeValue) && !node.parentElement.closest('th, td.total')) {
+            nodesToReplace.push(node);
+        }
+    }
 
-    nodes.forEach(node => {
-        terms.forEach(term => {
-            const regex = new RegExp(`(${term})`, 'gi');
-            if (regex.test(node.textContent)) {
-                const span = document.createElement('span');
-                span.innerHTML = node.textContent.replace(regex, '<span class="highlight">$1</span>');
-                node.parentNode.replaceChild(span, node);
-            }
-        });
+    nodesToReplace.forEach(node => {
+        const span = document.createElement('span');
+        span.innerHTML = node.nodeValue.replace(regex, '<mark>$1</mark>');
+        node.parentNode.replaceChild(span, node);
     });
 }
+
+// Handle keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey) {
+        switch (e.key) {
+            case 'b': e.preventDefault(); document.getElementById('boldBtn').click(); break;
+            case 'i': e.preventDefault(); document.getElementById('italicBtn').click(); break;
+            case 'u': e.preventDefault(); document.getElementById('underlineBtn').click(); break;
+            case 's': e.preventDefault(); saveNote(); break;
+        }
+    }
+});
