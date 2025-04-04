@@ -66,8 +66,7 @@ function setupEventListeners() {
     document.getElementById('copyFormattedBtn').addEventListener('click', copyFormattedText);
     document.getElementById('saveBtn').addEventListener('click', saveNote);
     document.getElementById('exitBtn').addEventListener('click', () => window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`);
-    document.getElementById('noteContent').addEventListener('click', toggleTableButtons);
-    document.getElementById('noteContent').addEventListener('keyup', toggleTableButtons);
+    document.getElementById('noteContent').addEventListener('click', handleTableClick);
     document.getElementById('noteContent').addEventListener('input', checkAmountInput);
     document.getElementById('noteContent').addEventListener('focusout', updateFinancialTable);
 }
@@ -191,15 +190,12 @@ function insertFinancialTable() {
     document.execCommand('insertHTML', false, financeHtml);
 
     const wrapper = document.querySelector('.finance-table-wrapper:last-child');
-    const table = wrapper.querySelector('.finance-table');
     wrapper.querySelector('.add-income').addEventListener('click', () => addFinanceRow(wrapper, '+'));
     wrapper.querySelector('.subtract-expense').addEventListener('click', () => addFinanceRow(wrapper, '-'));
     wrapper.querySelector('.multiply').addEventListener('click', () => addFinanceRow(wrapper, '*'));
     wrapper.querySelector('.divide').addEventListener('click', () => addFinanceRow(wrapper, '/'));
     wrapper.querySelector('.calculate').addEventListener('click', () => calculateTotal(wrapper));
     wrapper.querySelector('.delete-last-row').addEventListener('click', () => deleteLastRow(wrapper));
-    table.addEventListener('focusin', () => toggleFinanceButtons(wrapper, true));
-    table.addEventListener('focusout', () => toggleFinanceButtons(wrapper, false));
     wrapper.querySelector('.amount').focus();
 }
 
@@ -222,7 +218,6 @@ function addFinanceRow(wrapper, operation) {
     }, 10);
 
     newRow.querySelector('.amount').focus();
-    toggleFinanceButtons(wrapper, true);
 }
 
 function deleteLastRow(wrapper) {
@@ -234,9 +229,26 @@ function deleteLastRow(wrapper) {
     }
 }
 
-function toggleFinanceButtons(wrapper, show) {
-    const btnGroup = wrapper.querySelector('.finance-btn-group');
-    btnGroup.style.display = show ? 'flex' : 'none';
+function handleTableClick(event) {
+    const wrapper = event.target.closest('.finance-table-wrapper');
+    const allWrappers = document.querySelectorAll('.finance-table-wrapper');
+    
+    allWrappers.forEach(w => {
+        const btnGroup = w.querySelector('.finance-btn-group');
+        if (w === wrapper) {
+            btnGroup.style.display = 'flex'; // Tampilkan tombol jika tabel diklik
+        } else {
+            btnGroup.style.display = 'none'; // Sembunyikan tombol untuk tabel lain
+        }
+    });
+
+    if (!wrapper) {
+        allWrappers.forEach(w => {
+            w.querySelector('.finance-btn-group').style.display = 'none'; // Sembunyikan semua tombol jika klik di luar tabel
+        });
+    }
+
+    toggleTableButtons();
 }
 
 function checkAmountInput(event) {
