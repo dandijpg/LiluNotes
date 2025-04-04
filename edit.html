@@ -3,109 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Note - TechNotes</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Edit Note - Simple Notes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="edit-container">
         <div class="toolbar">
-            <!-- Kelompok Format Teks -->
             <div class="toolbar-group">
-                <button class="tool-btn" id="boldBtn" title="Bold (Ctrl+B)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12h9a4 4 0 0 1 0 8H6V4h7a5 5 0 0 1 0 10"/></svg>
-                </button>
-                <button class="tool-btn" id="italicBtn" title="Italic (Ctrl+I)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 4h-9m4 16H5M15 4L9 20"/></svg>
-                </button>
-                <button class="tool-btn" id="underlineBtn" title="Underline (Ctrl+U)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4v6a6 6 0 0 0 12 0V4M4 20h16"/></svg>
-                </button>
-                <button class="tool-btn" id="highlightBtn" title="Highlight">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3 8-8"/><path d="M17 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h7"/></svg>
-                </button>
-                <button class="tool-btn" id="linkBtn" title="Insert Link">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-                </button>
+                <button id="boldBtn" class="tool-btn" title="Bold"><i class="fas fa-bold"></i></button>
+                <button id="italicBtn" class="tool-btn" title="Italic"><i class="fas fa-italic"></i></button>
+                <button id="underlineBtn" class="tool-btn" title="Underline"><i class="fas fa-underline"></i></button>
             </div>
-            <!-- Kelompok Daftar -->
             <div class="toolbar-group">
-                <button class="tool-btn" id="numberedListBtn" title="Numbered List">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17h10"/><path d="M10 12h10"/><path d="M10 7h10"/><path d="M4 6v2"/><path d="M5 7H3"/><path d="M5 12v5H3"/><path d="M4 13h2"/></svg>
-                </button>
-                <button class="tool-btn" id="bulletListBtn" title="Bullet List">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h12"/><path d="M9 12h12"/><path d="M9 6h12"/><circle cx="4" cy="18" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="6" r="1"/></svg>
-                </button>
-                <button class="tool-btn" id="arrowListBtn" title="Arrow List">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5h9"/><path d="M12 12h9"/><path d="M12 19h9"/><path d="M6 6 2 9l4 3"/><path d="M6 13 2 16l4 3"/></svg>
-                </button>
+                <button id="highlightBtn" class="tool-btn" title="Highlight"><i class="fas fa-highlighter"></i></button>
+                <button id="linkBtn" class="tool-btn" title="Insert Link"><i class="fas fa-link"></i></button>
+                <button id="copyFormattedBtn" class="tool-btn" title="Copy Formatted"><i class="fas fa-copy"></i></button>
             </div>
-            <!-- Kelompok Penjajaran -->
             <div class="toolbar-group">
-                <button class="tool-btn" id="alignLeftBtn" title="Align Left">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18"/><path d="M3 12h12"/><path d="M3 17h18"/></svg>
-                </button>
-                <button class="tool-btn" id="alignCenterBtn" title="Align Center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18"/><path d="M7 12h10"/><path d="M3 17h18"/></svg>
-                </button>
-                <button class="tool-btn" id="alignRightBtn" title="Align Right">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18"/><path d="M9 12h12"/><path d="M3 17h18"/></svg>
-                </button>
+                <button id="numberedListBtn" class="tool-btn" title="Numbered List"><i class="fas fa-list-ol"></i></button>
+                <button id="bulletListBtn" class="tool-btn" title="Bullet List"><i class="fas fa-list-ul"></i></button>
+                <button id="arrowListBtn" class="tool-btn" title="Arrow List"><i class="fas fa-arrow-right"></i></button>
             </div>
-            <!-- Kelompok Float -->
             <div class="toolbar-group">
-                <button class="tool-btn" id="floatLeftBtn" title="Float Left">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="3" y="3" rx="2"/><path d="M17 22h4"/></svg>
-                </button>
-                <button class="tool-btn" id="floatCenterBtn" title="Float Center">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="5" y="3" rx="2"/><path d="M3 22h18"/></svg>
-                </button>
-                <button class="tool-btn" id="floatRightBtn" title="Float Right">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="7" y="3" rx="2"/><path d="M3 22h4"/></svg>
-                </button>
+                <button id="alignLeftBtn" class="tool-btn" title="Align Left"><i class="fas fa-align-left"></i></button>
+                <button id="alignCenterBtn" class="tool-btn" title="Align Center"><i class="fas fa-align-center"></i></button>
+                <button id="alignRightBtn" class="tool-btn" title="Align Right"><i class="fas fa-align-right"></i></button>
             </div>
-            <!-- Kelompok Tabel -->
             <div class="toolbar-group">
-                <button class="tool-btn" id="tableBtn" title="Insert Table">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg>
-                </button>
-                <button class="table-tool-btn add-row-btn" id="addRowBtn" title="Add Row">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-                </button>
-                <button class="table-tool-btn add-col-btn" id="addColBtn" title="Add Column">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-                </button>
-                <button class="table-tool-btn delete-row-btn" id="deleteRowBtn" title="Delete Row">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>
-                </button>
-                <button class="table-tool-btn delete-col-btn" id="deleteColBtn" title="Delete Column">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/></svg>
-                </button>
+                <button id="floatLeftBtn" class="tool-btn" title="Float Left"><i class="fas fa-arrow-left"></i></button>
+                <button id="floatCenterBtn" class="tool-btn" title="Float Center"><i class="fas fa-arrows-alt-h"></i></button>
+                <button id="floatRightBtn" class="tool-btn" title="Float Right"><i class="fas fa-arrow-right"></i></button>
             </div>
-            <!-- Kelompok Kalkulator -->
             <div class="toolbar-group">
-                <button class="tool-btn" id="calcBtn" title="Insert Calculator">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 15h6"/><path d="M12 12v6"/></svg>
-                </button>
+                <button id="tableBtn" class="tool-btn" title="Insert Table"><i class="fas fa-table"></i></button>
+                <button id="addRowBtn" class="table-tool-btn add-row-btn" title="Add Row"><i class="fas fa-plus"></i> Row</button>
+                <button id="addColBtn" class="table-tool-btn add-col-btn" title="Add Column"><i class="fas fa-plus"></i> Col</button>
+                <button id="deleteRowBtn" class="table-tool-btn delete-row-btn" title="Delete Row"><i class="fas fa-minus"></i> Row</button>
+                <button id="deleteColBtn" class="table-tool-btn delete-col-btn" title="Delete Column"><i class="fas fa-minus"></i> Col</button>
             </div>
-            <!-- Tombol Utilitas -->
             <div class="toolbar-group">
-                <button class="tool-btn" id="copyFormattedBtn" title="Copy Formatted Text">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-                </button>
-                <button class="edit-btn" id="saveBtn" title="Save Note">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 14h-5"/><path d="M12 18v-4"/></svg>
-                    Save
-                </button>
-                <button class="exit-btn" id="exitBtn" title="Exit without Saving">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
-                    Exit
-                </button>
+                <button id="calcBtn" class="tool-btn" title="Insert CalcCard"><i class="fas fa-calculator"></i></button>
+            </div>
+            <div class="toolbar-group">
+                <button id="exitBtn" class="exit-btn" title="Exit"><i class="fas fa-times"></i></button>
             </div>
         </div>
-        <select id="categorySelect" class="category-select"></select>
-        <input type="text" id="noteTitle" class="note-title" placeholder="Note Title">
+        <select id="categorySelect" class="category-select">
+            <!-- Categories will be populated dynamically -->
+        </select>
+        <input type="text" id="noteTitle" class="note-title" placeholder="Enter note title...">
         <div id="noteContent" class="note-content" contenteditable="true"></div>
+        <button id="saveBtn" class="save-btn">Save Note</button>
     </div>
     <script src="edit.js"></script>
 </body>
