@@ -45,7 +45,7 @@ function setupEventListeners() {
     document.getElementById('boldBtn').addEventListener('click', () => document.execCommand('bold', false, null));
     document.getElementById('italicBtn').addEventListener('click', () => document.execCommand('italic', false, null));
     document.getElementById('underlineBtn').addEventListener('click', () => document.execCommand('underline', false, null));
-    document.getElementById('highlightBtn').addEventListener('click', toggleHighlight);
+    document.getElementById('markDoneBtn').addEventListener('click', markAsDone); // Ganti highlightBtn menjadi markDoneBtn
     document.getElementById('linkBtn').addEventListener('click', insertLink);
     document.getElementById('numberedListBtn').addEventListener('click', () => document.execCommand('insertOrderedList', false, null));
     document.getElementById('bulletListBtn').addEventListener('click', () => document.execCommand('insertUnorderedList', false, null));
@@ -71,14 +71,14 @@ function setupEventListeners() {
     document.getElementById('noteContent').addEventListener('focusout', updateFinancialTable);
 }
 
-function toggleHighlight() {
+function markAsDone() { // Ganti toggleHighlight menjadi markAsDone
     const selection = window.getSelection();
     if (selection.rangeCount > 0) {
         const range = selection.getRangeAt(0);
         const selectedText = range.toString();
         if (selectedText) {
             const span = document.createElement('span');
-            span.className = 'highlight';
+            span.className = 'done';
             span.textContent = selectedText;
             range.deleteContents();
             range.insertNode(span);
