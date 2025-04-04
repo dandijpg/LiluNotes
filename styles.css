@@ -821,26 +821,31 @@ button {
     max-width: 100%;
 }
 
-.note-content table, .note-content-view table {
+.regular-table {
     border-collapse: collapse;
     margin: 0;
     white-space: nowrap;
     width: auto;
 }
 
-.note-content th, .note-content td, .note-content-view th, .note-content-view td {
+.note-content .regular-table th,
+.note-content .regular-table td,
+.note-content-view .regular-table th,
+.note-content-view .regular-table td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
     min-width: 100px;
 }
 
-.note-content th, .note-content-view th {
+.note-content .regular-table th,
+.note-content-view .regular-table th {
     background-color: #f5f7fa;
     font-weight: 500;
 }
 
-.note-content table tr:nth-child(even), .note-content-view table tr:nth-child(even) {
+.note-content .regular-table tr:nth-child(even),
+.note-content-view .regular-table tr:nth-child(even) {
     background-color: #fafafa;
 }
 
