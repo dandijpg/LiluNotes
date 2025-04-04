@@ -1299,3 +1299,90 @@ button {
         width: 100%;
     }
 }
+
+/* Tambahkan di akhir file styles.css */
+
+/* Finance Table Tools */
+.finance-tool-btn {
+    padding: 8px;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    color: #4b5563;
+    font-weight: 500;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+}
+
+.finance-tool-btn.add-income-btn {
+    background: #34a853;
+    border-color: #34a853;
+    color: #fff;
+}
+
+.finance-tool-btn.add-income-btn:hover {
+    background: #2f9e44;
+    border-color: #2f9e44;
+}
+
+.finance-tool-btn.subtract-expense-btn {
+    background: #ea4335;
+    border-color: #ea4335;
+    color: #fff;
+}
+
+.finance-tool-btn.subtract-expense-btn:hover {
+    background: #db4437;
+    border-color: #db4437;
+}
+
+.finance-tool-btn.multiply-btn {
+    background: #fbbc05;
+    border-color: #fbbc05;
+    color: #fff;
+}
+
+.finance-tool-btn.multiply-btn:hover {
+    background: #f4b400;
+    border-color: #f4b400;
+}
+
+.finance-tool-btn.divide-btn {
+    background: #4285f4;
+    border-color: #4285f4;
+    color: #fff;
+}
+
+.finance-tool-btn.divide-btn:hover {
+    background: #357abd;
+    border-color: #357abd;
+}
+
+.finance-tool-btn.calculate-btn {
+    background: #6b7280;
+    border-color: #6b7280;
+    color: #fff;
+}
+
+.finance-tool-btn.calculate-btn:hover {
+    background: #4b5563;
+    border-color: #4b5563;
+}
+
+.finance-tool-btn.delete-last-row-btn {
+    background: #ea4335;
+    border-color: #ea4335;
+    color: #fff;
+}
+
+.finance-tool-btn.delete-last-row-btn:hover {
+    background: #db4437;
+    border-color: #db4437;
+}
