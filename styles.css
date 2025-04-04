@@ -886,6 +886,11 @@ button {
     color: #ea4335;
 }
 
+.finance-table .neutral {
+    background: #f9fbfc;
+    color: #555;
+}
+
 .finance-table .amount {
     text-align: right;
 }
@@ -938,15 +943,24 @@ button {
     box-shadow: 0 2px 5px rgba(234, 67, 53, 0.3);
 }
 
-.finance-btn.multiply, .finance-btn.divide {
+.finance-btn.multiply {
     background: #fbbc05;
     color: #fff;
-    cursor: not-allowed;
 }
 
-.finance-btn[disabled]:hover {
-    background: #fbbc05;
-    box-shadow: none;
+.finance-btn.multiply:hover {
+    background: #f4b400;
+    box-shadow: 0 2px 5px rgba(251, 188, 5, 0.3);
+}
+
+.finance-btn.divide {
+    background: #4285f4;
+    color: #fff;
+}
+
+.finance-btn.divide:hover {
+    background: #357abd;
+    box-shadow: 0 2px 5px rgba(66, 133, 244, 0.3);
 }
 
 /* Media Queries untuk Responsivitas */
