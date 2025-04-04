@@ -644,7 +644,7 @@ button {
     box-shadow: 0 3px 10px rgba(234, 67, 53, 0.3);
 }
 
-.category-select {
+.category-select, .calc-mode-select {
     padding: 8px 15px;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -657,10 +657,15 @@ button {
     transition: all 0.3s ease-in-out;
 }
 
-.category-select:focus {
+.category-select:focus, .calc-mode-select:focus {
     border-color: #4285f4;
     box-shadow: 0 0 5px rgba(66, 133, 244, 0.3);
     outline: none;
+}
+
+.calc-mode-select {
+    width: 120px;
+    margin: 0;
 }
 
 .note-title {
@@ -862,12 +867,23 @@ button {
     font-weight: 500;
     padding: 8px;
     border-bottom: 1px solid #e8ecef;
+    cursor: not-allowed;
 }
 
 .finance-table td {
     padding: 8px;
     border-bottom: 1px solid #f5f7fa;
     color: #333;
+}
+
+.finance-table .income {
+    background: #e6ffe6;
+    color: #34a853;
+}
+
+.finance-table .expense {
+    background: #ffe6e6;
+    color: #ea4335;
 }
 
 .finance-table .amount {
@@ -879,27 +895,58 @@ button {
     font-weight: 600;
     color: #ea4335;
     border-top: 1px dashed #e8ecef;
+    cursor: not-allowed;
 }
 
 .finance-table tfoot .total {
     text-align: right;
 }
 
-.add-finance-row-btn {
+.finance-btn-group {
+    display: flex;
+    gap: 5px;
     margin-top: 5px;
+}
+
+.finance-btn {
     padding: 5px 10px;
-    background: #34a853;
-    color: #fff;
     border: none;
     border-radius: 5px;
-    font-size: 0.8em;
+    font-size: 0.9em;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.add-finance-row-btn:hover {
+.finance-btn.add-income {
+    background: #34a853;
+    color: #fff;
+}
+
+.finance-btn.add-income:hover {
     background: #2f9e44;
     box-shadow: 0 2px 5px rgba(52, 168, 83, 0.3);
+}
+
+.finance-btn.subtract-expense {
+    background: #ea4335;
+    color: #fff;
+}
+
+.finance-btn.subtract-expense:hover {
+    background: #db4437;
+    box-shadow: 0 2px 5px rgba(234, 67, 53, 0.3);
+}
+
+.finance-btn.multiply, .finance-btn.divide {
+    background: #fbbc05;
+    color: #fff;
+    cursor: not-allowed;
+}
+
+.finance-btn[disabled]:hover {
+    background: #fbbc05;
+    box-shadow: none;
 }
 
 /* Media Queries untuk Responsivitas */
@@ -1096,7 +1143,7 @@ button {
         min-width: 32px;
     }
 
-    .category-select {
+    .category-select, .calc-mode-select {
         width: 100%;
     }
 
@@ -1112,5 +1159,9 @@ button {
 
     .finance-table {
         width: 100%;
+    }
+
+    .finance-btn-group {
+        flex-wrap: wrap;
     }
 }
