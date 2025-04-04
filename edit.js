@@ -68,7 +68,8 @@ function setupEventListeners() {
     document.getElementById('exitBtn').addEventListener('click', () => window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`);
     document.getElementById('noteContent').addEventListener('click', toggleTableButtons);
     document.getElementById('noteContent').addEventListener('keyup', toggleTableButtons);
-    document.getElementById('noteContent').addEventListener('focusout', updateFinancialTable); // Hanya update saat blur
+    document.getElementById('noteContent').addEventListener('input', updateFinancialTableRealTime);
+    document.getElementById('noteContent').addEventListener('focusout', updateFinancialTable);
 }
 
 function toggleHighlight() {
@@ -168,7 +169,7 @@ function insertFinancialTable() {
                 <tbody>
                     <tr class="income" data-operation="+">
                         <td contenteditable="true"></td>
-                        <td contenteditable="true" class="amount">0</td>
+                        <td contenteditable="true" class="amount" placeholder="0"></td>
                     </tr>
                 </tbody>
                 <tfoot>
@@ -178,20 +179,25 @@ function insertFinancialTable() {
                     </tr>
                 </tfoot>
             </table>
-            <div class="finance-btn-group">
+            <div class="finance-btn-group" contenteditable="false">
                 <button class="finance-btn add-income" title="Add Income">+</button>
                 <button class="finance-btn subtract-expense" title="Add Expense">-</button>
                 <button class="finance-btn multiply" title="Multiply">*</button>
                 <button class="finance-btn divide" title="Divide">/</button>
+                <button class="finance-btn delete-last-row" title="Delete Last Row">🗑️</button>
             </div>
         </div>`;
     document.execCommand('insertHTML', false, financeHtml);
 
     const wrapper = document.querySelector('.finance-table-wrapper:last-child');
+    const table = wrapper.querySelector('.finance-table');
     wrapper.querySelector('.add-income').addEventListener('click', () => addFinanceRow(wrapper, '+'));
     wrapper.querySelector('.subtract-expense').addEventListener('click', () => addFinanceRow(wrapper, '-'));
     wrapper.querySelector('.multiply').addEventListener('click', () => addFinanceRow(wrapper, '*'));
     wrapper.querySelector('.divide').addEventListener('click', () => addFinanceRow(wrapper, '/'));
+    wrapper.querySelector('.delete-last-row').addEventListener('click', () => deleteLastRow(wrapper));
+    table.addEventListener('focusin', () => toggleFinanceButtons(wrapper, true));
+    table.addEventListener('focusout', () => toggleFinanceButtons(wrapper, false));
     wrapper.querySelector('.amount').focus();
 }
 
@@ -204,7 +210,7 @@ function addFinanceRow(wrapper, operation) {
     newRow.style.transform = 'translateY(-10px)';
     newRow.innerHTML = `
         <td contenteditable="true"></td>
-        <td contenteditable="true" class="amount">0</td>`;
+        <td contenteditable="true" class="amount" placeholder="0"></td>`;
     tbody.appendChild(newRow);
 
     // Animasi smooth
@@ -215,6 +221,35 @@ function addFinanceRow(wrapper, operation) {
     }, 10);
 
     newRow.querySelector('.amount').focus();
+    toggleFinanceButtons(wrapper, true);
+}
+
+function deleteLastRow(wrapper) {
+    const tbody = wrapper.querySelector('tbody');
+    const rows = tbody.querySelectorAll('tr');
+    if (rows.length > 1) {
+        tbody.removeChild(rows[rows.length - 1]);
+        updateFinancialTable();
+    }
+}
+
+function toggleFinanceButtons(wrapper, enable) {
+    const buttons = wrapper.querySelectorAll('.finance-btn');
+    buttons.forEach(btn => btn.disabled = !enable);
+}
+
+function updateFinancialTableRealTime(event) {
+    const target = event.target;
+    if (target.classList.contains('amount')) {
+        const table = target.closest('.finance-table');
+        if (table) {
+            const rows = table.querySelectorAll('tbody tr');
+            const lastRow = rows[rows.length - 1];
+            if (target === lastRow.querySelector('.amount')) {
+                updateFinancialTable(event); // Update real-time hanya untuk baris terakhir
+            }
+        }
+    }
 }
 
 function updateFinancialTable(event) {
@@ -228,14 +263,13 @@ function updateFinancialTable(event) {
             const amountCell = row.querySelector('.amount');
             let value = amountCell.innerText.trim();
 
-            // Hanya format saat blur atau setelah selesai edit
             if (event && event.target === amountCell) {
-                value = value.replace(/[^\d.-]/g, ''); // Hapus semua kecuali angka dan tanda minus
+                value = value.replace(/[^\d.-]/g, '');
                 const num = parseFloat(value) || 0;
-                if (mode === 'financial') {
+                if (mode === 'financial' && value !== '') {
                     amountCell.innerText = formatCurrency(num);
-                } else {
-                    amountCell.innerText = num.toString();
+                } else if (value === '') {
+                    amountCell.innerText = '';
                 }
             } else {
                 value = value.replace(/[^\d.-]/g, '');
@@ -244,7 +278,7 @@ function updateFinancialTable(event) {
             const num = parseFloat(value) || 0;
             const operation = row.dataset.operation;
             if (index === 0) {
-                total = num; // Baris pertama adalah nilai awal
+                total = num;
             } else {
                 switch (operation) {
                     case '+':
@@ -257,7 +291,7 @@ function updateFinancialTable(event) {
                         total *= num;
                         break;
                     case '/':
-                        total = num !== 0 ? total / num : total; // Hindari pembagian dengan 0
+                        total = num !== 0 ? total / num : total;
                         break;
                 }
             }
@@ -300,7 +334,7 @@ function deleteRow() {
         const rowIndex = getSelectedRowIndex();
         if (rowIndex !== -1) {
             table.deleteRow(rowIndex);
-            updateFinancialTable(); // Perbarui total setelah menghapus baris
+            updateFinancialTable();
         }
     }
 }
