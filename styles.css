@@ -859,6 +859,7 @@ button {
     border: 1px solid #e8ecef;
     border-radius: 8px;
     overflow: hidden;
+    min-height: 150px; /* Tinggi minimum agar tabel terlihat jelas */
 }
 
 .finance-table th {
@@ -880,18 +881,23 @@ button {
 }
 
 .finance-table .income {
-    background: #e6ffe6;
+    background: #e6f4ea; /* Hijau soft sesuai tombol + */
     color: #34a853;
 }
 
 .finance-table .expense {
-    background: #ffe6e6;
+    background: #fce8e6; /* Merah soft sesuai tombol - */
     color: #ea4335;
 }
 
-.finance-table .neutral {
-    background: #f9fbfc;
-    color: #555;
+.finance-table .multiply {
+    background: #fef7e0; /* Kuning soft sesuai tombol * */
+    color: #fbbc05;
+}
+
+.finance-table .divide {
+    background: #e8f0fe; /* Biru soft sesuai tombol / */
+    color: #4285f4;
 }
 
 .finance-table .amount {
@@ -963,6 +969,15 @@ button {
 .finance-btn.divide:hover {
     background: #357abd;
     box-shadow: 0 2px 5px rgba(66, 133, 244, 0.3);
+}
+
+.finance-btn.calculate {
+    background: #666;
+}
+
+.finance-btn.calculate:hover {
+    background: #555;
+    box-shadow: 0 2px 5px rgba(102, 102, 102, 0.3);
 }
 
 .finance-btn.delete-last-row {
