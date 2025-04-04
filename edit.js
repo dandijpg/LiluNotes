@@ -45,7 +45,7 @@ function setupEventListeners() {
     document.getElementById('boldBtn').addEventListener('click', () => document.execCommand('bold', false, null));
     document.getElementById('italicBtn').addEventListener('click', () => document.execCommand('italic', false, null));
     document.getElementById('underlineBtn').addEventListener('click', () => document.execCommand('underline', false, null));
-    document.getElementById('markDoneBtn').addEventListener('click', markAsDone); // Ganti highlightBtn menjadi markDoneBtn
+    document.getElementById('markDoneBtn').addEventListener('click', markAsDone);
     document.getElementById('linkBtn').addEventListener('click', insertLink);
     document.getElementById('numberedListBtn').addEventListener('click', () => document.execCommand('insertOrderedList', false, null));
     document.getElementById('bulletListBtn').addEventListener('click', () => document.execCommand('insertUnorderedList', false, null));
@@ -71,7 +71,7 @@ function setupEventListeners() {
     document.getElementById('noteContent').addEventListener('focusout', updateFinancialTable);
 }
 
-function markAsDone() { // Ganti toggleHighlight menjadi markAsDone
+function markAsDone() {
     const selection = window.getSelection();
     if (selection.rangeCount > 0) {
         const range = selection.getRangeAt(0);
@@ -190,13 +190,28 @@ function insertFinancialTable() {
     document.execCommand('insertHTML', false, financeHtml);
 
     const wrapper = document.querySelector('.finance-table-wrapper:last-child');
-    wrapper.querySelector('.add-income').addEventListener('click', () => addFinanceRow(wrapper, '+'));
-    wrapper.querySelector('.subtract-expense').addEventListener('click', () => addFinanceRow(wrapper, '-'));
-    wrapper.querySelector('.multiply').addEventListener('click', () => addFinanceRow(wrapper, '*'));
-    wrapper.querySelector('.divide').addEventListener('click', () => addFinanceRow(wrapper, '/'));
-    wrapper.querySelector('.calculate').addEventListener('click', () => calculateTotal(wrapper));
-    wrapper.querySelector('.delete-last-row').addEventListener('click', () => deleteLastRow(wrapper));
-    wrapper.querySelector('.amount').focus();
+    setupFinanceButtons(wrapper); // Panggil fungsi untuk menambahkan event listener
+}
+
+function setupFinanceButtons(wrapper) {
+    const buttons = {
+        'add-income': () => addFinanceRow(wrapper, '+'),
+        'subtract-expense': () => addFinanceRow(wrapper, '-'),
+        'multiply': () => addFinanceRow(wrapper, '*'),
+        'divide': () => addFinanceRow(wrapper, '/'),
+        'calculate': () => calculateTotal(wrapper),
+        'delete-last-row': () => deleteLastRow(wrapper)
+    };
+
+    for (const [className, handler] of Object.entries(buttons)) {
+        const btn = wrapper.querySelector(`.finance-btn.${className}`);
+        if (btn) {
+            btn.removeEventListener('click', handler); // Hindari duplikat listener
+            btn.addEventListener('click', handler);
+        }
+    }
+
+    wrapper.querySelector('.amount')?.focus();
 }
 
 function addFinanceRow(wrapper, operation) {
@@ -240,24 +255,40 @@ function deleteLastRow(wrapper) {
 function handleTableClick(event) {
     const noteContent = document.getElementById('noteContent');
     const wrapper = event.target.closest('.finance-table-wrapper');
-    const allWrappers = document.querySelectorAll('.finance-table-wrapper');
-    
-    // Tangani tombol finansial
+    const allWrappers = noteContent.querySelectorAll('.finance-table-wrapper');
+
+    // Sembunyikan semua tombol terlebih dahulu
     allWrappers.forEach(w => {
         const btnGroup = w.querySelector('.finance-btn-group');
-        if (w === wrapper) {
-            btnGroup.style.display = 'flex'; // Tampilkan tombol jika tabel diklik
-        } else {
-            btnGroup.style.display = 'none'; // Sembunyikan tombol untuk tabel lain
+        if (btnGroup) {
+            btnGroup.style.display = 'none';
         }
     });
 
-    if (!wrapper) {
-        allWrappers.forEach(w => {
-            w.querySelector('.finance-btn-group').style.display = 'none'; // Sembunyikan semua tombol jika klik di luar tabel
-        });
-
-        // Posisikan kursor di luar tabel
+    // Jika klik di dalam tabel finansial, tampilkan tombolnya
+    if (wrapper) {
+        const btnGroup = wrapper.querySelector('.finance-btn-group');
+        if (btnGroup) {
+            btnGroup.style.display = 'flex'; // Tampilkan tombol
+        } else {
+            // Jika tombol hilang, tambahkan kembali
+            const newBtnGroup = document.createElement('div');
+            newBtnGroup.className = 'finance-btn-group';
+            newBtnGroup.setAttribute('contenteditable', 'false');
+            newBtnGroup.innerHTML = `
+                <button class="finance-btn add-income" title="Add Income">+</button>
+                <button class="finance-btn subtract-expense" title="Add Expense">-</button>
+                <button class="finance-btn multiply" title="Multiply">*</button>
+                <button class="finance-btn divide" title="Divide">/</button>
+                <button class="finance-btn calculate" title="Calculate Total">=</button>
+                <button class="finance-btn delete-last-row" title="Delete Last Row">🗑️</button>
+            `;
+            wrapper.appendChild(newBtnGroup);
+            setupFinanceButtons(wrapper); // Tambahkan event listener ke tombol baru
+            newBtnGroup.style.display = 'flex';
+        }
+    } else {
+        // Jika klik di luar tabel, posisikan kursor
         const selection = window.getSelection();
         const range = document.createRange();
         const clickX = event.clientX;
@@ -269,12 +300,10 @@ function handleTableClick(event) {
             const tableRight = rect.right;
 
             if (clickX < tableLeft) {
-                // Klik di kiri tabel, posisikan kursor sebelum tabel
                 range.setStartBefore(tableWrapper);
                 range.setEndBefore(tableWrapper);
                 positioned = true;
             } else if (clickX > tableRight) {
-                // Klik di kanan tabel, posisikan kursor setelah tabel
                 range.setStartAfter(tableWrapper);
                 range.setEndAfter(tableWrapper);
                 positioned = true;
@@ -282,7 +311,6 @@ function handleTableClick(event) {
         });
 
         if (!positioned) {
-            // Jika tidak ada tabel di sekitar klik, posisikan di akhir konten
             range.selectNodeContents(noteContent);
             range.collapse(false);
         }
