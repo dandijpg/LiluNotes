@@ -839,81 +839,67 @@ button {
     background-color: #fafafa;
 }
 
-/* CalcCard Styles */
-.calc-card {
+/* Financial Table Styles */
+.finance-table-wrapper {
+    position: relative;
     display: inline-block;
-    background: #f9fbfc;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    padding: 10px;
     margin: 10px 0;
-    width: 200px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-    user-select: none;
+    max-width: 100%;
 }
 
-.calc-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+.finance-table {
+    border-collapse: collapse;
+    width: 300px;
+    background: #fff;
+    border: 1px solid #e8ecef;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-.calc-card.expanded {
-    transform: scale(1.2);
-}
-
-.calc-header {
-    font-size: 0.9em;
-    font-weight: 500;
+.finance-table th {
+    background: #e8f0fe;
     color: #4285f4;
-    text-align: center;
-    padding-bottom: 5px;
+    font-weight: 500;
+    padding: 8px;
     border-bottom: 1px solid #e8ecef;
 }
 
-.calc-body {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 0;
-}
-
-.calc-input {
-    display: inline-block;
-    width: 60px;
-    text-align: center;
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 5px;
-    font-size: 1em;
+.finance-table td {
+    padding: 8px;
+    border-bottom: 1px solid #f5f7fa;
     color: #333;
-    outline: none;
 }
 
-.calc-input:empty::before {
-    content: attr(data-placeholder);
-    color: #aaa;
+.finance-table .amount {
+    text-align: right;
 }
 
-.calc-operator {
-    font-size: 1.2em;
-    color: #34a853;
-    font-weight: 600;
-}
-
-.calc-result {
-    text-align: center;
-    padding-top: 5px;
-    border-top: 1px dashed #e8ecef;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.calc-result-value {
-    font-size: 1.1em;
+.finance-table tfoot td {
+    background: #f9fbfc;
     font-weight: 600;
     color: #ea4335;
+    border-top: 1px dashed #e8ecef;
+}
+
+.finance-table tfoot .total {
+    text-align: right;
+}
+
+.add-finance-row-btn {
+    margin-top: 5px;
+    padding: 5px 10px;
+    background: #34a853;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.8em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-finance-row-btn:hover {
+    background: #2f9e44;
+    box-shadow: 0 2px 5px rgba(52, 168, 83, 0.3);
 }
 
 /* Media Queries untuk Responsivitas */
@@ -1122,5 +1108,9 @@ button {
     .note-content-view {
         padding: 12px;
         min-height: 300px;
+    }
+
+    .finance-table {
+        width: 100%;
     }
 }
