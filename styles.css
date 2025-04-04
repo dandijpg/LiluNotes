@@ -497,7 +497,7 @@ button {
 /* Toolbar */
 .toolbar {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap; /* Ubah ke nowrap untuk scroll horizontal */
     gap: 15px;
     margin-bottom: 25px;
     background: #f8fafc;
@@ -506,7 +506,8 @@ button {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     justify-content: flex-start;
     border: 1px solid #e8ecef;
-    overflow-x: auto; /* Tambahan untuk scroll horizontal di mobile */
+    overflow-x: auto; /* Aktifkan scroll horizontal */
+    white-space: nowrap; /* Pastikan konten tidak membungkus */
 }
 
 .toolbar-section {
@@ -1118,11 +1119,10 @@ button {
         width: 150px;
     }
 
+    /* Toolbar di Mobile */
     .toolbar {
-        flex-wrap: nowrap; /* Ubah ke nowrap untuk scroll horizontal */
-        overflow-x: auto;
-        gap: 10px;
         padding: 10px;
+        gap: 10px;
     }
 
     .toolbar-section {
@@ -1130,13 +1130,18 @@ button {
     }
 
     .toolbar-group {
-        justify-content: center;
+        padding: 6px;
+        min-width: fit-content; /* Pastikan grup tidak terlalu kecil */
     }
 
     .tool-btn, .edit-btn, .exit-btn, .table-tool-btn {
         padding: 6px;
         min-width: 32px;
         height: 32px;
+    }
+
+    .toolbar-label {
+        font-size: 0.75em;
     }
 
     .calc-mode-select {
@@ -1227,13 +1232,8 @@ button {
         width: 140px;
     }
 
-    .toolbar {
-        flex-direction: column; /* Tetap column untuk lebih rapi di layar kecil */
-        align-items: center;
-    }
-
     .toolbar-label {
-        font-size: 0.75em;
+        font-size: 0.7em;
     }
 
     .tool-btn, .edit-btn, .exit-btn, .table-tool-btn {
