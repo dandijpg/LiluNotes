@@ -11,6 +11,24 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
 });
 
+// Fungsi untuk menyimpan posisi kursor
+function saveCursorPosition(element) {
+    const selection = window.getSelection();
+    if (selection.rangeCount > 0 && element.contains(selection.anchorNode)) {
+        return selection.getRangeAt(0);
+    }
+    return null;
+}
+
+// Fungsi untuk mengembalikan posisi kursor
+function restoreCursorPosition(range) {
+    if (range) {
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+    }
+}
+
 function setupCategorySelect() {
     const select = document.getElementById('categorySelect');
     categories.forEach(category => {
@@ -34,25 +52,34 @@ function setupEditor() {
         noteContent.innerHTML = note.content;
         categorySelect.value = note.category;
         highlightSearchTerms(noteContent, searchQuery);
+        // Jangan panggil focus() langsung, biarkan pengguna mengklik untuk fokus
     } else {
         categorySelect.value = categories[1] || 'Uncategorized';
+        noteContent.innerHTML = ''; // Pastikan kosong untuk catatan baru
     }
-
-    noteContent.focus();
 }
 
 function setupEventListeners() {
-    document.getElementById('boldBtn').addEventListener('click', () => document.execCommand('bold', false, null));
-    document.getElementById('italicBtn').addEventListener('click', () => document.execCommand('italic', false, null));
-    document.getElementById('underlineBtn').addEventListener('click', () => document.execCommand('underline', false, null));
+    const noteContent = document.getElementById('noteContent');
+
+    // Fungsi pembantu untuk menerapkan perintah dengan mempertahankan kursor
+    const applyCommand = (command, value = null) => {
+        const range = saveCursorPosition(noteContent);
+        document.execCommand(command, false, value);
+        restoreCursorPosition(range);
+    };
+
+    document.getElementById('boldBtn').addEventListener('click', () => applyCommand('bold'));
+    document.getElementById('italicBtn').addEventListener('click', () => applyCommand('italic'));
+    document.getElementById('underlineBtn').addEventListener('click', () => applyCommand('underline'));
     document.getElementById('markDoneBtn').addEventListener('click', markAsDone);
     document.getElementById('linkBtn').addEventListener('click', insertLink);
-    document.getElementById('numberedListBtn').addEventListener('click', () => document.execCommand('insertOrderedList', false, null));
-    document.getElementById('bulletListBtn').addEventListener('click', () => document.execCommand('insertUnorderedList', false, null));
+    document.getElementById('numberedListBtn').addEventListener('click', () => applyCommand('insertOrderedList'));
+    document.getElementById('bulletListBtn').addEventListener('click', () => applyCommand('insertUnorderedList'));
     document.getElementById('arrowListBtn').addEventListener('click', insertArrowList);
-    document.getElementById('alignLeftBtn').addEventListener('click', () => document.execCommand('justifyLeft', false, null));
-    document.getElementById('alignCenterBtn').addEventListener('click', () => document.execCommand('justifyCenter', false, null));
-    document.getElementById('alignRightBtn').addEventListener('click', () => document.execCommand('justifyRight', false, null));
+    document.getElementById('alignLeftBtn').addEventListener('click', () => applyCommand('justifyLeft'));
+    document.getElementById('alignCenterBtn').addEventListener('click', () => applyCommand('justifyCenter'));
+    document.getElementById('alignRightBtn').addEventListener('click', () => applyCommand('justifyRight'));
     document.getElementById('floatLeftBtn').addEventListener('click', () => applyFloat('left'));
     document.getElementById('floatCenterBtn').addEventListener('click', () => applyFloat('none'));
     document.getElementById('floatRightBtn').addEventListener('click', () => applyFloat('right'));
@@ -66,15 +93,15 @@ function setupEventListeners() {
     document.getElementById('copyFormattedBtn').addEventListener('click', copyFormattedText);
     document.getElementById('saveBtn').addEventListener('click', saveNote);
     document.getElementById('exitBtn').addEventListener('click', () => window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`);
-    document.getElementById('noteContent').addEventListener('click', handleTableClick);
-    document.getElementById('noteContent').addEventListener('input', checkAmountInput);
-    document.getElementById('noteContent').addEventListener('focusout', updateFinancialTable);
+    noteContent.addEventListener('click', handleTableClick);
+    noteContent.addEventListener('input', checkAmountInput);
+    noteContent.addEventListener('focusout', updateFinancialTable);
 }
 
 function markAsDone() {
-    const selection = window.getSelection();
-    if (selection.rangeCount > 0) {
-        const range = selection.getRangeAt(0);
+    const noteContent = document.getElementById('noteContent');
+    const range = saveCursorPosition(noteContent);
+    if (range) {
         const selectedText = range.toString();
         if (selectedText) {
             const span = document.createElement('span');
@@ -82,53 +109,52 @@ function markAsDone() {
             span.textContent = selectedText;
             range.deleteContents();
             range.insertNode(span);
+            restoreCursorPosition(range);
         }
     }
 }
 
 function insertLink() {
+    const noteContent = document.getElementById('noteContent');
+    const range = saveCursorPosition(noteContent);
     const url = prompt('Enter the URL:');
-    if (url) {
-        const selection = window.getSelection();
-        if (selection.rangeCount > 0) {
-            const range = selection.getRangeAt(0);
-            const selectedText = range.toString();
-            const a = document.createElement('a');
-            a.href = url;
-            a.target = '_blank';
-            a.textContent = selectedText || url;
-            a.className = 'copyable';
-            range.deleteContents();
-            range.insertNode(a);
-        }
+    if (url && range) {
+        const selectedText = range.toString();
+        const a = document.createElement('a');
+        a.href = url;
+        a.target = '_blank';
+        a.textContent = selectedText || url;
+        a.className = 'copyable';
+        range.deleteContents();
+        range.insertNode(a);
+        restoreCursorPosition(range);
     }
 }
 
 function insertArrowList() {
-    const selection = window.getSelection();
-    if (selection.rangeCount > 0) {
-        const range = selection.getRangeAt(0);
+    const noteContent = document.getElementById('noteContent');
+    const range = saveCursorPosition(noteContent);
+    if (range) {
         const ul = document.createElement('ul');
         ul.style.listStyleType = '"➜ "';
         const li = document.createElement('li');
         ul.appendChild(li);
         range.deleteContents();
         range.insertNode(ul);
-        selection.removeAllRanges();
         const newRange = document.createRange();
         newRange.setStart(li, 0);
         newRange.setEnd(li, 0);
-        selection.addRange(newRange);
+        restoreCursorPosition(newRange);
     }
 }
 
 function applyFloat(direction) {
-    const selection = window.getSelection();
-    if (selection.rangeCount > 0) {
-        const range = selection.getRangeAt(0);
+    const noteContent = document.getElementById('noteContent');
+    const range = saveCursorPosition(noteContent);
+    if (range) {
         const selectedNode = range.commonAncestorContainer;
         const parentElement = selectedNode.nodeType === 3 ? selectedNode.parentElement : selectedNode;
-        if (parentElement && parentElement !== document.getElementById('noteContent')) {
+        if (parentElement && parentElement !== noteContent) {
             parentElement.style.float = direction;
             if (direction === 'none') {
                 parentElement.style.display = 'block';
@@ -139,11 +165,14 @@ function applyFloat(direction) {
                 parentElement.style.marginLeft = direction === 'left' ? '0' : 'auto';
                 parentElement.style.marginRight = direction === 'right' ? '0' : 'auto';
             }
+            restoreCursorPosition(range);
         }
     }
 }
 
 function insertTable() {
+    const noteContent = document.getElementById('noteContent');
+    const range = saveCursorPosition(noteContent);
     const tableHtml = `
         <div class="table-wrapper">
             <table class="regular-table">
@@ -152,10 +181,13 @@ function insertTable() {
             </table>
         </div>`;
     document.execCommand('insertHTML', false, tableHtml);
+    restoreCursorPosition(range);
     toggleTableButtons();
 }
 
 function insertFinancialTable() {
+    const noteContent = document.getElementById('noteContent');
+    const range = saveCursorPosition(noteContent);
     const financeHtml = `
         <div class="finance-table-wrapper">
             <table class="finance-table" data-mode="${calcMode}">
@@ -188,9 +220,9 @@ function insertFinancialTable() {
             </div>
         </div>`;
     document.execCommand('insertHTML', false, financeHtml);
-
-    const wrapper = document.querySelector('.finance-table-wrapper:last-child');
-    setupFinanceButtons(wrapper); // Panggil fungsi untuk menambahkan event listener
+    const wrapper = noteContent.querySelector('.finance-table-wrapper:last-child');
+    setupFinanceButtons(wrapper);
+    restoreCursorPosition(range);
 }
 
 function setupFinanceButtons(wrapper) {
@@ -241,7 +273,7 @@ function deleteLastRow(wrapper) {
     const rows = tbody.querySelectorAll('tr');
     if (rows.length > 0) {
         tbody.removeChild(rows[rows.length - 1]);
-        if (rows.length === 1) { // Jika tidak ada baris lagi setelah penghapusan
+        if (rows.length === 1) {
             const thead = table.querySelector('thead');
             const tfoot = table.querySelector('tfoot');
             if (thead) thead.remove();
@@ -257,70 +289,42 @@ function handleTableClick(event) {
     const wrapper = event.target.closest('.finance-table-wrapper');
     const allWrappers = noteContent.querySelectorAll('.finance-table-wrapper');
 
-    // Sembunyikan semua tombol terlebih dahulu
     allWrappers.forEach(w => {
         const btnGroup = w.querySelector('.finance-btn-group');
-        if (btnGroup) {
-            btnGroup.style.display = 'none';
-        }
+        if (btnGroup) btnGroup.style.display = 'none';
     });
 
-    // Jika klik di dalam tabel finansial, tampilkan tombolnya
     if (wrapper) {
-        const btnGroup = wrapper.querySelector('.finance-btn-group');
-        if (btnGroup) {
-            btnGroup.style.display = 'flex'; // Tampilkan tombol
-        } else {
-            // Jika tombol hilang, tambahkan kembali
-            const newBtnGroup = document.createElement('div');
-            newBtnGroup.className = 'finance-btn-group';
-            newBtnGroup.setAttribute('contenteditable', 'false');
-            newBtnGroup.innerHTML = `
-                <button class="finance-btn add-income" title="Add Income">+</button>
-                <button class="finance-btn subtract-expense" title="Add Expense">-</button>
-                <button class="finance-btn multiply" title="Multiply">*</button>
-                <button class="finance-btn divide" title="Divide">/</button>
-                <button class="finance-btn calculate" title="Calculate Total">=</button>
-                <button class="finance-btn delete-last-row" title="Delete Last Row">🗑️</button>
-            `;
-            wrapper.appendChild(newBtnGroup);
-            setupFinanceButtons(wrapper); // Tambahkan event listener ke tombol baru
-            newBtnGroup.style.display = 'flex';
-        }
+        const btnGroup = wrapper.querySelector('.finance-btn-group') || wrapper.appendChild(createFinanceBtnGroup(wrapper));
+        btnGroup.style.display = 'flex';
     } else {
-        // Jika klik di luar tabel, posisikan kursor
         const selection = window.getSelection();
         const range = document.createRange();
-        const clickX = event.clientX;
-        let positioned = false;
+        const target = event.target;
 
-        allWrappers.forEach(tableWrapper => {
-            const rect = tableWrapper.getBoundingClientRect();
-            const tableLeft = rect.left;
-            const tableRight = rect.right;
-
-            if (clickX < tableLeft) {
-                range.setStartBefore(tableWrapper);
-                range.setEndBefore(tableWrapper);
-                positioned = true;
-            } else if (clickX > tableRight) {
-                range.setStartAfter(tableWrapper);
-                range.setEndAfter(tableWrapper);
-                positioned = true;
-            }
-        });
-
-        if (!positioned) {
-            range.selectNodeContents(noteContent);
-            range.collapse(false);
+        if (target === noteContent || noteContent.contains(target)) {
+            // Jika klik langsung pada noteContent atau anaknya, biarkan kursor mengikuti posisi klik
+            return; // Tidak perlu memaksa posisi kursor
         }
-
-        selection.removeAllRanges();
-        selection.addRange(range);
-        noteContent.focus();
     }
 
     toggleTableButtons();
+}
+
+function createFinanceBtnGroup(wrapper) {
+    const btnGroup = document.createElement('div');
+    btnGroup.className = 'finance-btn-group';
+    btnGroup.setAttribute('contenteditable', 'false');
+    btnGroup.innerHTML = `
+        <button class="finance-btn add-income" title="Add Income">+</button>
+        <button class="finance-btn subtract-expense" title="Add Expense">-</button>
+        <button class="finance-btn multiply" title="Multiply">*</button>
+        <button class="finance-btn divide" title="Divide">/</button>
+        <button class="finance-btn calculate" title="Calculate Total">=</button>
+        <button class="finance-btn delete-last-row" title="Delete Last Row">🗑️</button>
+    `;
+    setupFinanceButtons(wrapper);
+    return btnGroup;
 }
 
 function checkAmountInput(event) {
@@ -328,7 +332,7 @@ function checkAmountInput(event) {
     if (target.classList.contains('amount')) {
         const value = target.innerText.trim();
         const isValid = /^-?[0-9]*$/.test(value.replace(/[^0-9-]/g, '')) && value !== '';
-        const existingWarning = target.nextElementSibling && target.nextElementSibling.classList.contains('warning');
+        const existingWarning = target.nextElementSibling?.classList.contains('warning');
 
         if (!isValid && value !== '' && !existingWarning) {
             const warning = document.createElement('span');
@@ -337,9 +341,7 @@ function checkAmountInput(event) {
             warning.title = 'Only numbers are supported';
             target.parentElement.appendChild(warning);
         } else if (isValid || value === '') {
-            if (existingWarning) {
-                target.parentElement.removeChild(existingWarning);
-            }
+            if (existingWarning) target.parentElement.removeChild(target.nextElementSibling);
         }
     }
 }
@@ -352,37 +354,23 @@ function calculateTotal(wrapper) {
 
     rows.forEach((row, index) => {
         const amountCell = row.querySelector('.amount');
-        let value = amountCell.innerText.trim();
-
-        // Hapus semua karakter non-numerik kecuali tanda minus
-        value = value.replace(/[^0-9-]/g, '');
+        let value = amountCell.innerText.trim().replace(/[^0-9-]/g, '');
         const num = parseFloat(value) || 0;
-
         const operation = row.dataset.operation;
-        if (index === 0) {
-            total = num;
-        } else {
+
+        if (index === 0) total = num;
+        else {
             switch (operation) {
-                case '+':
-                    total += num;
-                    break;
-                case '-':
-                    total -= num;
-                    break;
-                case '*':
-                    total *= num;
-                    break;
-                case '/':
-                    total = num !== 0 ? total / num : total;
-                    break;
+                case '+': total += num; break;
+                case '-': total -= num; break;
+                case '*': total *= num; break;
+                case '/': total = num !== 0 ? total / num : total; break;
             }
         }
     });
 
     const totalCell = table.querySelector('.total');
-    if (totalCell) {
-        totalCell.innerText = mode === 'financial' ? formatCurrency(total) : total.toFixed(2);
-    }
+    if (totalCell) totalCell.innerText = mode === 'financial' ? formatCurrency(total) : total.toFixed(2);
 }
 
 function updateFinancialTable(event) {
@@ -393,15 +381,15 @@ function updateFinancialTable(event) {
 
         rows.forEach(row => {
             const amountCell = row.querySelector('.amount');
-            if (event && event.target === amountCell) {
-                let value = amountCell.innerText.trim();
-                value = value.replace(/[^0-9-]/g, ''); // Hanya simpan angka dan tanda minus
+            if (event.target === amountCell) {
+                let value = amountCell.innerText.trim().replace(/[^0-9-]/g, '');
                 const num = parseFloat(value) || 0;
                 if (mode === 'financial' && value !== '') {
                     amountCell.innerText = formatCurrency(num);
                 } else if (value === '') {
                     amountCell.innerText = '';
                 }
+                calculateTotal(table.parentElement);
             }
         });
     });
@@ -417,9 +405,7 @@ function addRow() {
     if (table && !table.classList.contains('finance-table')) {
         const row = table.insertRow(-1);
         const cellCount = table.rows[0].cells.length;
-        for (let i = 0; i < cellCount; i++) {
-            row.insertCell(-1).textContent = 'New Cell';
-        }
+        for (let i = 0; i < cellCount; i++) row.insertCell(-1).textContent = 'New Cell';
     }
 }
 
@@ -437,9 +423,7 @@ function deleteRow() {
     const table = getSelectedTable();
     if (table && !table.classList.contains('finance-table') && table.rows.length > 1) {
         const rowIndex = getSelectedRowIndex();
-        if (rowIndex !== -1) {
-            table.deleteRow(rowIndex);
-        }
+        if (rowIndex !== -1) table.deleteRow(rowIndex);
     }
 }
 
@@ -447,20 +431,15 @@ function deleteColumn() {
     const table = getSelectedTable();
     if (table && !table.classList.contains('finance-table') && table.rows[0].cells.length > 1) {
         const colIndex = getSelectedColumnIndex();
-        if (colIndex !== -1) {
-            Array.from(table.rows).forEach(row => row.deleteCell(colIndex));
-        }
+        if (colIndex !== -1) Array.from(table.rows).forEach(row => row.deleteCell(colIndex));
     }
 }
 
 function getSelectedTable() {
     const selection = window.getSelection();
     if (selection.rangeCount > 0) {
-        const range = selection.getRangeAt(0);
-        let node = range.commonAncestorContainer;
-        while (node && node.tagName !== 'TABLE') {
-            node = node.parentElement;
-        }
+        let node = selection.getRangeAt(0).commonAncestorContainer;
+        while (node && node.tagName !== 'TABLE') node = node.parentElement;
         return node;
     }
     return null;
@@ -469,16 +448,10 @@ function getSelectedTable() {
 function getSelectedRowIndex() {
     const table = getSelectedTable();
     if (table) {
-        const selection = window.getSelection();
-        const range = selection.getRangeAt(0);
+        const range = window.getSelection().getRangeAt(0);
         let cell = range.commonAncestorContainer;
-        while (cell && cell.tagName !== 'TD' && cell.tagName !== 'TH') {
-            cell = cell.parentElement;
-        }
-        if (cell) {
-            const row = cell.parentElement;
-            return Array.from(table.rows).indexOf(row);
-        }
+        while (cell && cell.tagName !== 'TD' && cell.tagName !== 'TH') cell = cell.parentElement;
+        if (cell) return Array.from(table.rows).indexOf(cell.parentElement);
     }
     return -1;
 }
@@ -486,15 +459,10 @@ function getSelectedRowIndex() {
 function getSelectedColumnIndex() {
     const table = getSelectedTable();
     if (table) {
-        const selection = window.getSelection();
-        const range = selection.getRangeAt(0);
+        const range = window.getSelection().getRangeAt(0);
         let cell = range.commonAncestorContainer;
-        while (cell && cell.tagName !== 'TD' && cell.tagName !== 'TH') {
-            cell = cell.parentElement;
-        }
-        if (cell) {
-            return Array.from(cell.parentElement.cells).indexOf(cell);
-        }
+        while (cell && cell.tagName !== 'TD' && cell.tagName !== 'TH') cell = cell.parentElement;
+        if (cell) return Array.from(cell.parentElement.cells).indexOf(cell);
     }
     return -1;
 }
@@ -509,15 +477,16 @@ function toggleTableButtons() {
 }
 
 function copyFormattedText() {
-    const selection = window.getSelection();
-    if (selection.rangeCount > 0) {
-        const range = selection.getRangeAt(0);
+    const noteContent = document.getElementById('noteContent');
+    const range = saveCursorPosition(noteContent);
+    if (range) {
         const selectedText = range.cloneContents();
         const span = document.createElement('span');
         span.className = 'copyable';
         span.appendChild(selectedText);
         range.deleteContents();
         range.insertNode(span);
+        restoreCursorPosition(range);
     } else {
         alert('Please select some text to make copyable.');
     }
@@ -542,11 +511,8 @@ function saveNote() {
         pinnedTimestamp: noteId !== null ? (notes[noteId]?.pinnedTimestamp || null) : null
     };
 
-    if (noteId !== null) {
-        notes[noteId] = note;
-    } else {
-        notes.push(note);
-    }
+    if (noteId !== null) notes[noteId] = note;
+    else notes.push(note);
 
     localStorage.setItem('notes', JSON.stringify(notes));
     window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`;
@@ -559,9 +525,7 @@ function highlightSearchTerms(element, query) {
     const nodes = [];
     let node;
 
-    while ((node = walker.nextNode())) {
-        nodes.push(node);
-    }
+    while ((node = walker.nextNode())) nodes.push(node);
 
     nodes.forEach(node => {
         terms.forEach(term => {
