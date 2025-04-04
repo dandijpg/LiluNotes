@@ -3,7 +3,6 @@ let categories = JSON.parse(localStorage.getItem('categories') || '[]');
 const urlParams = new URLSearchParams(window.location.search);
 const noteId = urlParams.get('id');
 const searchQuery = urlParams.get('search') || '';
-let isCalculatorMode = false;
 
 document.addEventListener('DOMContentLoaded', () => {
     setupCategorySelect();
@@ -39,6 +38,7 @@ function setupEditor() {
     }
 
     noteContent.focus();
+    setupCalculatorListeners();
 }
 
 function setupEventListeners() {
@@ -61,14 +61,14 @@ function setupEventListeners() {
     document.getElementById('addColBtn').addEventListener('click', addColumn);
     document.getElementById('deleteRowBtn').addEventListener('click', deleteRow);
     document.getElementById('deleteColBtn').addEventListener('click', deleteColumn);
-    document.getElementById('calculatorBtn').addEventListener('click', insertCalculator);
     document.getElementById('copyFormattedBtn').addEventListener('click', copyFormattedText);
+    document.getElementById('calcBtn').addEventListener('click', insertCalculator);
     document.getElementById('saveBtn').addEventListener('click', saveNote);
     document.getElementById('exitBtn').addEventListener('click', () => window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`);
     document.getElementById('noteContent').addEventListener('click', toggleTableButtons);
     document.getElementById('noteContent').addEventListener('keyup', toggleTableButtons);
-    document.getElementById('noteContent').addEventListener('input', handleCalculatorInput);
-    document.getElementById('noteContent').addEventListener('keydown', handleCalculatorKeydown);
+
+    // Event listener untuk menangani klik pada elemen copyable
     document.getElementById('noteContent').addEventListener('click', (e) => {
         const target = e.target;
         if (target.classList.contains('copyable')) {
@@ -86,92 +86,8 @@ function setupEventListeners() {
                 console.error('Failed to copy: ', err);
                 alert('Failed to copy formatted text.');
             });
-        } else if (!e.target.closest('.calculator-wrapper')) {
-            isCalculatorMode = false;
         }
     });
-}
-
-function insertCalculator() {
-    const calculatorHtml = `
-        <div class="calculator-wrapper" contenteditable="true">
-            <div class="calc-line" contenteditable="true"></div>
-        </div>`;
-    document.execCommand('insertHTML', false, calculatorHtml);
-    const wrapper = document.querySelector('.calculator-wrapper');
-    wrapper.focus();
-    isCalculatorMode = true;
-}
-
-function handleCalculatorInput(e) {
-    if (!isCalculatorMode) return;
-
-    const wrapper = e.target.closest('.calculator-wrapper');
-    if (!wrapper) return;
-
-    const calcLine = wrapper.querySelector('.calc-line');
-    let content = calcLine.textContent.trim();
-    const selection = window.getSelection();
-    const range = selection.getRangeAt(0);
-
-    if (/^\d+[+]$/.test(content)) {
-        const number = parseInt(content.match(/\d+/)[0]);
-        calcLine.innerHTML = `${number}${' '.repeat(10)}+`;
-        const newLine = document.createElement('div');
-        newLine.className = 'calc-line';
-        newLine.setAttribute('contenteditable', 'true');
-        wrapper.appendChild(newLine);
-        const separator = document.createElement('div');
-        separator.innerHTML = '<b>----------=</b>';
-        wrapper.appendChild(separator);
-        const resultLine = document.createElement('div');
-        resultLine.className = 'calc-result';
-        wrapper.appendChild(resultLine);
-        newLine.focus();
-        range.setStart(newLine, 0);
-        range.setEnd(newLine, 0);
-        selection.removeAllRanges();
-        selection.addRange(range);
-    } else if (wrapper.children.length === 4 && /^\d+$/.test(content)) {
-        const firstNumber = parseInt(wrapper.children[0].textContent.match(/\d+/)[0]);
-        const secondNumber = parseInt(content);
-        const result = firstNumber + secondNumber;
-        wrapper.querySelector('.calc-result').textContent = result;
-    }
-
-    const lines = wrapper.children;
-    for (let i = 0; i < lines.length; i++) {
-        if (lines[i].className === 'calc-line' && i === 1 && lines[i].textContent.match(/\d+\s+.+/)) {
-            const [number, ...description] = lines[i].textContent.split(/\s+/);
-            lines[i].innerHTML = `${number} <span class="calc-desc">${description.join(' ')}</span>`;
-        }
-    }
-}
-
-function handleCalculatorKeydown(e) {
-    if (!isCalculatorMode) return;
-
-    const wrapper = e.target.closest('.calculator-wrapper');
-    if (!wrapper) return;
-
-    if (wrapper.children.length >= 2) {
-        if (e.key === 'Enter' || /[a-zA-Z]/.test(e.key)) {
-            e.preventDefault();
-            if (/[a-zA-Z]/.test(e.key) && wrapper.children[1].className === 'calc-line') {
-                const content = wrapper.children[1].textContent;
-                if (content.match(/\d+/)) {
-                    wrapper.children[1].innerHTML = `${content} <span class="calc-desc">${e.key}</span>`;
-                    const selection = window.getSelection();
-                    const range = document.createRange();
-                    const descSpan = wrapper.children[1].querySelector('.calc-desc');
-                    range.setStart(descSpan, 1);
-                    range.setEnd(descSpan, 1);
-                    selection.removeAllRanges();
-                    selection.addRange(range);
-                }
-            }
-        }
-    }
 }
 
 function toggleHighlight() {
@@ -363,6 +279,146 @@ function copyFormattedText() {
         range.insertNode(span);
     } else {
         alert('Please select some text to make copyable.');
+    }
+}
+
+function insertCalculator() {
+    const calcHtml = `
+        <div class="calculator-wrapper" contenteditable="true">
+            <div class="number-line">0          +</div>
+            <div class="number-line"></div>
+            <div class="separator">----------=</div>
+            <div class="result">0</div>
+        </div>`;
+    document.execCommand('insertHTML', false, calcHtml);
+    setupCalculatorListeners();
+}
+
+function setupCalculatorListeners() {
+    const calcWrappers = document.querySelectorAll('.calculator-wrapper');
+    calcWrappers.forEach(wrapper => {
+        wrapper.addEventListener('input', handleCalculatorInput);
+        wrapper.addEventListener('keydown', handleCalculatorKeydown);
+        wrapper.addEventListener('click', positionCursor);
+    });
+}
+
+function handleCalculatorInput(e) {
+    const wrapper = e.target.closest('.calculator-wrapper');
+    if (!wrapper) return;
+
+    const lines = wrapper.querySelectorAll('.number-line');
+    const result = wrapper.querySelector('.result');
+    let total = 0;
+    let valid = true;
+
+    lines.forEach((line, index) => {
+        const text = line.textContent.trim();
+        if (index === 0) {
+            const match = text.match(/^(\d+)\s{10}([+\-*/])/);
+            if (match) {
+                total = parseInt(match[1]);
+                const operator = match[2];
+                line.innerHTML = `${match[1]}${' '.repeat(10)}${operator}`;
+                const desc = text.split(operator)[1]?.trim();
+                if (desc) {
+                    line.innerHTML += ` <span class="description">${desc}</span>`;
+                }
+            } else {
+                valid = false;
+            }
+        } else if (text) {
+            const match = text.match(/^(\d+)/);
+            if (match) {
+                const num = parseInt(match[1]);
+                const desc = text.split(match[1])[1]?.trim();
+                line.innerHTML = match[1];
+                if (desc) {
+                    line.innerHTML += ` <span class="description">${desc}</span>`;
+                }
+                const operator = lines[0].textContent.match(/[+\-*/]/)[0];
+                switch (operator) {
+                    case '+': total += num; break;
+                    case '-': total -= num; break;
+                    case '*': total *= num; break;
+                    case '/': total = total / num; break;
+                }
+            } else {
+                valid = false;
+            }
+        }
+    });
+
+    if (valid) {
+        result.textContent = total;
+    } else {
+        result.textContent = 'Error';
+    }
+}
+
+function handleCalculatorKeydown(e) {
+    const wrapper = e.target.closest('.calculator-wrapper');
+    if (!wrapper) return;
+
+    const selection = window.getSelection();
+    const range = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
+    const currentLine = range?.commonAncestorContainer.parentElement.closest('.number-line, .result, .separator');
+
+    if (e.key === 'Enter' && currentLine?.className !== 'result') {
+        e.preventDefault();
+        const newLine = document.createElement('div');
+        newLine.className = 'number-line';
+        newLine.setAttribute('contenteditable', 'true');
+        wrapper.insertBefore(newLine, wrapper.querySelector('.separator'));
+        newLine.focus();
+        setupCalculatorListeners();
+    }
+
+    if ((currentLine?.className === 'result' || currentLine?.className === 'separator') && 
+        (e.key === 'Enter' || /[a-zA-Z]/.test(e.key))) {
+        e.preventDefault();
+    }
+
+    if (e.key.match(/[+\-*/]/) && currentLine === wrapper.querySelector('.number-line')) {
+        const text = currentLine.textContent;
+        const num = text.match(/^(\d+)/)?.[1] || '';
+        currentLine.textContent = `${num}${' '.repeat(10)}${e.key}`;
+        e.preventDefault();
+        handleCalculatorInput(e);
+        positionCursorToNextLine(wrapper);
+    }
+}
+
+function positionCursorToNextLine(wrapper) {
+    const nextLine = wrapper.querySelectorAll('.number-line')[1] || document.createElement('div');
+    if (!nextLine.parentElement) {
+        nextLine.className = 'number-line';
+        wrapper.insertBefore(nextLine, wrapper.querySelector('.separator'));
+    }
+    const range = document.createRange();
+    const sel = window.getSelection();
+    range.setStart(nextLine, 0);
+    range.collapse(true);
+    sel.removeAllRanges();
+    sel.addRange(range);
+    nextLine.focus();
+}
+
+function positionCursor(e) {
+    const wrapper = e.target.closest('.calculator-wrapper');
+    if (!wrapper) return;
+
+    const selection = window.getSelection();
+    const range = selection.rangeCount > 0 ? selection.getRangeAt(0) : null;
+    const currentLine = range?.commonAncestorContainer.parentElement.closest('.number-line, .result, .separator');
+
+    if (currentLine?.className === 'separator' || currentLine?.className === 'result') {
+        const lastNumLine = wrapper.querySelectorAll('.number-line')[wrapper.querySelectorAll('.number-line').length - 1];
+        const newRange = document.createRange();
+        newRange.setStart(lastNumLine, lastNumLine.childNodes.length);
+        newRange.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(newRange);
     }
 }
 
