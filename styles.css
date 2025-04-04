@@ -14,7 +14,7 @@ button, .note, .category {
 body {
     background: #f5f7fa;
     font-family: 'Poppins', sans-serif;
-    color: #333;
+    color: #374151;
     padding: 20px;
     line-height: 1.6;
 }
@@ -23,9 +23,9 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     background: #fff;
-    border-radius: 25px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    padding: 25px;
     animation: fadeIn 0.5s ease-in-out;
     user-select: none;
 }
@@ -39,13 +39,14 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     flex-wrap: wrap;
-    gap: 10px;
-    background: #fafafa;
+    gap: 15px;
+    background: #f8fafc;
     padding: 15px 20px;
-    border-radius: 15px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    border: 1px solid #e8ecef;
 }
 
 h1 {
@@ -53,12 +54,12 @@ h1 {
     font-weight: 600;
     color: #4285f4;
     letter-spacing: -0.5px;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease;
 }
 
 h1:hover {
     color: #ea4335;
-    transform: scale(1.05);
+    transform: scale(1.02);
 }
 
 .search-bar {
@@ -70,15 +71,15 @@ h1:hover {
 
 .search-bar input {
     padding: 10px 15px;
-    border: 1px solid #ddd;
-    border-radius: 20px;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
     background: #fff;
-    color: #555;
+    color: #4b5563;
     font-size: 0.9em;
     font-weight: 400;
     width: 100%;
     max-width: 300px;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease;
     user-select: text;
 }
 
@@ -103,17 +104,18 @@ h1:hover {
     gap: 5px;
     padding: 8px 20px;
     background: #e8f0fe;
-    border-radius: 20px;
+    border-radius: 12px;
     color: #4285f4;
     font-weight: 500;
     font-size: 0.9em;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 .category .count {
     background: rgba(66, 133, 244, 0.2);
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 2px 6px;
     font-size: 0.8em;
 }
@@ -121,6 +123,7 @@ h1:hover {
 .category.active {
     background: #4285f4;
     color: #fff;
+    box-shadow: 0 3px 10px rgba(66, 133, 244, 0.2);
 }
 
 .category.active .count {
@@ -130,8 +133,8 @@ h1:hover {
 .category:hover {
     background: #4285f4;
     color: #fff;
-    transform: scale(1.05);
-    box-shadow: 0 5px 15px rgba(66, 133, 244, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 3px 10px rgba(66, 133, 244, 0.2);
 }
 
 .category:hover .count {
@@ -139,11 +142,12 @@ h1:hover {
 }
 
 .controls-wrapper {
-    background: #fafafa;
-    padding: 10px;
-    border-radius: 15px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
-    margin-bottom: 20px;
+    background: #f8fafc;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    margin-bottom: 25px;
+    border: 1px solid #e8ecef;
 }
 
 .controls {
@@ -167,70 +171,80 @@ button {
 
 .add-category {
     padding: 10px 20px;
-    border-radius: 20px;
+    border-radius: 12px;
     border: none;
     background: #34a853;
     color: #fff;
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 .add-category:hover, .add-category:active {
     background: #2f9e44;
-    box-shadow: 0 5px 15px rgba(52, 168, 83, 0.3);
+    box-shadow: 0 3px 10px rgba(52, 168, 83, 0.2);
+    transform: translateY(-2px);
 }
 
 .add-note {
     padding: 10px 20px;
-    border-radius: 20px;
+    border-radius: 12px;
     border: none;
     background: #fbbc05;
     color: #fff;
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 .add-note:hover, .add-note:active {
     background: #f4b400;
-    box-shadow: 0 5px 15px rgba(251, 188, 5, 0.3);
+    box-shadow: 0 3px 10px rgba(251, 188, 5, 0.2);
+    transform: translateY(-2px);
 }
 
 .toggle-mode {
     padding: 10px 20px;
-    border-radius: 20px;
-    border: 1px solid #4285f4;
+    border-radius: 12px;
+    border: 1px solid #d1d5db;
     background: #fff;
-    color: #4285f4;
+    color: #4b5563;
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 .toggle-mode:hover, .toggle-mode:active {
     background: #4285f4;
     color: #fff;
+    border-color: #4285f4;
+    box-shadow: 0 3px 10px rgba(66, 133, 244, 0.2);
 }
 
 .more-btn {
     padding: 10px 20px;
-    border-radius: 20px;
-    border: 1px solid #666;
+    border-radius: 12px;
+    border: 1px solid #d1d5db;
     background: #fff;
-    color: #666;
+    color: #4b5563;
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 .more-btn:hover, .more-btn:active {
-    background: #666;
+    background: #6b7280;
     color: #fff;
+    border-color: #6b7280;
+    box-shadow: 0 3px 10px rgba(107, 114, 128, 0.2);
 }
 
 .more-options {
@@ -239,15 +253,16 @@ button {
     top: calc(100% + 5px);
     right: 0;
     background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     padding: 10px;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     z-index: 10;
     opacity: 0;
     transform: translateY(-10px);
-    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    border: 1px solid #e8ecef;
 }
 
 .more-options.active {
@@ -256,127 +271,56 @@ button {
     transform: translateY(0);
 }
 
-.backup-btn {
+.backup-btn, .restore-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn, .reset-btn {
     padding: 10px 20px;
-    border-radius: 20px;
+    border-radius: 12px;
     border: none;
-    background: #ea4335;
-    color: #fff;
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    color: #fff;
+}
+
+.backup-btn {
+    background: #ea4335;
 }
 
 .backup-btn:hover, .backup-btn:active {
     background: #db4437;
-    box-shadow: 0 5px 15px rgba(234, 67, 53, 0.3);
+    box-shadow: 0 3px 10px rgba(234, 67, 53, 0.2);
 }
 
-.restore-btn {
-    padding: 10px 20px;
-    border-radius: 20px;
-    border: none;
+.restore-btn, .copy-backup-btn, .google-auth-btn {
     background: #4285f4;
-    color: #fff;
-    font-size: 0.9em;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
 }
 
-.restore-btn:hover, .restore-btn:active {
+.restore-btn:hover, .restore-btn:active, .copy-backup-btn:hover, .copy-backup-btn:active, .google-auth-btn:hover, .google-auth-btn:active {
     background: #357abd;
-    box-shadow: 0 5px 15px rgba(66, 133, 244, 0.3);
-}
-
-.copy-backup-btn {
-    padding: 10px 20px;
-    border-radius: 20px;
-    border: none;
-    background: #4285f4;
-    color: #fff;
-    font-size: 0.9em;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-}
-
-.copy-backup-btn:hover, .copy-backup-btn:active {
-    background: #357abd;
-    box-shadow: 0 5px 15px rgba(66, 133, 244, 0.3);
-}
-
-.google-auth-btn {
-    padding: 10px 20px;
-    border-radius: 20px;
-    border: none;
-    background: #4285f4;
-    color: #fff;
-    font-size: 0.9em;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-}
-
-.google-auth-btn:hover, .google-auth-btn:active {
-    background: #357abd;
-    box-shadow: 0 5px 15px rgba(66, 133, 244, 0.3);
+    box-shadow: 0 3px 10px rgba(66, 133, 244, 0.2);
 }
 
 .backup-google-btn {
-    padding: 10px 20px;
-    border-radius: 20px;
-    border: none;
     background: #34a853;
-    color: #fff;
-    font-size: 0.9em;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
 }
 
 .backup-google-btn:hover, .backup-google-btn:active {
     background: #2f9e44;
-    box-shadow: 0 5px 15px rgba(52, 168, 83, 0.3);
+    box-shadow: 0 3px 10px rgba(52, 168, 83, 0.2);
 }
 
-.google-logout-btn {
-    padding: 10px 20px;
-    border-radius: 20px;
-    border: none;
+.google-logout-btn, .reset-btn {
     background: #ea4335;
-    color: #fff;
-    font-size: 0.9em;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
 }
 
-.google-logout-btn:hover, .google-logout-btn:active {
+.google-logout-btn:hover, .google-logout-btn:active, .reset-btn:hover, .reset-btn:active {
     background: #db4437;
-    box-shadow: 0 5px 15px rgba(234, 67, 53, 0.3);
-}
-
-.reset-btn {
-    padding: 10px 20px;
-    border-radius: 20px;
-    border: none;
-    background: #ea4335;
-    color: #fff;
-    font-size: 0.9em;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-}
-
-.reset-btn:hover, .reset-btn:active {
-    background: #db4437;
-    box-shadow: 0 5px 15px rgba(234, 67, 53, 0.3);
+    box-shadow: 0 3px 10px rgba(234, 67, 53, 0.2);
 }
 
 .pinned-section {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     display: none;
 }
 
@@ -384,33 +328,24 @@ button {
     display: block;
 }
 
-.pinned-section h2 {
+.pinned-section h2, .notes-section h2 {
     font-size: 1.5em;
     font-weight: 500;
-    color: #555;
+    color: #6b7280;
     margin-bottom: 15px;
     text-align: center;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease;
 }
 
 .notes-section {
-    margin-bottom: 20px;
-}
-
-.notes-section h2 {
-    font-size: 1.5em;
-    font-weight: 500;
-    color: #555;
-    margin-bottom: 15px;
-    text-align: center;
-    transition: all 0.3s ease-in-out;
+    margin-bottom: 25px;
 }
 
 .notes-list {
     display: grid;
     gap: 15px;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease;
 }
 
 .notes-list.list-mode {
@@ -423,10 +358,10 @@ button {
     background: #fff;
     padding: 15px;
     border-radius: 15px;
-    border: 1px solid #eee;
+    border: 1px solid #e8ecef;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -440,14 +375,14 @@ button {
 }
 
 .note:hover, .note:active {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .note .title {
     font-weight: 600;
     font-size: 1.1em;
-    color: #333;
+    color: #1f2937;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -459,7 +394,7 @@ button {
     color: #4285f4;
     background: #e8f0fe;
     padding: 2px 8px;
-    border-radius: 10px;
+    border-radius: 8px;
     align-self: flex-start;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -469,7 +404,7 @@ button {
 
 .note .timestamp {
     font-size: 0.8em;
-    color: #777;
+    color: #6b7280;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -478,11 +413,8 @@ button {
 
 .note .preview {
     font-size: 0.9em;
-    color: #555;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
+    color: #4b5563;
+ @ -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     max-width: 100%;
     word-break: break-word;
@@ -492,7 +424,7 @@ button {
     width: 100%;
     border-radius: 10px;
     padding: 12px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     max-width: 100%;
 }
 
@@ -504,37 +436,40 @@ button {
     padding: 10px 25px;
     background: #4285f4;
     border: none;
-    border-radius: 20px;
+    border-radius: 12px;
     color: #fff;
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 .view-more:hover, .view-more:active {
     background: #357abd;
-    box-shadow: 0 5px 15px rgba(66, 133, 244, 0.3);
+    box-shadow: 0 3px 10px rgba(66, 133, 244, 0.2);
+    transform: translateY(-2px);
 }
 
 .context-menu, .note-context-menu {
     position: absolute;
     background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     display: none;
     z-index: 10;
-    transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.2s ease;
     min-width: 150px;
+    border: 1px solid #e8ecef;
 }
 
 .menu-item {
     padding: 8px 15px;
-    color: #555;
+    color: #4b5563;
     font-weight: 400;
     font-size: 0.9em;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     gap: 5px;
@@ -545,13 +480,14 @@ button {
     color: #fff;
 }
 
+/* Edit Container */
 .edit-container {
     max-width: 900px;
     margin: 20px auto;
     background: #fff;
-    border-radius: 25px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    padding: 25px;
     animation: fadeIn 0.5s ease-in-out;
 }
 
@@ -559,146 +495,201 @@ button {
 .toolbar {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
-    background: #fafafa;
-    padding: 8px;
-    border-radius: 15px;
+    gap: 15px;
+    margin-bottom: 25px;
+    background: #f8fafc;
+    padding: 15px;
+    border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-    justify-content: center;
+    justify-content: flex-start;
+    border: 1px solid #e8ecef;
+}
+
+.toolbar-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.toolbar-label {
+    font-size: 0.8em;
+    font-weight: 500;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .toolbar-group {
     display: flex;
     gap: 6px;
-    padding: 4px;
-    border-radius: 8px;
+    padding: 6px;
+    border-radius: 10px;
     background: #fff;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e8ecef;
+    transition: all 0.3s ease;
 }
 
-.tool-btn, .edit-btn, .view-btn {
-    padding: 6px 10px;
+.toolbar-group:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.tool-btn, .edit-btn, .exit-btn, .table-tool-btn {
+    padding: 8px;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    color: #4b5563;
+    font-weight: 500;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+}
+
+.tool-btn:hover, .edit-btn:hover, .exit-btn:hover, .table-tool-btn:hover {
     background: #4285f4;
-    border: none;
-    border-radius: 8px;
     color: #fff;
-    font-weight: 500;
-    font-size: 0.85em;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    border-color: #4285f4;
+    box-shadow: 0 3px 8px rgba(66, 133, 244, 0.2);
 }
 
-.tool-btn:hover, .tool-btn:active, .edit-btn:hover, .edit-btn:active, .view-btn:hover, .view-btn:active {
-    background: #357abd;
-    box-shadow: 0 3px 10px rgba(66, 133, 244, 0.3);
+.tool-btn:active, .edit-btn:active, .exit-btn:active, .table-tool-btn:active {
+    transform: scale(0.95);
 }
 
-.table-tool-btn {
-    padding: 6px 10px;
-    border: none;
-    border-radius: 8px;
+.edit-btn {
+    background: #34a853;
+    border-color: #34a853;
     color: #fff;
-    font-weight: 500;
-    font-size: 0.85em;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    display: none;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.edit-btn:hover {
+    background: #2f9e44;
+    border-color: #2f9e44;
+}
+
+.exit-btn {
+    background: #ea4335;
+    border-color: #ea4335;
+    color: #fff;
+}
+
+.exit-btn:hover {
+    background: #db4437;
+    border-color: #db4437;
 }
 
 .table-tool-btn.add-row-btn, .table-tool-btn.add-col-btn {
     background-color: #34a853;
+    border-color: #34a853;
+    color: #fff;
 }
 
 .table-tool-btn.add-row-btn:hover, .table-tool-btn.add-col-btn:hover {
     background-color: #2f9e44;
-    box-shadow: 0 3px 10px rgba(52, 168, 83, 0.3);
+    border-color: #2f9e44;
 }
 
 .table-tool-btn.delete-row-btn, .table-tool-btn.delete-col-btn {
     background-color: #ea4335;
+    border-color: #ea4335;
+    color: #fff;
 }
 
 .table-tool-btn.delete-row-btn:hover, .table-tool-btn.delete-col-btn:hover {
     background-color: #db4437;
-    box-shadow: 0 3px 10px rgba(234, 67, 53, 0.3);
+    border-color: #db4437;
 }
 
-.exit-btn {
-    padding: 6px 10px;
-    background: #ea4335;
-    border: none;
-    border-radius: 8px;
-    color: #fff;
-    font-weight: 500;
-    font-size: 0.85em;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+.table-tool-btn {
+    display: none;
 }
 
-.exit-btn:hover, .exit-btn:active {
-    background: #db4437;
-    box-shadow: 0 3px 10px rgba(234, 67, 53, 0.3);
+/* Editor Header */
+.editor-header {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
-.category-select, .calc-mode-select {
-    padding: 8px 15px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
+/* Category Select */
+.category-select {
+    padding: 10px 15px;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
     background: #fff;
-    color: #555;
+    color: #4b5563;
     font-size: 0.9em;
     font-weight: 500;
-    margin: 10px 0;
-    width: 200px;
-    transition: all 0.3s ease-in-out;
+    width: 100%;
+    max-width: 300px;
+    transition: all 0.3s ease;
 }
 
-.category-select:focus, .calc-mode-select:focus {
+.category-select:focus {
     border-color: #4285f4;
     box-shadow: 0 0 5px rgba(66, 133, 244, 0.3);
     outline: none;
 }
 
+/* Calc Mode Select */
 .calc-mode-select {
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: #fff;
+    color: #4b5563;
+    font-size: 0.85em;
+    font-weight: 500;
     width: 120px;
-    margin: 0;
+    transition: all 0.3s ease;
 }
 
+.calc-mode-select:focus {
+    border-color: #4285f4;
+    box-shadow: 0 0 5px rgba(66, 133, 244, 0.3);
+    outline: none;
+}
+
+/* Note Title */
 .note-title {
     width: 100%;
-    padding: 12px;
-    background: #fafafa;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    color: #333;
+    padding: 12px 15px;
+    background: #f8fafc;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    color: #1f2937;
     font-size: 1.2em;
     font-weight: 500;
-    margin-bottom: 15px;
-    transition: all 0.3s ease-in-out;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
 }
 
 .note-title:focus {
     border-color: #4285f4;
-    box-shadow: 0 5px 15px rgba(66, 133, 244, 0.1);
+    box-shadow: 0 3px 10px rgba(66, 133, 244, 0.1);
     outline: none;
 }
 
+/* Note Content */
 .note-content {
     min-height: 400px;
     background: #fff;
     padding: 20px;
-    border: 1px solid #eee;
+    border: 1px solid #e8ecef;
     border-radius: 15px;
-    color: #333;
+    color: #374151;
     font-size: 1em;
     font-weight: 400;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    transition: all 0.3s ease-in-out;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
     user-select: none;
     overflow-x: auto;
 }
@@ -731,10 +722,10 @@ button {
 .note-title-view {
     width: 100%;
     padding: 12px;
-    background: #fafafa;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    color: #333;
+    background: #f8fafc;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    color: #1f2937;
     font-size: 1.5em;
     font-weight: 600;
     margin-bottom: 15px;
@@ -746,12 +737,12 @@ button {
     min-height: 400px;
     background: #fff;
     padding: 20px;
-    border: 1px solid #eee;
+    border: 1px solid #e8ecef;
     border-radius: 15px;
-    color: #333;
+    color: #374151;
     font-size: 1em;
     font-weight: 400;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
     user-select: none;
     overflow-x: auto;
     word-wrap: break-word;
@@ -770,28 +761,30 @@ button {
     padding: 10px 25px;
     background: #34a853;
     border: none;
-    border-radius: 20px;
+    border-radius: 12px;
     color: #fff;
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 
 .save-btn:hover, .save-btn:active {
     background: #2f9e44;
-    box-shadow: 0 5px 15px rgba(52, 168, 83, 0.3);
+    box-shadow: 0 3px 10px rgba(52, 168, 83, 0.2);
+    transform: translateY(-2px);
 }
 
-.done { /* Ganti .highlight menjadi .done */
+.done {
     text-decoration: line-through;
-    color: #888;
-    transition: all 0.3s ease-in-out;
+    color: #6b7280;
+    transition: all 0.3s ease;
 }
 
 .no-notes {
     text-align: center;
-    color: #888;
+    color: #6b7280;
     font-size: 1.1em;
     font-weight: 400;
     padding: 20px;
@@ -803,7 +796,7 @@ button {
     border-radius: 5px;
     color: #4285f4;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease;
 }
 
 .copyable:hover {
@@ -831,7 +824,7 @@ button {
 .note-content .regular-table td,
 .note-content-view .regular-table th,
 .note-content-view .regular-table td {
-    border: 1px solid #ddd;
+    border: 1px solid #d1d5db;
     padding: 8px;
     text-align: left;
     min-width: 100px;
@@ -839,13 +832,14 @@ button {
 
 .note-content .regular-table th,
 .note-content-view .regular-table th {
-    background-color: #f5f7fa;
+    background-color: #f8fafc;
     font-weight: 500;
+    color: #4b5563;
 }
 
 .note-content .regular-table tr:nth-child(even),
 .note-content-view .regular-table tr:nth-child(even) {
-    background-color: #fafafa;
+    background-color: #f9fafb;
 }
 
 /* Financial Table Styles */
@@ -864,6 +858,7 @@ button {
     border-radius: 8px;
     overflow: hidden;
     min-height: 150px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .finance-table th {
@@ -878,7 +873,7 @@ button {
 .finance-table td {
     padding: 8px;
     border-bottom: 1px solid #f5f7fa;
-    color: #333;
+    color: #374151;
     word-wrap: break-word;
     white-space: normal;
     max-width: 150px;
@@ -922,7 +917,7 @@ button {
 }
 
 .finance-btn-group {
-    display: none; /* Awalnya disembunyikan */
+    display: none;
     gap: 5px;
     margin-top: 5px;
     user-select: none;
@@ -938,6 +933,7 @@ button {
     transition: all 0.3s ease;
     background: #ccc;
     color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .finance-btn.add-income {
@@ -977,12 +973,12 @@ button {
 }
 
 .finance-btn.calculate {
-    background: #666;
+    background: #6b7280;
 }
 
 .finance-btn.calculate:hover {
-    background: #555;
-    box-shadow: 0 2px 5px rgba(102, 102, 102, 0.3);
+    background: #4b5563;
+    box-shadow: 0 2px 5px rgba(107, 114, 128, 0.3);
 }
 
 .finance-btn.delete-last-row {
@@ -996,7 +992,7 @@ button {
 
 .finance-table td[contenteditable="true"][placeholder]::before {
     content: attr(placeholder);
-    color: #aaa;
+    color: #9ca3af;
     font-style: italic;
 }
 
@@ -1063,7 +1059,7 @@ button {
         width: 200px;
         top: auto;
         bottom: calc(100% + 5px);
-        border-radius: 15px 15px 0 0;
+        border-radius: 12px 12px 0 0;
     }
 
     .more-options.active {
@@ -1112,6 +1108,37 @@ button {
     .context-menu, .note-context-menu {
         width: 150px;
     }
+
+    .toolbar {
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .toolbar-section {
+        width: 100%;
+    }
+
+    .toolbar-group {
+        justify-content: center;
+    }
+
+    .tool-btn, .edit-btn, .exit-btn, .table-tool-btn {
+        padding: 6px;
+        min-width: 32px;
+        height: 32px;
+    }
+
+    .category-select {
+        max-width: none;
+    }
+
+    .note-title {
+        font-size: 1.1em;
+    }
+
+    .note-content {
+        min-height: 300px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1139,7 +1166,7 @@ button {
         left: 0;
         right: 0;
         transform: none;
-        border-radius: 15px 15px 0 0;
+        border-radius: 12px 12px 0 0;
     }
 
     .more-options.active {
@@ -1184,30 +1211,18 @@ button {
     }
 
     .toolbar {
-        gap: 6px;
-        flex-direction: row;
-        flex-wrap: wrap;
-        padding: 6px;
-        justify-content: flex-start;
+        flex-direction: column;
+        align-items: center;
     }
 
-    .toolbar-group {
-        gap: 4px;
-        padding: 3px;
-        border-radius: 6px;
-        flex-wrap: wrap;
-        justify-content: center;
+    .toolbar-label {
+        font-size: 0.75em;
     }
 
     .tool-btn, .edit-btn, .exit-btn, .table-tool-btn {
-        padding: 4px 8px;
-        font-size: 0.75em;
-        border-radius: 6px;
-        min-width: 32px;
-    }
-
-    .category-select, .calc-mode-select {
-        width: 100%;
+        padding: 5px;
+        min-width: 30px;
+        height: 30px;
     }
 
     .note-title-view {
