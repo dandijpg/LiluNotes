@@ -17,7 +17,20 @@ function setupView() {
     if (!isNaN(noteId) && noteId >= 0 && noteId < notes.length && notes[noteId]) {
         const note = notes[noteId];
         noteTitle.textContent = note.title;
-        noteContent.innerHTML = note.content;
+        
+        // Bersihkan konten dari atribut contenteditable
+        let cleanContent = note.content;
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = cleanContent;
+        
+        // Hapus semua atribut contenteditable="true" dan ubah ke false
+        const editableElements = tempDiv.querySelectorAll('[contenteditable="true"]');
+        editableElements.forEach(el => {
+            el.setAttribute('contenteditable', 'false');
+            el.removeAttribute('placeholder'); // Hapus placeholder agar tidak membingungkan
+        });
+        
+        noteContent.innerHTML = tempDiv.innerHTML;
         highlightSearchTerms(noteContent, searchQuery);
     } else {
         noteTitle.textContent = 'Note Not Found';
