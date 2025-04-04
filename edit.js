@@ -68,7 +68,6 @@ function setupEventListeners() {
     document.getElementById('exitBtn').addEventListener('click', () => window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`);
     document.getElementById('noteContent').addEventListener('click', toggleTableButtons);
     document.getElementById('noteContent').addEventListener('keyup', toggleTableButtons);
-    document.getElementById('noteContent').addEventListener('input', updateFinancialTableRealTime);
     document.getElementById('noteContent').addEventListener('focusout', updateFinancialTable);
 }
 
@@ -184,6 +183,7 @@ function insertFinancialTable() {
                 <button class="finance-btn subtract-expense" title="Add Expense">-</button>
                 <button class="finance-btn multiply" title="Multiply">*</button>
                 <button class="finance-btn divide" title="Divide">/</button>
+                <button class="finance-btn calculate" title="Calculate Total">=</button>
                 <button class="finance-btn delete-last-row" title="Delete Last Row">🗑️</button>
             </div>
         </div>`;
@@ -195,6 +195,7 @@ function insertFinancialTable() {
     wrapper.querySelector('.subtract-expense').addEventListener('click', () => addFinanceRow(wrapper, '-'));
     wrapper.querySelector('.multiply').addEventListener('click', () => addFinanceRow(wrapper, '*'));
     wrapper.querySelector('.divide').addEventListener('click', () => addFinanceRow(wrapper, '/'));
+    wrapper.querySelector('.calculate').addEventListener('click', () => calculateTotal(wrapper));
     wrapper.querySelector('.delete-last-row').addEventListener('click', () => deleteLastRow(wrapper));
     table.addEventListener('focusin', () => toggleFinanceButtons(wrapper, true));
     table.addEventListener('focusout', () => toggleFinanceButtons(wrapper, false));
@@ -204,7 +205,7 @@ function insertFinancialTable() {
 function addFinanceRow(wrapper, operation) {
     const tbody = wrapper.querySelector('tbody');
     const newRow = document.createElement('tr');
-    newRow.className = operation === '+' ? 'income' : operation === '-' ? 'expense' : 'neutral';
+    newRow.className = operation === '+' ? 'income' : operation === '-' ? 'expense' : operation === '*' ? 'multiply' : 'divide';
     newRow.dataset.operation = operation;
     newRow.style.opacity = '0';
     newRow.style.transform = 'translateY(-10px)';
@@ -213,7 +214,6 @@ function addFinanceRow(wrapper, operation) {
         <td contenteditable="true" class="amount" placeholder="0"></td>`;
     tbody.appendChild(newRow);
 
-    // Animasi smooth
     setTimeout(() => {
         newRow.style.transition = 'all 0.3s ease';
         newRow.style.opacity = '1';
@@ -229,7 +229,7 @@ function deleteLastRow(wrapper) {
     const rows = tbody.querySelectorAll('tr');
     if (rows.length > 1) {
         tbody.removeChild(rows[rows.length - 1]);
-        updateFinancialTable();
+        calculateTotal(wrapper);
     }
 }
 
@@ -238,18 +238,43 @@ function toggleFinanceButtons(wrapper, enable) {
     buttons.forEach(btn => btn.disabled = !enable);
 }
 
-function updateFinancialTableRealTime(event) {
-    const target = event.target;
-    if (target.classList.contains('amount')) {
-        const table = target.closest('.finance-table');
-        if (table) {
-            const rows = table.querySelectorAll('tbody tr');
-            const lastRow = rows[rows.length - 1];
-            if (target === lastRow.querySelector('.amount')) {
-                updateFinancialTable(event); // Update real-time hanya untuk baris terakhir
+function calculateTotal(wrapper) {
+    const table = wrapper.querySelector('.finance-table');
+    const mode = table.dataset.mode;
+    const rows = table.querySelectorAll('tbody tr');
+    let total = 0;
+
+    rows.forEach((row, index) => {
+        const amountCell = row.querySelector('.amount');
+        let value = amountCell.innerText.trim();
+
+        // Hapus semua karakter non-numerik kecuali tanda minus
+        value = value.replace(/[^0-9-]/g, '');
+        const num = parseFloat(value) || 0;
+
+        const operation = row.dataset.operation;
+        if (index === 0) {
+            total = num;
+        } else {
+            switch (operation) {
+                case '+':
+                    total += num;
+                    break;
+                case '-':
+                    total -= num;
+                    break;
+                case '*':
+                    total *= num;
+                    break;
+                case '/':
+                    total = num !== 0 ? total / num : total;
+                    break;
             }
         }
-    }
+    });
+
+    const totalCell = table.querySelector('.total');
+    totalCell.innerText = mode === 'financial' ? formatCurrency(total) : total.toFixed(2);
 }
 
 function updateFinancialTable(event) {
@@ -257,48 +282,20 @@ function updateFinancialTable(event) {
     financeTables.forEach(table => {
         const mode = table.dataset.mode;
         const rows = table.querySelectorAll('tbody tr');
-        let total = 0;
 
-        rows.forEach((row, index) => {
+        rows.forEach(row => {
             const amountCell = row.querySelector('.amount');
-            let value = amountCell.innerText.trim();
-
             if (event && event.target === amountCell) {
-                value = value.replace(/[^\d.-]/g, '');
+                let value = amountCell.innerText.trim();
+                value = value.replace(/[^0-9-]/g, ''); // Hanya simpan angka dan tanda minus
                 const num = parseFloat(value) || 0;
                 if (mode === 'financial' && value !== '') {
                     amountCell.innerText = formatCurrency(num);
                 } else if (value === '') {
                     amountCell.innerText = '';
                 }
-            } else {
-                value = value.replace(/[^\d.-]/g, '');
-            }
-
-            const num = parseFloat(value) || 0;
-            const operation = row.dataset.operation;
-            if (index === 0) {
-                total = num;
-            } else {
-                switch (operation) {
-                    case '+':
-                        total += num;
-                        break;
-                    case '-':
-                        total -= num;
-                        break;
-                    case '*':
-                        total *= num;
-                        break;
-                    case '/':
-                        total = num !== 0 ? total / num : total;
-                        break;
-                }
             }
         });
-
-        const totalCell = table.querySelector('.total');
-        totalCell.innerText = mode === 'financial' ? formatCurrency(total) : total.toFixed(2);
     });
 }
 
@@ -334,7 +331,7 @@ function deleteRow() {
         const rowIndex = getSelectedRowIndex();
         if (rowIndex !== -1) {
             table.deleteRow(rowIndex);
-            updateFinancialTable();
+            calculateTotal(table.closest('.finance-table-wrapper'));
         }
     }
 }
