@@ -506,6 +506,7 @@ button {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     justify-content: flex-start;
     border: 1px solid #e8ecef;
+    overflow-x: auto; /* Tambahan untuk scroll horizontal di mobile */
 }
 
 .toolbar-section {
@@ -681,7 +682,7 @@ button {
     outline: none;
 }
 
-/* Note Content - Perbaikan Utama */
+/* Note Content */
 .note-content {
     min-height: 400px;
     background: #fff;
@@ -694,16 +695,16 @@ button {
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
     overflow-x: auto;
-    overflow-y: auto; /* Tambahan untuk memastikan scroll vertikal jika konten panjang */
-    position: relative; /* Pastikan elemen memiliki posisi yang jelas */
-    cursor: text; /* Menunjukkan bahwa elemen ini bisa diklik untuk teks */
+    overflow-y: auto;
+    position: relative;
+    cursor: text;
 }
 
 .note-content[contenteditable="true"] {
-    user-select: text; /* Memastikan teks bisa dipilih saat editable */
-    -webkit-user-select: text; /* Dukungan untuk Webkit */
-    -moz-user-select: text; /* Dukungan untuk Mozilla */
-    -ms-user-select: text; /* Dukungan untuk Microsoft */
+    user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
 }
 
 .note-content:focus {
@@ -715,9 +716,9 @@ button {
 .note-content ul,
 .note-content ol {
     margin: 0 auto;
-    padding-left: 40px; /* Memberikan indentasi default untuk daftar */
+    padding-left: 40px;
     max-width: 80%;
-    list-style-position: outside; /* Memastikan bullet/number di luar teks */
+    list-style-position: outside;
 }
 
 /* View Mode Styles */
@@ -751,7 +752,7 @@ button {
     font-size: 1em;
     font-weight: 400;
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
-    user-select: text; /* Memastikan teks bisa dipilih di view mode */
+    user-select: text;
     overflow-x: auto;
     word-wrap: break-word;
 }
@@ -759,7 +760,7 @@ button {
 .note-content-view ul,
 .note-content-view ol {
     margin: 0 auto;
-    padding-left: 40px; /* Konsisten dengan note-content */
+    padding-left: 40px;
     max-width: 80%;
     list-style-position: outside;
 }
@@ -1118,12 +1119,14 @@ button {
     }
 
     .toolbar {
+        flex-wrap: nowrap; /* Ubah ke nowrap untuk scroll horizontal */
+        overflow-x: auto;
         gap: 10px;
         padding: 10px;
     }
 
     .toolbar-section {
-        width: 100%;
+        flex-shrink: 0; /* Pastikan section tidak menyusut */
     }
 
     .toolbar-group {
@@ -1134,6 +1137,12 @@ button {
         padding: 6px;
         min-width: 32px;
         height: 32px;
+    }
+
+    .calc-mode-select {
+        padding: 6px 10px;
+        font-size: 0.8em;
+        width: 100px;
     }
 
     .category-select {
@@ -1219,7 +1228,7 @@ button {
     }
 
     .toolbar {
-        flex-direction: column;
+        flex-direction: column; /* Tetap column untuk lebih rapi di layar kecil */
         align-items: center;
     }
 
@@ -1231,6 +1240,12 @@ button {
         padding: 5px;
         min-width: 30px;
         height: 30px;
+    }
+
+    .calc-mode-select {
+        padding: 5px 8px;
+        font-size: 0.75em;
+        width: 90px;
     }
 
     .note-title-view {
