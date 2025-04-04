@@ -414,7 +414,10 @@ button {
 .note .preview {
     font-size: 0.9em;
     color: #4b5563;
- @ -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     max-width: 100%;
     word-break: break-word;
@@ -678,7 +681,7 @@ button {
     outline: none;
 }
 
-/* Note Content */
+/* Note Content - Perbaikan Utama */
 .note-content {
     min-height: 400px;
     background: #fff;
@@ -690,26 +693,31 @@ button {
     font-weight: 400;
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
-    user-select: none;
     overflow-x: auto;
-}
-
-.note-content ul,
-.note-content ol {
-    margin: 0 auto;
-    padding-left: 0;
-    max-width: 80%;
-    list-style-position: inside;
+    overflow-y: auto; /* Tambahan untuk memastikan scroll vertikal jika konten panjang */
+    position: relative; /* Pastikan elemen memiliki posisi yang jelas */
+    cursor: text; /* Menunjukkan bahwa elemen ini bisa diklik untuk teks */
 }
 
 .note-content[contenteditable="true"] {
-    user-select: text;
+    user-select: text; /* Memastikan teks bisa dipilih saat editable */
+    -webkit-user-select: text; /* Dukungan untuk Webkit */
+    -moz-user-select: text; /* Dukungan untuk Mozilla */
+    -ms-user-select: text; /* Dukungan untuk Microsoft */
 }
 
 .note-content:focus {
     border-color: #4285f4;
     box-shadow: 0 5px 15px rgba(66, 133, 244, 0.1);
     outline: none;
+}
+
+.note-content ul,
+.note-content ol {
+    margin: 0 auto;
+    padding-left: 40px; /* Memberikan indentasi default untuk daftar */
+    max-width: 80%;
+    list-style-position: outside; /* Memastikan bullet/number di luar teks */
 }
 
 /* View Mode Styles */
@@ -743,7 +751,7 @@ button {
     font-size: 1em;
     font-weight: 400;
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
-    user-select: none;
+    user-select: text; /* Memastikan teks bisa dipilih di view mode */
     overflow-x: auto;
     word-wrap: break-word;
 }
@@ -751,9 +759,9 @@ button {
 .note-content-view ul,
 .note-content-view ol {
     margin: 0 auto;
-    padding-left: 0;
+    padding-left: 40px; /* Konsisten dengan note-content */
     max-width: 80%;
-    list-style-position: inside;
+    list-style-position: outside;
 }
 
 .save-btn {
