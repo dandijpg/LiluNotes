@@ -859,7 +859,7 @@ button {
     border: 1px solid #e8ecef;
     border-radius: 8px;
     overflow: hidden;
-    min-height: 150px; /* Tinggi minimum agar tabel terlihat jelas */
+    min-height: 150px;
 }
 
 .finance-table th {
@@ -878,25 +878,26 @@ button {
     word-wrap: break-word;
     white-space: normal;
     max-width: 150px;
+    position: relative;
 }
 
 .finance-table .income {
-    background: #e6f4ea; /* Hijau soft sesuai tombol + */
+    background: #e6f4ea;
     color: #34a853;
 }
 
 .finance-table .expense {
-    background: #fce8e6; /* Merah soft sesuai tombol - */
+    background: #fce8e6;
     color: #ea4335;
 }
 
 .finance-table .multiply {
-    background: #fef7e0; /* Kuning soft sesuai tombol * */
+    background: #fef7e0;
     color: #fbbc05;
 }
 
 .finance-table .divide {
-    background: #e8f0fe; /* Biru soft sesuai tombol / */
+    background: #e8f0fe;
     color: #4285f4;
 }
 
@@ -917,7 +918,7 @@ button {
 }
 
 .finance-btn-group {
-    display: flex;
+    display: none; /* Awalnya disembunyikan */
     gap: 5px;
     margin-top: 5px;
     user-select: none;
@@ -1002,6 +1003,14 @@ button {
 
 .finance-table td[contenteditable="true"]:not(:empty)::before {
     content: none;
+}
+
+.warning {
+    color: #ea4335;
+    font-size: 0.8em;
+    margin-left: 5px;
+    vertical-align: middle;
+    display: inline-block;
 }
 
 /* Media Queries untuk Responsivitas */
