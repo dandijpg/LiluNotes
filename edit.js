@@ -68,6 +68,7 @@ function setupEventListeners() {
     document.getElementById('exitBtn').addEventListener('click', () => window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`);
     document.getElementById('noteContent').addEventListener('click', toggleTableButtons);
     document.getElementById('noteContent').addEventListener('keyup', toggleTableButtons);
+    document.getElementById('noteContent').addEventListener('input', checkAmountInput);
     document.getElementById('noteContent').addEventListener('focusout', updateFinancialTable);
 }
 
@@ -233,9 +234,30 @@ function deleteLastRow(wrapper) {
     }
 }
 
-function toggleFinanceButtons(wrapper, enable) {
-    const buttons = wrapper.querySelectorAll('.finance-btn');
-    buttons.forEach(btn => btn.disabled = !enable);
+function toggleFinanceButtons(wrapper, show) {
+    const btnGroup = wrapper.querySelector('.finance-btn-group');
+    btnGroup.style.display = show ? 'flex' : 'none';
+}
+
+function checkAmountInput(event) {
+    const target = event.target;
+    if (target.classList.contains('amount')) {
+        const value = target.innerText.trim();
+        const isValid = /^-?[0-9]*$/.test(value.replace(/[^0-9-]/g, '')) && value !== '';
+        const existingWarning = target.nextElementSibling && target.nextElementSibling.classList.contains('warning');
+
+        if (!isValid && value !== '' && !existingWarning) {
+            const warning = document.createElement('span');
+            warning.className = 'warning';
+            warning.innerHTML = '⚠️';
+            warning.title = 'Only numbers are supported';
+            target.parentElement.appendChild(warning);
+        } else if (isValid || value === '') {
+            if (existingWarning) {
+                target.parentElement.removeChild(existingWarning);
+            }
+        }
+    }
 }
 
 function calculateTotal(wrapper) {
