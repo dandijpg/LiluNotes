@@ -61,7 +61,6 @@ function setupEditor() {
 function setupEventListeners() {
     const noteContent = document.getElementById('noteContent');
 
-    // Fungsi pembantu untuk menerapkan perintah dengan mempertahankan kursor
     const applyCommand = (command, value = null) => {
         const range = saveCursorPosition(noteContent);
         document.execCommand(command, false, value);
@@ -237,7 +236,7 @@ function setupFinanceButtons(wrapper) {
     for (const [className, handler] of Object.entries(buttons)) {
         const btn = wrapper.querySelector(`.finance-btn.${className}`);
         if (btn) {
-            btn.removeEventListener('click', handler); // Hindari duplikat listener
+            btn.removeEventListener('click', handler);
             btn.addEventListener('click', handler);
         }
     }
@@ -273,7 +272,6 @@ function deleteLastRow(wrapper) {
     if (rows.length > 0) {
         tbody.removeChild(rows[rows.length - 1]);
         if (rows.length === 1) {
-            // Jika tidak ada baris tersisa, hapus seluruh wrapper
             wrapper.parentNode.removeChild(wrapper);
         } else {
             calculateTotal(wrapper);
@@ -287,31 +285,27 @@ function handleTableClick(event) {
     const table = event.target.closest('.regular-table') || event.target.closest('.finance-table');
     const allFinanceWrappers = noteContent.querySelectorAll('.finance-table-wrapper');
 
-    // Sembunyikan semua tombol finansial terlebih dahulu
     allFinanceWrappers.forEach(w => {
         const btnGroup = w.querySelector('.finance-btn-group');
         if (btnGroup) btnGroup.style.display = 'none';
     });
 
-    // Jika klik pada tabel finansial
     if (wrapper) {
         const btnGroup = wrapper.querySelector('.finance-btn-group') || wrapper.appendChild(createFinanceBtnGroup(wrapper));
         btnGroup.style.display = 'flex';
     } else if (!table) {
-        // Jika klik di luar tabel finansial atau reguler, kursor akan berada di noteContent
         const range = document.createRange();
         const selection = window.getSelection();
         const target = event.target;
 
         if (target === noteContent || !noteContent.contains(target)) {
             range.selectNodeContents(noteContent);
-            range.collapse(false); // Pindahkan kursor ke akhir konten
+            range.collapse(false);
             selection.removeAllRanges();
             selection.addRange(range);
         }
     }
 
-    // Pastikan tombol tabel reguler muncul saat tabel reguler diklik
     toggleTableButtons();
 }
 
