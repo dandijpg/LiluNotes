@@ -700,11 +700,13 @@ button {
     overflow-y: auto;
     position: relative;
     cursor: text;
+    touch-action: manipulation; /* Meningkatkan responsivitas sentuhan di mobile */
+    -webkit-overflow-scrolling: touch; /* Memperbaiki scroll di iOS */
 }
 
 .note-content[contenteditable="true"] {
     user-select: text;
-    -webkit-user-select: text;
+    -webkit-user-select: text; /* Pastikan teks bisa dipilih di mobile */
     -moz-user-select: text;
     -ms-user-select: text;
 }
@@ -1216,6 +1218,9 @@ button {
     .note-content {
         height: 300px; /* Tinggi statis untuk tablet */
         max-height: 300px;
+        padding: 15px;
+        touch-action: manipulation; /* Pastikan responsif di tablet */
+        -webkit-overflow-scrolling: touch;
     }
 
     .note-content-view {
@@ -1256,8 +1261,7 @@ button {
     }
 
     .pinned-section h2, .notes-section h2 {
-        font-size: 1.1em选用: pointer;
-        font-size: 0.95em;
+        font-size: 1.1em;
     }
 
     .note {
@@ -1326,6 +1330,9 @@ button {
     .note-content {
         height: 250px; /* Tinggi statis untuk ponsel */
         max-height: 250px;
+        padding: 12px;
+        touch-action: manipulation; /* Pastikan responsif di ponsel */
+        -webkit-overflow-scrolling: touch;
     }
 }
 
