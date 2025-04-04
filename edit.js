@@ -166,9 +166,9 @@ function insertFinancialTable() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="income">
+                    <tr class="income" data-operation="+">
                         <td contenteditable="true"></td>
-                        <td contenteditable="true" class="amount"></td>
+                        <td contenteditable="true" class="amount">0</td>
                     </tr>
                 </tbody>
                 <tfoot>
@@ -181,27 +181,30 @@ function insertFinancialTable() {
             <div class="finance-btn-group">
                 <button class="finance-btn add-income" title="Add Income">+</button>
                 <button class="finance-btn subtract-expense" title="Add Expense">-</button>
-                <button class="finance-btn multiply" title="Multiply" disabled>*</button>
-                <button class="finance-btn divide" title="Divide" disabled>/</button>
+                <button class="finance-btn multiply" title="Multiply">*</button>
+                <button class="finance-btn divide" title="Divide">/</button>
             </div>
         </div>`;
     document.execCommand('insertHTML', false, financeHtml);
 
     const wrapper = document.querySelector('.finance-table-wrapper:last-child');
-    wrapper.querySelector('.add-income').addEventListener('click', () => addFinanceRow(wrapper, 'income'));
-    wrapper.querySelector('.subtract-expense').addEventListener('click', () => addFinanceRow(wrapper, 'expense'));
+    wrapper.querySelector('.add-income').addEventListener('click', () => addFinanceRow(wrapper, '+'));
+    wrapper.querySelector('.subtract-expense').addEventListener('click', () => addFinanceRow(wrapper, '-'));
+    wrapper.querySelector('.multiply').addEventListener('click', () => addFinanceRow(wrapper, '*'));
+    wrapper.querySelector('.divide').addEventListener('click', () => addFinanceRow(wrapper, '/'));
     wrapper.querySelector('.amount').focus();
 }
 
-function addFinanceRow(wrapper, type) {
+function addFinanceRow(wrapper, operation) {
     const tbody = wrapper.querySelector('tbody');
     const newRow = document.createElement('tr');
-    newRow.className = type === 'income' ? 'income' : 'expense';
+    newRow.className = operation === '+' ? 'income' : operation === '-' ? 'expense' : 'neutral';
+    newRow.dataset.operation = operation;
     newRow.style.opacity = '0';
     newRow.style.transform = 'translateY(-10px)';
     newRow.innerHTML = `
         <td contenteditable="true"></td>
-        <td contenteditable="true" class="amount"></td>`;
+        <td contenteditable="true" class="amount">0</td>`;
     tbody.appendChild(newRow);
 
     // Animasi smooth
@@ -219,19 +222,38 @@ function updateFinancialTable() {
     const financeTables = document.querySelectorAll('.finance-table');
     financeTables.forEach(table => {
         const mode = table.dataset.mode;
-        const amounts = table.querySelectorAll('.amount');
+        const rows = table.querySelectorAll('tbody tr');
         let total = 0;
 
-        amounts.forEach(amount => {
-            let value = amount.innerText.trim();
+        rows.forEach((row, index) => {
+            const amountCell = row.querySelector('.amount');
+            let value = amountCell.innerText.trim().replace(/[^\d.-]/g, ''); // Hapus semua kecuali angka dan tanda minus
+            const num = parseFloat(value) || 0;
+
             if (mode === 'financial') {
-                value = value.replace(/[^\d]/g, ''); // Hapus semua kecuali angka
-                const num = parseFloat(value) || 0;
-                amount.innerText = formatCurrency(num);
-                total += amount.parentElement.classList.contains('income') ? num : -num;
+                amountCell.innerText = formatCurrency(num);
             } else {
-                const num = parseFloat(value) || 0;
-                total += num;
+                amountCell.innerText = num.toString();
+            }
+
+            const operation = row.dataset.operation;
+            if (index === 0) {
+                total = num; // Baris pertama adalah nilai awal
+            } else {
+                switch (operation) {
+                    case '+':
+                        total += num;
+                        break;
+                    case '-':
+                        total -= num;
+                        break;
+                    case '*':
+                        total *= num;
+                        break;
+                    case '/':
+                        total = num !== 0 ? total / num : total; // Hindari pembagian dengan 0
+                        break;
+                }
             }
         });
 
@@ -270,7 +292,10 @@ function deleteRow() {
     const table = getSelectedTable();
     if (table && table.rows.length > 1) {
         const rowIndex = getSelectedRowIndex();
-        if (rowIndex !== -1) table.deleteRow(rowIndex);
+        if (rowIndex !== -1) {
+            table.deleteRow(rowIndex);
+            updateFinancialTable(); // Perbarui total setelah menghapus baris
+        }
     }
 }
 
