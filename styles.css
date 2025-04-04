@@ -874,6 +874,9 @@ button {
     padding: 8px;
     border-bottom: 1px solid #f5f7fa;
     color: #333;
+    word-wrap: break-word;
+    white-space: normal;
+    max-width: 150px;
 }
 
 .finance-table .income {
@@ -911,6 +914,7 @@ button {
     display: flex;
     gap: 5px;
     margin-top: 5px;
+    user-select: none;
 }
 
 .finance-btn {
@@ -921,11 +925,12 @@ button {
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
+    background: #ccc;
+    color: #fff;
 }
 
 .finance-btn.add-income {
     background: #34a853;
-    color: #fff;
 }
 
 .finance-btn.add-income:hover {
@@ -935,7 +940,6 @@ button {
 
 .finance-btn.subtract-expense {
     background: #ea4335;
-    color: #fff;
 }
 
 .finance-btn.subtract-expense:hover {
@@ -945,7 +949,6 @@ button {
 
 .finance-btn.multiply {
     background: #fbbc05;
-    color: #fff;
 }
 
 .finance-btn.multiply:hover {
@@ -955,12 +958,35 @@ button {
 
 .finance-btn.divide {
     background: #4285f4;
-    color: #fff;
 }
 
 .finance-btn.divide:hover {
     background: #357abd;
     box-shadow: 0 2px 5px rgba(66, 133, 244, 0.3);
+}
+
+.finance-btn.delete-last-row {
+    background: #ea4335;
+}
+
+.finance-btn.delete-last-row:hover {
+    background: #db4437;
+    box-shadow: 0 2px 5px rgba(234, 67, 53, 0.3);
+}
+
+.finance-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.finance-table td[contenteditable="true"][placeholder]::before {
+    content: attr(placeholder);
+    color: #aaa;
+    font-style: italic;
+}
+
+.finance-table td[contenteditable="true"]:not(:empty)::before {
+    content: none;
 }
 
 /* Media Queries untuk Responsivitas */
