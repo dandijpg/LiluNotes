@@ -146,7 +146,7 @@ function applyFloat(direction) {
 function insertTable() {
     const tableHtml = `
         <div class="table-wrapper">
-            <table>
+            <table class="regular-table">
                 <tr><th>Header 1</th><th>Header 2</th></tr>
                 <tr><td>Cell 1</td><td>Cell 2</td></tr>
             </table>
@@ -221,11 +221,19 @@ function addFinanceRow(wrapper, operation) {
 }
 
 function deleteLastRow(wrapper) {
-    const tbody = wrapper.querySelector('tbody');
+    const table = wrapper.querySelector('.finance-table');
+    const tbody = table.querySelector('tbody');
     const rows = tbody.querySelectorAll('tr');
-    if (rows.length > 1) {
+    if (rows.length > 0) {
         tbody.removeChild(rows[rows.length - 1]);
-        calculateTotal(wrapper);
+        if (rows.length === 1) { // Jika tidak ada baris lagi setelah penghapusan
+            const thead = table.querySelector('thead');
+            const tfoot = table.querySelector('tfoot');
+            if (thead) thead.remove();
+            if (tfoot) tfoot.remove();
+        } else {
+            calculateTotal(wrapper);
+        }
     }
 }
 
@@ -308,7 +316,9 @@ function calculateTotal(wrapper) {
     });
 
     const totalCell = table.querySelector('.total');
-    totalCell.innerText = mode === 'financial' ? formatCurrency(total) : total.toFixed(2);
+    if (totalCell) {
+        totalCell.innerText = mode === 'financial' ? formatCurrency(total) : total.toFixed(2);
+    }
 }
 
 function updateFinancialTable(event) {
@@ -340,7 +350,7 @@ function formatCurrency(value) {
 
 function addRow() {
     const table = getSelectedTable();
-    if (table) {
+    if (table && !table.classList.contains('finance-table')) {
         const row = table.insertRow(-1);
         const cellCount = table.rows[0].cells.length;
         for (let i = 0; i < cellCount; i++) {
@@ -351,7 +361,7 @@ function addRow() {
 
 function addColumn() {
     const table = getSelectedTable();
-    if (table) {
+    if (table && !table.classList.contains('finance-table')) {
         Array.from(table.rows).forEach(row => {
             const cell = row.insertCell(-1);
             cell.textContent = row.cells[0].tagName === 'TH' ? 'New Header' : 'New Cell';
@@ -361,18 +371,17 @@ function addColumn() {
 
 function deleteRow() {
     const table = getSelectedTable();
-    if (table && table.rows.length > 1) {
+    if (table && !table.classList.contains('finance-table') && table.rows.length > 1) {
         const rowIndex = getSelectedRowIndex();
         if (rowIndex !== -1) {
             table.deleteRow(rowIndex);
-            calculateTotal(table.closest('.finance-table-wrapper'));
         }
     }
 }
 
 function deleteColumn() {
     const table = getSelectedTable();
-    if (table && table.rows[0].cells.length > 1) {
+    if (table && !table.classList.contains('finance-table') && table.rows[0].cells.length > 1) {
         const colIndex = getSelectedColumnIndex();
         if (colIndex !== -1) {
             Array.from(table.rows).forEach(row => row.deleteCell(colIndex));
@@ -428,10 +437,11 @@ function getSelectedColumnIndex() {
 
 function toggleTableButtons() {
     const table = getSelectedTable();
-    document.getElementById('addRowBtn').style.display = table ? 'inline-block' : 'none';
-    document.getElementById('addColBtn').style.display = table ? 'inline-block' : 'none';
-    document.getElementById('deleteRowBtn').style.display = table && table.rows.length > 1 ? 'inline-block' : 'none';
-    document.getElementById('deleteColBtn').style.display = table && table.rows[0].cells.length > 1 ? 'inline-block' : 'none';
+    const isRegularTable = table && !table.classList.contains('finance-table');
+    document.getElementById('addRowBtn').style.display = isRegularTable ? 'inline-block' : 'none';
+    document.getElementById('addColBtn').style.display = isRegularTable ? 'inline-block' : 'none';
+    document.getElementById('deleteRowBtn').style.display = isRegularTable && table.rows.length > 1 ? 'inline-block' : 'none';
+    document.getElementById('deleteColBtn').style.display = isRegularTable && table.rows[0].cells.length > 1 ? 'inline-block' : 'none';
 }
 
 function copyFormattedText() {
