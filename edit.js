@@ -66,8 +66,6 @@ function setupEventListeners() {
     document.getElementById('exitBtn').addEventListener('click', () => window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`);
     document.getElementById('noteContent').addEventListener('click', toggleTableButtons);
     document.getElementById('noteContent').addEventListener('keyup', toggleTableButtons);
-    document.getElementById('noteContent').addEventListener('input', handleCalculatorInput);
-    document.getElementById('noteContent').addEventListener('keydown', restrictCalculatorInput);
 }
 
 function toggleHighlight() {
@@ -156,114 +154,90 @@ function insertTable() {
 
 function insertCalculator() {
     const calcHtml = `
-        <div class="calculator-wrapper" contenteditable="true">
-            <div class="calc-line" contenteditable="true"></div>
+        <div class="calculator-wrapper">
+            <div class="calc-line"><span class="calc-number" contenteditable="true"></span><span class="calc-operator"></span></div>
+            <div class="calc-line" style="display: none;"><span class="calc-number" contenteditable="true"></span></div>
+            <div class="calc-line calc-divider" style="display: none;"><span class="calc-result">----------=</span></div>
+            <div class="calc-line" style="display: none;"><span class="calc-result"></span></div>
         </div>`;
     document.execCommand('insertHTML', false, calcHtml);
-    const calcLine = document.querySelector('.calculator-wrapper:last-child .calc-line');
-    calcLine.focus();
+
+    // Tambahkan event listener untuk kalkulator yang baru dibuat
+    const calcWrapper = document.querySelector('.calculator-wrapper:last-child');
+    const firstNumber = calcWrapper.querySelector('.calc-number:first-child');
+    const secondNumber = calcWrapper.querySelector('.calc-line:nth-child(2) .calc-number');
+
+    firstNumber.focus();
+
+    firstNumber.addEventListener('input', () => handleCalculatorInput(calcWrapper));
+    secondNumber.addEventListener('input', () => handleCalculatorInput(calcWrapper));
+    firstNumber.addEventListener('keydown', (e) => restrictCalculatorInput(e, calcWrapper));
+    secondNumber.addEventListener('keydown', (e) => restrictCalculatorInput(e, calcWrapper));
 }
 
-function handleCalculatorInput(e) {
-    const noteContent = document.getElementById('noteContent');
-    const calcWrappers = noteContent.querySelectorAll('.calculator-wrapper');
-    calcWrappers.forEach(calcWrapper => {
-        const lines = calcWrapper.querySelectorAll('.calc-line');
-        const firstLine = lines[0];
+function handleCalculatorInput(calcWrapper) {
+    const lines = calcWrapper.querySelectorAll('.calc-line');
+    const firstNumber = lines[0].querySelector('.calc-number');
+    const operator = lines[0].querySelector('.calc-operator');
+    const secondLine = lines[1];
+    const secondNumber = secondLine.querySelector('.calc-number');
+    const dividerLine = lines[2];
+    const resultLine = lines[3];
 
-        // Deteksi input pertama (misalnya "5+")
-        const firstText = firstLine.innerText.trim();
-        if (firstText.match(/^\d+\s*\+$/)) {
-            const number = firstText.replace('+', '').trim();
-            firstLine.innerHTML = `<span class="calc-number">${number}</span><span class="calc-operator">          +</span>`;
-            firstLine.removeAttribute('contenteditable');
-            addSecondLine(calcWrapper);
-            const secondLine = calcWrapper.querySelectorAll('.calc-line')[1];
-            secondLine.focus();
+    // Deteksi input pertama (misalnya "5+")
+    const firstText = firstNumber.innerText.trim();
+    if (firstText.match(/^\d+\s*\+$/)) {
+        const number = firstText.replace('+', '').trim();
+        firstNumber.innerText = number;
+        operator.innerText = '          +'; // 10 spasi sebelum +
+        secondLine.style.display = 'block';
+        secondNumber.focus();
+    }
+
+    // Tangani input kedua dan hitung hasil
+    const secondText = secondNumber.innerText.trim();
+    const numMatch = secondText.match(/^\d+/);
+    if (numMatch) {
+        const num1 = parseFloat(firstNumber.innerText) || 0;
+        const num2 = parseFloat(numMatch[0]) || 0;
+        if (!isNaN(num1) && !isNaN(num2)) {
+            dividerLine.style.display = 'block';
+            resultLine.style.display = 'block';
+            resultLine.querySelector('.calc-result').innerText = num1 + num2;
         }
-
-        // Jika ada baris kedua, tangani inputnya
-        if (lines.length > 1) {
-            const secondLine = lines[1];
-            const secondText = secondLine.innerText.trim();
-            const numMatch = secondText.match(/^\d+/);
-            if (numMatch) {
-                const num2 = parseFloat(numMatch[0]);
-                const num1 = parseFloat(firstLine.querySelector('.calc-number').innerText);
-                if (!isNaN(num1) && !isNaN(num2)) {
-                    if (lines.length < 4) {
-                        addDividerAndResult(calcWrapper);
-                    }
-                    const resultLine = calcWrapper.querySelectorAll('.calc-line')[3];
-                    resultLine.querySelector('.calc-result').innerText = num1 + num2;
-                }
-                secondLine.innerHTML = `<span class="calc-number">${numMatch[0]}</span><span class="calc-comment">${secondText.substring(numMatch[0].length)}</span>`;
-            }
-        }
-    });
-}
-
-function addSecondLine(calcWrapper) {
-    if (calcWrapper.querySelectorAll('.calc-line').length === 1) {
-        const secondLine = document.createElement('div');
-        secondLine.className = 'calc-line';
-        secondLine.setAttribute('contenteditable', 'true');
-        calcWrapper.appendChild(secondLine);
     }
 }
 
-function addDividerAndResult(calcWrapper) {
-    if (calcWrapper.querySelectorAll('.calc-line').length < 4) {
-        const dividerLine = document.createElement('div');
-        dividerLine.className = 'calc-line calc-divider';
-        dividerLine.innerHTML = '<span class="calc-result">----------=</span>';
-        calcWrapper.appendChild(dividerLine);
+function restrictCalculatorInput(e, calcWrapper) {
+    const lines = calcWrapper.querySelectorAll('.calc-line');
+    const currentLine = e.target.closest('.calc-line') || lines[0];
+    const lineIndex = Array.from(lines).indexOf(currentLine);
 
-        const resultLine = document.createElement('div');
-        resultLine.className = 'calc-line';
-        resultLine.innerHTML = '<span class="calc-result"></span>';
-        calcWrapper.appendChild(resultLine);
+    // Batasi input di baris hasil
+    if (lineIndex >= 2) {
+        e.preventDefault();
+        return;
     }
-}
 
-function restrictCalculatorInput(e) {
-    const selection = window.getSelection();
-    if (selection.rangeCount > 0) {
-        const range = selection.getRangeAt(0);
-        const container = range.commonAncestorContainer;
-        const calcWrapper = container.closest('.calculator-wrapper');
-        if (calcWrapper) {
-            const lines = calcWrapper.querySelectorAll('.calc-line');
-            const currentLine = container.closest('.calc-line') || lines[0];
-            const lineIndex = Array.from(lines).indexOf(currentLine);
-
-            // Batasi input di baris hasil
-            if (lineIndex >= 2) {
-                e.preventDefault();
-                return;
-            }
-
-            // Batasi enter di dalam kalkulator
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                if (lineIndex === 0 && lines.length > 1) {
-                    lines[1].focus();
-                }
-                return;
-            }
-
-            // Hanya izinkan angka, spasi, dan '+' di baris pertama
-            if (lineIndex === 0 && !/[\d+\s]/.test(e.key) && e.key !== 'Backspace') {
-                e.preventDefault();
-                return;
-            }
-
-            // Hanya izinkan angka dan spasi di baris kedua
-            if (lineIndex === 1 && !/[\d\s]/.test(e.key) && e.key !== 'Backspace') {
-                e.preventDefault();
-                return;
-            }
+    // Batasi enter di dalam kalkulator
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        if (lineIndex === 0 && lines[1].style.display === 'block') {
+            lines[1].querySelector('.calc-number').focus();
         }
+        return;
+    }
+
+    // Hanya izinkan angka dan '+' di baris pertama
+    if (lineIndex === 0 && !/[\d+]/.test(e.key) && e.key !== 'Backspace') {
+        e.preventDefault();
+        return;
+    }
+
+    // Hanya izinkan angka di baris kedua
+    if (lineIndex === 1 && !/\d/.test(e.key) && e.key !== 'Backspace') {
+        e.preventDefault();
+        return;
     }
 }
 
