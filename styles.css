@@ -685,7 +685,8 @@ button {
 
 /* Note Content */
 .note-content {
-    min-height: 400px;
+    height: 400px; /* Tinggi statis */
+    max-height: 400px; /* Pastikan tidak melebihi tinggi ini */
     background: #fff;
     padding: 20px;
     border: 1px solid #e8ecef;
@@ -1196,7 +1197,8 @@ button {
     }
 
     .note-content {
-        min-height: 300px;
+        height: 300px; /* Tinggi statis untuk tablet */
+        max-height: 300px;
     }
 }
 
@@ -1297,6 +1299,11 @@ button {
 
     .finance-table {
         width: 100%;
+    }
+
+    .note-content {
+        height: 250px; /* Tinggi statis untuk ponsel */
+        max-height: 250px;
     }
 }
 
