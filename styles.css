@@ -839,43 +839,81 @@ button {
     background-color: #fafafa;
 }
 
-/* Calculator Styles */
-.calculator-wrapper {
-    background: #f0f2f5;
-    padding: 10px;
-    border-radius: 8px;
-    margin: 10px 0;
+/* CalcCard Styles */
+.calc-card {
     display: inline-block;
-    max-width: 100%;
-    overflow-x: auto;
-    border: 1px solid #e0e2e5;
+    background: #f9fbfc;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 10px;
+    margin: 10px 0;
+    width: 200px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    user-select: none;
 }
 
-.calc-line {
+.calc-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+.calc-card.expanded {
+    transform: scale(1.2);
+}
+
+.calc-header {
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #4285f4;
+    text-align: center;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #e8ecef;
+}
+
+.calc-body {
     display: flex;
     align-items: center;
-    white-space: pre;
+    justify-content: space-between;
+    padding: 10px 0;
 }
 
-.calc-number {
-    min-width: 20px;
+.calc-input {
+    display: inline-block;
+    width: 60px;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 5px;
+    font-size: 1em;
+    color: #333;
+    outline: none;
+}
+
+.calc-input:empty::before {
+    content: attr(data-placeholder);
+    color: #aaa;
 }
 
 .calc-operator {
-    min-width: 20px;
-}
-
-.calc-comment {
-    color: green;
-    margin-left: 5px;
-}
-
-.calc-divider {
-    margin: 5px 0;
-}
-
-.calc-result b {
+    font-size: 1.2em;
+    color: #34a853;
     font-weight: 600;
+}
+
+.calc-result {
+    text-align: center;
+    padding-top: 5px;
+    border-top: 1px dashed #e8ecef;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.calc-result-value {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #ea4335;
 }
 
 /* Media Queries untuk Responsivitas */
@@ -997,7 +1035,7 @@ button {
 
     .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .reset-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn {
         padding: 6px 12px;
-        font-size: 0.Mail7em;
+        font-size: 0.7em;
     }
 
     .more-options {
