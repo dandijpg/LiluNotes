@@ -783,11 +783,10 @@ button {
     box-shadow: 0 5px 15px rgba(52, 168, 83, 0.3);
 }
 
-.highlight {
-    background-color: #fbbc05;
-    color: #333;
-    padding: 2px 5px;
-    border-radius: 5px;
+.done { /* Ganti .highlight menjadi .done */
+    text-decoration: line-through;
+    color: #888;
+    transition: all 0.3s ease-in-out;
 }
 
 .no-notes {
