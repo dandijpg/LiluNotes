@@ -238,9 +238,11 @@ function deleteLastRow(wrapper) {
 }
 
 function handleTableClick(event) {
+    const noteContent = document.getElementById('noteContent');
     const wrapper = event.target.closest('.finance-table-wrapper');
     const allWrappers = document.querySelectorAll('.finance-table-wrapper');
     
+    // Tangani tombol finansial
     allWrappers.forEach(w => {
         const btnGroup = w.querySelector('.finance-btn-group');
         if (w === wrapper) {
@@ -254,6 +256,40 @@ function handleTableClick(event) {
         allWrappers.forEach(w => {
             w.querySelector('.finance-btn-group').style.display = 'none'; // Sembunyikan semua tombol jika klik di luar tabel
         });
+
+        // Posisikan kursor di luar tabel
+        const selection = window.getSelection();
+        const range = document.createRange();
+        const clickX = event.clientX;
+        let positioned = false;
+
+        allWrappers.forEach(tableWrapper => {
+            const rect = tableWrapper.getBoundingClientRect();
+            const tableLeft = rect.left;
+            const tableRight = rect.right;
+
+            if (clickX < tableLeft) {
+                // Klik di kiri tabel, posisikan kursor sebelum tabel
+                range.setStartBefore(tableWrapper);
+                range.setEndBefore(tableWrapper);
+                positioned = true;
+            } else if (clickX > tableRight) {
+                // Klik di kanan tabel, posisikan kursor setelah tabel
+                range.setStartAfter(tableWrapper);
+                range.setEndAfter(tableWrapper);
+                positioned = true;
+            }
+        });
+
+        if (!positioned) {
+            // Jika tidak ada tabel di sekitar klik, posisikan di akhir konten
+            range.selectNodeContents(noteContent);
+            range.collapse(false);
+        }
+
+        selection.removeAllRanges();
+        selection.addRange(range);
+        noteContent.focus();
     }
 
     toggleTableButtons();
