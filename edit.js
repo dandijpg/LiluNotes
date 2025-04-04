@@ -52,10 +52,9 @@ function setupEditor() {
         noteContent.innerHTML = note.content;
         categorySelect.value = note.category;
         highlightSearchTerms(noteContent, searchQuery);
-        // Jangan panggil focus() langsung, biarkan pengguna mengklik untuk fokus
     } else {
         categorySelect.value = categories[1] || 'Uncategorized';
-        noteContent.innerHTML = ''; // Pastikan kosong untuk catatan baru
+        noteContent.innerHTML = '';
     }
 }
 
@@ -287,27 +286,22 @@ function deleteLastRow(wrapper) {
 function handleTableClick(event) {
     const noteContent = document.getElementById('noteContent');
     const wrapper = event.target.closest('.finance-table-wrapper');
-    const allWrappers = noteContent.querySelectorAll('.finance-table-wrapper');
+    const table = event.target.closest('.regular-table') || event.target.closest('.finance-table');
+    const allFinanceWrappers = noteContent.querySelectorAll('.finance-table-wrapper');
 
-    allWrappers.forEach(w => {
+    // Sembunyikan semua tombol finansial terlebih dahulu
+    allFinanceWrappers.forEach(w => {
         const btnGroup = w.querySelector('.finance-btn-group');
         if (btnGroup) btnGroup.style.display = 'none';
     });
 
+    // Jika klik pada tabel finansial
     if (wrapper) {
         const btnGroup = wrapper.querySelector('.finance-btn-group') || wrapper.appendChild(createFinanceBtnGroup(wrapper));
         btnGroup.style.display = 'flex';
-    } else {
-        const selection = window.getSelection();
-        const range = document.createRange();
-        const target = event.target;
-
-        if (target === noteContent || noteContent.contains(target)) {
-            // Jika klik langsung pada noteContent atau anaknya, biarkan kursor mengikuti posisi klik
-            return; // Tidak perlu memaksa posisi kursor
-        }
     }
 
+    // Pastikan tombol tabel reguler muncul saat tabel reguler diklik
     toggleTableButtons();
 }
 
@@ -470,6 +464,7 @@ function getSelectedColumnIndex() {
 function toggleTableButtons() {
     const table = getSelectedTable();
     const isRegularTable = table && !table.classList.contains('finance-table');
+    
     document.getElementById('addRowBtn').style.display = isRegularTable ? 'inline-block' : 'none';
     document.getElementById('addColBtn').style.display = isRegularTable ? 'inline-block' : 'none';
     document.getElementById('deleteRowBtn').style.display = isRegularTable && table.rows.length > 1 ? 'inline-block' : 'none';
