@@ -926,13 +926,6 @@ button {
     text-align: right;
 }
 
-.finance-btn-group {
-    display: none;
-    gap: 5px;
-    margin-top: 5px;
-    user-select: none;
-}
-
 .finance-btn {
     padding: 5px 10px;
     border: none;
@@ -1016,6 +1009,50 @@ button {
     margin-left: 5px;
     vertical-align: middle;
     display: inline-block;
+}
+
+/* Financial Table Popup Styles */
+.finance-options-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 5px;
+    background: #4285f4;
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1em;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.finance-options-btn:hover {
+    background: #357abd;
+    box-shadow: 0 3px 8px rgba(66, 133, 244, 0.2);
+}
+
+.finance-popup {
+    position: absolute;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    display: none;
+    z-index: 10;
+    flex-direction: column;
+    gap: 8px;
+    border: 1px solid #e8ecef;
+    min-width: 150px;
+}
+
+.finance-popup.active {
+    display: flex;
 }
 
 /* Media Queries untuk Responsivitas */
@@ -1260,9 +1297,5 @@ button {
 
     .finance-table {
         width: 100%;
-    }
-
-    .finance-btn-group {
-        flex-wrap: wrap;
     }
 }
