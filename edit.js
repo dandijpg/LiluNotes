@@ -60,12 +60,13 @@ function setupEventListeners() {
     document.getElementById('addColBtn').addEventListener('click', addColumn);
     document.getElementById('deleteRowBtn').addEventListener('click', deleteRow);
     document.getElementById('deleteColBtn').addEventListener('click', deleteColumn);
-    document.getElementById('calcBtn').addEventListener('click', insertCalcCard);
+    document.getElementById('financeBtn').addEventListener('click', insertFinancialTable);
     document.getElementById('copyFormattedBtn').addEventListener('click', copyFormattedText);
     document.getElementById('saveBtn').addEventListener('click', saveNote);
     document.getElementById('exitBtn').addEventListener('click', () => window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`);
     document.getElementById('noteContent').addEventListener('click', toggleTableButtons);
     document.getElementById('noteContent').addEventListener('keyup', toggleTableButtons);
+    document.getElementById('noteContent').addEventListener('input', updateFinancialTable);
 }
 
 function toggleHighlight() {
@@ -152,58 +153,60 @@ function insertTable() {
     toggleTableButtons();
 }
 
-function insertCalcCard() {
-    const calcCardHtml = `
-        <div class="calc-card">
-            <div class="calc-header">CalcCard</div>
-            <div class="calc-body">
-                <span class="calc-input" contenteditable="true" data-placeholder="0"></span>
-                <span class="calc-operator">+</span>
-                <span class="calc-input" contenteditable="true" data-placeholder="0"></span>
-            </div>
-            <div class="calc-result"><span class="calc-result-value">0</span></div>
+function insertFinancialTable() {
+    const financeHtml = `
+        <div class="finance-table-wrapper">
+            <table class="finance-table">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td contenteditable="true"></td>
+                        <td contenteditable="true" class="amount"></td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>Total</td>
+                        <td class="total">0</td>
+                    </tr>
+                </tfoot>
+            </table>
+            <button class="add-finance-row-btn">Add Row</button>
         </div>`;
-    document.execCommand('insertHTML', false, calcCardHtml);
+    document.execCommand('insertHTML', false, financeHtml);
 
-    const calcCard = document.querySelector('.calc-card:last-child');
-    const inputs = calcCard.querySelectorAll('.calc-input');
-    const resultValue = calcCard.querySelector('.calc-result-value');
-
-    inputs.forEach(input => {
-        input.addEventListener('input', () => {
-            const num1 = parseFloat(inputs[0].innerText) || 0;
-            const num2 = parseFloat(inputs[1].innerText) || 0;
-            resultValue.innerText = num1 + num2;
-            resultValue.parentElement.style.opacity = '1';
-        });
-        input.addEventListener('keydown', (e) => {
-            if (!/\d/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Enter') {
-                e.preventDefault();
-            }
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                inputs[lineIndex(inputs, input) === 0 ? 1 : 0].focus();
-            }
-        });
-        input.addEventListener('focus', () => {
-            if (input.innerText === '0') input.innerText = '';
-        });
-        input.addEventListener('blur', () => {
-            if (input.innerText === '') input.innerText = '0';
-        });
-    });
-
-    calcCard.addEventListener('click', (e) => {
-        if (!e.target.classList.contains('calc-input')) {
-            calcCard.classList.toggle('expanded');
-        }
-    });
-
-    inputs[0].focus();
+    const wrapper = document.querySelector('.finance-table-wrapper:last-child');
+    wrapper.querySelector('.add-finance-row-btn').addEventListener('click', () => addFinanceRow(wrapper));
+    wrapper.querySelector('.amount').focus();
 }
 
-function lineIndex(inputs, currentInput) {
-    return Array.from(inputs).indexOf(currentInput);
+function addFinanceRow(wrapper) {
+    const tbody = wrapper.querySelector('tbody');
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+        <td contenteditable="true"></td>
+        <td contenteditable="true" class="amount"></td>`;
+    tbody.appendChild(newRow);
+    updateFinancialTable();
+    newRow.querySelector('.amount').focus();
+}
+
+function updateFinancialTable() {
+    const financeTables = document.querySelectorAll('.finance-table');
+    financeTables.forEach(table => {
+        const amounts = table.querySelectorAll('.amount');
+        let total = 0;
+        amounts.forEach(amount => {
+            const value = parseFloat(amount.innerText) || 0;
+            total += value;
+        });
+        table.querySelector('.total').innerText = total.toFixed(2);
+    });
 }
 
 function addRow() {
