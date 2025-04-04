@@ -176,7 +176,7 @@ function insertTable() {
 
 function insertCalculator() {
     const calcHtml = `
-        <div class="calculator-wrapper" contenteditable="true">
+        <div class="calculator-wrapper">
             <div class="calc-line"><span class="calc-number" contenteditable="true"></span><span class="calc-operator"></span><span class="calc-comment"></span></div>
         </div>`;
     document.execCommand('insertHTML', false, calcHtml);
@@ -190,7 +190,6 @@ function insertCalculator() {
 }
 
 function handleCalculatorInput(e) {
-    const noteContent = document.getElementById('noteContent');
     const selection = window.getSelection();
     if (selection.rangeCount > 0) {
         const range = selection.getRangeAt(0);
@@ -199,8 +198,8 @@ function handleCalculatorInput(e) {
         if (calcWrapper) {
             const lines = calcWrapper.querySelectorAll('.calc-line');
             const firstLine = lines[0];
-            const operatorSpan = firstLine.querySelector('.calc-operator');
             const numberSpan = firstLine.querySelector('.calc-number');
+            const operatorSpan = firstLine.querySelector('.calc-operator');
             const commentSpan = firstLine.querySelector('.calc-comment');
 
             // Deteksi input pertama (misalnya "5+")
@@ -208,33 +207,49 @@ function handleCalculatorInput(e) {
             if (textContent.match(/^\d+\s*\+$/)) {
                 const number = textContent.replace('+', '').trim();
                 numberSpan.textContent = number;
-                operatorSpan.textContent = '          +';
+                operatorSpan.textContent = '          +'; // 10 spasi sebelum +
                 addSecondLine(calcWrapper);
                 moveCursorToNextLine(calcWrapper.querySelectorAll('.calc-line')[1].querySelector('.calc-number'));
             }
 
-            // Jika ada baris kedua, hitung hasil
+            // Jika ada baris kedua, tangani inputnya
             if (lines.length > 1) {
                 const secondLine = lines[1];
                 const secondNumberSpan = secondLine.querySelector('.calc-number');
+                const secondCommentSpan = secondLine.querySelector('.calc-comment');
                 const num1 = parseFloat(numberSpan.textContent) || 0;
                 const num2 = parseFloat(secondNumberSpan.textContent) || 0;
-                if (!isNaN(num1) && !isNaN(num2) && operatorSpan.textContent.includes('+')) {
+
+                // Tambahkan pembatas dan hasil jika ada angka kedua
+                if (!isNaN(num2) && operatorSpan.textContent.includes('+')) {
                     if (lines.length < 4) {
                         addDividerAndResult(calcWrapper);
                     }
                     const resultLine = calcWrapper.querySelectorAll('.calc-line')[3];
                     resultLine.querySelector('.calc-result').textContent = num1 + num2;
                 }
+
+                // Tangani komentar di baris kedua
+                const secondText = secondLine.textContent.trim();
+                const secondNumberText = secondNumberSpan.textContent.trim();
+                if (secondText.length > secondNumberText.length) {
+                    const comment = secondText.substring(secondNumberText.length).trim();
+                    if (comment) {
+                        secondCommentSpan.textContent = ` ${comment}`;
+                        secondCommentSpan.style.color = 'green';
+                    }
+                }
             }
 
-            // Tangani komentar
-            const commentText = firstLine.textContent.trim().substring(numberSpan.textContent.length + operatorSpan.textContent.length).trim();
-            if (commentText) {
-                commentSpan.textContent = ` ${commentText}`;
-                commentSpan.style.color = 'green';
-            } else {
-                commentSpan.textContent = '';
+            // Tangani komentar di baris pertama
+            const firstText = firstLine.textContent.trim();
+            const firstNumberText = numberSpan.textContent.trim();
+            if (firstText.length > firstNumberText.length + operatorSpan.textContent.length) {
+                const comment = firstText.substring(firstNumberText.length + operatorSpan.textContent.length).trim();
+                if (comment) {
+                    commentSpan.textContent = ` ${comment}`;
+                    commentSpan.style.color = 'green';
+                }
             }
         }
     }
@@ -304,8 +319,8 @@ function restrictCalculatorInput(e) {
                 return;
             }
 
-            // Hanya izinkan angka di baris kedua
-            if (lineIndex === 1 && !/\d/.test(e.key) && e.key !== 'Backspace' && e.key !== ' ') {
+            // Hanya izinkan angka dan spasi di baris kedua
+            if (lineIndex === 1 && !/[\d\s]/.test(e.key) && e.key !== 'Backspace') {
                 e.preventDefault();
                 return;
             }
