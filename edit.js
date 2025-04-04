@@ -68,26 +68,6 @@ function setupEventListeners() {
     document.getElementById('noteContent').addEventListener('keyup', toggleTableButtons);
     document.getElementById('noteContent').addEventListener('input', handleCalculatorInput);
     document.getElementById('noteContent').addEventListener('keydown', restrictCalculatorInput);
-
-    document.getElementById('noteContent').addEventListener('click', (e) => {
-        const target = e.target;
-        if (target.classList.contains('copyable')) {
-            const htmlContent = target.outerHTML;
-            const textContent = target.textContent;
-
-            navigator.clipboard.write([
-                new ClipboardItem({
-                    'text/html': new Blob([htmlContent], { type: 'text/html' }),
-                    'text/plain': new Blob([textContent], { type: 'text/plain' })
-                })
-            ]).then(() => {
-                alert('Formatted text copied to clipboard!');
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-                alert('Failed to copy formatted text.');
-            });
-        }
-    });
 }
 
 function toggleHighlight() {
@@ -176,90 +156,58 @@ function insertTable() {
 
 function insertCalculator() {
     const calcHtml = `
-        <div class="calculator-wrapper">
-            <div class="calc-line"><span class="calc-number" contenteditable="true"></span><span class="calc-operator"></span><span class="calc-comment"></span></div>
+        <div class="calculator-wrapper" contenteditable="true">
+            <div class="calc-line" contenteditable="true"></div>
         </div>`;
     document.execCommand('insertHTML', false, calcHtml);
-    const calcWrapper = document.querySelector('.calculator-wrapper:last-child .calc-number');
-    const selection = window.getSelection();
-    const range = document.createRange();
-    range.setStart(calcWrapper, 0);
-    range.setEnd(calcWrapper, 0);
-    selection.removeAllRanges();
-    selection.addRange(range);
+    const calcLine = document.querySelector('.calculator-wrapper:last-child .calc-line');
+    calcLine.focus();
 }
 
 function handleCalculatorInput(e) {
-    const selection = window.getSelection();
-    if (selection.rangeCount > 0) {
-        const range = selection.getRangeAt(0);
-        const container = range.commonAncestorContainer;
-        const calcWrapper = container.closest('.calculator-wrapper');
-        if (calcWrapper) {
-            const lines = calcWrapper.querySelectorAll('.calc-line');
-            const firstLine = lines[0];
-            const numberSpan = firstLine.querySelector('.calc-number');
-            const operatorSpan = firstLine.querySelector('.calc-operator');
-            const commentSpan = firstLine.querySelector('.calc-comment');
+    const noteContent = document.getElementById('noteContent');
+    const calcWrappers = noteContent.querySelectorAll('.calculator-wrapper');
+    calcWrappers.forEach(calcWrapper => {
+        const lines = calcWrapper.querySelectorAll('.calc-line');
+        const firstLine = lines[0];
 
-            // Deteksi input pertama (misalnya "5+")
-            const textContent = numberSpan.textContent.trim();
-            if (textContent.match(/^\d+\s*\+$/)) {
-                const number = textContent.replace('+', '').trim();
-                numberSpan.textContent = number;
-                operatorSpan.textContent = '          +'; // 10 spasi sebelum +
-                addSecondLine(calcWrapper);
-                moveCursorToNextLine(calcWrapper.querySelectorAll('.calc-line')[1].querySelector('.calc-number'));
-            }
+        // Deteksi input pertama (misalnya "5+")
+        const firstText = firstLine.innerText.trim();
+        if (firstText.match(/^\d+\s*\+$/)) {
+            const number = firstText.replace('+', '').trim();
+            firstLine.innerHTML = `<span class="calc-number">${number}</span><span class="calc-operator">          +</span>`;
+            firstLine.removeAttribute('contenteditable');
+            addSecondLine(calcWrapper);
+            const secondLine = calcWrapper.querySelectorAll('.calc-line')[1];
+            secondLine.focus();
+        }
 
-            // Jika ada baris kedua, tangani inputnya
-            if (lines.length > 1) {
-                const secondLine = lines[1];
-                const secondNumberSpan = secondLine.querySelector('.calc-number');
-                const secondCommentSpan = secondLine.querySelector('.calc-comment');
-                const num1 = parseFloat(numberSpan.textContent) || 0;
-                const num2 = parseFloat(secondNumberSpan.textContent) || 0;
-
-                // Tambahkan pembatas dan hasil jika ada angka kedua
-                if (!isNaN(num2) && operatorSpan.textContent.includes('+')) {
+        // Jika ada baris kedua, tangani inputnya
+        if (lines.length > 1) {
+            const secondLine = lines[1];
+            const secondText = secondLine.innerText.trim();
+            const numMatch = secondText.match(/^\d+/);
+            if (numMatch) {
+                const num2 = parseFloat(numMatch[0]);
+                const num1 = parseFloat(firstLine.querySelector('.calc-number').innerText);
+                if (!isNaN(num1) && !isNaN(num2)) {
                     if (lines.length < 4) {
                         addDividerAndResult(calcWrapper);
                     }
                     const resultLine = calcWrapper.querySelectorAll('.calc-line')[3];
-                    resultLine.querySelector('.calc-result').textContent = num1 + num2;
+                    resultLine.querySelector('.calc-result').innerText = num1 + num2;
                 }
-
-                // Tangani komentar di baris kedua
-                const secondText = secondLine.textContent.trim();
-                const secondNumberText = secondNumberSpan.textContent.trim();
-                if (secondText.length > secondNumberText.length) {
-                    const comment = secondText.substring(secondNumberText.length).trim();
-                    if (comment) {
-                        secondCommentSpan.textContent = ` ${comment}`;
-                        secondCommentSpan.style.color = 'green';
-                    }
-                }
-            }
-
-            // Tangani komentar di baris pertama
-            const firstText = firstLine.textContent.trim();
-            const firstNumberText = numberSpan.textContent.trim();
-            if (firstText.length > firstNumberText.length + operatorSpan.textContent.length) {
-                const comment = firstText.substring(firstNumberText.length + operatorSpan.textContent.length).trim();
-                if (comment) {
-                    commentSpan.textContent = ` ${comment}`;
-                    commentSpan.style.color = 'green';
-                }
+                secondLine.innerHTML = `<span class="calc-number">${numMatch[0]}</span><span class="calc-comment">${secondText.substring(numMatch[0].length)}</span>`;
             }
         }
-    }
+    });
 }
 
 function addSecondLine(calcWrapper) {
     if (calcWrapper.querySelectorAll('.calc-line').length === 1) {
         const secondLine = document.createElement('div');
         secondLine.className = 'calc-line';
-        secondLine.innerHTML = '<span class="calc-number" contenteditable="true"></span><span class="calc-comment"></span>';
+        secondLine.setAttribute('contenteditable', 'true');
         calcWrapper.appendChild(secondLine);
     }
 }
@@ -268,7 +216,7 @@ function addDividerAndResult(calcWrapper) {
     if (calcWrapper.querySelectorAll('.calc-line').length < 4) {
         const dividerLine = document.createElement('div');
         dividerLine.className = 'calc-line calc-divider';
-        dividerLine.innerHTML = '<span class="calc-result"><b>----------=</b></span>';
+        dividerLine.innerHTML = '<span class="calc-result">----------=</span>';
         calcWrapper.appendChild(dividerLine);
 
         const resultLine = document.createElement('div');
@@ -276,15 +224,6 @@ function addDividerAndResult(calcWrapper) {
         resultLine.innerHTML = '<span class="calc-result"></span>';
         calcWrapper.appendChild(resultLine);
     }
-}
-
-function moveCursorToNextLine(nextLine) {
-    const selection = window.getSelection();
-    const range = document.createRange();
-    range.setStart(nextLine, 0);
-    range.setEnd(nextLine, 0);
-    selection.removeAllRanges();
-    selection.addRange(range);
 }
 
 function restrictCalculatorInput(e) {
@@ -299,7 +238,7 @@ function restrictCalculatorInput(e) {
             const lineIndex = Array.from(lines).indexOf(currentLine);
 
             // Batasi input di baris hasil
-            if (lineIndex === 3) {
+            if (lineIndex >= 2) {
                 e.preventDefault();
                 return;
             }
@@ -308,7 +247,7 @@ function restrictCalculatorInput(e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 if (lineIndex === 0 && lines.length > 1) {
-                    moveCursorToNextLine(lines[1].querySelector('.calc-number'));
+                    lines[1].focus();
                 }
                 return;
             }
