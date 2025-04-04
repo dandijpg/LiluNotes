@@ -1063,7 +1063,7 @@ button {
         transform: translateX(-50%);
         width: 200px;
         top: auto;
-        bottom: 0;
+        bottom: calc(100% + 5px);
         border-radius: 15px 15px 0 0;
     }
 
