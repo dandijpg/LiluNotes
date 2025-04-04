@@ -990,11 +990,6 @@ button {
     box-shadow: 0 2px 5px rgba(234, 67, 53, 0.3);
 }
 
-.finance-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
 .finance-table td[contenteditable="true"][placeholder]::before {
     content: attr(placeholder);
     color: #aaa;
