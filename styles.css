@@ -841,40 +841,41 @@ button {
 
 /* Calculator Styles */
 .calculator-wrapper {
-    position: relative;
-    display: block;
-    margin: 10px 0;
-    padding: 10px;
     background: #f0f2f5;
-    border-radius: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 10px 0;
+    display: inline-block;
+    max-width: 100%;
+    overflow-x: auto;
     border: 1px solid #e0e2e5;
-    max-width: 300px;
-    font-family: monospace;
 }
 
-.calculator-wrapper .number-line {
-    white-space: pre;
-    color: #333;
-}
-
-.calculator-wrapper .description {
-    color: #34a853;
-    margin-left: 1ch;
-}
-
-.calculator-wrapper .separator {
-    font-weight: bold;
-    color: #666;
+.calc-line {
+    display: flex;
+    align-items: center;
     white-space: pre;
 }
 
-.calculator-wrapper .result {
-    font-weight: bold;
-    color: #4285f4;
+.calc-number {
+    min-width: 20px;
 }
 
-.calculator-wrapper[contenteditable="true"] {
-    user-select: text;
+.calc-operator {
+    min-width: 20px;
+}
+
+.calc-comment {
+    color: green;
+    margin-left: 5px;
+}
+
+.calc-divider {
+    margin: 5px 0;
+}
+
+.calc-result b {
+    font-weight: 600;
 }
 
 /* Media Queries untuk Responsivitas */
@@ -996,7 +997,7 @@ button {
 
     .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .reset-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn {
         padding: 6px 12px;
-        font-size: 0.7em;
+        font-size: 0.Mail7em;
     }
 
     .more-options {
