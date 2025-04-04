@@ -60,7 +60,7 @@ function setupEventListeners() {
     document.getElementById('addColBtn').addEventListener('click', addColumn);
     document.getElementById('deleteRowBtn').addEventListener('click', deleteRow);
     document.getElementById('deleteColBtn').addEventListener('click', deleteColumn);
-    document.getElementById('calcBtn').addEventListener('click', insertCalculator);
+    document.getElementById('calcBtn').addEventListener('click', insertCalcCard);
     document.getElementById('copyFormattedBtn').addEventListener('click', copyFormattedText);
     document.getElementById('saveBtn').addEventListener('click', saveNote);
     document.getElementById('exitBtn').addEventListener('click', () => window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`);
@@ -152,93 +152,58 @@ function insertTable() {
     toggleTableButtons();
 }
 
-function insertCalculator() {
-    const calcHtml = `
-        <div class="calculator-wrapper">
-            <div class="calc-line"><span class="calc-number" contenteditable="true"></span><span class="calc-operator"></span></div>
-            <div class="calc-line" style="display: none;"><span class="calc-number" contenteditable="true"></span></div>
-            <div class="calc-line calc-divider" style="display: none;"><span class="calc-result">----------=</span></div>
-            <div class="calc-line" style="display: none;"><span class="calc-result"></span></div>
+function insertCalcCard() {
+    const calcCardHtml = `
+        <div class="calc-card">
+            <div class="calc-header">CalcCard</div>
+            <div class="calc-body">
+                <span class="calc-input" contenteditable="true" data-placeholder="0"></span>
+                <span class="calc-operator">+</span>
+                <span class="calc-input" contenteditable="true" data-placeholder="0"></span>
+            </div>
+            <div class="calc-result"><span class="calc-result-value">0</span></div>
         </div>`;
-    document.execCommand('insertHTML', false, calcHtml);
+    document.execCommand('insertHTML', false, calcCardHtml);
 
-    // Tambahkan event listener untuk kalkulator yang baru dibuat
-    const calcWrapper = document.querySelector('.calculator-wrapper:last-child');
-    const firstNumber = calcWrapper.querySelector('.calc-number:first-child');
-    const secondNumber = calcWrapper.querySelector('.calc-line:nth-child(2) .calc-number');
+    const calcCard = document.querySelector('.calc-card:last-child');
+    const inputs = calcCard.querySelectorAll('.calc-input');
+    const resultValue = calcCard.querySelector('.calc-result-value');
 
-    firstNumber.focus();
+    inputs.forEach(input => {
+        input.addEventListener('input', () => {
+            const num1 = parseFloat(inputs[0].innerText) || 0;
+            const num2 = parseFloat(inputs[1].innerText) || 0;
+            resultValue.innerText = num1 + num2;
+            resultValue.parentElement.style.opacity = '1';
+        });
+        input.addEventListener('keydown', (e) => {
+            if (!/\d/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Enter') {
+                e.preventDefault();
+            }
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                inputs[lineIndex(inputs, input) === 0 ? 1 : 0].focus();
+            }
+        });
+        input.addEventListener('focus', () => {
+            if (input.innerText === '0') input.innerText = '';
+        });
+        input.addEventListener('blur', () => {
+            if (input.innerText === '') input.innerText = '0';
+        });
+    });
 
-    firstNumber.addEventListener('input', () => handleCalculatorInput(calcWrapper));
-    secondNumber.addEventListener('input', () => handleCalculatorInput(calcWrapper));
-    firstNumber.addEventListener('keydown', (e) => restrictCalculatorInput(e, calcWrapper));
-    secondNumber.addEventListener('keydown', (e) => restrictCalculatorInput(e, calcWrapper));
+    calcCard.addEventListener('click', (e) => {
+        if (!e.target.classList.contains('calc-input')) {
+            calcCard.classList.toggle('expanded');
+        }
+    });
+
+    inputs[0].focus();
 }
 
-function handleCalculatorInput(calcWrapper) {
-    const lines = calcWrapper.querySelectorAll('.calc-line');
-    const firstNumber = lines[0].querySelector('.calc-number');
-    const operator = lines[0].querySelector('.calc-operator');
-    const secondLine = lines[1];
-    const secondNumber = secondLine.querySelector('.calc-number');
-    const dividerLine = lines[2];
-    const resultLine = lines[3];
-
-    // Deteksi input pertama (misalnya "5+")
-    const firstText = firstNumber.innerText.trim();
-    if (firstText.match(/^\d+\s*\+$/)) {
-        const number = firstText.replace('+', '').trim();
-        firstNumber.innerText = number;
-        operator.innerText = '          +'; // 10 spasi sebelum +
-        secondLine.style.display = 'block';
-        secondNumber.focus();
-    }
-
-    // Tangani input kedua dan hitung hasil
-    const secondText = secondNumber.innerText.trim();
-    const numMatch = secondText.match(/^\d+/);
-    if (numMatch) {
-        const num1 = parseFloat(firstNumber.innerText) || 0;
-        const num2 = parseFloat(numMatch[0]) || 0;
-        if (!isNaN(num1) && !isNaN(num2)) {
-            dividerLine.style.display = 'block';
-            resultLine.style.display = 'block';
-            resultLine.querySelector('.calc-result').innerText = num1 + num2;
-        }
-    }
-}
-
-function restrictCalculatorInput(e, calcWrapper) {
-    const lines = calcWrapper.querySelectorAll('.calc-line');
-    const currentLine = e.target.closest('.calc-line') || lines[0];
-    const lineIndex = Array.from(lines).indexOf(currentLine);
-
-    // Batasi input di baris hasil
-    if (lineIndex >= 2) {
-        e.preventDefault();
-        return;
-    }
-
-    // Batasi enter di dalam kalkulator
-    if (e.key === 'Enter') {
-        e.preventDefault();
-        if (lineIndex === 0 && lines[1].style.display === 'block') {
-            lines[1].querySelector('.calc-number').focus();
-        }
-        return;
-    }
-
-    // Hanya izinkan angka dan '+' di baris pertama
-    if (lineIndex === 0 && !/[\d+]/.test(e.key) && e.key !== 'Backspace') {
-        e.preventDefault();
-        return;
-    }
-
-    // Hanya izinkan angka di baris kedua
-    if (lineIndex === 1 && !/\d/.test(e.key) && e.key !== 'Backspace') {
-        e.preventDefault();
-        return;
-    }
+function lineIndex(inputs, currentInput) {
+    return Array.from(inputs).indexOf(currentInput);
 }
 
 function addRow() {
