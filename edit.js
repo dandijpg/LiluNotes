@@ -273,10 +273,8 @@ function deleteLastRow(wrapper) {
     if (rows.length > 0) {
         tbody.removeChild(rows[rows.length - 1]);
         if (rows.length === 1) {
-            const thead = table.querySelector('thead');
-            const tfoot = table.querySelector('tfoot');
-            if (thead) thead.remove();
-            if (tfoot) tfoot.remove();
+            // Jika tidak ada baris tersisa, hapus seluruh wrapper
+            wrapper.parentNode.removeChild(wrapper);
         } else {
             calculateTotal(wrapper);
         }
@@ -299,6 +297,18 @@ function handleTableClick(event) {
     if (wrapper) {
         const btnGroup = wrapper.querySelector('.finance-btn-group') || wrapper.appendChild(createFinanceBtnGroup(wrapper));
         btnGroup.style.display = 'flex';
+    } else if (!table) {
+        // Jika klik di luar tabel finansial atau reguler, kursor akan berada di noteContent
+        const range = document.createRange();
+        const selection = window.getSelection();
+        const target = event.target;
+
+        if (target === noteContent || !noteContent.contains(target)) {
+            range.selectNodeContents(noteContent);
+            range.collapse(false); // Pindahkan kursor ke akhir konten
+            selection.removeAllRanges();
+            selection.addRange(range);
+        }
     }
 
     // Pastikan tombol tabel reguler muncul saat tabel reguler diklik
