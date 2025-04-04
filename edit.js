@@ -68,7 +68,7 @@ function setupEventListeners() {
     document.getElementById('exitBtn').addEventListener('click', () => window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`);
     document.getElementById('noteContent').addEventListener('click', toggleTableButtons);
     document.getElementById('noteContent').addEventListener('keyup', toggleTableButtons);
-    document.getElementById('noteContent').addEventListener('input', updateFinancialTable);
+    document.getElementById('noteContent').addEventListener('focusout', updateFinancialTable); // Hanya update saat blur
 }
 
 function toggleHighlight() {
@@ -214,11 +214,10 @@ function addFinanceRow(wrapper, operation) {
         newRow.style.transform = 'translateY(0)';
     }, 10);
 
-    updateFinancialTable();
     newRow.querySelector('.amount').focus();
 }
 
-function updateFinancialTable() {
+function updateFinancialTable(event) {
     const financeTables = document.querySelectorAll('.finance-table');
     financeTables.forEach(table => {
         const mode = table.dataset.mode;
@@ -227,15 +226,22 @@ function updateFinancialTable() {
 
         rows.forEach((row, index) => {
             const amountCell = row.querySelector('.amount');
-            let value = amountCell.innerText.trim().replace(/[^\d.-]/g, ''); // Hapus semua kecuali angka dan tanda minus
-            const num = parseFloat(value) || 0;
+            let value = amountCell.innerText.trim();
 
-            if (mode === 'financial') {
-                amountCell.innerText = formatCurrency(num);
+            // Hanya format saat blur atau setelah selesai edit
+            if (event && event.target === amountCell) {
+                value = value.replace(/[^\d.-]/g, ''); // Hapus semua kecuali angka dan tanda minus
+                const num = parseFloat(value) || 0;
+                if (mode === 'financial') {
+                    amountCell.innerText = formatCurrency(num);
+                } else {
+                    amountCell.innerText = num.toString();
+                }
             } else {
-                amountCell.innerText = num.toString();
+                value = value.replace(/[^\d.-]/g, '');
             }
 
+            const num = parseFloat(value) || 0;
             const operation = row.dataset.operation;
             if (index === 0) {
                 total = num; // Baris pertama adalah nilai awal
