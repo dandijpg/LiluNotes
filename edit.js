@@ -3,6 +3,7 @@ let categories = JSON.parse(localStorage.getItem('categories') || '[]');
 const urlParams = new URLSearchParams(window.location.search);
 const noteId = urlParams.get('id');
 const searchQuery = urlParams.get('search') || '';
+let calcMode = 'financial'; // Default mode
 
 document.addEventListener('DOMContentLoaded', () => {
     setupCategorySelect();
@@ -61,6 +62,7 @@ function setupEventListeners() {
     document.getElementById('deleteRowBtn').addEventListener('click', deleteRow);
     document.getElementById('deleteColBtn').addEventListener('click', deleteColumn);
     document.getElementById('financeBtn').addEventListener('click', insertFinancialTable);
+    document.getElementById('calcMode').addEventListener('change', (e) => calcMode = e.target.value);
     document.getElementById('copyFormattedBtn').addEventListener('click', copyFormattedText);
     document.getElementById('saveBtn').addEventListener('click', saveNote);
     document.getElementById('exitBtn').addEventListener('click', () => window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`);
@@ -156,42 +158,59 @@ function insertTable() {
 function insertFinancialTable() {
     const financeHtml = `
         <div class="finance-table-wrapper">
-            <table class="finance-table">
+            <table class="finance-table" data-mode="${calcMode}">
                 <thead>
                     <tr>
-                        <th>Description</th>
-                        <th>Amount</th>
+                        <th contenteditable="false">Description</th>
+                        <th contenteditable="false">Amount</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr class="income">
                         <td contenteditable="true"></td>
                         <td contenteditable="true" class="amount"></td>
                     </tr>
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td>Total</td>
-                        <td class="total">0</td>
+                        <td contenteditable="false">Total</td>
+                        <td contenteditable="false" class="total">0</td>
                     </tr>
                 </tfoot>
             </table>
-            <button class="add-finance-row-btn">Add Row</button>
+            <div class="finance-btn-group">
+                <button class="finance-btn add-income" title="Add Income">+</button>
+                <button class="finance-btn subtract-expense" title="Add Expense">-</button>
+                <button class="finance-btn multiply" title="Multiply" disabled>*</button>
+                <button class="finance-btn divide" title="Divide" disabled>/</button>
+            </div>
         </div>`;
     document.execCommand('insertHTML', false, financeHtml);
 
     const wrapper = document.querySelector('.finance-table-wrapper:last-child');
-    wrapper.querySelector('.add-finance-row-btn').addEventListener('click', () => addFinanceRow(wrapper));
+    wrapper.querySelector('.add-income').addEventListener('click', () => addFinanceRow(wrapper, 'income'));
+    wrapper.querySelector('.subtract-expense').addEventListener('click', () => addFinanceRow(wrapper, 'expense'));
     wrapper.querySelector('.amount').focus();
 }
 
-function addFinanceRow(wrapper) {
+function addFinanceRow(wrapper, type) {
     const tbody = wrapper.querySelector('tbody');
     const newRow = document.createElement('tr');
+    newRow.className = type === 'income' ? 'income' : 'expense';
+    newRow.style.opacity = '0';
+    newRow.style.transform = 'translateY(-10px)';
     newRow.innerHTML = `
         <td contenteditable="true"></td>
         <td contenteditable="true" class="amount"></td>`;
     tbody.appendChild(newRow);
+
+    // Animasi smooth
+    setTimeout(() => {
+        newRow.style.transition = 'all 0.3s ease';
+        newRow.style.opacity = '1';
+        newRow.style.transform = 'translateY(0)';
+    }, 10);
+
     updateFinancialTable();
     newRow.querySelector('.amount').focus();
 }
@@ -199,14 +218,31 @@ function addFinanceRow(wrapper) {
 function updateFinancialTable() {
     const financeTables = document.querySelectorAll('.finance-table');
     financeTables.forEach(table => {
+        const mode = table.dataset.mode;
         const amounts = table.querySelectorAll('.amount');
         let total = 0;
+
         amounts.forEach(amount => {
-            const value = parseFloat(amount.innerText) || 0;
-            total += value;
+            let value = amount.innerText.trim();
+            if (mode === 'financial') {
+                value = value.replace(/[^\d]/g, ''); // Hapus semua kecuali angka
+                const num = parseFloat(value) || 0;
+                amount.innerText = formatCurrency(num);
+                total += amount.parentElement.classList.contains('income') ? num : -num;
+            } else {
+                const num = parseFloat(value) || 0;
+                total += num;
+            }
         });
-        table.querySelector('.total').innerText = total.toFixed(2);
+
+        const totalCell = table.querySelector('.total');
+        totalCell.innerText = mode === 'financial' ? formatCurrency(total) : total.toFixed(2);
     });
+}
+
+function formatCurrency(value) {
+    const formatted = Math.abs(value).toLocaleString('id-ID', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return value < 0 ? `Rp -${formatted}` : `Rp ${formatted}`;
 }
 
 function addRow() {
