@@ -218,12 +218,12 @@ button {
 }
 
 .add-category {
-    padding: 10px 20px;
-    border-radius: 12px; /* Dikurangi dari 15px */
+    padding: 8px 16px; /* Dikurangi dari 10px 20px */
+    border-radius: 20px; /* Diperbesar dari 15px */
     border: 0.5px solid rgba(206, 172, 147, 0.3);
     background: #e3c9a4; /* Krem */
     color: #6a5545;
-    font-size: 0.9em;
+    font-size: 0.85em; /* Dikurangi dari 0.9em */
     font-weight: 500;
     cursor: pointer;
     transition: all 0.4s ease;
@@ -238,12 +238,12 @@ button {
 }
 
 .add-note {
-    padding: 10px 20px;
-    border-radius: 12px; /* Dikurangi dari 15px */
+    padding: 8px 16px; /* Dikurangi dari 10px 20px */
+    border-radius: 20px; /* Diperbesar dari 15px */
     border: 0.5px solid rgba(206, 172, 147, 0.3);
     background: #ceac93; /* Peach muda */
     color: #6a5545;
-    font-size: 0.9em;
+    font-size: 0.85em; /* Dikurangi dari 0.9em */
     font-weight: 500;
     cursor: pointer;
     transition: all 0.4s ease;
@@ -258,12 +258,12 @@ button {
 }
 
 .toggle-mode {
-    padding: 10px 20px;
-    border-radius: 12px; /* Dikurangi dari 15px */
+    padding: 8px 16px; /* Dikurangi dari 10px 20px */
+    border-radius: 20px; /* Diperbesar dari 15px */
     border: 0.5px solid rgba(206, 172, 147, 0.3);
     background: #fefbe8;
     color: #6a5545;
-    font-size: 0.9em;
+    font-size: 0.85em; /* Dikurangi dari 0.9em */
     font-weight: 500;
     cursor: pointer;
     transition: all 0.4s ease;
@@ -279,12 +279,12 @@ button {
 }
 
 .more-btn {
-    padding: 10px 20px;
-    border-radius: 12px; /* Dikurangi dari 15px */
+    padding: 8px 16px; /* Dikurangi dari 10px 20px */
+    border-radius: 20px; /* Diperbesar dari 15px */
     border: 0.5px solid rgba(206, 172, 147, 0.3);
     background: #fefbe8;
     color: #6a5545;
-    font-size: 0.9em;
+    font-size: 0.85em; /* Dikurangi dari 0.9em */
     font-weight: 500;
     cursor: pointer;
     transition: all 0.4s ease;
@@ -307,9 +307,9 @@ button {
     background: #fefbe8;
     border-radius: 15px;
     box-shadow: 0 3px 10px rgba(206, 172, 147, 0.1);
-    padding: 8px;
+    padding: 6px; /* Dikurangi dari 8px */
     flex-direction: column;
-    gap: 6px;
+    gap: 4px; /* Dikurangi dari 6px */
     z-index: 100;
     opacity: 0;
     transform: translateY(-8px);
@@ -325,10 +325,10 @@ button {
 }
 
 .backup-btn, .restore-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn, .reset-btn {
-    padding: 10px 20px;
-    border-radius: 12px; /* Dikurangi dari 15px */
+    padding: 8px 16px; /* Dikurangi dari 10px 20px */
+    border-radius: 20px; /* Diperbesar dari 15px */
     border: 0.5px solid rgba(206, 172, 147, 0.3);
-    font-size: 0.9em;
+    font-size: 0.85em; /* Dikurangi dari 0.9em */
     font-weight: 500;
     cursor: pointer;
     transition: all 0.4s ease;
@@ -491,12 +491,12 @@ button {
     align-items: center;
     gap: 5px;
     margin: 15px auto 0;
-    padding: 10px 20px;
+    padding: 8px 16px; /* Dikurangi dari 10px 20px */
     background: #ceac93; /* Peach muda */
     border: 0.5px solid rgba(206, 172, 147, 0.3);
-    border-radius: 12px; /* Dikurangi dari 15px */
+    border-radius: 20px; /* Diperbesar dari 15px */
     color: #6a5545;
-    font-size: 0.9em;
+    font-size: 0.85em; /* Dikurangi dari 0.9em */
     font-weight: 500;
     cursor: pointer;
     transition: all 0.4s ease;
@@ -840,12 +840,12 @@ button {
 
 .save-btn {
     margin-top: 12px;
-    padding: 10px 20px;
+    padding: 8px 16px; /* Dikurangi dari 10px 20px */
     background: #e3c9a4; /* Krem */
     border: 0.5px solid rgba(206, 172, 147, 0.3);
-    border-radius: 12px; /* Dikurangi dari 15px */
+    border-radius: 20px; /* Diperbesar dari 15px */
     color: #6a5545;
-    font-size: 0.9em;
+    font-size: 0.85em; /* Dikurangi dari 0.9em */
     font-weight: 500;
     cursor: pointer;
     transition: all 0.4s ease;
@@ -1136,18 +1136,19 @@ button {
     .categories { gap: 6px; }
     .category { padding: 5px 12px; font-size: 0.8em; }
     .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .reset-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn {
-        padding: 8px 12px;
-        font-size: 0.8em;
+        padding: 6px 12px; /* Dikurangi lagi untuk mobile */
+        font-size: 0.8em; /* Dikurangi lagi untuk mobile */
         margin: 2px;
     }
     .more-options { 
         right: auto; 
         left: 50%; 
         transform: translateX(-50%); 
-        width: 180px; 
-        top: auto; 
-        bottom: calc(100% + 5px); 
-        border-radius: 15px 15px 0 0; 
+        width: 160px; /* Dikurangi dari 180px */
+        top: calc(100% + 2px); /* Diturunkan dari bottom ke top agar tidak menembus header */
+        padding: 4px; /* Dikurangi dari 6px */
+        gap: 3px; /* Dikurangi dari 4px */
+        border-radius: 15px; 
     }
     .more-options.active { transform: translateX(-50%) translateY(0); }
     .pinned-section h2, .notes-section h2 { font-size: 1.2em; }
@@ -1158,7 +1159,7 @@ button {
     .note .category { font-size: 0.75em; }
     .note .timestamp { font-size: 0.7em; }
     .note .preview { font-size: 0.8em; }
-    .view-more { padding: 8px 15px; font-size: 0.8em; }
+    .view-more { padding: 6px 12px; font-size: 0.8em; }
     .context-menu, .note-context-menu { width: 140px; }
     .toolbar { padding: 10px; gap: 8px; }
     .toolbar-section { flex-shrink: 0; }
@@ -1170,7 +1171,7 @@ button {
     .note-title { font-size: 1em; }
     .note-content { height: 300px; max-height: 300px; }
     .note-content-view { min-height: 300px; }
-    .save-btn { padding: 8px 15px; font-size: 0.8em; }
+    .save-btn { padding: 6px 12px; font-size: 0.8em; }
 }
 
 @media (max-width: 480px) {
@@ -1178,18 +1179,20 @@ button {
     .search-bar input { padding: 6px 10px; font-size: 0.8em; }
     .category { padding: 4px 10px; font-size: 0.7em; }
     .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .reset-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn {
-        padding: 6px 10px;
-        font-size: 0.75em;
+        padding: 5px 10px; /* Dikurangi lagi untuk mobile kecil */
+        font-size: 0.75em; /* Dikurangi lagi untuk mobile kecil */
         margin: 2px;
     }
     .more-options { 
-        width: 100%; 
-        left: 0; 
-        right: 0; 
-        transform: none; 
-        border-radius: 15px 15px 0 0; 
+        width: 140px; /* Dikurangi lagi dari 160px */
+        left: 50%; 
+        transform: translateX(-50%); 
+        top: calc(100% + 2px); /* Diturunkan agar tidak menembus header */
+        padding: 4px; 
+        gap: 2px; /* Dikurangi lagi dari 3px */
+        border-radius: 15px; 
     }
-    .more-options.active { transform: translateY(0); }
+    .more-options.active { transform: translateX(-50%) translateY(0); }
     .pinned-section h2, .notes-section h2 { font-size: 1em; }
     .note { padding: 8px; }
     .note .title { font-size: 0.9em; }
@@ -1197,7 +1200,7 @@ button {
     .note .timestamp { font-size: 0.65em; }
     .note .preview { font-size: 0.75em; }
     .notes-list.list-mode .note { padding: 8px; }
-    .view-more { padding: 6px 12px; font-size: 0.75em; }
+    .view-more { padding: 5px 10px; font-size: 0.75em; }
     .context-menu, .note-context-menu { width: 130px; }
     .toolbar-label { font-size: 0.65em; }
     .tool-btn, .edit-btn, .exit-btn, .table-tool-btn { padding: 4px; min-width: 28px; height: 28px; }
@@ -1206,7 +1209,7 @@ button {
     .note-content-view { padding: 10px; min-height: 250px; }
     .finance-table { width: 100%; }
     .note-content { height: 250px; max-height: 250px; }
-    .save-btn { padding: 6px 12px; font-size: 0.75em; }
+    .save-btn { padding: 5px 10px; font-size: 0.75em; }
 }
 
 /* Finance Table Tools */
