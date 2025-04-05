@@ -1,0 +1,173 @@
+/* cat-theme.css */
+
+/* Import font lucu untuk tema kucing */
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+
+/* Override body untuk tema kucing */
+body {
+    background: #fff3e6; /* Warna pastel peach untuk suasana hangat */
+    font-family: 'Comic Neue', sans-serif;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Container dengan border bertema kucing */
+.container {
+    border: 3px solid #ffcc99; /* Warna peach lembut */
+    border-radius: 30px;
+    background: #fff7f0; /* Latar belakang krem lembut */
+    position: relative;
+    overflow: hidden;
+    padding: 30px;
+}
+
+/* Hiasan kucing di sudut container menggunakan pseudo-element */
+.container::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 60px;
+    height: 60px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 20c-10 0-18 8-18 18s8 18 18 18 18-8 18-18-8-18-18-18zm-10 20a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm20 0a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm-10 10c-5 0-9 4-9 9v10h18v-10c0-5-4-9-9-9z" fill="%23ff9999"/></svg>') no-repeat center;
+    background-size: contain;
+    animation: catWiggle 3s infinite ease-in-out;
+}
+
+.container::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 50px;
+    height: 50px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M30 20l-10 20 20 10 20-10-10-20c-5 0-10 5-10 10s5 10 10 10 10-5 10-10-5-10-10-10z" fill="%23ffcc99"/><circle cx="40" cy="30" r="5" fill="%23663333"/><circle cx="60" cy="30" r="5" fill="%23663333"/></svg>') no-repeat center;
+    background-size: contain;
+    animation: catBounce 2s infinite ease-in-out;
+}
+
+/* Border dekoratif untuk header */
+header {
+    border: 2px dashed #ff9999; /* Garis putus-putus pink */
+    background: #fff0f0; /* Pink sangat lembut */
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+header::before {
+    content: '🐾';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 1.5em;
+    animation: pawSpin 4s infinite linear;
+}
+
+/* Tombol dengan ikon kucing */
+button, .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn, .reset-btn, .view-more, .save-btn {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    padding: 10px 25px;
+    transition: all 0.3s ease;
+}
+
+button::after, .add-category::after, .add-note::after, .toggle-mode::after, .more-btn::after, .backup-btn::after, .restore-btn::after, .copy-backup-btn::after, .google-auth-btn::after, .backup-google-btn::after, .google-logout-btn::after, .reset-btn::after, .view-more::after, .save-btn::after {
+    content: '🐱';
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1em;
+    opacity: 0;
+    transition: opacity 0.3s ease, right 0.3s ease;
+}
+
+button:hover::after, .add-category:hover::after, .add-note:hover::after, .toggle-mode:hover::after, .more-btn:hover::after, .backup-btn:hover::after, .restore-btn:hover::after, .copy-backup-btn:hover::after, .google-auth-btn:hover::after, .backup-google-btn:hover::after, .google-logout-btn:hover::after, .reset-btn:hover::after, .view-more:hover::after, .save-btn:hover::after {
+    opacity: 1;
+    right: 10px;
+}
+
+/* Catatan dengan border bertema kucing */
+.note {
+    border: 2px solid #ffcc99;
+    border-radius: 25px;
+    background: #fffaf0; /* Krem lembut */
+    position: relative;
+    overflow: hidden;
+}
+
+.note::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 30px;
+    height: 30px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 30c-10 0-15 10-15 15s5 15 15 15 15-10 15-15-5-15-15-15zm-8 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm16 0a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="%23ff9999"/></svg>') no-repeat center;
+    background-size: contain;
+    animation: catPeek 3s infinite ease-in-out;
+}
+
+/* Edit container dengan tema kucing */
+.edit-container {
+    border: 3px double #ff9999; /* Border ganda pink */
+    border-radius: 30px;
+    background: #fff7f0;
+    position: relative;
+}
+
+.edit-container::after {
+    content: '🐾';
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 1.5em;
+    animation: pawFade 2s infinite ease-in-out;
+}
+
+/* Animasi elegan */
+@keyframes catWiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(5deg); }
+    75% { transform: rotate(-5deg); }
+}
+
+@keyframes catBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes catPeek {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+@keyframes pawSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes pawFade {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+/* Background kucing berjalan */
+body::before {
+    content: '';
+    position: fixed;
+    bottom: 20px;
+    left: -100px;
+    width: 80px;
+    height: 80px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20 60h10l10-20 10 20h10l-15-30h-10zM40 30c-5 0-10 5-10 10s5 10 10 10 10-5 10-10-5-10-10-10zm-8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" fill="%23ff9999"/></svg>') no-repeat center;
+    background-size: contain;
+    animation: catWalk 15s infinite linear;
+}
+
+@keyframes catWalk {
+    0% { left: -100px; }
+    100% { left: 100%; }
+}
