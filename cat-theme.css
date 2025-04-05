@@ -3,15 +3,41 @@
 /* Import font lucu */
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
 
-/* Override body */
+/* Override body dengan gradien bergerak dan bintang */
 body {
-    background: #2a2a3a !important; /* Dark pastel abu-abu keunguan */
+    background: linear-gradient(135deg, #2a2a3a 0%, #3a3a4a 50%, #2a2a3a 100%) !important;
+    background-size: 200% 200%;
+    animation: gradientFlow 15s ease infinite !important;
     font-family: 'Comic Neue', sans-serif !important;
     position: relative;
     overflow-x: hidden;
 }
 
-/* Container dengan tema kucing */
+@keyframes gradientFlow {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><circle cx="10" cy="10" r="1" fill="%23d8d8e8"/><circle cx="50" cy="50" r="2" fill="%23b8b8d8"/><circle cx="90" cy="20" r="1" fill="%23e8c8d8"/></svg>') repeat;
+    opacity: 0.1;
+    z-index: 1;
+    animation: twinkle 5s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.3; }
+}
+
+/* Container dengan tema kucing dan border berubah warna */
 .container {
     border: 3px solid #6a6a8a !important; /* Dark pastel biru tua */
     border-radius: 30px !important;
@@ -19,6 +45,7 @@ body {
     position: relative;
     overflow: hidden;
     padding: 30px !important;
+    animation: borderGlow 10s infinite ease-in-out;
 }
 
 .container::before {
@@ -67,13 +94,19 @@ header::before {
     z-index: 10 !important;
 }
 
-/* Tombol dengan ikon kucing */
+/* Tombol dengan efek glow */
 button, .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn, .reset-btn, .view-more, .save-btn {
     position: relative;
     overflow: hidden;
     border-radius: 20px !important;
     padding: 10px 25px;
     transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(136, 136, 168, 0.2);
+}
+
+button:hover, .add-category:hover, .add-note:hover, .toggle-mode:hover, .more-btn:hover, .backup-btn:hover, .restore-btn:hover, .copy-backup-btn:hover, .google-auth-btn:hover, .backup-google-btn:hover, .google-logout-btn:hover, .reset-btn:hover, .view-more:hover, .save-btn:hover {
+    box-shadow: 0 0 15px rgba(136, 136, 168, 0.5);
+    transform: translateY(-2px);
 }
 
 button::after, .add-category::after, .add-note::after, .toggle-mode::after, .more-btn::after, .backup-btn::after, .restore-btn::after, .copy-backup-btn::after, .google-auth-btn::after, .backup-google-btn::after, .google-logout-btn::after, .reset-btn::after, .view-more::after, .save-btn::after {
@@ -93,13 +126,20 @@ button:hover::after, .add-category:hover::after, .add-note:hover::after, .toggle
     right: 10px;
 }
 
-/* Catatan dengan dekorasi kucing */
+/* Catatan dengan dekorasi kucing dan efek hover */
 .note {
     border: 2px solid #6a6a8a !important; /* Dark pastel biru tua */
     border-radius: 25px !important;
     background: #404055 !important;
     position: relative !important;
     overflow: hidden !important;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: borderGlow 10s infinite ease-in-out;
+}
+
+.note:hover {
+    transform: scale(1.02) translateY(-5px);
+    box-shadow: 0 8px 20px rgba(136, 136, 168, 0.2);
 }
 
 .note::before {
@@ -115,12 +155,28 @@ button:hover::after, .add-category:hover::after, .add-note:hover::after, .toggle
     z-index: 10 !important;
 }
 
+.note::after {
+    content: '🐾';
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    font-size: 1em;
+    color: #e8c8d8;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.note:hover::after {
+    opacity: 0.5;
+}
+
 /* Edit container dengan tema kucing */
 .edit-container {
     border: 3px double #8888a8 !important; /* Dark pastel abu-abu keunguan */
     border-radius: 30px !important;
     background: #3a3a4a !important;
     position: relative;
+    animation: borderGlow 10s infinite ease-in-out;
 }
 
 .edit-container::after {
@@ -187,6 +243,7 @@ button:hover::after, .add-category:hover::after, .add-note:hover::after, .toggle
     50% { opacity: 1; }
 }
 
+/* Background kucing berjalan */
 body::before {
     content: '' !important;
     position: fixed !important;
@@ -203,4 +260,11 @@ body::before {
 @keyframes catWalk {
     0% { left: -100px; }
     100% { left: 100%; }
+}
+
+/* Animasi border berubah warna */
+@keyframes borderGlow {
+    0%, 100% { border-color: #6a6a8a; }
+    33% { border-color: #5a6a6a; } /* Hijau tua */
+    66% { border-color: #6a5a6a; } /* Ungu tua */
 }
