@@ -3,7 +3,7 @@
 /* Import font lucu */
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
 
-/* Override body dengan gradien bergerak dan bintang */
+/* Override body dengan gradien bergerak (tanpa bintang) */
 body {
     background: linear-gradient(135deg, #2a2a3a 0%, #3a3a4a 50%, #2a2a3a 100%) !important;
     background-size: 200% 200%;
@@ -19,24 +19,6 @@ body {
     100% { background-position: 0% 0%; }
 }
 
-body::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><circle cx="10" cy="10" r="1" fill="%23d8d8e8"/><circle cx="50" cy="50" r="2" fill="%23b8b8d8"/><circle cx="90" cy="20" r="1" fill="%23e8c8d8"/></svg>') repeat;
-    opacity: 0.1;
-    z-index: 1;
-    animation: twinkle 5s infinite ease-in-out;
-}
-
-@keyframes twinkle {
-    0%, 100% { opacity: 0.1; }
-    50% { opacity: 0.3; }
-}
-
 /* Container dengan tema kucing dan border berubah warna */
 .container {
     border: 3px solid #6a6a8a !important; /* Dark pastel biru tua */
@@ -46,7 +28,7 @@ body::after {
     overflow: hidden;
     padding: 30px !important;
     animation: borderGlow 10s infinite ease-in-out;
-    z-index: 1; /* Pastikan container di bawah tombol */
+    z-index: 1; /* Pastikan container tidak menutupi tombol */
 }
 
 .container::before {
@@ -107,8 +89,8 @@ button, .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore
     transition: all 0.3s ease;
     box-shadow: 0 0 10px rgba(136, 136, 168, 0.2);
     cursor: pointer;
-    pointer-events: auto;
-    z-index: 2;
+    pointer-events: auto; /* Pastikan tombol dapat disentuh */
+    z-index: 20; /* Naikkan z-index agar di atas semua dekorasi */
 }
 
 button:hover, .add-category:hover, .add-note:hover, .toggle-mode:hover, .more-btn:hover, .backup-btn:hover, .restore-btn:hover, .copy-backup-btn:hover, .google-auth-btn:hover, .backup-google-btn:hover, .google-logout-btn:hover, .reset-btn:hover, .view-more:hover, .save-btn:hover {
@@ -144,6 +126,7 @@ button:hover::after, .add-category:hover::after, .add-note:hover::after, .toggle
     overflow: hidden !important;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     animation: borderGlow 10s infinite ease-in-out;
+    z-index: 15; /* Pastikan catatan di atas dekorasi tapi di bawah tombol */
 }
 
 .note:hover {
@@ -175,10 +158,6 @@ button:hover::after, .add-category:hover::after, .add-note:hover::after, .toggle
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
-}
-
-.note:hover::after {
-    opacity: 0.5;
 }
 
 /* Edit container dengan tema kucing */
@@ -239,6 +218,7 @@ button:hover::after, .add-category:hover::after, .add-note:hover::after, .toggle
     border-radius: 15px;
     position: relative;
     white-space: nowrap;
+    z-index: 10; /* Pastikan kategori di atas dekorasi */
 }
 
 .categories::before {
@@ -252,6 +232,7 @@ button:hover::after, .add-category:hover::after, .add-note:hover::after, .toggle
     background-size: 100px 10px;
     opacity: 0.3;
     z-index: 1;
+    pointer-events: none;
 }
 
 /* Animasi elegan lainnya */
