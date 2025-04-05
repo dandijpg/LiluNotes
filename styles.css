@@ -56,7 +56,33 @@ h1 {
     font-weight: 600;
     color: #b8b8d8; /* Pastel ungu muda */
     letter-spacing: -0.5px;
-    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    animation: handwriting 2s ease-in-out forwards;
+}
+
+@keyframes handwriting {
+    0% { width: 0; opacity: 0; }
+    50% { width: 100%; opacity: 1; }
+    100% { width: 100%; opacity: 1; }
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #e8c8d8; /* Pastel pink tua */
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: underline 2s ease-in-out forwards 0.5s;
+}
+
+@keyframes underline {
+    to { transform: scaleX(1); }
 }
 
 h1:hover {
@@ -96,8 +122,23 @@ h1:hover {
     gap: 10px;
     margin-bottom: 20px;
     overflow-x: auto;
-    padding-bottom: 10px;
+    padding: 10px;
+    background: #3a3a4a;
+    border-radius: 15px;
+    position: relative;
     white-space: nowrap;
+}
+
+.categories::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="10"><path d="M0 5 Q25 0 50 5 T100 5" stroke="%238888a8" stroke-width="2" fill="none"/></svg>') repeat-x top;
+    opacity: 0.3;
+    z-index: 1;
 }
 
 .category {
@@ -113,6 +154,8 @@ h1:hover {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 2;
 }
 
 .category .count {
