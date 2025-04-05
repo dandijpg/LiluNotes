@@ -14,22 +14,35 @@ button, .note, .category {
 }
 
 body {
-    background: #fefbe8;
     font-family: 'Comic Neue', sans-serif;
     color: #6a5545;
-    padding: 20px;
+    padding: 0; /* Menghapus padding default body agar gradient penuh */
     line-height: 1.6;
+    position: relative;
+    min-height: 100vh; /* Pastikan body minimal setinggi layar */
+}
+
+.background-gradient {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; /* Tinggi sesuai viewport */
+    background: linear-gradient(135deg, #fefbe8 0%, #e3c9a4 50%, #ceac93 100%);
+    z-index: -1; /* Di belakang konten */
 }
 
 .container {
     max-width: 1200px;
-    margin: 0 auto;
-    background: #fefbe8;
+    margin: 20px auto; /* Margin atas bawah untuk jarak dari tepi layar */
+    background: rgba(255, 255, 255, 0.9); /* Sedikit transparansi agar gradient terlihat */
     border-radius: 25px;
     box-shadow: 0 3px 10px rgba(206, 172, 147, 0.1);
     padding: 25px;
     animation: fadeIn 0.6s ease-in-out;
     user-select: none;
+    position: relative;
+    z-index: 1; /* Di atas gradient */
 }
 
 @keyframes fadeIn {
@@ -64,20 +77,26 @@ h1 {
     order: 1;
 }
 
-.search-wrapper {
+.search-cat-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
     order: 2;
-    position: relative;
+    max-width: 300px; /* Membatasi lebar keseluruhan */
+}
+
+.search-wrapper {
+    width: 100%;
     display: flex;
     align-items: center;
-    max-width: 300px; /* Membatasi lebar di desktop */
-    flex-grow: 0; /* Tidak memanjang sepenuhnya */
+    transition: all 0.3s ease-in-out;
 }
 
 .search-bar {
     width: 100%;
     display: flex;
     align-items: center;
-    transition: all 0.3s ease-in-out; /* Animasi halus */
 }
 
 .search-bar input {
@@ -89,7 +108,7 @@ h1 {
     font-size: 0.9em;
     font-weight: 400;
     width: 100%;
-    max-width: 100%; /* Mengikuti wrapper */
+    max-width: 100%;
     transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
     user-select: text;
     box-shadow: 0 1px 3px rgba(206, 172, 147, 0.1);
@@ -99,7 +118,7 @@ h1 {
     border-color: rgba(206, 172, 147, 0.5);
     box-shadow: 0 0 6px rgba(206, 172, 147, 0.2);
     outline: none;
-    transform: scale(1.02); /* Efek zoom kecil saat fokus */
+    transform: scale(1.02);
 }
 
 .search-bar input::placeholder {
@@ -109,15 +128,13 @@ h1 {
 }
 
 .search-bar input:focus::placeholder {
-    opacity: 0.4; /* Placeholder memudar saat fokus */
+    opacity: 0.4;
 }
 
 .sleeping-cat {
     flex-shrink: 0;
     width: 60px;
     height: 40px;
-    order: 3;
-    z-index: 10;
 }
 
 @media (max-width: 768px) {
@@ -131,11 +148,17 @@ h1 {
         font-size: 1.5em;
         align-self: flex-start;
     }
-    .search-wrapper {
+    .search-cat-wrapper {
+        flex-direction: row;
+        align-items: center;
         width: 100%;
-        max-width: none; /* Penuh di mobile */
-        order: 2;
-        margin-top: 5px;
+        max-width: none;
+        gap: 15px;
+        justify-content: space-between;
+    }
+    .search-wrapper {
+        width: auto;
+        flex-grow: 1;
     }
     .search-bar {
         width: 100%;
@@ -146,10 +169,6 @@ h1 {
     .sleeping-cat {
         width: 50px;
         height: 35px;
-        position: absolute;
-        right: 20px;
-        top: 50%;
-        transform: translateY(-50%);
     }
 }
 
@@ -164,11 +183,13 @@ h1 {
     .sleeping-cat {
         width: 40px;
         height: 30px;
-        right: 15px;
+    }
+    .search-cat-wrapper {
+        gap: 10px;
     }
 }
 
-/* Sisa CSS tetap sama seperti sebelumnya, hanya bagian header yang diubah */
+/* Sisa CSS tetap sama seperti sebelumnya, hanya bagian header dan background yang diubah */
 .categories {
     display: flex;
     gap: 8px;
@@ -434,7 +455,7 @@ button {
     display: block;
 }
 
-.pinned-section h1, .notes-section h1 {
+.pinned-section h2, .notes-section h2 {
     font-size: 1.4em;
     font-weight: 500;
     color: #ad8b72;
@@ -1179,8 +1200,7 @@ button {
 
 /* Media Queries untuk Responsivitas */
 @media (max-width: 768px) {
-    body { padding: 10px; }
-    .container, .edit-container { padding: 15px; border-radius: 20px; }
+    .container { padding: 15px; border-radius: 20px; margin: 10px auto; }
     h1 { font-size: 1.5em; }
     .controls { justify-content: center; gap: 8px; }
     .categories { gap: 6px; }
@@ -1201,7 +1221,7 @@ button {
         border-radius: 15px; 
     }
     .more-options.active { transform: translateX(-50%) translateY(0); }
-    .pinned-section h1, .notes-section h1 { font-size: 1.2em; }
+    .pinned-section h2, .notes-section h2 { font-size: 1.2em; }
     .notes-list { grid-template-columns: repeat(2, 1fr); gap: 8px; }
     .notes-list.list-mode { grid-template-columns: 1fr; gap: 6px; }
     .note { padding: 10px; }
@@ -1225,32 +1245,11 @@ button {
     .sleeping-cat {
         width: 50px;
         height: 35px;
-        right: 8px;
-    }
-    .cat-body {
-        width: 40px;
-        height: 20px;
-    }
-    .cat-head {
-        width: 16px;
-        height: 16px;
-        top: -8px;
-        left: -8px;
-    }
-    .cat-eyes::before,
-    .cat-eyes::after {
-        top: 10px;
-        width: 3px;
-    }
-    .cat-tail {
-        width: 15px;
-        height: 5px;
-        top: 8px;
-        right: -8px;
     }
 }
 
 @media (max-width: 480px) {
+    .container { padding: 10px; margin: 5px auto; }
     h1 { font-size: 1.2em; }
     .category { padding: 4px 10px; font-size: 0.7em; }
     .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .reset-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn {
@@ -1268,7 +1267,7 @@ button {
         border-radius: 15px;
     }
     .more-options.active { transform: translateX(-50%) translateY(0); }
-    .pinned-section h1, .notes-section h1 { font-size: 1em; }
+    .pinned-section h2, .notes-section h2 { font-size: 1em; }
     .note { padding: 8px; }
     .note .title { font-size: 0.9em; }
     .note .category { font-size: 0.7em; }
@@ -1288,28 +1287,6 @@ button {
     .sleeping-cat {
         width: 40px;
         height: 30px;
-        right: 6px;
-    }
-    .cat-body {
-        width: 30px;
-        height: 15px;
-    }
-    .cat-head {
-        width: 12px;
-        height: 12px;
-        top: -6px;
-        left: -6px;
-    }
-    .cat-eyes::before,
-    .cat-eyes::after {
-        top: 8px;
-        width: 2px;
-    }
-    .cat-tail {
-        width: 12px;
-        height: 4px;
-        top: 6px;
-        right: -6px;
     }
 }
 
