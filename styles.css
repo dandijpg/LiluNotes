@@ -135,7 +135,7 @@ h1:hover {
     position: absolute;
     top: 0;
     left: 0;
-    width: 200vw;
+    width: 100%;
     height: 8px;
     background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q25 0 50 5 T100 5" stroke="%23ad8b72" stroke-width="1" fill="none"/></svg>') repeat-x top;
     background-size: 80px 8px;
@@ -219,7 +219,7 @@ button {
 
 .add-category {
     padding: 10px 20px;
-    border-radius: 15px;
+    border-radius: 12px; /* Dikurangi dari 15px */
     border: 0.5px solid rgba(206, 172, 147, 0.3);
     background: #e3c9a4; /* Krem */
     color: #6a5545;
@@ -239,7 +239,7 @@ button {
 
 .add-note {
     padding: 10px 20px;
-    border-radius: 15px;
+    border-radius: 12px; /* Dikurangi dari 15px */
     border: 0.5px solid rgba(206, 172, 147, 0.3);
     background: #ceac93; /* Peach muda */
     color: #6a5545;
@@ -259,7 +259,7 @@ button {
 
 .toggle-mode {
     padding: 10px 20px;
-    border-radius: 15px;
+    border-radius: 12px; /* Dikurangi dari 15px */
     border: 0.5px solid rgba(206, 172, 147, 0.3);
     background: #fefbe8;
     color: #6a5545;
@@ -280,7 +280,7 @@ button {
 
 .more-btn {
     padding: 10px 20px;
-    border-radius: 15px;
+    border-radius: 12px; /* Dikurangi dari 15px */
     border: 0.5px solid rgba(206, 172, 147, 0.3);
     background: #fefbe8;
     color: #6a5545;
@@ -326,7 +326,7 @@ button {
 
 .backup-btn, .restore-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn, .reset-btn {
     padding: 10px 20px;
-    border-radius: 15px;
+    border-radius: 12px; /* Dikurangi dari 15px */
     border: 0.5px solid rgba(206, 172, 147, 0.3);
     font-size: 0.9em;
     font-weight: 500;
@@ -494,7 +494,7 @@ button {
     padding: 10px 20px;
     background: #ceac93; /* Peach muda */
     border: 0.5px solid rgba(206, 172, 147, 0.3);
-    border-radius: 15px;
+    border-radius: 12px; /* Dikurangi dari 15px */
     color: #6a5545;
     font-size: 0.9em;
     font-weight: 500;
@@ -843,7 +843,7 @@ button {
     padding: 10px 20px;
     background: #e3c9a4; /* Krem */
     border: 0.5px solid rgba(206, 172, 147, 0.3);
-    border-radius: 15px;
+    border-radius: 12px; /* Dikurangi dari 15px */
     color: #6a5545;
     font-size: 0.9em;
     font-weight: 500;
