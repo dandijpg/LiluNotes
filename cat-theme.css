@@ -80,17 +80,20 @@ header::before {
     pointer-events: none;
 }
 
-/* Tombol dengan efek glow pastel */
+/* Tombol dengan efek glow pastel dan font eksplisit */
 button, .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn, .reset-btn, .view-more, .save-btn {
     position: relative;
     overflow: hidden;
     border-radius: 20px !important;
-    padding: 10px 25px;
+    padding: 10px 20px;
     transition: all 0.3s ease;
     box-shadow: 0 0 10px rgba(168, 200, 216, 0.2);
     cursor: pointer;
     pointer-events: auto;
     z-index: 20; /* Tombol di atas container tapi di bawah popup */
+    font-family: 'Comic Neue', sans-serif !important; /* Pastikan font diterapkan */
+    font-size: 0.9em;
+    font-weight: 500;
 }
 
 button:hover, .add-category:hover, .add-note:hover, .toggle-mode:hover, .more-btn:hover, .backup-btn:hover, .restore-btn:hover, .copy-backup-btn:hover, .google-auth-btn:hover, .backup-google-btn:hover, .google-logout-btn:hover, .reset-btn:hover, .view-more:hover, .save-btn:hover {
@@ -232,6 +235,7 @@ button:hover::after, .add-category:hover::after, .add-note:hover::after, .toggle
     z-index: 100 !important; /* Pastikan popup di atas semua elemen lain */
     background: #f0f0f8 !important; /* Pastel abu-abu sangat muda */
     border: 1px solid #c8d8e8 !important; /* Pastel biru sangat muda */
+    font-family: 'Comic Neue', sans-serif !important; /* Pastikan font diterapkan */
 }
 
 /* Animasi elegan lainnya */
