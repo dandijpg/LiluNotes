@@ -7,8 +7,8 @@
     box-sizing: border-box;
 }
 
-/* Hilangkan background biru saat klik atau hover pada semua elemen interaktif */
-button, .note, .category, .sleeping-cat {
+/* Hilangkan background biru saat klik */
+button, .note, .category {
     -webkit-tap-highlight-color: transparent;
     tap-highlight-color: transparent;
 }
@@ -150,6 +150,11 @@ h1 {
     flex-shrink: 0;
     width: 60px;
     height: 40px;
+    transition: transform 0.3s ease;
+}
+
+.search-cat-wrapper:hover .sleeping-cat {
+    transform: scale(1.1);
 }
 
 @media (max-width: 768px) {
@@ -199,20 +204,27 @@ h1 {
     }
 }
 
-/* Categories tanpa scroller horizontal */
+/* Categories dengan scrollbar tersembunyi */
 .categories {
     display: flex;
     gap: 10px;
     margin-bottom: 25px;
+    overflow-x: auto;
     padding: 12px;
     background: #fefbe8;
     border-radius: 20px;
     position: relative;
     white-space: nowrap;
+    scroll-behavior: smooth;
     box-shadow: 0 4px 15px rgba(206, 172, 147, 0.15);
     transition: box-shadow 0.3s ease;
-    flex-wrap: wrap; /* Mengizinkan elemen membungkus ke baris baru */
-    overflow-x: hidden; /* Menghilangkan scroller horizontal */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling di iOS */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE dan Edge */
+}
+
+.categories::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, dan browser berbasis Webkit */
 }
 
 .categories:hover {
@@ -297,7 +309,7 @@ h1 {
     transition: box-shadow 0.3s ease;
 }
 
-.controls-wrapper:hover {
+.controlschirper-wrapper:hover {
     box-shadow: 0 6px 20px rgba(206, 172, 147, 0.25);
 }
 
@@ -650,10 +662,10 @@ button {
     animation: fadeIn 0.8s ease-in-out;
 }
 
-/* Toolbar tanpa scroller horizontal */
+/* Toolbar dengan scrollbar tersembunyi */
 .toolbar {
     display: flex;
-    flex-wrap: wrap; /* Mengizinkan elemen membungkus */
+    flex-wrap: nowrap;
     gap: 15px;
     margin-bottom: 25px;
     background: #e3c9a4;
@@ -662,7 +674,15 @@ button {
     box-shadow: 0 4px 15px rgba(206, 172, 147, 0.15);
     justify-content: flex-start;
     border: 1px solid rgba(206, 172, 147, 0.25);
-    overflow-x: hidden; /* Menghilangkan scroller horizontal */
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE dan Edge */
+}
+
+.toolbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, dan browser berbasis Webkit */
 }
 
 .toolbar-section {
@@ -830,7 +850,7 @@ button {
     outline: none;
 }
 
-/* Note Content tanpa scroller horizontal */
+/* Note Content dengan scrollbar tersembunyi */
 .note-content {
     height: 350px;
     max-height: 350px;
@@ -843,10 +863,17 @@ button {
     font-weight: 400;
     box-shadow: 0 4px 15px rgba(206, 172, 147, 0.2);
     transition: all 0.4s ease;
-    overflow-x: hidden; /* Menghilangkan scroller horizontal */
+    overflow-x: auto;
     overflow-y: auto;
     position: relative;
     cursor: text;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE dan Edge */
+}
+
+.note-content::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, dan browser berbasis Webkit */
 }
 
 .note-content[contenteditable="true"] {
@@ -891,7 +918,7 @@ button {
     box-shadow: 0 4px 15px rgba(206, 172, 147, 0.2);
 }
 
-/* Note Content View tanpa scroller horizontal */
+/* Note Content View dengan scrollbar tersembunyi */
 .note-content-view {
     min-height: 350px;
     background: #fefbe8;
@@ -903,9 +930,16 @@ button {
     font-weight: 400;
     box-shadow: 0 4px 15px rgba(206, 172, 147, 0.2);
     user-select: text;
-    overflow-x: hidden; /* Menghilangkan scroller horizontal */
+    overflow-x: auto;
     word-wrap: break-word;
     cursor: default;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE dan Edge */
+}
+
+.note-content-view::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, dan browser berbasis Webkit */
 }
 
 .note-content-view:focus {
@@ -978,13 +1012,20 @@ button {
     color: #fff;
 }
 
-/* Table Styles tanpa scroller horizontal */
+/* Table Styles dengan scrollbar tersembunyi */
 .table-wrapper {
     position: relative;
     display: block;
     margin: 10px 0;
-    overflow-x: hidden; /* Menghilangkan scroller horizontal */
+    overflow-x: auto;
     max-width: 100%;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE dan Edge */
+}
+
+.table-wrapper::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, dan browser berbasis Webkit */
 }
 
 .regular-table {
