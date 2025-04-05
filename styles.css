@@ -12,9 +12,9 @@ button, .note, .category {
 }
 
 body {
-    background: #f5f7fa;
+    background: #f8f1f1; /* Pastel soft pinkish */
     font-family: 'Poppins', sans-serif;
-    color: #374151;
+    color: #5c5c5c; /* Abu-abu pastel lembut */
     padding: 20px;
     line-height: 1.6;
 }
@@ -22,9 +22,9 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    background: #fff;
-    border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    background: #fff7f7; /* Pastel putih dengan hint pink */
+    border-radius: 25px; /* Radius lebih besar untuk kesan lembut */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
     padding: 25px;
     animation: fadeIn 0.5s ease-in-out;
     user-select: none;
@@ -42,23 +42,23 @@ header {
     margin-bottom: 25px;
     flex-wrap: wrap;
     gap: 15px;
-    background: #f8fafc;
+    background: #f9f5f5; /* Pastel pink sangat lembut */
     padding: 15px 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-    border: 1px solid #e8ecef;
+    border-radius: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+    border: 1px solid #f0ebeb; /* Border pastel lembut */
 }
 
 h1 {
     font-size: 2em;
     font-weight: 600;
-    color: #4285f4;
+    color: #a8b5e2; /* Pastel biru muda */
     letter-spacing: -0.5px;
     transition: all 0.3s ease;
 }
 
 h1:hover {
-    color: #ea4335;
+    color: #f7caca; /* Pastel pink lembut */
     transform: scale(1.02);
 }
 
@@ -71,10 +71,10 @@ h1:hover {
 
 .search-bar input {
     padding: 10px 15px;
-    border: 1px solid #d1d5db;
-    border-radius: 12px;
+    border: 1px solid #e6e1e1; /* Border pastel abu-abu */
+    border-radius: 15px;
     background: #fff;
-    color: #4b5563;
+    color: #6b7280;
     font-size: 0.9em;
     font-weight: 400;
     width: 100%;
@@ -84,8 +84,8 @@ h1:hover {
 }
 
 .search-bar input:focus {
-    border-color: #4285f4;
-    box-shadow: 0 0 5px rgba(66, 133, 244, 0.3);
+    border-color: #c9d1f0; /* Pastel biru muda */
+    box-shadow: 0 0 5px rgba(201, 209, 240, 0.3);
     outline: none;
 }
 
@@ -103,27 +103,27 @@ h1:hover {
     align-items: center;
     gap: 5px;
     padding: 8px 20px;
-    background: #e8f0fe;
-    border-radius: 12px;
-    color: #4285f4;
+    background: #e8edfa; /* Pastel biru sangat lembut */
+    border-radius: 15px;
+    color: #8a9cd6; /* Pastel biru sedang */
     font-weight: 500;
     font-size: 0.9em;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
 .category .count {
-    background: rgba(66, 133, 244, 0.2);
-    border-radius: 8px;
+    background: rgba(138, 156, 214, 0.2); /* Pastel biru transparan */
+    border-radius: 10px;
     padding: 2px 6px;
     font-size: 0.8em;
 }
 
 .category.active {
-    background: #4285f4;
+    background: #c9d1f0; /* Pastel biru muda */
     color: #fff;
-    box-shadow: 0 3px 10px rgba(66, 133, 244, 0.2);
+    box-shadow: 0 3px 8px rgba(201, 209, 240, 0.2);
 }
 
 .category.active .count {
@@ -131,10 +131,10 @@ h1:hover {
 }
 
 .category:hover {
-    background: #4285f4;
+    background: #c9d1f0;
     color: #fff;
     transform: translateY(-2px);
-    box-shadow: 0 3px 10px rgba(66, 133, 244, 0.2);
+    box-shadow: 0 3px 8px rgba(201, 209, 240, 0.2);
 }
 
 .category:hover .count {
@@ -142,12 +142,12 @@ h1:hover {
 }
 
 .controls-wrapper {
-    background: #f8fafc;
+    background: #f9f5f5; /* Pastel pink sangat lembut */
     padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    border-radius: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
     margin-bottom: 25px;
-    border: 1px solid #e8ecef;
+    border: 1px solid #f0ebeb;
 }
 
 .controls {
@@ -171,80 +171,80 @@ button {
 
 .add-category {
     padding: 10px 20px;
-    border-radius: 12px;
+    border-radius: 15px;
     border: none;
-    background: #34a853;
+    background: #d4e9d7; /* Pastel hijau muda */
     color: #fff;
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
 .add-category:hover, .add-category:active {
-    background: #2f9e44;
-    box-shadow: 0 3px 10px rgba(52, 168, 83, 0.2);
+    background: #c2e0c5; /* Pastel hijau sedikit lebih gelap */
+    box-shadow: 0 3px 8px rgba(212, 233, 215, 0.2);
     transform: translateY(-2px);
 }
 
 .add-note {
     padding: 10px 20px;
-    border-radius: 12px;
+    border-radius: 15px;
     border: none;
-    background: #fbbc05;
+    background: #fce8c9; /* Pastel kuning lembut */
     color: #fff;
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
 .add-note:hover, .add-note:active {
-    background: #f4b400;
-    box-shadow: 0 3px 10px rgba(251, 188, 5, 0.2);
+    background: #f9deae; /* Pastel kuning sedikit lebih gelap */
+    box-shadow: 0 3px 8px rgba(252, 232, 201, 0.2);
     transform: translateY(-2px);
 }
 
 .toggle-mode {
     padding: 10px 20px;
-    border-radius: 12px;
-    border: 1px solid #d1d5db;
+    border-radius: 15px;
+    border: 1px solid #e6e1e1;
     background: #fff;
-    color: #4b5563;
+    color: #6b7280;
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
 .toggle-mode:hover, .toggle-mode:active {
-    background: #4285f4;
-    color: #fff;
-    border-color: #4285f4;
-    box-shadow: 0 3px 10px rgba(66, 133, 244, 0.2);
+    background: #e8edfa; /* Pastel biru sangat lembut */
+    color: #8a9cd6;
+    border-color: #c9d1f0;
+    box-shadow: 0 3px 8px rgba(201, 209, 240, 0.2);
 }
 
 .more-btn {
     padding: 10px 20px;
-    border-radius: 12px;
-    border: 1px solid #d1d5db;
+    border-radius: 15px;
+    border: 1px solid #e6e1e1;
     background: #fff;
-    color: #4b5563;
+    color: #6b7280;
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
 .more-btn:hover, .more-btn:active {
-    background: #6b7280;
+    background: #e2e2e2; /* Pastel abu-abu lembut */
     color: #fff;
-    border-color: #6b7280;
-    box-shadow: 0 3px 10px rgba(107, 114, 128, 0.2);
+    border-color: #d8d8d8;
+    box-shadow: 0 3px 8px rgba(226, 226, 226, 0.2);
 }
 
 .more-options {
@@ -252,9 +252,9 @@ button {
     position: absolute;
     top: calc(100% + 5px);
     right: 0;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background: #fff7f7;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     padding: 10px;
     flex-direction: column;
     gap: 8px;
@@ -262,7 +262,7 @@ button {
     opacity: 0;
     transform: translateY(-10px);
     transition: opacity 0.2s ease, transform 0.2s ease;
-    border: 1px solid #e8ecef;
+    border: 1px solid #f0ebeb;
 }
 
 .more-options.active {
@@ -273,50 +273,50 @@ button {
 
 .backup-btn, .restore-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn, .reset-btn {
     padding: 10px 20px;
-    border-radius: 12px;
+    border-radius: 15px;
     border: none;
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
     color: #fff;
 }
 
 .backup-btn {
-    background: #ea4335;
+    background: #f7caca; /* Pastel pink */
 }
 
 .backup-btn:hover, .backup-btn:active {
-    background: #db4437;
-    box-shadow: 0 3px 10px rgba(234, 67, 53, 0.2);
+    background: #f4b8b8; /* Pastel pink lebih gelap */
+    box-shadow: 0 3px 8px rgba(247, 202, 202, 0.2);
 }
 
 .restore-btn, .copy-backup-btn, .google-auth-btn {
-    background: #4285f4;
+    background: #c9d1f0; /* Pastel biru muda */
 }
 
 .restore-btn:hover, .restore-btn:active, .copy-backup-btn:hover, .copy-backup-btn:active, .google-auth-btn:hover, .google-auth-btn:active {
-    background: #357abd;
-    box-shadow: 0 3px 10px rgba(66, 133, 244, 0.2);
+    background: #b8c2e8; /* Pastel biru sedikit lebih gelap */
+    box-shadow: 0 3px 8px rgba(201, 209, 240, 0.2);
 }
 
 .backup-google-btn {
-    background: #34a853;
+    background: #d4e9d7; /* Pastel hijau muda */
 }
 
 .backup-google-btn:hover, .backup-google-btn:active {
-    background: #2f9e44;
-    box-shadow: 0 3px 10px rgba(52, 168, 83, 0.2);
+    background: #c2e0c5; /* Pastel hijau sedikit lebih gelap */
+    box-shadow: 0 3px 8px rgba(212, 233, 215, 0.2);
 }
 
 .google-logout-btn, .reset-btn {
-    background: #ea4335;
+    background: #f7caca; /* Pastel pink */
 }
 
 .google-logout-btn:hover, .google-logout-btn:active, .reset-btn:hover, .reset-btn:active {
-    background: #db4437;
-    box-shadow: 0 3px 10px rgba(234, 67, 53, 0.2);
+    background: #f4b8b8; /* Pastel pink lebih gelap */
+    box-shadow: 0 3px 8px rgba(247, 202, 202, 0.2);
 }
 
 .pinned-section {
@@ -331,7 +331,7 @@ button {
 .pinned-section h2, .notes-section h2 {
     font-size: 1.5em;
     font-weight: 500;
-    color: #6b7280;
+    color: #b8b8b8; /* Pastel abu-abu lembut */
     margin-bottom: 15px;
     text-align: center;
     transition: all 0.3s ease;
@@ -355,13 +355,13 @@ button {
 }
 
 .note {
-    background: #fff;
+    background: #fef8f8; /* Pastel pink sangat lembut */
     padding: 15px;
-    border-radius: 15px;
-    border: 1px solid #e8ecef;
+    border-radius: 20px; /* Radius lebih besar untuk kesan lembut */
+    border: 1px solid #f4ebeb; /* Border pastel pink lembut */
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -376,13 +376,14 @@ button {
 
 .note:hover, .note:active {
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.05);
+    background: #fdf5f5; /* Pastel pink lebih terang saat hover */
 }
 
 .note .title {
     font-weight: 600;
     font-size: 1.1em;
-    color: #1f2937;
+    color: #5c5c5c; /* Abu-abu pastel lembut */
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -391,10 +392,10 @@ button {
 
 .note .category {
     font-size: 0.85em;
-    color: #4285f4;
-    background: #e8f0fe;
+    color: #8a9cd6; /* Pastel biru sedang */
+    background: #e8edfa; /* Pastel biru sangat lembut */
     padding: 2px 8px;
-    border-radius: 8px;
+    border-radius: 10px;
     align-self: flex-start;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -404,7 +405,7 @@ button {
 
 .note .timestamp {
     font-size: 0.8em;
-    color: #6b7280;
+    color: #b8b8b8; /* Pastel abu-abu lembut */
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -413,7 +414,7 @@ button {
 
 .note .preview {
     font-size: 0.9em;
-    color: #4b5563;
+    color: #7a7a7a; /* Abu-abu pastel sedang */
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -425,9 +426,9 @@ button {
 
 .notes-list.list-mode .note {
     width: 100%;
-    border-radius: 10px;
+    border-radius: 15px;
     padding: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
     max-width: 100%;
 }
 
@@ -437,38 +438,38 @@ button {
     gap: 5px;
     margin: 20px auto 0;
     padding: 10px 25px;
-    background: #4285f4;
+    background: #c9d1f0; /* Pastel biru muda */
     border: none;
-    border-radius: 12px;
+    border-radius: 15px;
     color: #fff;
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
 .view-more:hover, .view-more:active {
-    background: #357abd;
-    box-shadow: 0 3px 10px rgba(66, 133, 244, 0.2);
+    background: #b8c2e8; /* Pastel biru sedikit lebih gelap */
+    box-shadow: 0 3px 8px rgba(201, 209, 240, 0.2);
     transform: translateY(-2px);
 }
 
 .context-menu, .note-context-menu {
     position: absolute;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background: #fff7f7;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     display: none;
     z-index: 10;
     transition: opacity 0.2s ease;
     min-width: 150px;
-    border: 1px solid #e8ecef;
+    border: 1px solid #f0ebeb;
 }
 
 .menu-item {
     padding: 8px 15px;
-    color: #4b5563;
+    color: #6b7280;
     font-weight: 400;
     font-size: 0.9em;
     cursor: pointer;
@@ -479,7 +480,7 @@ button {
 }
 
 .menu-item:hover {
-    background: #4285f4;
+    background: #c9d1f0; /* Pastel biru muda */
     color: #fff;
 }
 
@@ -487,9 +488,9 @@ button {
 .edit-container {
     max-width: 900px;
     margin: 20px auto;
-    background: #fff;
-    border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    background: #fff7f7;
+    border-radius: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
     padding: 25px;
     animation: fadeIn 0.5s ease-in-out;
 }
@@ -497,17 +498,17 @@ button {
 /* Toolbar */
 .toolbar {
     display: flex;
-    flex-wrap: nowrap; /* Ubah ke nowrap untuk scroll horizontal */
+    flex-wrap: nowrap;
     gap: 15px;
     margin-bottom: 25px;
-    background: #f8fafc;
+    background: #f9f5f5;
     padding: 15px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    border-radius: 15px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
     justify-content: flex-start;
-    border: 1px solid #e8ecef;
-    overflow-x: auto; /* Aktifkan scroll horizontal */
-    white-space: nowrap; /* Pastikan konten tidak membungkus */
+    border: 1px solid #f0ebeb;
+    overflow-x: auto;
+    white-space: nowrap;
 }
 
 .toolbar-section {
@@ -519,7 +520,7 @@ button {
 .toolbar-label {
     font-size: 0.8em;
     font-weight: 500;
-    color: #6b7280;
+    color: #b8b8b8; /* Pastel abu-abu lembut */
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -528,28 +529,28 @@ button {
     display: flex;
     gap: 6px;
     padding: 6px;
-    border-radius: 10px;
+    border-radius: 12px;
     background: #fff;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-    border: 1px solid #e8ecef;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+    border: 1px solid #f0ebeb;
     transition: all 0.3s ease;
 }
 
 .toolbar-group:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .tool-btn, .edit-btn, .exit-btn, .table-tool-btn {
     padding: 8px;
     background: #ffffff;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    color: #4b5563;
+    border: 1px solid #e6e1e1;
+    border-radius: 10px;
+    color: #6b7280;
     font-weight: 500;
     font-size: 0.9em;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -558,10 +559,10 @@ button {
 }
 
 .tool-btn:hover, .edit-btn:hover, .exit-btn:hover, .table-tool-btn:hover {
-    background: #4285f4;
+    background: #c9d1f0; /* Pastel biru muda */
     color: #fff;
-    border-color: #4285f4;
-    box-shadow: 0 3px 8px rgba(66, 133, 244, 0.2);
+    border-color: #c9d1f0;
+    box-shadow: 0 3px 6px rgba(201, 209, 240, 0.2);
 }
 
 .tool-btn:active, .edit-btn:active, .exit-btn:active, .table-tool-btn:active {
@@ -569,47 +570,47 @@ button {
 }
 
 .edit-btn {
-    background: #34a853;
-    border-color: #34a853;
+    background: #d4e9d7; /* Pastel hijau muda */
+    border-color: #d4e9d7;
     color: #fff;
 }
 
 .edit-btn:hover {
-    background: #2f9e44;
-    border-color: #2f9e44;
+    background: #c2e0c5; /* Pastel hijau sedikit lebih gelap */
+    border-color: #c2e0c5;
 }
 
 .exit-btn {
-    background: #ea4335;
-    border-color: #ea4335;
+    background: #f7caca; /* Pastel pink */
+    border-color: #f7caca;
     color: #fff;
 }
 
 .exit-btn:hover {
-    background: #db4437;
-    border-color: #db4437;
+    background: #f4b8b8; /* Pastel pink lebih gelap */
+    border-color: #f4b8b8;
 }
 
 .table-tool-btn.add-row-btn, .table-tool-btn.add-col-btn {
-    background-color: #34a853;
-    border-color: #34a853;
+    background-color: #d4e9d7; /* Pastel hijau muda */
+    border-color: #d4e9d7;
     color: #fff;
 }
 
 .table-tool-btn.add-row-btn:hover, .table-tool-btn.add-col-btn:hover {
-    background-color: #2f9e44;
-    border-color: #2f9e44;
+    background-color: #c2e0c5; /* Pastel hijau sedikit lebih gelap */
+    border-color: #c2e0c5;
 }
 
 .table-tool-btn.delete-row-btn, .table-tool-btn.delete-col-btn {
-    background-color: #ea4335;
-    border-color: #ea4335;
+    background-color: #f7caca; /* Pastel pink */
+    border-color: #f7caca;
     color: #fff;
 }
 
 .table-tool-btn.delete-row-btn:hover, .table-tool-btn.delete-col-btn:hover {
-    background-color: #db4437;
-    border-color: #db4437;
+    background-color: #f4b8b8; /* Pastel pink lebih gelap */
+    border-color: #f4b8b8;
 }
 
 .table-tool-btn {
@@ -627,10 +628,10 @@ button {
 /* Category Select */
 .category-select {
     padding: 10px 15px;
-    border: 1px solid #d1d5db;
-    border-radius: 12px;
+    border: 1px solid #e6e1e1;
+    border-radius: 15px;
     background: #fff;
-    color: #4b5563;
+    color: #6b7280;
     font-size: 0.9em;
     font-weight: 500;
     width: 100%;
@@ -639,18 +640,18 @@ button {
 }
 
 .category-select:focus {
-    border-color: #4285f4;
-    box-shadow: 0 0 5px rgba(66, 133, 244, 0.3);
+    border-color: #c9d1f0; /* Pastel biru muda */
+    box-shadow: 0 0 5px rgba(201, 209, 240, 0.3);
     outline: none;
 }
 
 /* Calc Mode Select */
 .calc-mode-select {
     padding: 8px 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
+    border: 1px solid #e6e1e1;
+    border-radius: 10px;
     background: #fff;
-    color: #4b5563;
+    color: #6b7280;
     font-size: 0.85em;
     font-weight: 500;
     width: 120px;
@@ -658,8 +659,8 @@ button {
 }
 
 .calc-mode-select:focus {
-    border-color: #4285f4;
-    box-shadow: 0 0 5px rgba(66, 133, 244, 0.3);
+    border-color: #c9d1f0; /* Pastel biru muda */
+    box-shadow: 0 0 5px rgba(201, 209, 240, 0.3);
     outline: none;
 }
 
@@ -667,34 +668,34 @@ button {
 .note-title {
     width: 100%;
     padding: 12px 15px;
-    background: #f8fafc;
-    border: 1px solid #d1d5db;
-    border-radius: 12px;
-    color: #1f2937;
+    background: #f9f5f5;
+    border: 1px solid #e6e1e1;
+    border-radius: 15px;
+    color: #5c5c5c; /* Abu-abu pastel lembut */
     font-size: 1.2em;
     font-weight: 500;
     transition: all 0.3s ease;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
 
 .note-title:focus {
-    border-color: #4285f4;
-    box-shadow: 0 3px 10px rgba(66, 133, 244, 0.1);
+    border-color: #c9d1f0; /* Pastel biru muda */
+    box-shadow: 0 3px 8px rgba(201, 209, 240, 0.1);
     outline: none;
 }
 
 /* Note Content */
 .note-content {
-    height: 400px; /* Tinggi statis */
-    max-height: 400px; /* Pastikan tidak melebihi tinggi ini */
+    height: 400px;
+    max-height: 400px;
     background: #fff;
     padding: 20px;
-    border: 1px solid #e8ecef;
-    border-radius: 15px;
-    color: #374151;
+    border: 1px solid #f4ebeb; /* Border pastel pink lembut */
+    border-radius: 20px;
+    color: #5c5c5c; /* Abu-abu pastel lembut */
     font-size: 1em;
     font-weight: 400;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
     transition: all 0.3s ease;
     overflow-x: auto;
     overflow-y: auto;
@@ -710,8 +711,8 @@ button {
 }
 
 .note-content:focus {
-    border-color: #4285f4;
-    box-shadow: 0 5px 15px rgba(66, 133, 244, 0.1);
+    border-color: #c9d1f0; /* Pastel biru muda */
+    box-shadow: 0 5px 12px rgba(201, 209, 240, 0.1);
     outline: none;
 }
 
@@ -733,43 +734,43 @@ button {
 .note-title-view {
     width: 100%;
     padding: 12px;
-    background: #f8fafc;
-    border: 1px solid #d1d5db;
-    border-radius: 12px;
-    color: #1f2937;
+    background: #f9f5f5;
+    border: 1px solid #e6e1e1;
+    border-radius: 15px;
+    color: #5c5c5c; /* Abu-abu pastel lembut */
     font-size: 1.5em;
     font-weight: 600;
     margin-bottom: 15px;
     text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 
 .note-content-view {
     min-height: 400px;
     background: #fff;
     padding: 20px;
-    border: 1px solid #e8ecef;
-    border-radius: 15px;
-    color: #374151;
+    border: 1px solid #f4ebeb; /* Border pastel pink lembut */
+    border-radius: 20px;
+    color: #5c5c5c; /* Abu-abu pastel lembut */
     font-size: 1em;
     font-weight: 400;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
     user-select: text;
     overflow-x: auto;
     word-wrap: break-word;
-    cursor: default; /* Pastikan kursor tidak berubah menjadi text */
+    cursor: default;
 }
 
 .note-content-view:focus {
-    outline: none; /* Hilangkan outline saat fokus */
-    border-color: #e8ecef; /* Jaga border tetap sama */
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05); /* Jaga shadow tetap sama */
+    outline: none;
+    border-color: #f4ebeb;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.03);
 }
 
 .note-content-view [contenteditable="false"] {
-    cursor: default; /* Pastikan elemen dalam tabel tidak menunjukkan kursor edit */
-    background: transparent; /* Hilangkan background yang mungkin menunjukkan editability */
-    border: none; /* Hilangkan border yang mungkin ada */
+    cursor: default;
+    background: transparent;
+    border: none;
 }
 
 .note-content-view ul,
@@ -783,48 +784,48 @@ button {
 .save-btn {
     margin-top: 15px;
     padding: 10px 25px;
-    background: #34a853;
+    background: #d4e9d7; /* Pastel hijau muda */
     border: none;
-    border-radius: 12px;
+    border-radius: 15px;
     color: #fff;
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
 }
 
 .save-btn:hover, .save-btn:active {
-    background: #2f9e44;
-    box-shadow: 0 3px 10px rgba(52, 168, 83, 0.2);
+    background: #c2e0c5; /* Pastel hijau sedikit lebih gelap */
+    box-shadow: 0 3px 8px rgba(212, 233, 215, 0.2);
     transform: translateY(-2px);
 }
 
 .done {
     text-decoration: line-through;
-    color: #6b7280;
+    color: #b8b8b8; /* Pastel abu-abu lembut */
     transition: all 0.3s ease;
 }
 
 .no-notes {
     text-align: center;
-    color: #6b7280;
+    color: #b8b8b8; /* Pastel abu-abu lembut */
     font-size: 1.1em;
     font-weight: 400;
     padding: 20px;
 }
 
 .copyable {
-    background-color: #e8f0fe;
+    background-color: #e8edfa; /* Pastel biru sangat lembut */
     padding: 2px 5px;
-    border-radius: 5px;
-    color: #4285f4;
+    border-radius: 8px;
+    color: #8a9cd6; /* Pastel biru sedang */
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .copyable:hover {
-    background-color: #4285f4;
+    background-color: #c9d1f0; /* Pastel biru muda */
     color: #fff;
 }
 
@@ -848,7 +849,7 @@ button {
 .note-content .regular-table td,
 .note-content-view .regular-table th,
 .note-content-view .regular-table td {
-    border: 1px solid #d1d5db;
+    border: 1px solid #e6e1e1;
     padding: 8px;
     text-align: left;
     min-width: 100px;
@@ -856,14 +857,14 @@ button {
 
 .note-content .regular-table th,
 .note-content-view .regular-table th {
-    background-color: #f8fafc;
+    background-color: #f9f5f5;
     font-weight: 500;
-    color: #4b5563;
+    color: #6b7280;
 }
 
 .note-content .regular-table tr:nth-child(even),
 .note-content-view .regular-table tr:nth-child(even) {
-    background-color: #f9fafb;
+    background-color: #fef8f8; /* Pastel pink sangat lembut */
 }
 
 /* Financial Table Styles */
@@ -878,26 +879,26 @@ button {
     border-collapse: collapse;
     width: 300px;
     background: #fff;
-    border: 1px solid #e8ecef;
-    border-radius: 8px;
+    border: 1px solid #f4ebeb; /* Border pastel pink lembut */
+    border-radius: 10px;
     overflow: hidden;
     min-height: 150px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
 }
 
 .finance-table th {
-    background: #e8f0fe;
-    color: #4285f4;
+    background: #e8edfa; /* Pastel biru sangat lembut */
+    color: #8a9cd6; /* Pastel biru sedang */
     font-weight: 500;
     padding: 8px;
-    border-bottom: 1px solid #e8ecef;
+    border-bottom: 1px solid #f0ebeb;
     cursor: not-allowed;
 }
 
 .finance-table td {
     padding: 8px;
-    border-bottom: 1px solid #f5f7fa;
-    color: #374151;
+    border-bottom: 1px solid #f9f5f5;
+    color: #5c5c5c; /* Abu-abu pastel lembut */
     word-wrap: break-word;
     white-space: normal;
     max-width: 150px;
@@ -905,23 +906,23 @@ button {
 }
 
 .finance-table .income {
-    background: #e6f4ea;
-    color: #34a853;
+    background: #e9f4ea; /* Pastel hijau sangat lembut */
+    color: #a3c9a8; /* Pastel hijau sedang */
 }
 
 .finance-table .expense {
-    background: #fce8e6;
-    color: #ea4335;
+    background: #fce8e8; /* Pastel pink sangat lembut */
+    color: #f7caca; /* Pastel pink */
 }
 
 .finance-table .multiply {
-    background: #fef7e0;
-    color: #fbbc05;
+    background: #fef4e0; /* Pastel kuning sangat lembut */
+    color: #fce8c9; /* Pastel kuning */
 }
 
 .finance-table .divide {
-    background: #e8f0fe;
-    color: #4285f4;
+    background: #e8edfa; /* Pastel biru sangat lembut */
+    color: #c9d1f0; /* Pastel biru muda */
 }
 
 .finance-table .amount {
@@ -929,10 +930,10 @@ button {
 }
 
 .finance-table tfoot td {
-    background: #f9fbfc;
+    background: #fdf5f5; /* Pastel pink lebih terang */
     font-weight: 600;
-    color: #ea4335;
-    border-top: 1px dashed #e8ecef;
+    color: #f7caca; /* Pastel pink */
+    border-top: 1px dashed #f0ebeb;
     cursor: not-allowed;
 }
 
@@ -941,88 +942,88 @@ button {
 }
 
 .finance-table td, .finance-table th {
-    pointer-events: none; /* Nonaktifkan interaksi di tabel finansial */
+    pointer-events: none;
 }
 
 .finance-btn {
     padding: 5px 10px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-    background: #ccc;
+    background: #e2e2e2; /* Pastel abu-abu lembut */
     color: #fff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
 
 .finance-btn.add-income {
-    background: #34a853;
+    background: #d4e9d7; /* Pastel hijau muda */
 }
 
 .finance-btn.add-income:hover {
-    background: #2f9e44;
-    box-shadow: 0 2px 5px rgba(52, 168, 83, 0.3);
+    background: #c2e0c5; /* Pastel hijau sedikit lebih gelap */
+    box-shadow: 0 2px 4px rgba(212, 233, 215, 0.3);
 }
 
 .finance-btn.subtract-expense {
-    background: #ea4335;
+    background: #f7caca; /* Pastel pink */
 }
 
 .finance-btn.subtract-expense:hover {
-    background: #db4437;
-    box-shadow: 0 2px 5px rgba(234, 67, 53, 0.3);
+    background: #f4b8b8; /* Pastel pink lebih gelap */
+    box-shadow: 0 2px 4px rgba(247, 202, 202, 0.3);
 }
 
 .finance-btn.multiply {
-    background: #fbbc05;
+    background: #fce8c9; /* Pastel kuning lembut */
 }
 
 .finance-btn.multiply:hover {
-    background: #f4b400;
-    box-shadow: 0 2px 5px rgba(251, 188, 5, 0.3);
+    background: #f9deae; /* Pastel kuning sedikit lebih gelap */
+    box-shadow: 0 2px 4px rgba(252, 232, 201, 0.3);
 }
 
 .finance-btn.divide {
-    background: #4285f4;
+    background: #c9d1f0; /* Pastel biru muda */
 }
 
 .finance-btn.divide:hover {
-    background: #357abd;
-    box-shadow: 0 2px 5px rgba(66, 133, 244, 0.3);
+    background: #b8c2e8; /* Pastel biru sedikit lebih gelap */
+    box-shadow: 0 2px 4px rgba(201, 209, 240, 0.3);
 }
 
 .finance-btn.calculate {
-    background: #6b7280;
+    background: #e2e2e2; /* Pastel abu-abu lembut */
 }
 
 .finance-btn.calculate:hover {
-    background: #4b5563;
-    box-shadow: 0 2px 5px rgba(107, 114, 128, 0.3);
+    background: #d8d8d8; /* Pastel abu-abu sedikit lebih gelap */
+    box-shadow: 0 2px 4px rgba(226, 226, 226, 0.3);
 }
 
 .finance-btn.delete-last-row {
-    background: #ea4335;
+    background: #f7caca; /* Pastel pink */
 }
 
 .finance-btn.delete-last-row:hover {
-    background: #db4437;
-    box-shadow: 0 2px 5px rgba(234, 67, 53, 0.3);
+    background: #f4b8b8; /* Pastel pink lebih gelap */
+    box-shadow: 0 2px 4px rgba(247, 202, 202, 0.3);
 }
 
 .finance-table td[contenteditable="true"][placeholder]::before {
     content: attr(placeholder);
-    color: #9ca3af;
+    color: #b8b8b8; /* Pastel abu-abu lembut */
     font-style: italic;
 }
 
-.finance-table td[contenteditable="true"]:not(:empty)::before {
-    content: none;
+.finance-table td[contenteditable="true"]:not(:empty):: Ascolta: pointer;
+    font-style: italic;
 }
 
 .warning {
-    color: #ea4335;
+    color: #f7caca; /* Pastel pink */
     font-size: 0.8em;
     margin-left: 5px;
     vertical-align: middle;
@@ -1035,7 +1036,7 @@ button {
     top: 5px;
     right: 5px;
     padding: 5px;
-    background: #4285f4;
+    background: #c9d1f0; /* Pastel biru muda */
     border: none;
     border-radius: 50%;
     color: #fff;
@@ -1046,26 +1047,26 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
 }
 
 .finance-options-btn:hover {
-    background: #357abd;
-    box-shadow: 0 3px 8px rgba(66, 133, 244, 0.2);
+    background: #b8c2e8; /* Pastel biru sedikit lebih gelap */
+    box-shadow: 0 3px 6px rgba(201, 209, 240, 0.2);
 }
 
 .finance-popup {
     position: absolute;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background: #fff7f7;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     padding: 10px;
     display: none;
     z-index: 10;
     flex-direction: column;
     gap: 8px;
-    border: 1px solid #e8ecef;
+    border: 1px solid #f0ebeb;
     min-width: 150px;
 }
 
@@ -1081,7 +1082,7 @@ button {
 
     .container, .edit-container {
         padding: 15px;
-        border-radius: 15px;
+        border-radius: 20px;
     }
 
     h1 {
@@ -1124,7 +1125,7 @@ button {
         width: 200px;
         top: auto;
         bottom: calc(100% + 5px);
-        border-radius: 12px 12px 0 0;
+        border-radius: 15px 15px 0 0;
     }
 
     .more-options.active {
@@ -1181,12 +1182,12 @@ button {
     }
 
     .toolbar-section {
-        flex-shrink: 0; /* Pastikan section tidak menyusut */
+        flex-shrink: 0;
     }
 
     .toolbar-group {
         padding: 6px;
-        min-width: fit-content; /* Pastikan grup tidak terlalu kecil */
+        min-width: fit-content;
     }
 
     .tool-btn, .edit-btn, .exit-btn, .table-tool-btn {
@@ -1214,7 +1215,7 @@ button {
     }
 
     .note-content {
-        height: 300px; /* Tinggi statis untuk tablet */
+        height: 300px;
         max-height: 300px;
     }
 
@@ -1248,7 +1249,7 @@ button {
         left: 0;
         right: 0;
         transform: none;
-        border-radius: 12px 12px 0 0;
+        border-radius: 15px 15px 0 0;
     }
 
     .more-options.active {
@@ -1256,8 +1257,7 @@ button {
     }
 
     .pinned-section h2, .notes-section h2 {
-        font-size: 1.1em选用: pointer;
-        font-size: 0.95em;
+        font-size: 1.1em;
     }
 
     .note {
@@ -1324,7 +1324,7 @@ button {
     }
 
     .note-content {
-        height: 250px; /* Tinggi statis untuk ponsel */
+        height: 250px;
         max-height: 250px;
     }
 }
@@ -1333,14 +1333,14 @@ button {
 .finance-tool-btn {
     padding: 8px;
     background: #ffffff;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    color: #4b5563;
+    border: 1px solid #e6e1e1;
+    border-radius: 10px;
+    color: #6b7280;
     font-weight: 500;
     font-size: 0.9em;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
     display: none;
     align-items: center;
     justify-content: center;
@@ -1349,67 +1349,67 @@ button {
 }
 
 .finance-tool-btn.add-income-btn {
-    background: #34a853;
-    border-color: #34a853;
+    background: #d4e9d7; /* Pastel hijau muda */
+    border-color: #d4e9d7;
     color: #fff;
 }
 
 .finance-tool-btn.add-income-btn:hover {
-    background: #2f9e44;
-    border-color: #2f9e44;
+    background: #c2e0c5; /* Pastel hijau sedikit lebih gelap */
+    border-color: #c2e0c5;
 }
 
 .finance-tool-btn.subtract-expense-btn {
-    background: #ea4335;
-    border-color: #ea4335;
+    background: #f7caca; /* Pastel pink */
+    border-color: #f7caca;
     color: #fff;
 }
 
 .finance-tool-btn.subtract-expense-btn:hover {
-    background: #db4437;
-    border-color: #db4437;
+    background: #f4b8b8; /* Pastel pink lebih gelap */
+    border-color: #f4b8b8;
 }
 
 .finance-tool-btn.multiply-btn {
-    background: #fbbc05;
-    border-color: #fbbc05;
+    background: #fce8c9; /* Pastel kuning lembut */
+    border-color: #fce8c9;
     color: #fff;
 }
 
 .finance-tool-btn.multiply-btn:hover {
-    background: #f4b400;
-    border-color: #f4b400;
+    background: #f9deae; /* Pastel kuning sedikit lebih gelap */
+    border-color: #f9deae;
 }
 
 .finance-tool-btn.divide-btn {
-    background: #4285f4;
-    border-color: #4285f4;
+    background: #c9d1f0; /* Pastel biru muda */
+    border-color: #c9d1f0;
     color: #fff;
 }
 
 .finance-tool-btn.divide-btn:hover {
-    background: #357abd;
-    border-color: #357abd;
+    background: #b8c2e8; /* Pastel biru sedikit lebih gelap */
+    border-color: #b8c2e8;
 }
 
 .finance-tool-btn.calculate-btn {
-    background: #6b7280;
-    border-color: #6b7280;
+    background: #e2e2e2; /* Pastel abu-abu lembut */
+    border-color: #e2e2e2;
     color: #fff;
 }
 
 .finance-tool-btn.calculate-btn:hover {
-    background: #4b5563;
-    border-color: #4b5563;
+    background: #d8d8d8; /* Pastel abu-abu sedikit lebih gelap */
+    border-color: #d8d8d8;
 }
 
 .finance-tool-btn.delete-last-row-btn {
-    background: #ea4335;
-    border-color: #ea4335;
+    background: #f7caca; /* Pastel pink */
+    border-color: #f7caca;
     color: #fff;
 }
 
 .finance-tool-btn.delete-last-row-btn:hover {
-    background: #db4437;
-    border-color: #db4437;
+    background: #f4b8b8; /* Pastel pink lebih gelap */
+    border-color: #f4b8b8;
 }
