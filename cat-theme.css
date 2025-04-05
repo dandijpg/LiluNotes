@@ -87,7 +87,7 @@ header::after {
     pointer-events: none;
 }
 
-/* Kucing tidur di header */
+/* Kucing tidur di header dengan desain yang lebih baik */
 .sleeping-cat {
     position: absolute;
     top: 50%;
@@ -110,44 +110,68 @@ header::after {
 
 .cat-head {
     position: absolute;
-    top: -10px;
-    left: -10px;
-    width: 20px;
-    height: 20px;
+    top: -15px;
+    left: -15px;
+    width: 25px;
+    height: 25px;
     background: #ceac93; /* Peach muda */
     border-radius: 50%;
     overflow: hidden;
 }
 
+/* Telinga kucing */
+.cat-ear-left,
+.cat-ear-right {
+    position: absolute;
+    width: 8px;
+    height: 12px;
+    background: #ceac93; /* Peach muda */
+    top: -8px;
+    border-radius: 4px 4px 0 0;
+    transform-origin: bottom;
+}
+
+.cat-ear-left {
+    left: 2px;
+    transform: rotate(-20deg);
+}
+
+.cat-ear-right {
+    right: 2px;
+    transform: rotate(20deg);
+}
+
+/* Mata kucing */
 .cat-eyes::before,
 .cat-eyes::after {
     content: '';
     position: absolute;
-    top: 12px;
-    width: 4px;
+    top: 14px;
+    width: 5px;
     height: 1px;
     background: #6a5545; /* Coklat lembut */
     transition: all 0.3s ease;
 }
 
 .cat-eyes::before {
-    left: 4px;
+    left: 5px;
 }
 
 .cat-eyes::after {
-    right: 4px;
+    right: 5px;
 }
 
 .sleeping-cat:hover .cat-eyes::before,
 .sleeping-cat:hover .cat-eyes::after {
-    height: 4px; /* Mata terbuka saat hover */
+    height: 5px; /* Mata terbuka saat hover */
     border-radius: 50%;
 }
 
+/* Ekor kucing yang lebih natural */
 .cat-tail {
     position: absolute;
-    top: 10px;
-    right: -10px;
+    bottom: 2px;
+    right: -12px;
     width: 20px;
     height: 6px;
     background: #ad8b72; /* Peach tua */
@@ -158,8 +182,8 @@ header::after {
 
 @keyframes tailWag {
     0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(-10deg); }
-    75% { transform: rotate(10deg); }
+    25% { transform: rotate(-15deg); }
+    75% { transform: rotate(15deg); }
 }
 
 /* Tombol dengan efek glow pastel dan ukuran lebih kecil */
