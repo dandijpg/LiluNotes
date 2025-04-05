@@ -46,6 +46,7 @@ body::after {
     overflow: hidden;
     padding: 30px !important;
     animation: borderGlow 10s infinite ease-in-out;
+    z-index: 1; /* Pastikan container di bawah tombol */
 }
 
 .container::before {
@@ -59,6 +60,7 @@ body::after {
     background-size: contain !important;
     animation: catWiggle 3s infinite ease-in-out !important;
     z-index: 10 !important;
+    pointer-events: none; /* Dekorasi tidak mengganggu interaksi */
 }
 
 .container::after {
@@ -72,6 +74,7 @@ body::after {
     background-size: contain !important;
     animation: catBounce 2s infinite ease-in-out !important;
     z-index: 10 !important;
+    pointer-events: none; /* Dekorasi tidak mengganggu interaksi */
 }
 
 /* Header dengan border dekoratif */
@@ -92,6 +95,7 @@ header::before {
     color: #e8c8d8 !important; /* Pastel pink tua */
     animation: pawSpin 4s infinite linear !important;
     z-index: 10 !important;
+    pointer-events: none;
 }
 
 /* Tombol dengan efek glow */
@@ -102,6 +106,9 @@ button, .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore
     padding: 10px 25px;
     transition: all 0.3s ease;
     box-shadow: 0 0 10px rgba(136, 136, 168, 0.2);
+    cursor: pointer;
+    pointer-events: auto;
+    z-index: 2;
 }
 
 button:hover, .add-category:hover, .add-note:hover, .toggle-mode:hover, .more-btn:hover, .backup-btn:hover, .restore-btn:hover, .copy-backup-btn:hover, .google-auth-btn:hover, .backup-google-btn:hover, .google-logout-btn:hover, .reset-btn:hover, .view-more:hover, .save-btn:hover {
@@ -119,6 +126,8 @@ button::after, .add-category::after, .add-note::after, .toggle-mode::after, .mor
     color: #e8c8d8; /* Pastel pink tua */
     opacity: 0;
     transition: opacity 0.3s ease, right 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
 }
 
 button:hover::after, .add-category:hover::after, .add-note:hover::after, .toggle-mode:hover::after, .more-btn:hover::after, .backup-btn:hover::after, .restore-btn:hover::after, .copy-backup-btn:hover::after, .google-auth-btn:hover::after, .backup-google-btn:hover::after, .google-logout-btn:hover::after, .reset-btn:hover::after, .view-more:hover::after, .save-btn:hover::after {
@@ -153,6 +162,7 @@ button:hover::after, .add-category:hover::after, .add-note:hover::after, .toggle
     background-size: contain !important;
     animation: catPeek 3s infinite ease-in-out !important;
     z-index: 10 !important;
+    pointer-events: none;
 }
 
 .note::after {
@@ -164,6 +174,7 @@ button:hover::after, .add-category:hover::after, .add-note:hover::after, .toggle
     color: #e8c8d8;
     opacity: 0;
     transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
 .note:hover::after {
@@ -187,6 +198,7 @@ button:hover::after, .add-category:hover::after, .add-note:hover::after, .toggle
     font-size: 1.5em !important;
     color: #e8c8d8 !important; /* Pastel pink tua */
     animation: pawFade 2s infinite ease-in-out !important;
+    pointer-events: none;
 }
 
 /* Gelembung Animasi */
@@ -214,6 +226,32 @@ button:hover::after, .add-category:hover::after, .add-note:hover::after, .toggle
         transform: translateY(-100vh) scale(0.8);
         opacity: 0;
     }
+}
+
+/* Kategori dengan garis gelombang penuh */
+.categories {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    padding: 10px;
+    background: #3a3a4a;
+    border-radius: 15px;
+    position: relative;
+    white-space: nowrap;
+}
+
+.categories::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q25 0 50 5 T100 5" stroke="%238888a8" stroke-width="2" fill="none"/></svg>') repeat-x top;
+    background-size: 100px 10px;
+    opacity: 0.3;
+    z-index: 1;
 }
 
 /* Animasi elegan lainnya */
@@ -255,6 +293,7 @@ body::before {
     background-size: contain !important;
     animation: catWalk 15s infinite linear !important;
     z-index: 5 !important;
+    pointer-events: none;
 }
 
 @keyframes catWalk {
