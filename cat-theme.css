@@ -1,74 +1,77 @@
 /* cat-theme.css */
 
-/* Import font lucu untuk tema kucing */
+/* Import font lucu */
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
 
-/* Override body untuk tema kucing */
+/* Override body */
 body {
-    background: #fff3e6; /* Warna pastel peach untuk suasana hangat */
-    font-family: 'Comic Neue', sans-serif;
+    background: #2a2a3a !important; /* Dark pastel abu-abu keunguan */
+    font-family: 'Comic Neue', sans-serif !important;
     position: relative;
     overflow-x: hidden;
 }
 
-/* Container dengan border bertema kucing */
+/* Container dengan tema kucing */
 .container {
-    border: 3px solid #ffcc99; /* Warna peach lembut */
-    border-radius: 30px;
-    background: #fff7f0; /* Latar belakang krem lembut */
+    border: 3px solid #6a6a8a !important; /* Dark pastel biru tua */
+    border-radius: 30px !important;
+    background: #3a3a4a !important;
     position: relative;
     overflow: hidden;
-    padding: 30px;
+    padding: 30px !important;
 }
 
-/* Hiasan kucing di sudut container menggunakan pseudo-element */
 .container::before {
-    content: '';
-    position: absolute;
-    top: -20px;
-    left: -20px;
-    width: 60px;
-    height: 60px;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 20c-10 0-18 8-18 18s8 18 18 18 18-8 18-18-8-18-18-18zm-10 20a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm20 0a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm-10 10c-5 0-9 4-9 9v10h18v-10c0-5-4-9-9-9z" fill="%23ff9999"/></svg>') no-repeat center;
-    background-size: contain;
-    animation: catWiggle 3s infinite ease-in-out;
+    content: '' !important;
+    position: absolute !important;
+    top: -20px !important;
+    left: -20px !important;
+    width: 60px !important;
+    height: 60px !important;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 20c-10 0-18 8-18 18s8 18 18 18 18-8 18-18-8-18-18-18zm-10 20a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm20 0a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm-10 10c-5 0-9 4-9 9v10h18v-10c0-5-4-9-9-9z" fill="%238888a8"/></svg>') no-repeat center !important;
+    background-size: contain !important;
+    animation: catWiggle 3s infinite ease-in-out !important;
+    z-index: 10 !important;
 }
 
 .container::after {
-    content: '';
-    position: absolute;
-    bottom: -20px;
-    right: -20px;
-    width: 50px;
-    height: 50px;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M30 20l-10 20 20 10 20-10-10-20c-5 0-10 5-10 10s5 10 10 10 10-5 10-10-5-10-10-10z" fill="%23ffcc99"/><circle cx="40" cy="30" r="5" fill="%23663333"/><circle cx="60" cy="30" r="5" fill="%23663333"/></svg>') no-repeat center;
-    background-size: contain;
-    animation: catBounce 2s infinite ease-in-out;
+    content: '' !important;
+    position: absolute !important;
+    bottom: -20px !important;
+    right: -20px !important;
+    width: 50px !important;
+    height: 50px !important;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M30 20l-10 20 20 10 20-10-10-20c-5 0-10 5-10 10s5 10 10 10 10-5 10-10-5-10-10-10z" fill="%236a6a8a"/><circle cx="40" cy="30" r="5" fill="%23d8d8e8"/><circle cx="60" cy="30" r="5" fill="%23d8d8e8"/></svg>') no-repeat center !important;
+    background-size: contain !important;
+    animation: catBounce 2s infinite ease-in-out !important;
+    z-index: 10 !important;
 }
 
-/* Border dekoratif untuk header */
+/* Header dengan border dekoratif */
 header {
-    border: 2px dashed #ff9999; /* Garis putus-putus pink */
-    background: #fff0f0; /* Pink sangat lembut */
-    border-radius: 20px;
-    position: relative;
-    overflow: hidden;
+    border: 2px dashed #8888a8 !important; /* Dark pastel abu-abu keunguan */
+    background: #404055 !important;
+    border-radius: 20px !important;
+    position: relative !important;
+    overflow: hidden !important;
 }
 
 header::before {
-    content: '🐾';
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 1.5em;
-    animation: pawSpin 4s infinite linear;
+    content: '🐾' !important;
+    position: absolute !important;
+    top: 10px !important;
+    left: 10px !important;
+    font-size: 1.5em !important;
+    color: #e8c8d8 !important; /* Pastel pink tua */
+    animation: pawSpin 4s infinite linear !important;
+    z-index: 10 !important;
 }
 
 /* Tombol dengan ikon kucing */
 button, .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn, .reset-btn, .view-more, .save-btn {
     position: relative;
     overflow: hidden;
-    border-radius: 20px;
+    border-radius: 20px !important;
     padding: 10px 25px;
     transition: all 0.3s ease;
 }
@@ -80,6 +83,7 @@ button::after, .add-category::after, .add-note::after, .toggle-mode::after, .mor
     top: 50%;
     transform: translateY(-50%);
     font-size: 1em;
+    color: #e8c8d8; /* Pastel pink tua */
     opacity: 0;
     transition: opacity 0.3s ease, right 0.3s ease;
 }
@@ -89,42 +93,44 @@ button:hover::after, .add-category:hover::after, .add-note:hover::after, .toggle
     right: 10px;
 }
 
-/* Catatan dengan border bertema kucing */
+/* Catatan dengan dekorasi kucing */
 .note {
-    border: 2px solid #ffcc99;
-    border-radius: 25px;
-    background: #fffaf0; /* Krem lembut */
-    position: relative;
-    overflow: hidden;
+    border: 2px solid #6a6a8a !important; /* Dark pastel biru tua */
+    border-radius: 25px !important;
+    background: #404055 !important;
+    position: relative !important;
+    overflow: hidden !important;
 }
 
 .note::before {
-    content: '';
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    width: 30px;
-    height: 30px;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 30c-10 0-15 10-15 15s5 15 15 15 15-10 15-15-5-15-15-15zm-8 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm16 0a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="%23ff9999"/></svg>') no-repeat center;
-    background-size: contain;
-    animation: catPeek 3s infinite ease-in-out;
+    content: '' !important;
+    position: absolute !important;
+    top: -10px !important;
+    right: -10px !important;
+    width: 30px !important;
+    height: 30px !important;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 30c-10 0-15 10-15 15s5 15 15 15 15-10 15-15-5-15-15-15zm-8 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm16 0a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="%238888a8"/></svg>') no-repeat center !important;
+    background-size: contain !important;
+    animation: catPeek 3s infinite ease-in-out !important;
+    z-index: 10 !important;
 }
 
 /* Edit container dengan tema kucing */
 .edit-container {
-    border: 3px double #ff9999; /* Border ganda pink */
-    border-radius: 30px;
-    background: #fff7f0;
+    border: 3px double #8888a8 !important; /* Dark pastel abu-abu keunguan */
+    border-radius: 30px !important;
+    background: #3a3a4a !important;
     position: relative;
 }
 
 .edit-container::after {
-    content: '🐾';
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    font-size: 1.5em;
-    animation: pawFade 2s infinite ease-in-out;
+    content: '🐾' !important;
+    position: absolute !important;
+    bottom: 10px !important;
+    right: 10px !important;
+    font-size: 1.5em !important;
+    color: #e8c8d8 !important; /* Pastel pink tua */
+    animation: pawFade 2s infinite ease-in-out !important;
 }
 
 /* Animasi elegan */
@@ -156,15 +162,16 @@ button:hover::after, .add-category:hover::after, .add-note:hover::after, .toggle
 
 /* Background kucing berjalan */
 body::before {
-    content: '';
-    position: fixed;
-    bottom: 20px;
-    left: -100px;
-    width: 80px;
-    height: 80px;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20 60h10l10-20 10 20h10l-15-30h-10zM40 30c-5 0-10 5-10 10s5 10 10 10 10-5 10-10-5-10-10-10zm-8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" fill="%23ff9999"/></svg>') no-repeat center;
-    background-size: contain;
-    animation: catWalk 15s infinite linear;
+    content: '' !important;
+    position: fixed !important;
+    bottom: 20px !important;
+    left: -100px !important;
+    width: 80px !important;
+    height: 80px !important;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20 60h10l10-20 10 20h10l-15-30h-10zM40 30c-5 0-10 5-10 10s5 10 10 10 10-5 10-10-5-10-10-10zm-8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" fill="%238888a8"/></svg>') no-repeat center !important;
+    background-size: contain !important;
+    animation: catWalk 15s infinite linear !important;
+    z-index: 5 !important;
 }
 
 @keyframes catWalk {
