@@ -3,120 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechNotes</title>
+    <title>Edit Note - TechNotes</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="cat-theme.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        .note.blurred {
-            filter: blur(5px);
-            pointer-events: none; /* Mencegah interaksi */
-        }
-    </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="header-content">
-                <h1>LiluNotes</h1>
-                <div class="search-wrapper">
-                    <button class="search-toggle" id="searchToggleBtn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <div class="edit-container">
+        <div class="toolbar">
+            <div class="toolbar-section">
+                <span class="toolbar-label">Text Formatting</span>
+                <div class="toolbar-group text-formatting">
+                    <button class="tool-btn" id="boldBtn" title="Bold (Ctrl+B)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12h9a4 4 0 0 1 0 8H6V4h7a5 5 0 0 1 0 10"/></svg>
                     </button>
-                    <div class="search-bar" id="searchBar">
-                        <input type="text" id="searchInput" placeholder="Search notes...">
-                    </div>
-                </div>
-                <div class="sleeping-cat">
-                    <div class="cat-body">
-                        <div class="cat-head">
-                            <div class="cat-eyes"></div>
-                        </div>
-                        <div class="cat-tail"></div>
-                    </div>
+                    <button class="tool-btn" id="italicBtn" title="Italic (Ctrl+I)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 4h-9m4 16H5M15 4L9 20"/></svg>
+                    </button>
+                    <button class="tool-btn" id="underlineBtn" title="Underline (Ctrl+U)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4v6a6 6 0 0 0 12 0V4M4 20h16"/></svg>
+                    </button>
+                    <button class="tool-btn" id="markDoneBtn" title="Mark as Done">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </button>
+                    <button class="tool-btn" id="linkBtn" title="Insert Link">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </button>
                 </div>
             </div>
-        </header>
-        <div class="categories" id="categoryList"></div>
-        <div class="controls-wrapper">
-            <div class="controls">
-                <div class="creation-controls">
-                    <button class="add-category" id="addCategoryBtn">
+            <div class="toolbar-section">
+                <span class="toolbar-label">Lists</span>
+                <div class="toolbar-group list-formatting">
+                    <button class="tool-btn" id="numberedListBtn" title="Numbered List">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 17h10"/><path d="M10 12h10"/><path d="M10 7h10"/><path d="M4 6v2"/><path d="M5 7H3"/><path d="M5 12v5H3"/><path d="M4 13h2"/></svg>
+                    </button>
+                    <button class="tool-btn" id="bulletListBtn" title="Bullet List">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h12"/><path d="M9 12h12"/><path d="M9 6h12"/><circle cx="4" cy="18" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="6" r="1"/></svg>
+                    </button>
+                    <button class="tool-btn" id="arrowListBtn" title="Arrow List">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5h9"/><path d="M12 12h9"/><path d="M12 19h9"/><path d="M6 6 2 9l4 3"/><path d="M6 13 2 16l4 3"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="toolbar-section">
+                <span class="toolbar-label">Alignment</span>
+                <div class="toolbar-group alignment">
+                    <button class="tool-btn" id="alignLeftBtn" title="Align Left">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18"/><path d="M3 12h12"/><path d="M3 17h18"/></svg>
+                    </button>
+                    <button class="tool-btn" id="alignCenterBtn" title="Align Center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18"/><path d="M7 12h10"/><path d="M3 17h18"/></svg>
+                    </button>
+                    <button class="tool-btn" id="alignRightBtn" title="Align Right">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18"/><path d="M9 12h12"/><path d="M3 17h18"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="toolbar-section">
+                <span class="toolbar-label">Float</span>
+                <div class="toolbar-group float">
+                    <button class="tool-btn" id="floatLeftBtn" title="Float Left">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="3" y="3" rx="2"/><path d="M17 22h4"/></svg>
+                    </button>
+                    <button class="tool-btn" id="floatCenterBtn" title="Float Center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="5" y="3" rx="2"/><path d="M3 22h18"/></svg>
+                    </button>
+                    <button class="tool-btn" id="floatRightBtn" title="Float Right">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="7" y="3" rx="2"/><path d="M3 22h4"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="toolbar-section">
+                <span class="toolbar-label">Tables</span>
+                <div class="toolbar-group table-tools">
+                    <button class="tool-btn" id="tableBtn" title="Insert Table">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg>
+                    </button>
+                    <button class="table-tool-btn add-row-btn" id="addRowBtn" title="Add Row">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-                        Add Category
                     </button>
-                    <button class="add-note" id="addNoteBtn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
-                        Add Note
+                    <button class="table-tool-btn add-col-btn" id="addColBtn" title="Add Column">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                    </button>
+                    <button class="table-tool-btn delete-row-btn" id="deleteRowBtn" title="Delete Row">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>
+                    </button>
+                    <button class="table-tool-btn delete-col-btn" id="deleteColBtn" title="Delete Column">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/></svg>
                     </button>
                 </div>
-                <div class="utility-controls">
-                    <button class="toggle-mode" id="toggleModeBtn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mode-icon"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
-                        List Mode
+            </div>
+            <div class="toolbar-section">
+                <span class="toolbar-label">Financial</span>
+                <div class="toolbar-group financial-tools">
+                    <select id="calcMode" class="calc-mode-select">
+                        <option value="financial">Financial</option>
+                        <option value="normal">Normal</option>
+                    </select>
+                    <button class="tool-btn" id="financeBtn" title="Insert Financial Table">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 9v12"/></svg>
                     </button>
-                    <button class="more-btn" id="moreBtn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
-                        More
+                </div>
+            </div>
+            <div class="toolbar-section">
+                <span class="toolbar-label">Finance Tools</span>
+                <div class="toolbar-group finance-table-tools">
+                    <button class="finance-tool-btn add-income-btn" id="addIncomeBtn" title="Add Income">+</button>
+                    <button class="finance-tool-btn subtract-expense-btn" id="subtractExpenseBtn" title="Add Expense">-</button>
+                    <button class="finance-tool-btn multiply-btn" id="multiplyBtn" title="Multiply">*</button>
+                    <button class="finance-tool-btn divide-btn" id="divideBtn" title="Divide">/</button>
+                    <button class="finance-tool-btn calculate-btn" id="calculateBtn" title="Calculate Total">=</button>
+                    <button class="finance-tool-btn delete-last-row-btn" id="deleteLastRowBtn" title="Delete Last Row">🗑️</button>
+                </div>
+            </div>
+            <div class="toolbar-section utility-section">
+                <span class="toolbar-label">Actions</span>
+                <div class="toolbar-group utility-tools">
+                    <button class="tool-btn" id="copyFormattedBtn" title="Copy Formatted Text">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
                     </button>
-                    <div class="more-options" id="moreOptions">
-                        <button class="backup-btn" id="backupBtn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-                            Backup
-                        </button>
-                        <button class="restore-btn" id="restoreBtn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6 2.3L3 13"/></svg>
-                            Restore
-                        </button>
-                        <button class="copy-backup-btn" id="copyBackupBtn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                            Copy Backup
-                        </button>
-                        <button class="google-auth-btn" id="googleAuthBtn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8Z"/><path d="M12 6v6l4 2"/></svg>
-                            Sign in with Google
-                        </button>
-                        <button class="backup-google-btn" id="backupGoogleBtn" style="display: none;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-                            Backup to Google Drive
-                        </button>
-                        <button class="google-logout-btn" id="googleLogoutBtn" style="display: none;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
-                            Sign out from Google
-                        </button>
-                    </div>
-                    <button class="reset-btn" id="resetBtn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
-                        Reset
+                    <button class="edit-btn" id="saveBtn" title="Save Note">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 14h-5"/><path d="M12 18v-4"/></svg>
+                        Save
+                    </button>
+                    <button class="exit-btn" id="exitBtn" title="Exit without Saving">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+                        Exit
                     </button>
                 </div>
             </div>
         </div>
-        <div class="pinned-section" id="pinnedSection">
-            <h2>Pinned Notes</h2>
-            <div class="notes-list" id="pinnedNotes"></div>
+        <div class="editor-header">
+            <select id="categorySelect" class="category-select"></select>
+            <input type="text" id="noteTitle" class="note-title" placeholder="Note Title">
         </div>
-        <div class="notes-section">
-            <h2>All Notes</h2>
-            <div class="notes-list" id="notesList"></div>
-        </div>
-        <button class="view-more" id="viewMoreBtn" style="display: none;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
-            View More
-        </button>
-        <div id="contextMenu" class="context-menu"></div>
-        <div id="noteContextMenu" class="note-context-menu"></div>
+        <div id="noteContent" class="note-content" contenteditable="true"></div>
     </div>
-    <script src="https://apis.google.com/js/api.js"></script>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <script src="cat-animations.js" defer></script>
-    <script src="script.js"></script>
-    <script>
-        // Toggle search bar di mobile
-        document.getElementById('searchToggleBtn').addEventListener('click', function() {
-            const searchBar = document.getElementById('searchBar');
-            searchBar.classList.toggle('active');
-        });
-    </script>
+    <script src="edit.js"></script>
 </body>
 </html>
