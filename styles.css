@@ -16,7 +16,7 @@ button, .note, .category {
 body {
     background: #fefbe8;
     font-family: 'Comic Neue', sans-serif;
-    color: #6a5545; /* Coklat lembut agar kontras dengan pastel */
+    color: #6a5545;
     padding: 20px;
     line-height: 1.6;
 }
@@ -44,46 +44,52 @@ header {
     border-radius: 15px;
     box-shadow: 0 2px 5px rgba(206, 172, 147, 0.1);
     border: 1px solid rgba(206, 172, 147, 0.2);
-    position: relative;
 }
 
 .header-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    max-width: 100%;
-    flex-wrap: nowrap;
     gap: 15px;
 }
 
 h1 {
     font-size: 1.8em;
     font-weight: 600;
-    color: #ad8b72; /* Peach tua */
+    color: #ad8b72;
     letter-spacing: -0.3px;
     white-space: nowrap;
+    order: 1;
 }
 
-h1::after {
-    content: '';
-    position: absolute;
-    bottom: -3px;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: #ceac93; /* Peach muda */
+.search-wrapper {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    order: 2;
+    position: relative;
 }
 
-h1:hover {
-    color: #ceac93;
-    transform: scale(1.01);
+.search-toggle {
+    display: none;
+    padding: 6px;
+    background: #ceac93;
+    border: 0.5px solid rgba(206, 172, 147, 0.3);
+    border-radius: 8px;
+    color: #6a5545;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.search-toggle:hover {
+    background: #fefbe8;
 }
 
 .search-bar {
     flex-grow: 1;
     display: flex;
     align-items: center;
-    min-width: 0;
+    transition: all 0.3s ease;
 }
 
 .search-bar input {
@@ -109,24 +115,47 @@ h1:hover {
     flex-shrink: 0;
     width: 60px;
     height: 40px;
+    order: 3;
 }
 
 @media (max-width: 768px) {
     .header-content {
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         gap: 10px;
     }
     h1 {
         font-size: 1.5em;
     }
+    .search-wrapper {
+        flex-grow: 0;
+    }
+    .search-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
     .search-bar {
+        position: absolute;
+        top: 100%;
+        left: 0;
         width: 100%;
-        order: 2;
+        padding: 10px 20px;
+        background: #e3c9a4;
+        border-radius: 0 0 15px 15px;
+        box-shadow: 0 2px 5px rgba(206, 172, 147, 0.1);
+        transform: translateY(-10px);
+        opacity: 0;
+        visibility: hidden;
+        z-index: 10;
+    }
+    .search-bar.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
     }
     .sleeping-cat {
         width: 50px;
         height: 35px;
-        order: 1;
     }
 }
 
@@ -142,9 +171,11 @@ h1:hover {
         width: 40px;
         height: 30px;
     }
+    .search-toggle {
+        padding: 5px;
+    }
 }
 
-/* Bagian lain dari styles.css tetap sama, hanya header yang diubah */
 .categories {
     display: flex;
     gap: 8px;
@@ -176,9 +207,9 @@ h1:hover {
     align-items: center;
     gap: 5px;
     padding: 6px 15px;
-    background: #e3c9a4; /* Krem */
+    background: #e3c9a4;
     border-radius: 12px;
-    color: #ad8b72; /* Peach tua */
+    color: #ad8b72;
     font-weight: 500;
     font-size: 0.9em;
     cursor: pointer;
@@ -197,7 +228,7 @@ h1:hover {
 }
 
 .category.active {
-    background: #ceac93; /* Peach muda */
+    background: #ceac93;
     color: #fff;
     box-shadow: 0 2px 6px rgba(206, 172, 147, 0.2);
 }
@@ -218,7 +249,7 @@ h1:hover {
 }
 
 .controls-wrapper {
-    background: #fefbe8; /* Krem pucat */
+    background: #fefbe8;
     padding: 12px;
     border-radius: 15px;
     box-shadow: 0 2px 5px rgba(206, 172, 147, 0.1);
@@ -249,7 +280,7 @@ button {
     padding: 8px 16px;
     border-radius: 20px;
     border: 0.5px solid rgba(206, 172, 147, 0.3);
-    background: #e3c9a4; /* Krem */
+    background: #e3c9a4;
     color: #6a5545;
     font-size: 0.85em;
     font-weight: 500;
@@ -269,7 +300,7 @@ button {
     padding: 8px 16px;
     border-radius: 20px;
     border: 0.5px solid rgba(206, 172, 147, 0.3);
-    background: #ceac93; /* Peach muda */
+    background: #ceac93;
     color: #6a5545;
     font-size: 0.85em;
     font-weight: 500;
@@ -366,7 +397,7 @@ button {
 }
 
 .backup-btn {
-    background: #ad8b72; /* Peach tua */
+    background: #ad8b72;
 }
 
 .backup-btn:hover, .backup-btn:active {
@@ -375,7 +406,7 @@ button {
 }
 
 .restore-btn, .copy-backup-btn, .google-auth-btn {
-    background: #e3c9a4; /* Krem */
+    background: #e3c9a4;
 }
 
 .restore-btn:hover, .restore-btn:active, .copy-backup-btn:hover, .copy-backup-btn:active, .google-auth-btn:hover, .google-auth-btn:active {
@@ -384,7 +415,7 @@ button {
 }
 
 .backup-google-btn {
-    background: #ceac93; /* Peach muda */
+    background: #ceac93;
 }
 
 .backup-google-btn:hover, .backup-google-btn:active {
@@ -393,7 +424,7 @@ button {
 }
 
 .google-logout-btn, .reset-btn {
-    background: #ad8b72; /* Peach tua */
+    background: #ad8b72;
 }
 
 .google-logout-btn:hover, .google-logout-btn:active, .reset-btn:hover, .reset-btn:active {
@@ -413,7 +444,7 @@ button {
 .pinned-section h2, .notes-section h2 {
     font-size: 1.4em;
     font-weight: 500;
-    color: #ad8b72; /* Peach tua */
+    color: #ad8b72;
     margin-bottom: 12px;
     text-align: center;
     transition: all 0.4s ease;
@@ -474,8 +505,8 @@ button {
 
 .note .category {
     font-size: 0.8em;
-    color: #ad8b72; /* Peach tua */
-    background: #e3c9a4; /* Krem */
+    color: #ad8b72;
+    background: #e3c9a4;
     padding: 2px 6px;
     border-radius: 8px;
     align-self: flex-start;
@@ -487,7 +518,7 @@ button {
 
 .note .timestamp {
     font-size: 0.75em;
-    color: #ceac93; /* Peach muda */
+    color: #ceac93;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -496,7 +527,7 @@ button {
 
 .note .preview {
     font-size: 0.85em;
-    color: #ad8b72; /* Peach tua */
+    color: #ad8b72;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -520,7 +551,7 @@ button {
     gap: 5px;
     margin: 15px auto 0;
     padding: 8px 16px;
-    background: #ceac93; /* Peach muda */
+    background: #ceac93;
     border: 0.5px solid rgba(206, 172, 147, 0.3);
     border-radius: 20px;
     color: #6a5545;
@@ -564,7 +595,7 @@ button {
 }
 
 .menu-item:hover {
-    background: #ceac93; /* Peach muda */
+    background: #ceac93;
     color: #fff;
 }
 
@@ -585,7 +616,7 @@ button {
     flex-wrap: nowrap;
     gap: 12px;
     margin-bottom: 20px;
-    background: #e3c9a4; /* Krem */
+    background: #e3c9a4;
     padding: 12px;
     border-radius: 15px;
     box-shadow: 0 2px 5px rgba(206, 172, 147, 0.1);
@@ -604,7 +635,7 @@ button {
 .toolbar-label {
     font-size: 0.75em;
     font-weight: 500;
-    color: #ad8b72; /* Peach tua */
+    color: #ad8b72;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -644,7 +675,7 @@ button {
 }
 
 .tool-btn:hover, .edit-btn:hover, .exit-btn:hover, .table-tool-btn:hover {
-    background: #ceac93; /* Peach muda */
+    background: #ceac93;
     color: #fff;
     border-color: rgba(206, 172, 147, 0.5);
     box-shadow: 0 2px 5px rgba(206, 172, 147, 0.2);
@@ -655,7 +686,7 @@ button {
 }
 
 .edit-btn {
-    background: #e3c9a4; /* Krem */
+    background: #e3c9a4;
     border-color: rgba(206, 172, 147, 0.3);
     color: #6a5545;
 }
@@ -666,7 +697,7 @@ button {
 }
 
 .exit-btn {
-    background: #ad8b72; /* Peach tua */
+    background: #ad8b72;
     border-color: rgba(206, 172, 147, 0.3);
     color: #fff;
 }
@@ -677,7 +708,7 @@ button {
 }
 
 .table-tool-btn.add-row-btn, .table-tool-btn.add-col-btn {
-    background-color: #e3c9a4; /* Krem */
+    background-color: #e3c9a4;
     border-color: rgba(206, 172, 147, 0.3);
     color: #6a5545;
 }
@@ -688,7 +719,7 @@ button {
 }
 
 .table-tool-btn.delete-row-btn, .table-tool-btn.delete-col-btn {
-    background-color: #ad8b72; /* Peach tua */
+    background-color: #ad8b72;
     border-color: rgba(206, 172, 147, 0.3);
     color: #fff;
 }
@@ -753,7 +784,7 @@ button {
 .note-title {
     width: 100%;
     padding: 10px 12px;
-    background: #e3c9a4; /* Krem */
+    background: #e3c9a4;
     border: 1px solid rgba(206, 172, 147, 0.2);
     border-radius: 12px;
     color: #6a5545;
@@ -812,14 +843,14 @@ button {
 /* View Mode Styles */
 .view-header {
     display: flex;
-    justify-content: flex foods-end;
+    justify-content: flex-end;
     margin-bottom: 12px;
 }
 
 .note-title-view {
     width: 100%;
     padding: 10px;
-    background: #e3c9a4; /* Krem */
+    background: #e3c9a4;
     border: 1px solid rgba(206, 172, 147, 0.2);
     border-radius: 12px;
     color: #6a5545;
@@ -869,7 +900,7 @@ button {
 .save-btn {
     margin-top: 12px;
     padding: 8px 16px;
-    background: #e3c9a4; /* Krem */
+    background: #e3c9a4;
     border: 0.5px solid rgba(206, 172, 147, 0.3);
     border-radius: 20px;
     color: #6a5545;
@@ -889,29 +920,29 @@ button {
 
 .done {
     text-decoration: line-through;
-    color: #ceac93; /* Peach muda */
+    color: #ceac93;
     transition: all 0.4s ease;
 }
 
 .no-notes {
     text-align: center;
-    color: #ad8b72; /* Peach tua */
+    color: #ad8b72;
     font-size: 1em;
     font-weight: 400;
     padding: 15px;
 }
 
 .copyable {
-    background-color: #e3c9a4; /* Krem */
+    background-color: #e3c9a4;
     padding: 2px 5px;
     border-radius: 6px;
-    color: #ad8b72; /* Peach tua */
+    color: #ad8b72;
     cursor: pointer;
     transition: all 0.4s ease;
 }
 
 .copyable:hover {
-    background-color: #ceac93; /* Peach muda */
+    background-color: #ceac93;
     color: #fff;
 }
 
@@ -943,7 +974,7 @@ button {
 
 .note-content .regular-table th,
 .note-content-view .regular-table th {
-    background-color: #e3c9a4; /* Krem */
+    background-color: #e3c9a4;
     font-weight: 500;
     color: #6a5545;
 }
@@ -973,8 +1004,8 @@ button {
 }
 
 .finance-table th {
-    background: #e3c9a4; /* Krem */
-    color: #ad8b72; /* Peach tua */
+    background: #e3c9a4;
+    color: #ad8b72;
     font-weight: 500;
     padding: 6px;
     border-bottom: 1px solid rgba(206, 172, 147, 0.2);
@@ -992,22 +1023,22 @@ button {
 }
 
 .finance-table .income {
-    background: #e3c9a4; /* Krem */
+    background: #e3c9a4;
     color: #6a5545;
 }
 
 .finance-table .expense {
-    background: #ad8b72; /* Peach tua */
+    background: #ad8b72;
     color: #fff;
 }
 
 .finance-table .multiply {
-    background: #ceac93; /* Peach muda */
+    background: #ceac93;
     color: #6a5545;
 }
 
 .finance-table .divide {
-    background: #fefbe8; /* Krem pucat */
+    background: #fefbe8;
     color: #6a5545;
 }
 
@@ -1016,9 +1047,9 @@ button {
 }
 
 .finance-table tfoot td {
-    background: #e3c9a4; /* Krem */
+    background: #e3c9a Membersihkan4;
     font-weight: 600;
-    color: #ad8b72; /* Peach tua */
+    color: #ad8b72;
     border-top: 1px dashed rgba(206, 172, 147, 0.2);
     cursor: not-allowed;
 }
@@ -1046,7 +1077,7 @@ button {
 }
 
 .finance-btn.add-income {
-    background: #e3c9a4; /* Krem */
+    background: #e3c9a4;
 }
 
 .finance-btn.add-income:hover {
@@ -1055,7 +1086,7 @@ button {
 }
 
 .finance-btn.subtract-expense {
-    background: #ad8b72; /* Peach tua */
+    background: #ad8b72;
     color: #fff;
 }
 
@@ -1065,7 +1096,7 @@ button {
 }
 
 .finance-btn.multiply {
-    background: #ceac93; /* Peach muda */
+    background: #ceac93;
 }
 
 .finance-btn.multiply:hover {
@@ -1074,7 +1105,7 @@ button {
 }
 
 .finance-btn.divide {
-    background: #fefbe8; /* Krem pucat */
+    background: #fefbe8;
 }
 
 .finance-btn.divide:hover {
@@ -1083,7 +1114,7 @@ button {
 }
 
 .finance-btn.calculate {
-    background: #e3c9a4; /* Krem */
+    background: #e3c9a4;
 }
 
 .finance-btn.calculate:hover {
@@ -1092,7 +1123,7 @@ button {
 }
 
 .finance-btn.delete-last-row {
-    background: #ad8b72; /* Peach tua */
+    background: #ad8b72;
     color: #fff;
 }
 
@@ -1103,7 +1134,7 @@ button {
 
 .finance-table td[contenteditable="true"][placeholder]::before {
     content: attr(placeholder);
-    color: #ad8b72; /* Peach tua */
+    color: #ad8b72;
     font-style: italic;
 }
 
@@ -1113,7 +1144,7 @@ button {
     top: 4px;
     right: 4px;
     padding: 4px;
-    background: #ceac93; /* Peach muda */
+    background: #ceac93;
     border: 0.5px solid rgba(206, 172, 147, 0.3);
     border-radius: 50%;
     color: #6a5545;
@@ -1158,8 +1189,6 @@ button {
     body { padding: 10px; }
     .container, .edit-container { padding: 15px; border-radius: 20px; }
     h1 { font-size: 1.5em; }
-    .search-bar { flex-direction: column; width: 100%; }
-    .search-bar input { max-width: none; width: 100%; }
     .controls { justify-content: center; gap: 8px; }
     .categories { gap: 6px; }
     .category { padding: 5px 12px; font-size: 0.8em; }
@@ -1230,7 +1259,6 @@ button {
 
 @media (max-width: 480px) {
     h1 { font-size: 1.2em; }
-    .search-bar input { padding: 6px 10px; font-size: 0.8em; }
     .category { padding: 4px 10px; font-size: 0.7em; }
     .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .reset-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn {
         padding: 5px 10px;
@@ -1312,15 +1340,15 @@ button {
     font-family: 'Comic Neue', sans-serif;
 }
 
-.finance-tool-btn.add-income-btn { background: #e3c9a4; } /* Krem */
+.finance-tool-btn.add-income-btn { background: #e3c9a4; }
 .finance-tool-btn.add-income-btn:hover { background: #fefbe8; }
-.finance-tool-btn.subtract-expense-btn { background: #ad8b72; color: #fff; } /* Peach tua */
+.finance-tool-btn.subtract-expense-btn { background: #ad8b72; color: #fff; }
 .finance-tool-btn.subtract-expense-btn:hover { background: #ceac93; }
-.finance-tool-btn.multiply-btn { background: #ceac93; } /* Peach muda */
+.finance-tool-btn.multiply-btn { background: #ceac93; }
 .finance-tool-btn.multiply-btn:hover { background: #e3c9a4; }
-.finance-tool-btn.divide-btn { background: #fefbe8; } /* Krem pucat */
+.finance-tool-btn.divide-btn { background: #fefbe8; }
 .finance-tool-btn.divide-btn:hover { background: #e3c9a4; }
-.finance-tool-btn.calculate-btn { background: #e3c9a4; } /* Krem */
+.finance-tool-btn.calculate-btn { background: #e3c9a4; }
 .finance-tool-btn.calculate-btn:hover { background: #fefbe8; }
-.finance-tool-btn.delete-last-row-btn { background: #ad8b72; color: #fff; } /* Peach tua */
+.finance-tool-btn.delete-last-row-btn { background: #ad8b72; color: #fff; }
 .finance-tool-btn.delete-last-row-btn:hover { background: #ceac93; }
