@@ -226,6 +226,7 @@ button {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    font-family: 'Comic Neue', sans-serif; /* Tambahkan font */
 }
 
 .add-category:hover, .add-category:active {
@@ -245,6 +246,7 @@ button {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    font-family: 'Comic Neue', sans-serif; /* Tambahkan font */
 }
 
 .add-note:hover, .add-note:active {
@@ -264,6 +266,7 @@ button {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    font-family: 'Comic Neue', sans-serif; /* Tambahkan font */
 }
 
 .toggle-mode:hover, .toggle-mode:active {
@@ -284,6 +287,7 @@ button {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    font-family: 'Comic Neue', sans-serif; /* Tambahkan font */
 }
 
 .more-btn:hover, .more-btn:active {
@@ -309,6 +313,7 @@ button {
     transform: translateY(-10px);
     transition: opacity 0.2s ease, transform 0.2s ease;
     border: 1px solid #c8d8e8;
+    font-family: 'Comic Neue', sans-serif; /* Tambahkan font */
 }
 
 .more-options.active {
@@ -327,6 +332,7 @@ button {
     transition: all 0.3s ease;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     color: #fff;
+    font-family: 'Comic Neue', sans-serif; /* Tambahkan font */
 }
 
 .backup-btn {
@@ -493,6 +499,7 @@ button {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    font-family: 'Comic Neue', sans-serif; /* Tambahkan font */
 }
 
 .view-more:hover, .view-more:active {
@@ -511,6 +518,7 @@ button {
     transition: opacity 0.2s ease;
     min-width: 150px;
     border: 1px solid #c8d8e8;
+    font-family: 'Comic Neue', sans-serif; /* Tambahkan font */
 }
 
 .menu-item {
@@ -602,6 +610,7 @@ button {
     justify-content: center;
     min-width: 36px;
     height: 36px;
+    font-family: 'Comic Neue', sans-serif; /* Tambahkan font */
 }
 
 .tool-btn:hover, .edit-btn:hover, .exit-btn:hover, .table-tool-btn:hover {
@@ -839,6 +848,7 @@ button {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    font-family: 'Comic Neue', sans-serif; /* Tambahkan font */
 }
 
 .save-btn:hover, .save-btn:active {
@@ -1002,6 +1012,7 @@ button {
     background: #e8e8f0;
     color: #5a5a6a;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    font-family: 'Comic Neue', sans-serif; /* Tambahkan font */
 }
 
 .finance-btn.add-income {
@@ -1083,6 +1094,7 @@ button {
     justify-content: center;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     transition: all 0.3s ease;
+    font-family: 'Comic Neue', sans-serif; /* Tambahkan font */
 }
 
 .finance-options-btn:hover {
@@ -1102,6 +1114,7 @@ button {
     gap: 8px;
     border: 1px solid #c8d8e8;
     min-width: 150px;
+    font-family: 'Comic Neue', sans-serif; /* Tambahkan font */
 }
 
 .finance-popup.active {
@@ -1115,11 +1128,23 @@ button {
     h1 { font-size: 1.5em; }
     .search-bar { flex-direction: column; width: 100%; }
     .search-bar input { max-width: none; width: 100%; }
-    .controls { justify-content: center; gap: 10px; }
+    .controls { justify-content: center; gap: 8px; } /* Kurangi gap */
     .categories { gap: 8px; }
     .category { padding: 6px 15px; font-size: 0.8em; }
-    .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .reset-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn { padding: 8px 15px; font-size: 0.8em; }
-    .more-options { right: auto; left: 50%; transform: translateX(-50%); width: 200px; top: auto; bottom: calc(100% + 5px); border-radius: 15px 15px 0 0; }
+    .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .reset-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn {
+        padding: 8px 12px; /* Kurangi padding */
+        font-size: 0.8em;
+        margin: 2px; /* Tambah margin kecil untuk pemisahan */
+    }
+    .more-options { 
+        right: auto; 
+        left: 50%; 
+        transform: translateX(-50%); 
+        width: 180px; /* Kurangi lebar */
+        top: auto; 
+        bottom: calc(100% + 5px); 
+        border-radius: 15px 15px 0 0; 
+    }
     .more-options.active { transform: translateX(-50%) translateY(0); }
     .pinned-section h2, .notes-section h2 { font-size: 1.3em; }
     .notes-list { grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -1129,7 +1154,7 @@ button {
     .note .category { font-size: 0.8em; }
     .note .timestamp { font-size: 0.75em; }
     .note .preview { font-size: 0.85em; }
-    .view-more { padding: 8px 20px; font-size: 0.8em; }
+    .view-more { padding: 8px 15px; font-size: 0.8em; }
     .context-menu, .note-context-menu { width: 150px; }
     .toolbar { padding: 10px; gap: 10px; }
     .toolbar-section { flex-shrink: 0; }
@@ -1141,14 +1166,25 @@ button {
     .note-title { font-size: 1.1em; }
     .note-content { height: 300px; max-height: 300px; }
     .note-content-view { min-height: 300px; }
+    .save-btn { padding: 8px 15px; font-size: 0.8em; }
 }
 
 @media (max-width: 480px) {
     h1 { font-size: 1.2em; }
     .search-bar input { padding: 8px 12px; font-size: 0.8em; }
     .category { padding: 5px 12px; font-size: 0.7em; }
-    .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .reset-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn { padding: 6px 12px; font-size: 0.7em; }
-    .more-options { width: 100%; left: 0; right: 0; transform: none; border-radius: 15px 15px 0 0; }
+    .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .reset-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn {
+        padding: 6px 10px; /* Lebih kecil lagi */
+        font-size: 0.75em;
+        margin: 2px;
+    }
+    .more-options { 
+        width: 100%; 
+        left: 0; 
+        right: 0; 
+        transform: none; 
+        border-radius: 15px 15px 0 0; 
+    }
     .more-options.active { transform: translateY(0); }
     .pinned-section h2, .notes-section h2 { font-size: 1.1em; }
     .note { padding: 10px; }
@@ -1157,7 +1193,7 @@ button {
     .note .timestamp { font-size: 0.7em; }
     .note .preview { font-size: 0.8em; }
     .notes-list.list-mode .note { padding: 10px; }
-    .view-more { padding: 6px 15px; font-size: 0.7em; }
+    .view-more { padding: 6px 12px; font-size: 0.75em; }
     .context-menu, .note-context-menu { width: 140px; }
     .toolbar-label { font-size: 0.7em; }
     .tool-btn, .edit-btn, .exit-btn, .table-tool-btn { padding: 5px; min-width: 30px; height: 30px; }
@@ -1166,6 +1202,7 @@ button {
     .note-content-view { padding: 12px; min-height: 250px; }
     .finance-table { width: 100%; }
     .note-content { height: 250px; max-height: 250px; }
+    .save-btn { padding: 6px 12px; font-size: 0.75em; }
 }
 
 /* Finance Table Tools */
@@ -1185,6 +1222,7 @@ button {
     justify-content: center;
     min-width: 36px;
     height: 36px;
+    font-family: 'Comic Neue', sans-serif; /* Tambahkan font */
 }
 
 .finance-tool-btn.add-income-btn { background: #c8e8c8; border-color: #c8e8c8; color: #5a5a6a; }
