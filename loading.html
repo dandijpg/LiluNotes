@@ -275,10 +275,13 @@
 
         cat.addEventListener('touchend', () => {
             isTouching = false;
+            // Kembali ke animasi default setelah sentuhan dilepaskan
+            animationStep = 0;
+            pupils.forEach(pupil => pupil.style.transform = 'translate(0, 0)');
         });
 
         function updatePupilPosition(e) {
-            if (isTouching) {
+            if (isTouching && e.touches.length > 0) {
                 const touch = e.touches[0];
                 const rect = cat.getBoundingClientRect();
                 const centerX = rect.width / 2;
@@ -302,7 +305,7 @@
         }
 
         // Mulai animasi
-        moveAnimation();
+        moveEyes(); // Pastikan fungsi ini dipanggil dengan benar
     </script>
 </body>
 </html>
