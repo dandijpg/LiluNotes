@@ -52,6 +52,7 @@ header {
     align-items: center;
     justify-content: space-between;
     gap: 15px;
+    flex-wrap: wrap; /* Memungkinkan elemen membungkus jika perlu */
 }
 
 h1 {
@@ -69,30 +70,12 @@ h1 {
     flex-grow: 1;
     order: 2;
     position: relative;
-    justify-content: center;
-}
-
-.search-toggle {
-    display: none;
-    padding: 6px;
-    background: #ceac93;
-    border: 0.5px solid rgba(206, 172, 147, 0.3);
-    border-radius: 8px;
-    color: #6a5545;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    z-index: 15;
-}
-
-.search-toggle:hover {
-    background: #fefbe8;
 }
 
 .search-bar {
     flex-grow: 1;
     display: flex;
     align-items: center;
-    transition: all 0.3s ease;
 }
 
 .search-bar input {
@@ -124,49 +107,26 @@ h1 {
 
 @media (max-width: 768px) {
     .header-content {
-        flex-wrap: nowrap;
+        flex-direction: column;
+        align-items: flex-start;
         gap: 10px;
         position: relative;
     }
     h1 {
         font-size: 1.5em;
+        align-self: flex-start;
     }
     .search-wrapper {
         flex-grow: 0;
-        margin-right: 60px; /* Memberi ruang untuk kucing */
-    }
-    .search-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        width: 100%;
+        order: 2;
+        margin-top: 5px; /* Jarak kecil dari logo */
     }
     .search-bar {
-        position: absolute;
-        top: 100%; /* Tepat di bawah header */
-        left: 0;
-        right: 0;
-        background: #e3c9a4; /* Warna selaras dengan header */
-        padding: 10px 20px;
-        border-bottom-left-radius: 15px;
-        border-bottom-right-radius: 15px;
-        border: 1px solid rgba(206, 172, 147, 0.2);
-        border-top: none;
-        box-shadow: 0 2px 5px rgba(206, 172, 147, 0.1);
-        transform: translateY(-100%); /* Mulai tersembunyi di atas */
-        opacity: 0;
-        visibility: hidden;
-        z-index: 20; /* Pastikan di atas elemen lain */
-        transition: transform 0.3s ease, opacity 0.3s ease;
-    }
-    .search-bar.active {
-        transform: translateY(0); /* Muncul ke bawah */
-        opacity: 1;
-        visibility: visible;
+        width: 100%;
     }
     .search-bar input {
-        background: #fefbe8;
-        border-radius: 12px;
-        padding: 8px 12px;
+        width: 100%;
     }
     .sleeping-cat {
         width: 50px;
@@ -182,9 +142,6 @@ h1 {
     h1 {
         font-size: 1.2em;
     }
-    .search-bar {
-        padding: 8px 15px;
-    }
     .search-bar input {
         padding: 6px 10px;
         font-size: 0.8em;
@@ -192,12 +149,7 @@ h1 {
     .sleeping-cat {
         width: 40px;
         height: 30px;
-    }
-    .search-toggle {
-        padding: 5px;
-    }
-    .search-wrapper {
-        margin-right: 50px; /* Menyesuaikan ruang untuk kucing */
+        right: 15px;
     }
 }
 
