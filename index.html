@@ -20,9 +20,6 @@
             <div class="header-content">
                 <h1>LiluNotes</h1>
                 <div class="search-wrapper">
-                    <button class="search-toggle" id="searchToggleBtn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                    </button>
                     <div class="search-bar" id="searchBar">
                         <input type="text" id="searchInput" placeholder="Search notes...">
                     </div>
@@ -111,12 +108,5 @@
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     <script src="cat-animations.js" defer></script>
     <script src="script.js"></script>
-    <script>
-        // Toggle search bar di mobile
-        document.getElementById('searchToggleBtn').addEventListener('click', function() {
-            const searchBar = document.getElementById('searchBar');
-            searchBar.classList.toggle('active');
-        });
-    </script>
 </body>
 </html>
