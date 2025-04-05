@@ -3,13 +3,12 @@
 /* Import font lucu */
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
 
-/* Body dengan gradien pastel terang */
+/* Override body dengan gradien pastel terang */
 body {
-    background: linear-gradient(135deg, #f0e6f0 0%, #e6f0e6 50%, #f0e6f0 100%) !important;
+    background: linear-gradient(135deg, #e8d8e8 0%, #f0e8f0 50%, #e8d8e8 100%) !important;
     background-size: 200% 200%;
     animation: gradientFlow 15s ease infinite !important;
     font-family: 'Comic Neue', sans-serif !important;
-    color: #6a6a8a !important; /* Abu-abu pastel lembut */
     position: relative;
     overflow-x: hidden;
 }
@@ -20,19 +19,18 @@ body {
     100% { background-position: 0% 0%; }
 }
 
-/* Container dengan tema pastel terang */
+/* Container dengan tema kucing dan border pastel */
 .container {
-    border: 3px solid #a8c8d8 !important; /* Biru pastel muda */
+    border: 3px solid #a8c8d8 !important; /* Pastel biru muda */
     border-radius: 30px !important;
-    background: #f9f2f9 !important; /* Pink pastel sangat muda */
+    background: #f0f0f8 !important; /* Pastel abu-abu sangat muda */
     position: relative;
     overflow: hidden;
     padding: 30px !important;
     animation: borderGlow 10s infinite ease-in-out;
-    z-index: 1 !important; /* Container tetap di bawah popup */
+    z-index: 1; /* Container tetap di bawah popup */
 }
 
-/* Dekorasi kucing di container */
 .container::before {
     content: '' !important;
     position: absolute !important;
@@ -54,17 +52,17 @@ body {
     right: -20px !important;
     width: 50px !important;
     height: 50px !important;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M30 20l-10 20 20 10 20-10-10-20c-5 0-10 5-10 10s5 10 10 10 10-5 10-10-5-10-10-10z" fill="%23a8d8c8"/><circle cx="40" cy="30" r="5" fill="%23f9f2f9"/><circle cx="60" cy="30" r="5" fill="%23f9f2f9"/></svg>') no-repeat center !important;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M30 20l-10 20 20 10 20-10-10-20c-5 0-10 5-10 10s5 10 10 10 10-5 10-10-5-10-10-10z" fill="%23c8a8c8"/><circle cx="40" cy="30" r="5" fill="%23f0e8f0"/><circle cx="60" cy="30" r="5" fill="%23f0e8f0"/></svg>') no-repeat center !important;
     background-size: contain !important;
     animation: catBounce 2s infinite ease-in-out !important;
     z-index: 10 !important;
     pointer-events: none;
 }
 
-/* Header dengan pastel terang */
+/* Header dengan border dekoratif pastel */
 header {
-    border: 2px dashed #a8d8c8 !important; /* Hijau mint pastel */
-    background: #f2f9f2 !important; /* Hijau sangat muda */
+    border: 2px dashed #c8d8e8 !important; /* Pastel biru sangat muda */
+    background: #e8e8f0 !important; /* Pastel abu-abu muda */
     border-radius: 20px !important;
     position: relative !important;
     overflow: hidden !important;
@@ -76,31 +74,28 @@ header::before {
     top: 10px !important;
     left: 10px !important;
     font-size: 1.5em !important;
-    color: #d8a8c8 !important; /* Pink pastel muda */
+    color: #f8c8d8 !important; /* Pastel pink muda */
     animation: pawSpin 4s infinite linear !important;
     z-index: 10 !important;
     pointer-events: none;
 }
 
-/* Tombol dengan tema pastel terang */
+/* Tombol dengan efek glow pastel */
 button, .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn, .reset-btn, .view-more, .save-btn {
     position: relative;
     overflow: hidden;
     border-radius: 20px !important;
     padding: 10px 25px;
     transition: all 0.3s ease;
-    box-shadow: 0 0 10px rgba(168, 200, 216, 0.2); /* Bayangan biru pastel */
+    box-shadow: 0 0 10px rgba(168, 200, 216, 0.2);
     cursor: pointer;
     pointer-events: auto;
-    z-index: 20 !important; /* Tombol di atas dekorasi */
-    background: #a8d8c8 !important; /* Hijau mint pastel */
-    color: #6a6a8a !important; /* Abu-abu pastel lembut */
+    z-index: 20; /* Tombol di atas container tapi di bawah popup */
 }
 
 button:hover, .add-category:hover, .add-note:hover, .toggle-mode:hover, .more-btn:hover, .backup-btn:hover, .restore-btn:hover, .copy-backup-btn:hover, .google-auth-btn:hover, .backup-google-btn:hover, .google-logout-btn:hover, .reset-btn:hover, .view-more:hover, .save-btn:hover {
     box-shadow: 0 0 15px rgba(168, 200, 216, 0.5);
     transform: translateY(-2px);
-    background: #c8e8d8 !important; /* Hijau mint lebih terang */
 }
 
 button::after, .add-category::after, .add-note::after, .toggle-mode::after, .more-btn::after, .backup-btn::after, .restore-btn::after, .copy-backup-btn::after, .google-auth-btn::after, .backup-google-btn::after, .google-logout-btn::after, .reset-btn::after, .view-more::after, .save-btn::after {
@@ -110,7 +105,7 @@ button::after, .add-category::after, .add-note::after, .toggle-mode::after, .mor
     top: 50%;
     transform: translateY(-50%);
     font-size: 1em;
-    color: #d8a8c8; /* Pink pastel muda */
+    color: #f8c8d8; /* Pastel pink muda */
     opacity: 0;
     transition: opacity 0.3s ease, right 0.3s ease;
     pointer-events: none;
@@ -122,30 +117,21 @@ button:hover::after, .add-category:hover::after, .add-note:hover::after, .toggle
     right: 10px;
 }
 
-/* Popup dengan z-index tinggi */
-.more-options, .context-menu, .note-context-menu {
-    z-index: 100 !important; /* Pastikan popup di atas semua elemen */
-    background: #f9f2f9 !important; /* Pink pastel sangat muda */
-    border: 2px solid #a8c8d8 !important; /* Biru pastel muda */
-    box-shadow: 0 4px 12px rgba(106, 106, 138, 0.2); /* Bayangan abu-abu pastel */
-}
-
-/* Note dengan tema pastel terang */
+/* Catatan dengan dekorasi kucing dan efek hover */
 .note {
-    border: 2px solid #a8c8d8 !important; /* Biru pastel muda */
+    border: 2px solid #a8c8d8 !important; /* Pastel biru muda */
     border-radius: 25px !important;
-    background: #f2f9f2 !important; /* Hijau sangat muda */
+    background: #e8e8f0 !important; /* Pastel abu-abu muda */
     position: relative !important;
     overflow: hidden !important;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     animation: borderGlow 10s infinite ease-in-out;
-    z-index: 15 !important; /* Note di atas dekorasi tapi di bawah tombol dan popup */
+    z-index: 15; /* Catatan di atas dekorasi tapi di bawah tombol */
 }
 
 .note:hover {
     transform: scale(1.02) translateY(-5px);
     box-shadow: 0 8px 20px rgba(168, 200, 216, 0.2);
-    background: #f9fff9 !important; /* Hijau lebih terang */
 }
 
 .note::before {
@@ -155,7 +141,7 @@ button:hover::after, .add-category:hover::after, .add-note:hover::after, .toggle
     right: -10px !important;
     width: 30px !important;
     height: 30px !important;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 30c-10 0-15 10-15 15s5 15 15 15 15-10 15-15-5-15-15-15zm-8 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm16 0a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="%23a8d8c8"/></svg>') no-repeat center !important;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 30c-10 0-15 10-15 15s5 15 15 15 15-10 15-15-5-15-15-15zm-8 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm16 0a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="%23a8c8d8"/></svg>') no-repeat center !important;
     background-size: contain !important;
     animation: catPeek 3s infinite ease-in-out !important;
     z-index: 10 !important;
@@ -168,21 +154,17 @@ button:hover::after, .add-category:hover::after, .add-note:hover::after, .toggle
     bottom: 5px;
     left: 5px;
     font-size: 1em;
-    color: #d8a8c8; /* Pink pastel muda */
+    color: #f8c8d8;
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
 }
 
-.note:hover::after {
-    opacity: 1;
-}
-
-/* Edit container */
+/* Edit container dengan tema kucing */
 .edit-container {
-    border: 3px double #a8d8c8 !important; /* Hijau mint pastel */
+    border: 3px double #c8d8e8 !important; /* Pastel biru sangat muda */
     border-radius: 30px !important;
-    background: #f9f2f9 !important; /* Pink pastel sangat muda */
+    background: #f0f0f8 !important; /* Pastel abu-abu sangat muda */
     position: relative;
     animation: borderGlow 10s infinite ease-in-out;
 }
@@ -193,17 +175,17 @@ button:hover::after, .add-category:hover::after, .add-note:hover::after, .toggle
     bottom: 10px !important;
     right: 10px !important;
     font-size: 1.5em !important;
-    color: #d8a8c8 !important; /* Pink pastel muda */
+    color: #f8c8d8 !important; /* Pastel pink muda */
     animation: pawFade 2s infinite ease-in-out !important;
     pointer-events: none;
 }
 
-/* Gelembung */
+/* Gelembung Animasi */
 .bubble {
     position: fixed;
     width: 20px;
     height: 20px;
-    background: rgba(168, 200, 216, 0.3); /* Biru pastel transparan */
+    background: rgba(168, 200, 216, 0.3); /* Pastel biru muda transparan */
     border-radius: 50%;
     pointer-events: none;
     z-index: 5;
@@ -216,28 +198,69 @@ button:hover::after, .add-category:hover::after, .add-note:hover::after, .toggle
     100% { transform: translateY(-100vh) scale(0.8); opacity: 0; }
 }
 
-/* Kategori */
-.categories::before {
-    content: '' !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100% !important;
-    height: 10px !important;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q25 0 50 5 T100 5" stroke="%23a8c8d8" stroke-width="2" fill="none"/></svg>') repeat-x top !important;
-    background-size: 100px 10px !important;
-    opacity: 0.3 !important;
-    z-index: 1 !important;
-    pointer-events: none !important;
+/* Kategori dengan garis gelombang penuh */
+.categories {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    padding: 10px;
+    background: #f0f0f8;
+    border-radius: 15px;
+    position: relative;
+    white-space: nowrap;
+    z-index: 10; /* Kategori di atas dekorasi */
 }
 
-/* Animasi */
-@keyframes catWiggle { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(5deg); } 75% { transform: rotate(-5deg); } }
-@keyframes catBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-@keyframes catPeek { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-@keyframes pawSpin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-@keyframes pawFade { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+.categories::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q25 0 50 5 T100 5" stroke="%23c8d8e8" stroke-width="2" fill="none"/></svg>') repeat-x top;
+    background-size: 100px 10px;
+    opacity: 0.3;
+    z-index: 1;
+    pointer-events: none;
+}
 
+/* Popup dengan z-index lebih tinggi */
+.more-options, .finance-popup {
+    z-index: 100 !important; /* Pastikan popup di atas semua elemen lain */
+    background: #f0f0f8 !important; /* Pastel abu-abu sangat muda */
+    border: 1px solid #c8d8e8 !important; /* Pastel biru sangat muda */
+}
+
+/* Animasi elegan lainnya */
+@keyframes catWiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(5deg); }
+    75% { transform: rotate(-5deg); }
+}
+
+@keyframes catBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes catPeek {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+@keyframes pawSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes pawFade {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+/* Background kucing berjalan */
 body::before {
     content: '' !important;
     position: fixed !important;
@@ -245,17 +268,21 @@ body::before {
     left: -100px !important;
     width: 80px !important;
     height: 80px !important;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20 60h10l10-20 10 20h10l-15-30h-10zM40 30c-5 0-10 5-10 10s5 10 10 10 10-5 10-10-5-10-10-10zm-8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" fill="%23a8d8c8"/></svg>') no-repeat center !important;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20 60h10l10-20 10 20h10l-15-30h-10zM40 30c-5 0-10 5-10 10s5 10 10 10 10-5 10-10-5-10-10-10zm-8 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm16 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" fill="%23a8c8d8"/></svg>') no-repeat center !important;
     background-size: contain !important;
     animation: catWalk 15s infinite linear !important;
     z-index: 5 !important;
     pointer-events: none;
 }
 
-@keyframes catWalk { 0% { left: -100px; } 100% { left: 100%; } }
+@keyframes catWalk {
+    0% { left: -100px; }
+    100% { left: 100%; }
+}
 
+/* Animasi border berubah warna pastel */
 @keyframes borderGlow {
-    0%, 100% { border-color: #a8c8d8; } /* Biru pastel */
-    33% { border-color: #a8d8c8; } /* Hijau mint */
-    66% { border-color: #d8a8c8; } /* Pink pastel */
+    0%, 100% { border-color: #a8c8d8; } /* Pastel biru muda */
+    33% { border-color: #c8e8c8; } /* Pastel hijau muda */
+    66% { border-color: #f8c8d8; } /* Pastel pink muda */
 }
