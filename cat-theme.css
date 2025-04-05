@@ -80,11 +80,11 @@ header::before {
     pointer-events: none;
 }
 
-/* Tombol dengan efek glow pastel */
+/* Tombol dengan efek glow pastel dan radius kecil */
 button, .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn, .reset-btn, .view-more, .save-btn {
     position: relative;
     overflow: hidden;
-    border-radius: 20px !important;
+    border-radius: 12px !important; /* Dikurangi dari 20px */
     padding: 10px 20px;
     transition: all 0.4s ease;
     box-shadow: 0 0 8px rgba(206, 172, 147, 0.2);
@@ -166,7 +166,7 @@ button, .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore
     100% { transform: translateY(-120vh) scale(0.7); opacity: 0; }
 }
 
-/* Kategori dengan garis gelombang penuh */
+/* Kategori dengan garis gelombang yang tidak kelebihan */
 .categories {
     display: flex;
     gap: 10px;
@@ -186,7 +186,7 @@ button, .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore
     position: absolute;
     top: 0;
     left: 0;
-    width: 200vw;
+    width: 100%; /* Diubah dari 200vw agar sesuai lebar kontainer */
     height: 8px;
     background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q25 0 50 5 T100 5" stroke="%23ad8b72" stroke-width="1" fill="none"/></svg>') repeat-x top;
     background-size: 80px 8px;
