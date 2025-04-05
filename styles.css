@@ -141,29 +141,32 @@ h1 {
         justify-content: center;
     }
     .search-bar {
-        position: fixed;
-        top: 0;
-        left: -250px; /* Mulai dari luar layar kiri */
-        width: 250px;
-        height: 100%;
-        padding: 20px;
-        background: #fefbe8;
-        border-right: 1px solid rgba(206, 172, 147, 0.2);
-        box-shadow: 2px 0 5px rgba(206, 172, 147, 0.1);
-        transform: translateX(0);
+        position: absolute;
+        top: 100%; /* Tepat di bawah header */
+        left: 0;
+        right: 0;
+        background: #e3c9a4; /* Warna selaras dengan header */
+        padding: 10px 20px;
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        border: 1px solid rgba(206, 172, 147, 0.2);
+        border-top: none;
+        box-shadow: 0 2px 5px rgba(206, 172, 147, 0.1);
+        transform: translateY(-100%); /* Mulai tersembunyi di atas */
         opacity: 0;
         visibility: hidden;
-        z-index: 100; /* Pastikan di atas semua elemen */
+        z-index: 20; /* Pastikan di atas elemen lain */
         transition: transform 0.3s ease, opacity 0.3s ease;
     }
     .search-bar.active {
-        transform: translateX(250px); /* Geser ke kanan untuk muncul */
+        transform: translateY(0); /* Muncul ke bawah */
         opacity: 1;
         visibility: visible;
     }
     .search-bar input {
-        width: 100%;
-        margin-top: 20px; /* Jarak dari atas */
+        background: #fefbe8;
+        border-radius: 12px;
+        padding: 8px 12px;
     }
     .sleeping-cat {
         width: 50px;
@@ -180,11 +183,7 @@ h1 {
         font-size: 1.2em;
     }
     .search-bar {
-        width: 200px; /* Lebih kecil untuk layar sangat kecil */
-        left: -200px;
-    }
-    .search-bar.active {
-        transform: translateX(200px);
+        padding: 8px 15px;
     }
     .search-bar input {
         padding: 6px 10px;
