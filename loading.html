@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cat Head Animation</title>
+    <title>Cat Head Animation - Anime Style</title>
     <style>
         .container {
             display: flex;
@@ -45,7 +45,7 @@
 
         .eye-container {
             position: absolute;
-            top: 60px;
+            top: 50px;
             width: 100%;
             display: flex;
             justify-content: space-around;
@@ -53,23 +53,44 @@
 
         .eye {
             position: relative;
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 40px;
             background: white;
-            border-radius: 50%;
+            border-radius: 50% 50% 60% 60% / 70% 70% 30% 30%;
             overflow: hidden;
+            border: 2px solid #333;
         }
 
         .pupil {
             position: absolute;
-            width: 20px;
-            height: 20px;
-            background: black;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle at 30% 30%, #1a1a1a 40%, #4a4a4a 70%);
             border-radius: 50%;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             transition: transform 0.3s ease-out;
+        }
+
+        .highlight {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+        }
+
+        .highlight-large {
+            width: 15px;
+            height: 15px;
+            top: 5px;
+            left: 10px;
+        }
+
+        .highlight-small {
+            width: 8px;
+            height: 8px;
+            top: 20px;
+            left: 20px;
         }
 
         .nose {
@@ -110,9 +131,13 @@
             <div class="eye-container">
                 <div class="eye">
                     <div class="pupil"></div>
+                    <div class="highlight highlight-large"></div>
+                    <div class="highlight highlight-small"></div>
                 </div>
                 <div class="eye">
                     <div class="pupil"></div>
+                    <div class="highlight highlight-large"></div>
+                    <div class="highlight highlight-small"></div>
                 </div>
             </div>
             <div class="nose"></div>
@@ -131,8 +156,8 @@
 
         function moveEyes() {
             const time = Date.now() * 0.001;
-            const moveX = Math.sin(time) * 10;
-            const moveY = Math.cos(time * 1.5) * 10;
+            const moveX = Math.sin(time) * 12;
+            const moveY = Math.cos(time * 1.5) * 8;
 
             pupils.forEach(pupil => {
                 pupil.style.transform = `translate(${moveX}px, ${moveY}px)`;
@@ -141,10 +166,8 @@
             requestAnimationFrame(moveEyes);
         }
 
-        // Mulai animasi
         moveEyes();
 
-        // Optional: Tambahkan interaksi dengan mouse
         catHead.addEventListener('mousemove', (e) => {
             const rect = catHead.getBoundingClientRect();
             const centerX = rect.width / 2;
@@ -153,7 +176,7 @@
             const mouseY = e.clientY - rect.top;
 
             const moveX = ((mouseX - centerX) / centerX) * 15;
-            const moveY = ((mouseY - centerY) / centerY) * 15;
+            const moveY = ((mouseY - centerY) / centerY) * 10;
 
             pupils.forEach(pupil => {
                 pupil.style.transform = `translate(${moveX}px, ${moveY}px)`;
