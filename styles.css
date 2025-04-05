@@ -33,13 +33,13 @@ body {
     z-index: -1;
     margin: 20px;
     border-radius: 30px;
-    box-shadow: 0 4px 20px rgba(206, 172, 147, 0.15); /* Shadow halus untuk kesan elegan */
+    box-shadow: 0 4px 20px rgba(206, 172, 147, 0.15);
 }
 
 .container {
     max-width: 1200px;
     margin: 40px auto;
-    background: rgba(255, 255, 255, 0.95); /* Sedikit lebih opaque untuk kontras */
+    background: rgba(255, 255, 255, 0.95);
     border-radius: 30px;
     box-shadow: 0 6px 25px rgba(206, 172, 147, 0.2);
     padding: 30px;
@@ -47,11 +47,11 @@ body {
     user-select: none;
     position: relative;
     z-index: 1;
-    transition: transform 0.3s ease; /* Animasi saat hover */
+    transition: transform 0.3s ease;
 }
 
 .container:hover {
-    transform: translateY(-3px); /* Efek melayang ringan */
+    transform: translateY(-3px);
 }
 
 @keyframes fadeIn {
@@ -71,7 +71,7 @@ header {
 }
 
 header:hover {
-    box-shadow: 0 6px 20px rgba(206, 172, 147, 0.25); /* Shadow lebih dalam saat hover */
+    box-shadow: 0 6px 20px rgba(206, 172, 147, 0.25);
 }
 
 .header-content {
@@ -89,7 +89,7 @@ h1 {
     letter-spacing: -0.5px;
     white-space: nowrap;
     order: 1;
-    text-shadow: 0 2px 4px rgba(206, 172, 147, 0.2); /* Bayangan teks untuk elegan */
+    text-shadow: 0 2px 4px rgba(206, 172, 147, 0.2);
 }
 
 .search-cat-wrapper {
@@ -117,7 +117,7 @@ h1 {
 .search-bar input {
     padding: 10px 15px;
     border: 1px solid rgba(206, 172, 147, 0.3);
-    border-radius: 25px; /* Radius lebih besar untuk elegan */
+    border-radius: 25px;
     background: #fefbe8;
     color: #6a5545;
     font-size: 0.95em;
@@ -133,7 +133,7 @@ h1 {
     border-color: rgba(206, 172, 147, 0.5);
     box-shadow: 0 4px 12px rgba(206, 172, 147, 0.25);
     outline: none;
-    transform: scale(1.03); /* Efek zoom ringan */
+    transform: scale(1.03);
 }
 
 .search-bar input::placeholder {
@@ -150,11 +150,11 @@ h1 {
     flex-shrink: 0;
     width: 60px;
     height: 40px;
-    transition: transform 0.3s ease; /* Animasi kucing */
+    transition: transform 0.3s ease;
 }
 
 .search-cat-wrapper:hover .sleeping-cat {
-    transform: scale(1.1); /* Kucing membesar saat hover */
+    transform: scale(1.1);
 }
 
 @media (max-width: 768px) {
@@ -204,7 +204,7 @@ h1 {
     }
 }
 
-/* Categories dengan Gelombang Statis di Kiri */
+/* Categories dengan Animasi Asap yang Mulus */
 .categories {
     display: flex;
     gap: 10px;
@@ -230,12 +230,8 @@ h1 {
     top: 0;
     left: 0;
     width: 100%;
-    height: 10px;
-    background: linear-gradient(to right, 
-        rgba(173, 139, 114, 1) 0%, /* Titik statis di kiri */
-        rgba(173, 139, 114, 0.7) 20%,
-        rgba(173, 139, 114, 0) 100%
-    ); /* Gradient untuk asap */
+    height: 12px;
+    background: radial-gradient(circle at 0% 50%, rgba(173, 139, 114, 0.8) 10%, rgba(173, 139, 114, 0) 50%);
     z-index: 1;
 }
 
@@ -243,20 +239,34 @@ h1 {
     content: '';
     position: absolute;
     top: 0;
-    left: 20%; /* Mulai dari 20% agar kiri tetap statis */
-    width: 200%;
-    height: 10px;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q25 0 50 5 T100 5" stroke="%23ad8b72" stroke-width="1" fill="none"/></svg>') repeat-x top;
-    background-size: 80px 10px;
-    animation: waveMove 8s linear infinite;
-    mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
-    -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0));
+    left: 10%;
+    width: 300%;
+    height: 12px;
+    background: linear-gradient(to right, 
+        rgba(173, 139, 114, 0) 0%, 
+        rgba(173, 139, 114, 0.6) 30%, 
+        rgba(173, 139, 114, 0.4) 60%, 
+        rgba(173, 139, 114, 0) 100%
+    );
+    animation: smokeFlow 12s ease-in-out infinite;
     z-index: 1;
+    mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0));
+    -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0));
 }
 
-@keyframes waveMove {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+@keyframes smokeFlow {
+    0% { 
+        transform: translateX(-33%) scaleX(1); 
+        opacity: 0.8; 
+    }
+    50% { 
+        transform: translateX(0%) scaleX(1.1); 
+        opacity: 1; 
+    }
+    100% { 
+        transform: translateX(33%) scaleX(1); 
+        opacity: 0.8; 
+    }
 }
 
 .category {
@@ -265,7 +275,7 @@ h1 {
     gap: 6px;
     padding: 8px 18px;
     background: #e3c9a4;
-    border-radius: 25px; /* Radius lebih besar */
+    border-radius: 25px;
     color: #ad8b72;
     font-weight: 500;
     font-size: 0.95em;
