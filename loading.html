@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cat Head Animation - Anime Style</title>
+    <title>Cat Head Animation - Enhanced Anime Style</title>
     <style>
         .container {
             display: flex;
@@ -45,7 +45,7 @@
 
         .eye-container {
             position: absolute;
-            top: 50px;
+            top: 45px;
             width: 100%;
             display: flex;
             justify-content: space-around;
@@ -53,18 +53,30 @@
 
         .eye {
             position: relative;
-            width: 60px;
-            height: 40px;
+            width: 65px;
+            height: 45px;
             background: white;
-            border-radius: 50% 50% 60% 60% / 70% 70% 30% 30%;
+            border-radius: 70% 70% 40% 40% / 80% 80% 20% 20%;
             overflow: hidden;
             border: 2px solid #333;
         }
 
+        .eye::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: linear-gradient(to bottom, #333 50%, transparent 50%);
+            border-radius: 50% 50% 0 0;
+            clip-path: polygon(0 0, 20% 50%, 40% 20%, 60% 50%, 80% 20%, 100% 0);
+        }
+
         .pupil {
             position: absolute;
-            width: 30px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
             background: radial-gradient(circle at 30% 30%, #1a1a1a 40%, #4a4a4a 70%);
             border-radius: 50%;
             top: 50%;
@@ -75,22 +87,22 @@
 
         .highlight {
             position: absolute;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 50%;
         }
 
         .highlight-large {
-            width: 15px;
-            height: 15px;
+            width: 18px;
+            height: 18px;
             top: 5px;
             left: 10px;
         }
 
         .highlight-small {
-            width: 8px;
-            height: 8px;
-            top: 20px;
-            left: 20px;
+            width: 10px;
+            height: 10px;
+            top: 25px;
+            left: 25px;
         }
 
         .nose {
@@ -156,8 +168,8 @@
 
         function moveEyes() {
             const time = Date.now() * 0.001;
-            const moveX = Math.sin(time) * 12;
-            const moveY = Math.cos(time * 1.5) * 8;
+            const moveX = Math.sin(time) * 15;
+            const moveY = Math.cos(time * 1.5) * 10;
 
             pupils.forEach(pupil => {
                 pupil.style.transform = `translate(${moveX}px, ${moveY}px)`;
@@ -175,8 +187,8 @@
             const mouseX = e.clientX - rect.left;
             const mouseY = e.clientY - rect.top;
 
-            const moveX = ((mouseX - centerX) / centerX) * 15;
-            const moveY = ((mouseY - centerY) / centerY) * 10;
+            const moveX = ((mouseX - centerX) / centerX) * 18;
+            const moveY = ((mouseY - centerY) / centerY) * 12;
 
             pupils.forEach(pupil => {
                 pupil.style.transform = `translate(${moveX}px, ${moveY}px)`;
