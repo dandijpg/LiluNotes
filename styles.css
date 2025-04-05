@@ -7,8 +7,8 @@
     box-sizing: border-box;
 }
 
-/* Hilangkan background biru saat klik */
-button, .note, .category {
+/* Hilangkan background biru saat klik atau hover pada semua elemen interaktif */
+button, .note, .category, .sleeping-cat {
     -webkit-tap-highlight-color: transparent;
     tap-highlight-color: transparent;
 }
@@ -199,20 +199,20 @@ h1 {
     }
 }
 
-/* Categories dengan Gelombang Satu Garis */
+/* Categories tanpa scroller horizontal */
 .categories {
     display: flex;
     gap: 10px;
     margin-bottom: 25px;
-    overflow-x: auto;
     padding: 12px;
     background: #fefbe8;
     border-radius: 20px;
     position: relative;
     white-space: nowrap;
-    scroll-behavior: smooth;
     box-shadow: 0 4px 15px rgba(206, 172, 147, 0.15);
     transition: box-shadow 0.3s ease;
+    flex-wrap: wrap; /* Mengizinkan elemen membungkus ke baris baru */
+    overflow-x: hidden; /* Menghilangkan scroller horizontal */
 }
 
 .categories:hover {
@@ -650,10 +650,10 @@ button {
     animation: fadeIn 0.8s ease-in-out;
 }
 
-/* Toolbar */
+/* Toolbar tanpa scroller horizontal */
 .toolbar {
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap; /* Mengizinkan elemen membungkus */
     gap: 15px;
     margin-bottom: 25px;
     background: #e3c9a4;
@@ -662,8 +662,7 @@ button {
     box-shadow: 0 4px 15px rgba(206, 172, 147, 0.15);
     justify-content: flex-start;
     border: 1px solid rgba(206, 172, 147, 0.25);
-    overflow-x: auto;
-    white-space: nowrap;
+    overflow-x: hidden; /* Menghilangkan scroller horizontal */
 }
 
 .toolbar-section {
@@ -831,7 +830,7 @@ button {
     outline: none;
 }
 
-/* Note Content */
+/* Note Content tanpa scroller horizontal */
 .note-content {
     height: 350px;
     max-height: 350px;
@@ -844,7 +843,7 @@ button {
     font-weight: 400;
     box-shadow: 0 4px 15px rgba(206, 172, 147, 0.2);
     transition: all 0.4s ease;
-    overflow-x: auto;
+    overflow-x: hidden; /* Menghilangkan scroller horizontal */
     overflow-y: auto;
     position: relative;
     cursor: text;
@@ -892,6 +891,7 @@ button {
     box-shadow: 0 4px 15px rgba(206, 172, 147, 0.2);
 }
 
+/* Note Content View tanpa scroller horizontal */
 .note-content-view {
     min-height: 350px;
     background: #fefbe8;
@@ -903,7 +903,7 @@ button {
     font-weight: 400;
     box-shadow: 0 4px 15px rgba(206, 172, 147, 0.2);
     user-select: text;
-    overflow-x: auto;
+    overflow-x: hidden; /* Menghilangkan scroller horizontal */
     word-wrap: break-word;
     cursor: default;
 }
@@ -978,12 +978,12 @@ button {
     color: #fff;
 }
 
-/* Table Styles */
+/* Table Styles tanpa scroller horizontal */
 .table-wrapper {
     position: relative;
     display: block;
     margin: 10px 0;
-    overflow-x: auto;
+    overflow-x: hidden; /* Menghilangkan scroller horizontal */
     max-width: 100%;
 }
 
