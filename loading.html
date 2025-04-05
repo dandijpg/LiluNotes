@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cat Head Animation - Stalking Eyes with Blink</title>
+    <title>Cat Head Animation - Stalking Eyes with Touch Interaction</title>
     <!-- Normalize.css 5.0.0 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <style>
@@ -13,6 +13,7 @@
             align-items: center;
             justify-content: center;
             background: #161616;
+            touch-action: none; /* Mencegah pinch-zoom pada layar sentuh */
         }
 
         .cat {
@@ -220,13 +221,14 @@
         let lastBlinkTime = Date.now();
         const animationInterval = 2000; // Total durasi per siklus (2 detik)
         const blinkInterval = 4000; // Kedipan setiap 4 detik
+        let isTouching = false; // Status sentuhan
 
         function moveEyes() {
             const currentTime = Date.now();
             const elapsed = currentTime - lastAnimationTime;
 
-            // Logika pergerakan mata (2 gerakan: kanan lalu kiri)
-            if (elapsed >= animationInterval) {
+            // Logika pergerakan mata (2 gerakan: kanan lalu kiri) jika tidak disentuh
+            if (!isTouching && elapsed >= animationInterval) {
                 animationStep = (animationStep + 1) % 4; // Siklus: tengah -> kanan -> kiri -> tengah
                 lastAnimationTime = currentTime;
 
@@ -252,7 +254,6 @@
                 eyes.forEach(eye => eye.classList.add('blink'));
                 lastBlinkTime = currentTime;
 
-                // Hapus kelas blink setelah animasi selesai (4 detik)
                 setTimeout(() => {
                     eyes.forEach(eye => eye.classList.remove('blink'));
                 }, 4000);
@@ -261,24 +262,47 @@
             requestAnimationFrame(moveEyes);
         }
 
-        // Interaksi dengan mouse (opsional, bisa dinonaktifkan jika tidak diinginkan)
-        cat.addEventListener('mousemove', (e) => {
-            const rect = cat.getBoundingClientRect();
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const mouseX = e.clientX - rect.left;
-            const mouseY = e.clientY - rect.top;
-
-            const moveX = ((mouseX - centerX) / centerX) * 100;
-            const moveY = ((mouseY - centerY) / centerY) * 50;
-
-            pupils.forEach(pupil => {
-                pupil.style.transform = `translate(${moveX}%, ${moveY}%)`;
-            });
+        // Interaksi sentuh (touch)
+        cat.addEventListener('touchstart', (e) => {
+            isTouching = true;
+            updatePupilPosition(e);
         });
 
+        cat.addEventListener('touchmove', (e) => {
+            e.preventDefault(); // Mencegah scroll saat disentuh
+            updatePupilPosition(e);
+        });
+
+        cat.addEventListener('touchend', () => {
+            isTouching = false;
+        });
+
+        function updatePupilPosition(e) {
+            if (isTouching) {
+                const touch = e.touches[0];
+                const rect = cat.getBoundingClientRect();
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const touchX = touch.clientX - rect.left;
+                const touchY = touch.clientY - rect.top;
+
+                const moveX = ((touchX - centerX) / centerX) * 100; // Skala pergerakan horizontal
+                const moveY = ((touchY - centerY) / centerY) * 50;  // Skala pergerakan vertikal
+
+                // Batasi pergerakan agar tetap dalam batas mata
+                const maxMoveX = 100;
+                const maxMoveY = 50;
+                const clampedMoveX = Math.max(-maxMoveX, Math.min(maxMoveX, moveX));
+                const clampedMoveY = Math.max(-maxMoveY, Math.min(maxMoveY, moveY));
+
+                pupils.forEach(pupil => {
+                    pupil.style.transform = `translate(${clampedMoveX}%, ${clampedMoveY}%)`;
+                });
+            }
+        }
+
         // Mulai animasi
-        moveEyes();
+        moveAnimation();
     </script>
 </body>
 </html>
