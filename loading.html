@@ -3,318 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Cute Cat Animation</title>
+    <title>Cat Head Animation</title>
     <style>
-        body {
+        .container {
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(145deg, #e9f1ff 0%, #d1e3ff 100%);
-            margin: 0;
-            overflow: hidden;
-            font-family: 'Arial', sans-serif;
-        }
-
-        .cat-container {
-            position: relative;
-            width: 320px;
-            height: 420px;
-            transform: scale(1);
-            transition: transform 0.3s ease;
-        }
-
-        .cat-container:hover {
-            transform: scale(1.05);
-        }
-
-        .cat-body {
-            position: absolute;
-            width: 160px;
-            height: 220px;
-            background: #ffaa33;
-            border-radius: 80px;
-            left: 80px;
-            top: 140px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            z-index: 2;
+            height: 100vh;
+            background: #f0f0f0;
         }
 
         .cat-head {
-            position: absolute;
-            width: 130px;
-            height: 130px;
-            background: #ffaa33;
-            border-radius: 65px;
-            left: 95px;
-            top: 50px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            z-index: 3;
-            animation: headBob 2.5s ease-in-out infinite;
+            position: relative;
+            width: 200px;
+            height: 180px;
+            background: #ffa500;
+            border-radius: 50% 50% 40% 40%;
+            overflow: hidden;
         }
 
-        .ear-left, .ear-right {
+        .ear {
             position: absolute;
             width: 0;
             height: 0;
-            border-left: 25px solid transparent;
-            border-right: 25px solid transparent;
-            border-bottom: 45px solid #ffaa33;
-            z-index: 2;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 50px solid #ff8c00;
         }
 
         .ear-left {
-            left: 10px;
-            top: 5px;
+            top: -30px;
+            left: 20px;
             transform: rotate(-30deg);
         }
 
         .ear-right {
-            left: 90px;
-            top: 5px;
+            top: -30px;
+            right: 20px;
             transform: rotate(30deg);
         }
 
-        .ear-inner-left, .ear-inner-right {
+        .eye-container {
             position: absolute;
-            width: 0;
-            height: 0;
-            border-left: 18px solid transparent;
-            border-right: 18px solid transparent;
-            border-bottom: 35px solid #ffdab9;
+            top: 60px;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
         }
 
-        .ear-inner-left {
-            left: 7px;
-            top: 5px;
-            transform: rotate(-30deg);
-        }
-
-        .ear-inner-right {
-            left: 67px;
-            top: 5px;
-            transform: rotate(30deg);
-        }
-
-        .eye-left, .eye-right {
-            position: absolute;
-            width: 24px;
-            height: 30px;
-            background: #fff;
+        .eye {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            background: white;
             border-radius: 50%;
-            top: 45px;
-            border: 2px solid #333;
-            z-index: 4;
-        }
-
-        .eye-left {
-            left: 30px;
-        }
-
-        .eye-right {
-            left: 75px;
+            overflow: hidden;
         }
 
         .pupil {
             position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #333;
+            width: 20px;
+            height: 20px;
+            background: black;
             border-radius: 50%;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            animation: blink 3.5s infinite;
+            transition: transform 0.3s ease-out;
         }
 
         .nose {
             position: absolute;
-            width: 16px;
-            height: 12px;
-            background: #ff9999;
-            border-radius: 50%;
-            top: 75px;
-            left: 57px;
-            z-index: 5;
-        }
-
-        .mouth {
-            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
             width: 20px;
-            height: 10px;
-            border-bottom: 3px solid #333;
-            border-radius: 0 0 50% 50%;
-            top: 85px;
-            left: 55px;
-            z-index: 5;
+            height: 15px;
+            background: #ff69b4;
+            border-radius: 50%;
         }
 
-        .whiskers-left, .whiskers-right {
+        .whiskers {
+            position: absolute;
+            bottom: 50px;
+            width: 100%;
+        }
+
+        .whisker {
             position: absolute;
             width: 40px;
             height: 2px;
-            background: rgba(255, 255, 255, 0.9);
-            top: 80px;
-            z-index: 4;
+            background: #333;
         }
 
-        .whiskers-left {
-            left: 10px;
-            transform: rotate(10deg);
-        }
-
-        .whiskers-right {
-            left: 80px;
-            transform: rotate(-10deg);
-        }
-
-        .arm-left {
-            position: absolute;
-            width: 45px;
-            height: 90px;
-            background: #ffaa33;
-            border-radius: 22px;
-            left: 60px;
-            top: 200px;
-            transform-origin: top center;
-            animation: waveLeft 1.8s ease-in-out infinite;
-            z-index: 1;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .arm-right {
-            position: absolute;
-            width: 45px;
-            height: 90px;
-            background: #ffaa33;
-            border-radius: 22px;
-            left: 215px;
-            top: 200px;
-            transform-origin: top center;
-            animation: waveRight 1.8s ease-in-out infinite;
-            z-index: 3;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .note {
-            position: absolute;
-            width: 90px;
-            height: 70px;
-            background: #fffcf0;
-            border: 3px solid #4dabf7;
-            border-radius: 8px;
-            left: 200px;
-            top: 260px;
-            transform: rotate(-15deg);
-            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.15);
-            z-index: 4;
-            transition: transform 0.3s ease;
-        }
-
-        .note-text {
-            position: absolute;
-            width: 100%;
-            text-align: center;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 16px;
-            color: #2d3436;
-            font-weight: bold;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        .tail {
-            position: absolute;
-            width: 35px;
-            height: 100px;
-            background: #ffaa33;
-            border-radius: 20px;
-            left: 140px;
-            top: 300px;
-            transform-origin: top center;
-            animation: tailWag 1.2s ease-in-out infinite;
-            z-index: 1;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        @keyframes headBob {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-5px) rotate(1deg); }
-        }
-
-        @keyframes waveLeft {
-            0%, 100% { transform: rotate(-15deg); }
-            50% { transform: rotate(-35deg); }
-        }
-
-        @keyframes waveRight {
-            0%, 100% { transform: rotate(15deg); }
-            50% { transform: rotate(35deg); }
-        }
-
-        @keyframes tailWag {
-            0%, 100% { transform: rotate(8deg); }
-            50% { transform: rotate(-8deg); }
-        }
-
-        @keyframes blink {
-            0%, 10%, 100% { height: 10px; }
-            5% { height: 2px; }
-        }
+        .whisker-left-1 { left: 20px; transform: rotate(15deg); }
+        .whisker-left-2 { left: 20px; top: 10px; transform: rotate(5deg); }
+        .whisker-right-1 { right: 20px; transform: rotate(-15deg); }
+        .whisker-right-2 { right: 20px; top: 10px; transform: rotate(-5deg); }
     </style>
 </head>
 <body>
-    <div class="cat-container">
-        <div class="cat-body"></div>
+    <div class="container">
         <div class="cat-head">
-            <div class="ear-left">
-                <div class="ear-inner-left"></div>
-            </div>
-            <div class="ear-right">
-                <div class="ear-inner-right"></div>
-            </div>
-            <div class="eye-left">
-                <div class="pupil"></div>
-            </div>
-            <div class="eye-right">
-                <div class="pupil"></div>
+            <div class="ear ear-left"></div>
+            <div class="ear ear-right"></div>
+            <div class="eye-container">
+                <div class="eye">
+                    <div class="pupil"></div>
+                </div>
+                <div class="eye">
+                    <div class="pupil"></div>
+                </div>
             </div>
             <div class="nose"></div>
-            <div class="mouth"></div>
-            <div class="whiskers-left"></div>
-            <div class="whiskers-right"></div>
+            <div class="whiskers">
+                <div class="whisker whisker-left-1"></div>
+                <div class="whisker whisker-left-2"></div>
+                <div class="whisker whisker-right-1"></div>
+                <div class="whisker whisker-right-2"></div>
+            </div>
         </div>
-        <div class="arm-left"></div>
-        <div class="arm-right"></div>
-        <div class="note">
-            <div class="note-text">Meow!</div>
-        </div>
-        <div class="tail"></div>
     </div>
 
     <script>
-        const catContainer = document.querySelector('.cat-container');
-        const note = document.querySelector('.note');
+        const pupils = document.querySelectorAll('.pupil');
+        const catHead = document.querySelector('.cat-head');
 
-        catContainer.addEventListener('mouseover', () => {
-            note.style.transform = 'rotate(0deg) scale(1.1)';
-            note.style.transition = 'transform 0.4s ease';
-        });
+        function moveEyes() {
+            const time = Date.now() * 0.001;
+            const moveX = Math.sin(time) * 10;
+            const moveY = Math.cos(time * 1.5) * 10;
 
-        catContainer.addEventListener('mouseout', () => {
-            note.style.transform = 'rotate(-15deg) scale(1)';
-        });
-
-        // Efek tambahan: pupil mengikuti mouse (opsional)
-        document.addEventListener('mousemove', (e) => {
-            const pupils = document.querySelectorAll('.pupil');
             pupils.forEach(pupil => {
-                const rect = pupil.parentElement.getBoundingClientRect();
-                const eyeX = rect.left + rect.width / 2;
-                const eyeY = rect.top + rect.height / 2;
-                const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
-                const distance = Math.min(5, Math.hypot(e.clientX - eyeX, e.clientY - eyeY) / 20);
-                pupil.style.transform = `translate(-50%, -50%) translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
+                pupil.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+
+            requestAnimationFrame(moveEyes);
+        }
+
+        // Mulai animasi
+        moveEyes();
+
+        // Optional: Tambahkan interaksi dengan mouse
+        catHead.addEventListener('mousemove', (e) => {
+            const rect = catHead.getBoundingClientRect();
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const mouseX = e.clientX - rect.left;
+            const mouseY = e.clientY - rect.top;
+
+            const moveX = ((mouseX - centerX) / centerX) * 15;
+            const moveY = ((mouseY - centerY) / centerY) * 15;
+
+            pupils.forEach(pupil => {
+                pupil.style.transform = `translate(${moveX}px, ${moveY}px)`;
             });
         });
     </script>
