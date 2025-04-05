@@ -3,277 +3,261 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minimalist Cat Head Animation - Refined Anime Eyes</title>
+    <title>Cat Head Animation - Adjusted with Normalize</title>
+    <!-- Normalize.css 5.0.0 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <style>
-        body {
-            margin: 0;
-            height: 100vh;
+        html {
+            height: 100%;
             display: flex;
-            justify-content: center;
             align-items: center;
-            background: #000;
+            justify-content: center;
+            background: #161616;
         }
 
-        canvas {
-            border: 1px solid #333;
+        .cat {
+            position: relative;
+            height: 170px;
+            width: 192.1px;
+        }
+
+        .ear {
+            position: absolute;
+            top: -30%;
+            height: 60%;
+            width: 25%;
+            background: #fff;
+        }
+
+        .ear::before,
+        .ear::after {
+            content: "";
+            position: absolute;
+            bottom: 24%;
+            height: 10%;
+            width: 5%;
+            border-radius: 50%;
+            background: #161616;
+        }
+
+        .ear::after {
+            transform-origin: 50% 100%;
+        }
+
+        .ear--left {
+            left: -7%;
+            border-radius: 70% 30% 0% 0% / 100% 100% 0% 0%;
+            transform: rotate(-15deg);
+        }
+
+        .ear--left::before,
+        .ear--left::after {
+            right: 10%;
+        }
+
+        .ear--left::after {
+            transform: rotate(-45deg);
+        }
+
+        .ear--right {
+            right: -7%;
+            border-radius: 30% 70% 0% 0% / 100% 100% 0% 0%;
+            transform: rotate(15deg);
+        }
+
+        .ear--right::before,
+        .ear--right::after {
+            left: 10%;
+        }
+
+        .ear--right::after {
+            transform: rotate(45deg);
+        }
+
+        .face {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background: #161616;
+            border-radius: 50%;
+        }
+
+        .eye {
+            position: absolute;
+            top: 35%;
+            height: 30%;
+            width: 31%;
+            background: #fff;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            overflow: hidden;
+        }
+
+        .eye::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 0;
+            width: 100%;
+            border-radius: 0 0 50% 50% / 0 0 40% 40%;
+            background: #161616;
+        }
+
+        .eye.blink::after {
+            animation: blink 4s infinite ease-in;
+        }
+
+        @keyframes blink {
+            0% {
+                height: 0;
+            }
+            90% {
+                height: 0;
+            }
+            92.5% {
+                height: 100%;
+            }
+            95% {
+                height: 0;
+            }
+            97.5% {
+                height: 100%;
+            }
+            100% {
+                height: 0;
+            }
+        }
+
+        .eye::before {
+            content: "";
+            position: absolute;
+            top: 60%;
+            height: 10%;
+            width: 15%;
+            background: #fff;
+            border-radius: 50%;
+        }
+
+        .eye--left {
+            left: 0;
+        }
+
+        .eye--left::before {
+            right: -5%;
+        }
+
+        .eye--right {
+            right: 0;
+        }
+
+        .eye--right::before {
+            left: -5%;
+        }
+
+        .eye-pupil {
+            position: absolute;
+            top: 25%;
+            height: 50%;
+            width: 20%;
+            background: #161616;
+            border-radius: 50%;
+            transition: transform 0.1s ease-out; /* Smooth transition for pupil movement */
+        }
+
+        .eye--left .eye-pupil {
+            right: 30%;
+        }
+
+        .eye--right .eye-pupil {
+            left: 30%;
+        }
+
+        .eye-pupil::after {
+            content: "";
+            position: absolute;
+            top: 30%;
+            right: -5%;
+            height: 20%;
+            width: 35%;
+            border-radius: 50%;
+            background: #fff;
+        }
+
+        .muzzle {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            height: 6%;
+            width: 10%;
+            background: #fff;
+            transform: translateX(-50%);
+            border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%;
         }
     </style>
 </head>
 <body>
-    <canvas id="catCanvas" width="300" height="300"></canvas>
+    <div class="cat">
+        <div class="ear ear--left"></div>
+        <div class="ear ear--right"></div>
+        <div class="face">
+            <div class="eye eye--left">
+                <div class="eye-pupil"></div>
+            </div>
+            <div class="eye eye--right">
+                <div class="eye-pupil"></div>
+            </div>
+            <div class="muzzle"></div>
+        </div>
+    </div>
 
     <script>
-        const canvas = document.getElementById('catCanvas');
-        const ctx = canvas.getContext('2d');
+        const pupils = document.querySelectorAll('.eye-pupil');
+        const cat = document.querySelector('.cat');
+        const eyes = document.querySelectorAll('.eye');
 
-        // Variabel untuk animasi mata
-        let pupilOffsetXLeft = 0;
-        let pupilOffsetYLeft = 0;
-        let pupilOffsetXRight = 0;
-        let pupilOffsetYRight = 0;
-        let blinkProgress = 0;
-        let isBlinking = false;
+        // Variabel untuk animasi kedipan
         let lastBlinkTime = Date.now();
-        const blinkInterval = 3000; // Kedipan setiap 3 detik
-        const blinkSpeed = 0.1; // Kecepatan kedipan
+        const blinkInterval = 4000; // Kedipan setiap 4 detik
 
-        function drawCat() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Kepala kucing
-            ctx.beginPath();
-            ctx.arc(150, 150, 100, 0, Math.PI * 2);
-            ctx.fillStyle = '#000';
-            ctx.fill();
-            ctx.closePath();
-
-            // Telinga kiri
-            ctx.beginPath();
-            ctx.moveTo(70, 70);
-            ctx.lineTo(110, 30);
-            ctx.lineTo(110, 90);
-            ctx.fillStyle = '#000';
-            ctx.fill();
-            ctx.closePath();
-
-            // Telinga kanan
-            ctx.beginPath();
-            ctx.moveTo(230, 70);
-            ctx.lineTo(190, 30);
-            ctx.lineTo(190, 90);
-            ctx.fillStyle = '#000';
-            ctx.fill();
-            ctx.closePath();
-
-            // Telinga dalam kiri
-            ctx.beginPath();
-            ctx.moveTo(80, 70);
-            ctx.lineTo(105, 40);
-            ctx.lineTo(105, 80);
-            ctx.fillStyle = '#fff';
-            ctx.fill();
-            ctx.closePath();
-
-            // Telinga dalam kanan
-            ctx.beginPath();
-            ctx.moveTo(220, 70);
-            ctx.lineTo(195, 40);
-            ctx.lineTo(195, 80);
-            ctx.fillStyle = '#fff';
-            ctx.fill();
-            ctx.closePath();
-
-            // Posisi mata yang lebih proporsional
-            const eyeLeftX = 120; // Posisi X mata kiri
-            const eyeRightX = 180; // Posisi X mata kanan
-            const eyeY = 130; // Posisi Y kedua mata (disederhanakan agar simetris)
-
-            // Mata kiri (Anime Style dengan lekukan profesional)
-            ctx.save();
-            ctx.beginPath();
-            if (isBlinking) {
-                // Animasi kedipan
-                const eyeHeight = 20 * (1 - Math.abs(blinkProgress));
-                ctx.moveTo(eyeLeftX - 30, eyeY);
-                ctx.bezierCurveTo(eyeLeftX - 20, eyeY - 30, eyeLeftX + 20, eyeY - 30, eyeLeftX + 30, eyeY);
-                ctx.bezierCurveTo(eyeLeftX + 20, eyeY + eyeHeight, eyeLeftX - 20, eyeY + eyeHeight, eyeLeftX - 30, eyeY);
-            } else {
-                ctx.moveTo(eyeLeftX - 30, eyeY);
-                ctx.bezierCurveTo(eyeLeftX - 20, eyeY - 30, eyeLeftX + 20, eyeY - 30, eyeLeftX + 30, eyeY);
-                ctx.bezierCurveTo(eyeLeftX + 20, eyeY + 20, eyeLeftX - 20, eyeY + 20, eyeLeftX - 30, eyeY);
-            }
-            ctx.fillStyle = '#fff';
-            ctx.fill();
-
-            // Bayangan halus di bagian atas mata
-            const gradient = ctx.createLinearGradient(eyeLeftX, eyeY - 30, eyeLeftX, eyeY + 20);
-            gradient.addColorStop(0, 'rgba(0, 0, 0, 0.1)');
-            gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
-            ctx.fillStyle = gradient;
-            ctx.fill();
-
-            ctx.strokeStyle = '#000';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            ctx.closePath();
-
-            // Bulu mata kiri
-            if (!isBlinking || blinkProgress < 0) {
-                ctx.beginPath();
-                ctx.moveTo(eyeLeftX - 25, eyeY - 15);
-                ctx.quadraticCurveTo(eyeLeftX - 20, eyeY - 30, eyeLeftX - 10, eyeY - 20);
-                ctx.moveTo(eyeLeftX - 10, eyeY - 20);
-                ctx.quadraticCurveTo(eyeLeftX, eyeY - 35, eyeLeftX + 10, eyeY - 20);
-                ctx.moveTo(eyeLeftX + 10, eyeY - 20);
-                ctx.quadraticCurveTo(eyeLeftX + 20, eyeY - 30, eyeLeftX + 25, eyeY - 15);
-                ctx.strokeStyle = '#000';
-                ctx.lineWidth = 2;
-                ctx.stroke();
-                ctx.closePath();
-            }
-
-            // Pupil kiri (hanya jika mata terbuka)
-            if (!isBlinking || Math.abs(blinkProgress) < 0.5) {
-                ctx.beginPath();
-                ctx.arc(eyeLeftX + pupilOffsetXLeft, eyeY + pupilOffsetYLeft, 10, 0, Math.PI * 2);
-                ctx.fillStyle = '#000';
-                ctx.fill();
-                ctx.closePath();
-
-                // Highlight kiri
-                ctx.beginPath();
-                ctx.arc(eyeLeftX - 10 + pupilOffsetXLeft, eyeY - 10 + pupilOffsetYLeft, 6, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-                ctx.fill();
-                ctx.closePath();
-
-                ctx.beginPath();
-                ctx.arc(eyeLeftX + 5 + pupilOffsetXLeft, eyeY + 5 + pupilOffsetYLeft, 3, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-                ctx.fill();
-                ctx.closePath();
-            }
-
-            // Mata kanan (Anime Style dengan lekukan profesional)
-            ctx.beginPath();
-            if (isBlinking) {
-                const eyeHeight = 20 * (1 - Math.abs(blinkProgress));
-                ctx.moveTo(eyeRightX - 30, eyeY);
-                ctx.bezierCurveTo(eyeRightX - 20, eyeY - 30, eyeRightX + 20, eyeY - 30, eyeRightX + 30, eyeY);
-                ctx.bezierCurveTo(eyeRightX + 20, eyeY + eyeHeight, eyeRightX - 20, eyeY + eyeHeight, eyeRightX - 30, eyeY);
-            } else {
-                ctx.moveTo(eyeRightX - 30, eyeY);
-                ctx.bezierCurveTo(eyeRightX - 20, eyeY - 30, eyeRightX + 20, eyeY - 30, eyeRightX + 30, eyeY);
-                ctx.bezierCurveTo(eyeRightX + 20, eyeY + 20, eyeRightX - 20, eyeY + 20, eyeRightX - 30, eyeY);
-            }
-            ctx.fillStyle = '#fff';
-            ctx.fill();
-
-            ctx.fillStyle = gradient;
-            ctx.fill();
-
-            ctx.strokeStyle = '#000';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            ctx.closePath();
-
-            // Bulu mata kanan
-            if (!isBlinking || blinkProgress < 0) {
-                ctx.beginPath();
-                ctx.moveTo(eyeRightX - 25, eyeY - 15);
-                ctx.quadraticCurveTo(eyeRightX - 20, eyeY - 30, eyeRightX - 10, eyeY - 20);
-                ctx.moveTo(eyeRightX - 10, eyeY - 20);
-                ctx.quadraticCurveTo(eyeRightX, eyeY - 35, eyeRightX + 10, eyeY - 20);
-                ctx.moveTo(eyeRightX + 10, eyeY - 20);
-                ctx.quadraticCurveTo(eyeRightX + 20, eyeY - 30, eyeRightX + 25, eyeY - 15);
-                ctx.strokeStyle = '#000';
-                ctx.lineWidth = 2;
-                ctx.stroke();
-                ctx.closePath();
-            }
-
-            // Pupil kanan (hanya jika mata terbuka)
-            if (!isBlinking || Math.abs(blinkProgress) < 0.5) {
-                ctx.beginPath();
-                ctx.arc(eyeRightX + pupilOffsetXRight, eyeY + pupilOffsetYRight, 10, 0, Math.PI * 2);
-                ctx.fillStyle = '#000';
-                ctx.fill();
-                ctx.closePath();
-
-                // Highlight kanan
-                ctx.beginPath();
-                ctx.arc(eyeRightX - 10 + pupilOffsetXRight, eyeY - 10 + pupilOffsetYRight, 6, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-                ctx.fill();
-                ctx.closePath();
-
-                ctx.beginPath();
-                ctx.arc(eyeRightX + 5 + pupilOffsetXRight, eyeY + 5 + pupilOffsetYRight, 3, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-                ctx.fill();
-                ctx.closePath();
-            }
-
-            ctx.restore();
-
-            // Hidung
-            ctx.beginPath();
-            ctx.arc(150, 170, 5, 0, Math.PI * 2);
-            ctx.fillStyle = '#fff';
-            ctx.fill();
-            ctx.closePath();
-        }
-
-        // Animasi mata
-        function animateEyes() {
+        // Animasi pergerakan pupil
+        function moveEyes() {
             const time = Date.now();
-            const elapsedSinceLastBlink = time - lastBlinkTime;
+            const speedFactor = 2; // Kecepatan pergerakan pupil
+            const moveX = Math.sin(time * 0.003 * speedFactor) * 50; // Pergerakan horizontal
+            const moveY = Math.cos(time * 0.004 * speedFactor) * 25; // Pergerakan vertikal
 
-            // Pergerakan pupil yang lebih cepat dan realistis
-            const speedFactor = 2; // Meningkatkan kecepatan pergerakan
-            pupilOffsetXLeft = Math.sin(time * 0.003 * speedFactor) * 10;
-            pupilOffsetYLeft = Math.cos(time * 0.004 * speedFactor) * 5;
-            pupilOffsetXRight = Math.sin(time * 0.003 * speedFactor) * 10;
-            pupilOffsetYRight = Math.cos(time * 0.004 * speedFactor) * 5;
+            pupils.forEach(pupil => {
+                pupil.style.transform = `translate(${moveX}%, ${moveY}%)`;
+            });
 
             // Logika kedipan
-            if (elapsedSinceLastBlink > blinkInterval && !isBlinking) {
-                isBlinking = true;
-                blinkProgress = -1;
+            const elapsedSinceLastBlink = time - lastBlinkTime;
+            if (elapsedSinceLastBlink > blinkInterval) {
+                eyes.forEach(eye => eye.classList.add('blink'));
                 lastBlinkTime = time;
             }
 
-            if (isBlinking) {
-                blinkProgress += blinkSpeed;
-                if (blinkProgress >= 1) {
-                    isBlinking = false;
-                    blinkProgress = 0;
-                }
-            }
-
-            drawCat();
-            requestAnimationFrame(animateEyes);
+            requestAnimationFrame(moveEyes);
         }
 
         // Interaksi dengan mouse
-        canvas.addEventListener('mousemove', (e) => {
-            const rect = canvas.getBoundingClientRect();
+        cat.addEventListener('mousemove', (e) => {
+            const rect = cat.getBoundingClientRect();
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
             const mouseX = e.clientX - rect.left;
             const mouseY = e.clientY - rect.top;
 
-            const centerX = canvas.width / 2;
-            const centerY = canvas.height / 2;
+            const moveX = ((mouseX - centerX) / centerX) * 100; // Skala pergerakan lebih besar
+            const moveY = ((mouseY - centerY) / centerY) * 50;
 
-            pupilOffsetXLeft = ((mouseX - centerX) / centerX) * 15;
-            pupilOffsetYLeft = ((mouseY - centerY) / centerY) * 10;
-            pupilOffsetXRight = ((mouseX - centerX) / centerX) * 15;
-            pupilOffsetYRight = ((mouseY - centerY) / centerY) * 10;
-
-            drawCat();
+            pupils.forEach(pupil => {
+                pupil.style.transform = `translate(${moveX}%, ${moveY}%)`;
+            });
         });
 
         // Mulai animasi
-        animateEyes();
+        moveEyes();
     </script>
 </body>
 </html>
