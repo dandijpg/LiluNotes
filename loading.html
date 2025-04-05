@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cat Head Animation - Adjusted with Normalize</title>
+    <title>Cat Head Animation - Stalking Eyes with Blink</title>
     <!-- Normalize.css 5.0.0 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <style>
@@ -161,7 +161,7 @@
             width: 20%;
             background: #161616;
             border-radius: 50%;
-            transition: transform 0.1s ease-out; /* Smooth transition for pupil movement */
+            transition: transform 0.2s ease-out; /* Smooth transition for pupil movement */
         }
 
         .eye--left .eye-pupil {
@@ -212,35 +212,56 @@
 
     <script>
         const pupils = document.querySelectorAll('.eye-pupil');
-        const cat = document.querySelector('.cat');
         const eyes = document.querySelectorAll('.eye');
+        const cat = document.querySelector('.cat');
 
-        // Variabel untuk animasi kedipan
+        let animationStep = 0; // 0: tengah, 1: kanan, 2: kiri, 3: kembali ke tengah
+        let lastAnimationTime = Date.now();
         let lastBlinkTime = Date.now();
+        const animationInterval = 2000; // Total durasi per siklus (2 detik)
         const blinkInterval = 4000; // Kedipan setiap 4 detik
 
-        // Animasi pergerakan pupil
         function moveEyes() {
-            const time = Date.now();
-            const speedFactor = 2; // Kecepatan pergerakan pupil
-            const moveX = Math.sin(time * 0.003 * speedFactor) * 50; // Pergerakan horizontal
-            const moveY = Math.cos(time * 0.004 * speedFactor) * 25; // Pergerakan vertikal
+            const currentTime = Date.now();
+            const elapsed = currentTime - lastAnimationTime;
 
-            pupils.forEach(pupil => {
-                pupil.style.transform = `translate(${moveX}%, ${moveY}%)`;
-            });
+            // Logika pergerakan mata (2 gerakan: kanan lalu kiri)
+            if (elapsed >= animationInterval) {
+                animationStep = (animationStep + 1) % 4; // Siklus: tengah -> kanan -> kiri -> tengah
+                lastAnimationTime = currentTime;
+
+                switch (animationStep) {
+                    case 0: // Tengah (awal)
+                        pupils.forEach(pupil => pupil.style.transform = 'translate(0, 0)');
+                        break;
+                    case 1: // Kanan
+                        pupils.forEach(pupil => pupil.style.transform = 'translate(50%, -25%)');
+                        break;
+                    case 2: // Kiri
+                        pupils.forEach(pupil => pupil.style.transform = 'translate(-100%, -25%)');
+                        break;
+                    case 3: // Kembali ke tengah
+                        pupils.forEach(pupil => pupil.style.transform = 'translate(0, 0)');
+                        break;
+                }
+            }
 
             // Logika kedipan
-            const elapsedSinceLastBlink = time - lastBlinkTime;
+            const elapsedSinceLastBlink = currentTime - lastBlinkTime;
             if (elapsedSinceLastBlink > blinkInterval) {
                 eyes.forEach(eye => eye.classList.add('blink'));
-                lastBlinkTime = time;
+                lastBlinkTime = currentTime;
+
+                // Hapus kelas blink setelah animasi selesai (4 detik)
+                setTimeout(() => {
+                    eyes.forEach(eye => eye.classList.remove('blink'));
+                }, 4000);
             }
 
             requestAnimationFrame(moveEyes);
         }
 
-        // Interaksi dengan mouse
+        // Interaksi dengan mouse (opsional, bisa dinonaktifkan jika tidak diinginkan)
         cat.addEventListener('mousemove', (e) => {
             const rect = cat.getBoundingClientRect();
             const centerX = rect.width / 2;
@@ -248,7 +269,7 @@
             const mouseX = e.clientX - rect.left;
             const mouseY = e.clientY - rect.top;
 
-            const moveX = ((mouseX - centerX) / centerX) * 100; // Skala pergerakan lebih besar
+            const moveX = ((mouseX - centerX) / centerX) * 100;
             const moveY = ((mouseY - centerY) / centerY) * 50;
 
             pupils.forEach(pupil => {
