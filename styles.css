@@ -16,10 +16,10 @@ button, .note, .category {
 body {
     font-family: 'Comic Neue', sans-serif;
     color: #6a5545;
-    padding: 0; /* Menghapus padding default body agar gradient penuh */
+    padding: 0;
     line-height: 1.6;
     position: relative;
-    min-height: 100vh; /* Pastikan body minimal setinggi layar */
+    min-height: 100vh;
 }
 
 .background-gradient {
@@ -27,22 +27,24 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh; /* Tinggi sesuai viewport */
+    height: 100vh;
     background: linear-gradient(135deg, #fefbe8 0%, #e3c9a4 50%, #ceac93 100%);
-    z-index: -1; /* Di belakang konten */
+    z-index: -1;
+    margin: 20px; /* Margin untuk efek gradient terlihat */
+    border-radius: 25px; /* Memberikan sudut melengkung agar terlihat seperti container */
 }
 
 .container {
     max-width: 1200px;
-    margin: 20px auto; /* Margin atas bawah untuk jarak dari tepi layar */
-    background: rgba(255, 255, 255, 0.9); /* Sedikit transparansi agar gradient terlihat */
+    margin: 40px auto; /* Margin lebih besar untuk menonjolkan gradient */
+    background: rgba(255, 255, 255, 0.9);
     border-radius: 25px;
     box-shadow: 0 3px 10px rgba(206, 172, 147, 0.1);
     padding: 25px;
     animation: fadeIn 0.6s ease-in-out;
     user-select: none;
     position: relative;
-    z-index: 1; /* Di atas gradient */
+    z-index: 1;
 }
 
 @keyframes fadeIn {
@@ -83,7 +85,7 @@ h1 {
     align-items: center;
     gap: 8px;
     order: 2;
-    max-width: 300px; /* Membatasi lebar keseluruhan */
+    max-width: 300px;
 }
 
 .search-wrapper {
@@ -189,7 +191,7 @@ h1 {
     }
 }
 
-/* Sisa CSS tetap sama seperti sebelumnya, hanya bagian header dan background yang diubah */
+/* Categories dengan Animasi Gelombang */
 .categories {
     display: flex;
     gap: 8px;
@@ -208,12 +210,19 @@ h1 {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 200%; /* Lebar lebih besar untuk animasi */
     height: 8px;
     background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q25 0 50 5 T100 5" stroke="%23ad8b72" stroke-width="1" fill="none"/></svg>') repeat-x top;
     background-size: 80px 8px;
-    opacity: 0.2;
+    animation: waveMove 10s linear infinite;
+    mask-image: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)); /* Gradient transparansi */
+    -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)); /* Dukungan browser */
     z-index: 1;
+}
+
+@keyframes waveMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* Bergerak ke kiri */
 }
 
 .category {
@@ -1200,7 +1209,8 @@ button {
 
 /* Media Queries untuk Responsivitas */
 @media (max-width: 768px) {
-    .container { padding: 15px; border-radius: 20px; margin: 10px auto; }
+    .container { padding: 15px; border-radius: 20px; margin: 20px auto; }
+    .background-gradient { margin: 10px; }
     h1 { font-size: 1.5em; }
     .controls { justify-content: center; gap: 8px; }
     .categories { gap: 6px; }
@@ -1249,7 +1259,8 @@ button {
 }
 
 @media (max-width: 480px) {
-    .container { padding: 10px; margin: 5px auto; }
+    .container { padding: 10px; margin: 15px auto; }
+    .background-gradient { margin: 5px; }
     h1 { font-size: 1.2em; }
     .category { padding: 4px 10px; font-size: 0.7em; }
     .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .reset-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn {
