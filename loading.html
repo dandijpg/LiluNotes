@@ -3,152 +3,205 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minimalist Cat Head Animation</title>
+    <title>Minimalist Cat Head Animation - Anime Eyes with Canvas</title>
     <style>
-        .container {
+        body {
+            margin: 0;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
             background: #000;
         }
 
-        .cat-head {
-            position: relative;
-            width: 200px;
-            height: 180px;
-            background: #000;
-            border-radius: 50%;
-            overflow: hidden;
-        }
-
-        .ear {
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-left: 30px solid transparent;
-            border-right: 30px solid transparent;
-            border-bottom: 50px solid #000;
-        }
-
-        .ear-left {
-            top: -30px;
-            left: 20px;
-            transform: rotate(-45deg);
-        }
-
-        .ear-right {
-            top: -30px;
-            right: 20px;
-            transform: rotate(45deg);
-        }
-
-        .ear-inner {
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-left: 20px solid transparent;
-            border-right: 20px solid transparent;
-            border-bottom: 35px solid #fff;
-            top: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .eye-container {
-            position: absolute;
-            top: 60px;
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-        }
-
-        .eye {
-            position: relative;
-            width: 50px;
-            height: 50px;
-            background: #fff;
-            border-radius: 50%;
-            overflow: hidden;
-        }
-
-        .pupil {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            background: #000;
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            transition: transform 0.3s ease-out;
-        }
-
-        .nose {
-            position: absolute;
-            bottom: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 10px;
-            height: 10px;
-            background: #fff;
-            border-radius: 50%;
+        canvas {
+            border: 1px solid #333;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="cat-head">
-            <div class="ear ear-left">
-                <div class="ear-inner"></div>
-            </div>
-            <div class="ear ear-right">
-                <div class="ear-inner"></div>
-            </div>
-            <div class="eye-container">
-                <div class="eye">
-                    <div class="pupil"></div>
-                </div>
-                <div class="eye">
-                    <div class="pupil"></div>
-                </div>
-            </div>
-            <div class="nose"></div>
-        </div>
-    </div>
+    <canvas id="catCanvas" width="300" height="300"></canvas>
 
     <script>
-        const pupils = document.querySelectorAll('.pupil');
-        const catHead = document.querySelector('.cat-head');
+        const canvas = document.getElementById('catCanvas');
+        const ctx = canvas.getContext('2d');
 
-        function moveEyes() {
-            const time = Date.now() * 0.001;
-            const moveX = Math.sin(time) * 10;
-            const moveY = Math.cos(time * 1.5) * 10;
+        // Variabel untuk animasi mata
+        let pupilOffsetXLeft = 0;
+        let pupilOffsetYLeft = 0;
+        let pupilOffsetXRight = 0;
+        let pupilOffsetYRight = 0;
 
-            pupils.forEach(pupil => {
-                pupil.style.transform = `translate(${moveX}px, ${moveY}px)`;
-            });
+        function drawCat() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            requestAnimationFrame(moveEyes);
+            // Kepala kucing
+            ctx.beginPath();
+            ctx.arc(150, 150, 100, 0, Math.PI * 2);
+            ctx.fillStyle = '#000';
+            ctx.fill();
+            ctx.closePath();
+
+            // Telinga kiri
+            ctx.beginPath();
+            ctx.moveTo(70, 70);
+            ctx.lineTo(110, 30);
+            ctx.lineTo(110, 90);
+            ctx.fillStyle = '#000';
+            ctx.fill();
+            ctx.closePath();
+
+            // Telinga kanan
+            ctx.beginPath();
+            ctx.moveTo(230, 70);
+            ctx.lineTo(190, 30);
+            ctx.lineTo(190, 90);
+            ctx.fillStyle = '#000';
+            ctx.fill();
+            ctx.closePath();
+
+            // Telinga dalam kiri
+            ctx.beginPath();
+            ctx.moveTo(80, 70);
+            ctx.lineTo(105, 40);
+            ctx.lineTo(105, 80);
+            ctx.fillStyle = '#fff';
+            ctx.fill();
+            ctx.closePath();
+
+            // Telinga dalam kanan
+            ctx.beginPath();
+            ctx.moveTo(220, 70);
+            ctx.lineTo(195, 40);
+            ctx.lineTo(195, 80);
+            ctx.fillStyle = '#fff';
+            ctx.fill();
+            ctx.closePath();
+
+            // Mata kiri (Anime Style)
+            ctx.save();
+            ctx.beginPath();
+            ctx.ellipse(110, 140, 30, 20, 0, 0, Math.PI * 2);
+            ctx.fillStyle = '#fff';
+            ctx.fill();
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.closePath();
+
+            // Bulu mata kiri
+            ctx.beginPath();
+            ctx.moveTo(90, 120);
+            ctx.quadraticCurveTo(100, 110, 110, 120);
+            ctx.moveTo(110, 120);
+            ctx.quadraticCurveTo(120, 110, 130, 120);
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.closePath();
+
+            // Pupil kiri
+            ctx.beginPath();
+            ctx.arc(110 + pupilOffsetXLeft, 140 + pupilOffsetYLeft, 10, 0, Math.PI * 2);
+            ctx.fillStyle = '#000';
+            ctx.fill();
+            ctx.closePath();
+
+            // Highlight kiri (kilau)
+            ctx.beginPath();
+            ctx.arc(105 + pupilOffsetXLeft, 135 + pupilOffsetYLeft, 5, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            ctx.fill();
+            ctx.closePath();
+
+            ctx.beginPath();
+            ctx.arc(115 + pupilOffsetXLeft, 145 + pupilOffsetYLeft, 3, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            ctx.fill();
+            ctx.closePath();
+
+            // Mata kanan (Anime Style)
+            ctx.beginPath();
+            ctx.ellipse(190, 140, 30, 20, 0, 0, Math.PI * 2);
+            ctx.fillStyle = '#fff';
+            ctx.fill();
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.closePath();
+
+            // Bulu mata kanan
+            ctx.beginPath();
+            ctx.moveTo(170, 120);
+            ctx.quadraticCurveTo(180, 110, 190, 120);
+            ctx.moveTo(190, 120);
+            ctx.quadraticCurveTo(200, 110, 210, 120);
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.closePath();
+
+            // Pupil kanan
+            ctx.beginPath();
+            ctx.arc(190 + pupilOffsetXRight, 140 + pupilOffsetYRight, 10, 0, Math.PI * 2);
+            ctx.fillStyle = '#000';
+            ctx.fill();
+            ctx.closePath();
+
+            // Highlight kanan (kilau)
+            ctx.beginPath();
+            ctx.arc(185 + pupilOffsetXRight, 135 + pupilOffsetYRight, 5, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            ctx.fill();
+            ctx.closePath();
+
+            ctx.beginPath();
+            ctx.arc(195 + pupilOffsetXRight, 145 + pupilOffsetYRight, 3, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+            ctx.fill();
+            ctx.closePath();
+
+            ctx.restore();
+
+            // Hidung
+            ctx.beginPath();
+            ctx.arc(150, 170, 5, 0, Math.PI * 2);
+            ctx.fillStyle = '#fff';
+            ctx.fill();
+            ctx.closePath();
         }
 
-        moveEyes();
+        // Animasi mata
+        function animateEyes() {
+            const time = Date.now() * 0.001;
+            pupilOffsetXLeft = Math.sin(time) * 10;
+            pupilOffsetYLeft = Math.cos(time * 1.5) * 5;
+            pupilOffsetXRight = Math.sin(time) * 10;
+            pupilOffsetYRight = Math.cos(time * 1.5) * 5;
 
-        catHead.addEventListener('mousemove', (e) => {
-            const rect = catHead.getBoundingClientRect();
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
+            drawCat();
+            requestAnimationFrame(animateEyes);
+        }
+
+        // Interaksi dengan mouse
+        canvas.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
             const mouseX = e.clientX - rect.left;
             const mouseY = e.clientY - rect.top;
 
-            const moveX = ((mouseX - centerX) / centerX) * 15;
-            const moveY = ((mouseY - centerY) / centerY) * 15;
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
 
-            pupils.forEach(pupil => {
-                pupil.style.transform = `translate(${moveX}px, ${moveY}px)`;
-            });
+            pupilOffsetXLeft = ((mouseX - centerX) / centerX) * 15;
+            pupilOffsetYLeft = ((mouseY - centerY) / centerY) * 10;
+            pupilOffsetXRight = ((mouseX - centerX) / centerX) * 15;
+            pupilOffsetYRight = ((mouseY - centerY) / centerY) * 10;
+
+            drawCat();
         });
+
+        // Mulai animasi
+        animateEyes();
     </script>
 </body>
 </html>
