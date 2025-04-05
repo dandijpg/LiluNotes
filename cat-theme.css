@@ -80,19 +80,19 @@ header::before {
     pointer-events: none;
 }
 
-/* Tombol dengan efek glow pastel dan radius kecil */
+/* Tombol dengan efek glow pastel dan ukuran lebih kecil */
 button, .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn, .reset-btn, .view-more, .save-btn {
     position: relative;
     overflow: hidden;
-    border-radius: 12px !important; /* Dikurangi dari 20px */
-    padding: 10px 20px;
+    border-radius: 20px !important; /* Diperbesar dari 15px untuk kesan lebih bulat */
+    padding: 8px 16px; /* Dikurangi dari 10px 20px */
     transition: all 0.4s ease;
     box-shadow: 0 0 8px rgba(206, 172, 147, 0.2);
     cursor: pointer;
     pointer-events: auto;
     z-index: 20;
     font-family: 'Comic Neue', sans-serif !important;
-    font-size: 0.9em;
+    font-size: 0.85em; /* Dikurangi dari 0.9em */
     font-weight: 500;
     border: 0.5px solid rgba(206, 172, 147, 0.3) !important;
 }
@@ -186,7 +186,7 @@ button, .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%; /* Diubah dari 200vw agar sesuai lebar kontainer */
+    width: 100%; /* Sesuai lebar kontainer */
     height: 8px;
     background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q25 0 50 5 T100 5" stroke="%23ad8b72" stroke-width="1" fill="none"/></svg>') repeat-x top;
     background-size: 80px 8px;
