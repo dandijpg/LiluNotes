@@ -3,9 +3,9 @@
 /* Import font lucu */
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
 
-/* Override body dengan gradien pastel lembut */
+/* Override body dengan gradien pastel bertema musim semi */
 body {
-    background: linear-gradient(135deg, #f0e6f0 0%, #f5eef5 50%, #f0e6f0 100%) !important;
+    background: linear-gradient(135deg, #f5e8ef 0%, #e8f0ed 50%, #f0e8f5 100%) !important; /* Pink, mint, lavender */
     background-size: 200% 200%;
     animation: gradientFlow 20s ease infinite !important;
     font-family: 'Comic Neue', sans-serif !important;
@@ -21,9 +21,9 @@ body {
 
 /* Container dengan tema kucing dan border samar */
 .container {
-    border: 1px solid rgba(200, 210, 230, 0.3) !important; /* Samar dan lembut */
+    border: 1px solid rgba(230, 220, 230, 0.3) !important; /* Samar pastel */
     border-radius: 25px !important;
-    background: #f8f2f8 !important; /* Pastel sangat lembut */
+    background: #f8f0f5 !important; /* Soft lavender pink */
     position: relative;
     overflow: hidden;
     padding: 25px !important;
@@ -38,7 +38,7 @@ body {
     left: -15px !important;
     width: 50px !important;
     height: 50px !important;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 20c-10 0-15 8-15 15s5 15 15 15 15-8 15-15-5-15-15-15zm-8 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm16 0a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="%23d0d8e8"/></svg>') no-repeat center !important;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 20c-10 0-15 8-15 15s5 15 15 15 15-8 15-15-5-15-15-15zm-8 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm16 0a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="%23e8d8f0"/></svg>') no-repeat center !important; /* Lavender cat */
     background-size: contain !important;
     animation: catWiggle 4s ease-in-out infinite !important;
     z-index: 10 !important;
@@ -52,7 +52,7 @@ body {
     right: -10px !important;
     width: 40px !important;
     height: 40px !important;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M70 50c0 15-10 25-20 25s-20-10-20-25c0-10 5-15 10-20l5-5 5 5c5 5 10 10 10 20z" fill="%23e8d0e8"/></svg>') no-repeat center !important; /* Ekor kucing */
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M70 50c0 15-10 25-20 25s-20-10-20-25c0-10 5-15 10-20l5-5 5 5c5 5 10 10 10 20z" fill="%23f0e0e8"/></svg>') no-repeat center !important; /* Peach tail */
     background-size: contain !important;
     animation: catTail 3s ease-in-out infinite !important;
     z-index: 10 !important;
@@ -61,8 +61,8 @@ body {
 
 /* Header dengan border samar */
 header {
-    border: 1px solid rgba(200, 210, 230, 0.2) !important;
-    background: #f5eef5 !important; /* Pastel lembut */
+    border: 1px solid rgba(230, 220, 230, 0.2) !important;
+    background: #f0f5e8 !important; /* Soft mint */
     border-radius: 20px !important;
     position: relative !important;
     overflow: hidden !important;
@@ -74,41 +74,34 @@ header::before {
     top: 8px !important;
     left: 8px !important;
     font-size: 1.2em !important;
-    color: #e8d0e8 !important; /* Pastel pink lembut */
+    color: #f0e0e8 !important; /* Peach paw */
     animation: pawSpin 6s ease infinite !important;
     z-index: 10 !important;
     pointer-events: none;
 }
 
-/* Tombol dengan efek glow pastel dan font eksplisit */
+/* Tombol dengan efek glow pastel */
 button, .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn, .reset-btn, .view-more, .save-btn {
     position: relative;
     overflow: hidden;
     border-radius: 20px !important;
     padding: 10px 20px;
     transition: all 0.4s ease;
-    box-shadow: 0 0 8px rgba(200, 210, 230, 0.2);
+    box-shadow: 0 0 8px rgba(230, 220, 230, 0.2);
     cursor: pointer;
     pointer-events: auto;
     z-index: 20;
     font-family: 'Comic Neue', sans-serif !important;
     font-size: 0.9em;
     font-weight: 500;
-    border: 0.5px solid rgba(200, 210, 230, 0.3) !important; /* Border samar */
-    background: #f8f2f8 !important; /* Pastel lembut */
-    color: #6a6a7a !important; /* Abu-abu lembut */
-}
-
-button:hover, .add-category:hover, .add-note:hover, .toggle-mode:hover, .more-btn:hover, .backup-btn:hover, .restore-btn:hover, .copy-backup-btn:hover, .google-auth-btn:hover, .backup-google-btn:hover, .google-logout-btn:hover, .reset-btn:hover, .view-more:hover, .save-btn:hover {
-    box-shadow: 0 0 12px rgba(200, 210, 230, 0.4);
-    transform: translateY(-2px);
+    border: 0.5px solid rgba(230, 220, 230, 0.3) !important;
 }
 
 /* Catatan dengan dekorasi kucing */
 .note {
-    border: 1px solid rgba(200, 210, 230, 0.2) !important;
+    border: 1px solid rgba(230, 220, 230, 0.2) !important;
     border-radius: 20px !important;
-    background: #f5eef5 !important;
+    background: #f5eef0 !important; /* Soft pink */
     position: relative !important;
     overflow: hidden !important;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
@@ -118,7 +111,7 @@ button:hover, .add-category:hover, .add-note:hover, .toggle-mode:hover, .more-bt
 
 .note:hover {
     transform: scale(1.01) translateY(-3px);
-    box-shadow: 0 6px 15px rgba(200, 210, 230, 0.2);
+    box-shadow: 0 6px 15px rgba(230, 220, 230, 0.2);
 }
 
 .note::before {
@@ -128,7 +121,7 @@ button:hover, .add-category:hover, .add-note:hover, .toggle-mode:hover, .more-bt
     right: -8px !important;
     width: 25px !important;
     height: 25px !important;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 30c-8 0-12 8-12 12s4 12 12 12 12-8 12-12-4-12-12-12zm-6 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm12 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" fill="%23d0d8e8"/></svg>') no-repeat center !important;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 30c-8 0-12 8-12 12s4 12 12 12 12-8 12-12-4-12-12-12zm-6 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm12 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" fill="%23e8f0ed"/></svg>') no-repeat center !important; /* Mint cat */
     background-size: contain !important;
     animation: catPeek 5s ease-in-out infinite !important;
     z-index: 10 !important;
@@ -137,9 +130,9 @@ button:hover, .add-category:hover, .add-note:hover, .toggle-mode:hover, .more-bt
 
 /* Edit container dengan border samar */
 .edit-container {
-    border: 1px solid rgba(200, 210, 230, 0.2) !important;
+    border: 1px solid rgba(230, 220, 230, 0.2) !important;
     border-radius: 25px !important;
-    background: #f8f2f8 !important;
+    background: #f8f0f5 !important; /* Soft lavender pink */
     position: relative;
     animation: borderGlow 15s ease-in-out infinite;
 }
@@ -150,7 +143,7 @@ button:hover, .add-category:hover, .add-note:hover, .toggle-mode:hover, .more-bt
     bottom: 8px !important;
     right: 8px !important;
     font-size: 1.2em !important;
-    color: #e8d0e8 !important;
+    color: #e8f0ed !important; /* Mint paw */
     animation: pawFade 4s ease-in-out infinite !important;
     pointer-events: none;
 }
@@ -160,7 +153,7 @@ button:hover, .add-category:hover, .add-note:hover, .toggle-mode:hover, .more-bt
     position: fixed;
     width: 15px;
     height: 15px;
-    background: rgba(200, 210, 230, 0.2);
+    background: rgba(230, 220, 230, 0.2);
     border-radius: 50%;
     pointer-events: none;
     z-index: 5;
@@ -180,7 +173,7 @@ button:hover, .add-category:hover, .add-note:hover, .toggle-mode:hover, .more-bt
     margin-bottom: 20px;
     overflow-x: auto;
     padding: 10px;
-    background: #f8f2f8;
+    background: #f8f0f5;
     border-radius: 15px;
     position: relative;
     white-space: nowrap;
@@ -195,7 +188,7 @@ button:hover, .add-category:hover, .add-note:hover, .toggle-mode:hover, .more-bt
     left: 0;
     width: 200vw;
     height: 8px;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q25 0 50 5 T100 5" stroke="%23d0d8e8" stroke-width="1" fill="none"/></svg>') repeat-x top;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q25 0 50 5 T100 5" stroke="%23e8d8f0" stroke-width="1" fill="none"/></svg>') repeat-x top;
     background-size: 80px 8px;
     opacity: 0.2;
     z-index: 1;
@@ -205,8 +198,8 @@ button:hover, .add-category:hover, .add-note:hover, .toggle-mode:hover, .more-bt
 /* Popup dengan z-index lebih tinggi */
 .more-options, .finance-popup {
     z-index: 100 !important;
-    background: #f8f2f8 !important;
-    border: 1px solid rgba(200, 210, 230, 0.2) !important;
+    background: #f8f0f5 !important;
+    border: 1px solid rgba(230, 220, 230, 0.2) !important;
     font-family: 'Comic Neue', sans-serif !important;
 }
 
@@ -237,9 +230,9 @@ button:hover, .add-category:hover, .add-note:hover, .toggle-mode:hover, .more-bt
 }
 
 @keyframes borderGlow {
-    0%, 100% { border-color: rgba(200, 210, 230, 0.3); }
-    33% { border-color: rgba(230, 220, 230, 0.3); }
-    66% { border-color: rgba(230, 200, 210, 0.3); }
+    0%, 100% { border-color: rgba(230, 220, 230, 0.3); }
+    33% { border-color: rgba(232, 240, 232, 0.3); } /* Mint */
+    66% { border-color: rgba(240, 224, 232, 0.3); } /* Peach */
 }
 
 /* Background kucing berjalan */
@@ -250,7 +243,7 @@ body::before {
     left: -80px !important;
     width: 60px !important;
     height: 60px !important;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20 60h10l10-20 10 20h10l-15-30h-10zM40 30c-5 0-8 5-8 8s3 8 8 8 8-5 8-8-3-8-8-8zm-6 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm12 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" fill="%23d0d8e8"/></svg>') no-repeat center !important;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20 60h10l10-20 10 20h10l-15-30h-10zM40 30c-5 0-8 5-8 8s3 8 8 8 8-5 8-8-3-8-8-8zm-6 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm12 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" fill="%23e8d8f0"/></svg>') no-repeat center !important; /* Lavender cat */
     background-size: contain !important;
     animation: catWalk 20s ease infinite !important;
     z-index: 5 !important;
