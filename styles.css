@@ -14,7 +14,7 @@ button, .note, .category {
 }
 
 body {
-    background: #f0e6f0;
+    background: #f5e8ef;
     font-family: 'Comic Neue', sans-serif;
     color: #6a6a7a;
     padding: 20px;
@@ -24,9 +24,9 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    background: #f8f2f8;
+    background: #f8f0f5;
     border-radius: 25px;
-    box-shadow: 0 3px 10px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 3px 10px rgba(230, 220, 230, 0.1);
     padding: 25px;
     animation: fadeIn 0.6s ease-in-out;
     user-select: none;
@@ -44,17 +44,17 @@ header {
     margin-bottom: 20px;
     flex-wrap: wrap;
     gap: 12px;
-    background: #f5eef5;
+    background: #f0f5e8;
     padding: 12px 18px;
     border-radius: 15px;
-    box-shadow: 0 2px 5px rgba(200, 210, 230, 0.1);
-    border: 1px solid rgba(200, 210, 230, 0.2);
+    box-shadow: 0 2px 5px rgba(230, 220, 230, 0.1);
+    border: 1px solid rgba(230, 220, 230, 0.2);
 }
 
 h1 {
     font-size: 1.8em;
     font-weight: 600;
-    color: #d0d0e0;
+    color: #e8d8f0; /* Lavender */
     letter-spacing: -0.3px;
     position: relative;
     overflow: hidden;
@@ -75,7 +75,7 @@ h1::after {
     left: 0;
     width: 100%;
     height: 1px;
-    background: #e8d0e8;
+    background: #f0e0e8; /* Peach */
     transform: scaleX(0);
     transform-origin: left;
     animation: underline 2.5s ease-in-out forwards 0.5s;
@@ -86,7 +86,7 @@ h1::after {
 }
 
 h1:hover {
-    color: #e8d0e8;
+    color: #f0e0e8;
     transform: scale(1.01);
 }
 
@@ -99,9 +99,9 @@ h1:hover {
 
 .search-bar input {
     padding: 8px 12px;
-    border: 1px solid rgba(200, 210, 230, 0.3);
+    border: 1px solid rgba(230, 220, 230, 0.3);
     border-radius: 12px;
-    background: #f8f2f8;
+    background: #f8f0f5;
     color: #6a6a7a;
     font-size: 0.9em;
     font-weight: 400;
@@ -112,8 +112,8 @@ h1:hover {
 }
 
 .search-bar input:focus {
-    border-color: rgba(200, 210, 230, 0.5);
-    box-shadow: 0 0 4px rgba(200, 210, 230, 0.2);
+    border-color: rgba(230, 220, 230, 0.5);
+    box-shadow: 0 0 4px rgba(230, 220, 230, 0.2);
     outline: none;
 }
 
@@ -123,7 +123,7 @@ h1:hover {
     margin-bottom: 20px;
     overflow-x: auto;
     padding: 10px;
-    background: #f8f2f8;
+    background: #f8f0f5;
     border-radius: 15px;
     position: relative;
     white-space: nowrap;
@@ -137,7 +137,7 @@ h1:hover {
     left: 0;
     width: 200vw;
     height: 8px;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q25 0 50 5 T100 5" stroke="%23d0d8e8" stroke-width="1" fill="none"/></svg>') repeat-x top;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q25 0 50 5 T100 5" stroke="%23e8d8f0" stroke-width="1" fill="none"/></svg>') repeat-x top;
     background-size: 80px 8px;
     opacity: 0.2;
     z-index: 1;
@@ -148,30 +148,30 @@ h1:hover {
     align-items: center;
     gap: 5px;
     padding: 6px 15px;
-    background: #f5eef5;
+    background: #f0f5e8; /* Mint */
     border-radius: 12px;
-    color: #d0d0e0;
+    color: #e8d8f0; /* Lavender */
     font-weight: 500;
     font-size: 0.9em;
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 1px 2px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 1px 2px rgba(230, 220, 230, 0.1);
     position: relative;
     z-index: 2;
-    border: 0.5px solid rgba(200, 210, 230, 0.2);
+    border: 0.5px solid rgba(230, 220, 230, 0.2);
 }
 
 .category .count {
-    background: rgba(200, 210, 230, 0.2);
+    background: rgba(230, 220, 230, 0.2);
     border-radius: 8px;
     padding: 2px 5px;
     font-size: 0.8em;
 }
 
 .category.active {
-    background: #d0d8e8;
+    background: #e8d8f0; /* Lavender */
     color: #fff;
-    box-shadow: 0 2px 6px rgba(200, 210, 230, 0.2);
+    box-shadow: 0 2px 6px rgba(230, 220, 230, 0.2);
 }
 
 .category.active .count {
@@ -179,10 +179,10 @@ h1:hover {
 }
 
 .category:hover {
-    background: #d0d8e8;
+    background: #e8d8f0;
     color: #fff;
     transform: translateY(-2px);
-    box-shadow: 0 2px 6px rgba(200, 210, 230, 0.2);
+    box-shadow: 0 2px 6px rgba(230, 220, 230, 0.2);
 }
 
 .category:hover .count {
@@ -190,12 +190,12 @@ h1:hover {
 }
 
 .controls-wrapper {
-    background: #f5eef5;
+    background: #f5eef0; /* Soft pink */
     padding: 12px;
     border-radius: 15px;
-    box-shadow: 0 2px 5px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 2px 5px rgba(230, 220, 230, 0.1);
     margin-bottom: 20px;
-    border: 1px solid rgba(200, 210, 230, 0.2);
+    border: 1px solid rgba(230, 220, 230, 0.2);
 }
 
 .controls {
@@ -220,83 +220,83 @@ button {
 .add-category {
     padding: 10px 20px;
     border-radius: 15px;
-    border: 0.5px solid rgba(200, 210, 230, 0.3);
-    background: #e8f0e8;
+    border: 0.5px solid rgba(230, 220, 230, 0.3);
+    background: #e8f0ed; /* Mint */
     color: #6a6a7a;
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 1px 2px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 1px 2px rgba(230, 220, 230, 0.1);
     font-family: 'Comic Neue', sans-serif;
 }
 
 .add-category:hover, .add-category:active {
-    background: #f0f8f0;
-    box-shadow: 0 2px 6px rgba(200, 210, 230, 0.2);
+    background: #f0f5e8;
+    box-shadow: 0 2px 6px rgba(230, 220, 230, 0.2);
     transform: translateY(-2px);
 }
 
 .add-note {
     padding: 10px 20px;
     border-radius: 15px;
-    border: 0.5px solid rgba(200, 210, 230, 0.3);
-    background: #e8d0e8;
+    border: 0.5px solid rgba(230, 220, 230, 0.3);
+    background: #e8d8f0; /* Lavender */
     color: #6a6a7a;
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 1px 2px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 1px 2px rgba(230, 220, 230, 0.1);
     font-family: 'Comic Neue', sans-serif;
 }
 
 .add-note:hover, .add-note:active {
-    background: #f0e0f0;
-    box-shadow: 0 2px 6px rgba(200, 210, 230, 0.2);
+    background: #f0e8f5;
+    box-shadow: 0 2px 6px rgba(230, 220, 230, 0.2);
     transform: translateY(-2px);
 }
 
 .toggle-mode {
     padding: 10px 20px;
     border-radius: 15px;
-    border: 0.5px solid rgba(200, 210, 230, 0.3);
-    background: #f8f2f8;
+    border: 0.5px solid rgba(230, 220, 230, 0.3);
+    background: #f8f0f5;
     color: #6a6a7a;
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 1px 2px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 1px 2px rgba(230, 220, 230, 0.1);
     font-family: 'Comic Neue', sans-serif;
 }
 
 .toggle-mode:hover, .toggle-mode:active {
-    background: #f5eef5;
-    color: #d0d0e0;
-    border-color: rgba(200, 210, 230, 0.5);
-    box-shadow: 0 2px 6px rgba(200, 210, 230, 0.2);
+    background: #f5eef0;
+    color: #e8d8f0;
+    border-color: rgba(230, 220, 230, 0.5);
+    box-shadow: 0 2px 6px rgba(230, 220, 230, 0.2);
 }
 
 .more-btn {
     padding: 10px 20px;
     border-radius: 15px;
-    border: 0.5px solid rgba(200, 210, 230, 0.3);
-    background: #f8f2f8;
+    border: 0.5px solid rgba(230, 220, 230, 0.3);
+    background: #f8f0f5;
     color: #6a6a7a;
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 1px 2px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 1px 2px rgba(230, 220, 230, 0.1);
     font-family: 'Comic Neue', sans-serif;
 }
 
 .more-btn:hover, .more-btn:active {
-    background: #f5eef5;
-    color: #d0d0e0;
-    border-color: rgba(200, 210, 230, 0.5);
-    box-shadow: 0 2px 6px rgba(200, 210, 230, 0.2);
+    background: #f5eef0;
+    color: #e8d8f0;
+    border-color: rgba(230, 220, 230, 0.5);
+    box-shadow: 0 2px 6px rgba(230, 220, 230, 0.2);
 }
 
 .more-options {
@@ -304,9 +304,9 @@ button {
     position: absolute;
     top: calc(100% + 5px);
     right: 0;
-    background: #f8f2f8;
+    background: #f8f0f5;
     border-radius: 15px;
-    box-shadow: 0 3px 10px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 3px 10px rgba(230, 220, 230, 0.1);
     padding: 8px;
     flex-direction: column;
     gap: 6px;
@@ -314,7 +314,7 @@ button {
     opacity: 0;
     transform: translateY(-8px);
     transition: opacity 0.3s ease, transform 0.3s ease;
-    border: 1px solid rgba(200, 210, 230, 0.2);
+    border: 1px solid rgba(230, 220, 230, 0.2);
     font-family: 'Comic Neue', sans-serif;
 }
 
@@ -327,50 +327,50 @@ button {
 .backup-btn, .restore-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn, .reset-btn {
     padding: 10px 20px;
     border-radius: 15px;
-    border: 0.5px solid rgba(200, 210, 230, 0.3);
+    border: 0.5px solid rgba(230, 220, 230, 0.3);
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 1px 2px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 1px 2px rgba(230, 220, 230, 0.1);
     font-family: 'Comic Neue', sans-serif;
     color: #6a6a7a;
 }
 
 .backup-btn {
-    background: #f0e0e8;
+    background: #f0e0e8; /* Peach */
 }
 
 .backup-btn:hover, .backup-btn:active {
-    background: #f8e8f0;
-    box-shadow: 0 2px 6px rgba(200, 210, 230, 0.2);
+    background: #f5e8ef;
+    box-shadow: 0 2px 6px rgba(230, 220, 230, 0.2);
 }
 
 .restore-btn, .copy-backup-btn, .google-auth-btn {
-    background: #d0d8e8;
+    background: #e8f0ed; /* Mint */
 }
 
-.restore-btn:hover, .restore-btn:active, .copy-backup-btn:hover, .copy-backup-btn:active, .google-auth-btn:hover, .google-auth-btn:active {
-    background: #e0e8f0;
-    box-shadow: 0 2px 6px rgba(200, 210, 230, 0.2);
+.restore-btn:hover, .restore-btn:active, .copy-backup-btn:hover, .copy-backup-btn:active, .google-auth-btn:hover, .google somehow-auth-btn:active {
+    background: #f0f5e8;
+    box-shadow: 0 2px 6px rgba(230, 220, 230, 0.2);
 }
 
 .backup-google-btn {
-    background: #e8f0e8;
+    background: #e8d8f0; /* Lavender */
 }
 
 .backup-google-btn:hover, .backup-google-btn:active {
-    background: #f0f8f0;
-    box-shadow: 0 2px 6px rgba(200, 210, 230, 0.2);
+    background: #f0e8f5;
+    box-shadow: 0 2px 6px rgba(230, 220, 230, 0.2);
 }
 
 .google-logout-btn, .reset-btn {
-    background: #f0e0e8;
+    background: #f0e0e8; /* Peach */
 }
 
 .google-logout-btn:hover, .google-logout-btn:active, .reset-btn:hover, .reset-btn:active {
-    background: #f8e8f0;
-    box-shadow: 0 2px 6px rgba(200, 210, 230, 0.2);
+    background: #f5e8ef;
+    box-shadow: 0 2px 6px rgba(230, 220, 230, 0.2);
 }
 
 .pinned-section {
@@ -385,7 +385,7 @@ button {
 .pinned-section h2, .notes-section h2 {
     font-size: 1.4em;
     font-weight: 500;
-    color: #d0d0e0;
+    color: #e8d8f0; /* Lavender */
     margin-bottom: 12px;
     text-align: center;
     transition: all 0.4s ease;
@@ -409,13 +409,13 @@ button {
 }
 
 .note {
-    background: #f5eef5;
+    background: #f5eef0;
     padding: 12px;
     border-radius: 15px;
-    border: 1px solid rgba(200, 210, 230, 0.2);
+    border: 1px solid rgba(230, 220, 230, 0.2);
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 2px 5px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 2px 5px rgba(230, 220, 230, 0.1);
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -430,8 +430,8 @@ button {
 
 .note:hover, .note:active {
     transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(200, 210, 230, 0.15);
-    background: #f8f2f8;
+    box-shadow: 0 4px 10px rgba(230, 220, 230, 0.15);
+    background: #f8f0f5;
 }
 
 .note .title {
@@ -446,8 +446,8 @@ button {
 
 .note .category {
     font-size: 0.8em;
-    color: #d0d0e0;
-    background: #f5eef5;
+    color: #e8d8f0; /* Lavender */
+    background: #f0f5e8; /* Mint */
     padding: 2px 6px;
     border-radius: 8px;
     align-self: flex-start;
@@ -459,7 +459,7 @@ button {
 
 .note .timestamp {
     font-size: 0.75em;
-    color: #d0d8e8;
+    color: #e8f0ed; /* Mint */
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -468,7 +468,7 @@ button {
 
 .note .preview {
     font-size: 0.85em;
-    color: #d0d0e0;
+    color: #e8d8f0; /* Lavender */
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -482,7 +482,7 @@ button {
     width: 100%;
     border-radius: 12px;
     padding: 10px;
-    box-shadow: 0 2px 5px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 2px 5px rgba(230, 220, 230, 0.1);
     max-width: 100%;
 }
 
@@ -492,34 +492,34 @@ button {
     gap: 5px;
     margin: 15px auto 0;
     padding: 10px 20px;
-    background: #d0d8e8;
-    border: 0.5px solid rgba(200, 210, 230, 0.3);
+    background: #e8d8f0; /* Lavender */
+    border: 0.5px solid rgba(230, 220, 230, 0.3);
     border-radius: 15px;
     color: #6a6a7a;
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 1px 2px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 1px 2px rgba(230, 220, 230, 0.1);
     font-family: 'Comic Neue', sans-serif;
 }
 
 .view-more:hover, .view-more:active {
-    background: #e0e8f0;
-    box-shadow: 0 2px 6px rgba(200, 210, 230, 0.2);
+    background: #f0e8f5;
+    box-shadow: 0 2px 6px rgba(230, 220, 230, 0.2);
     transform: translateY(-2px);
 }
 
 .context-menu, .note-context-menu {
     position: absolute;
-    background: #f8f2f8;
+    background: #f8f0f5;
     border-radius: 15px;
-    box-shadow: 0 3px 10px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 3px 10px rgba(230, 220, 230, 0.1);
     display: none;
     z-index: 100;
     transition: opacity 0.3s ease;
     min-width: 140px;
-    border: 1px solid rgba(200, 210, 230, 0.2);
+    border: 1px solid rgba(230, 220, 230, 0.2);
     font-family: 'Comic Neue', sans-serif;
 }
 
@@ -536,7 +536,7 @@ button {
 }
 
 .menu-item:hover {
-    background: #d0d8e8;
+    background: #e8d8f0; /* Lavender */
     color: #fff;
 }
 
@@ -544,9 +544,9 @@ button {
 .edit-container {
     max-width: 900px;
     margin: 20px auto;
-    background: #f8f2f8;
+    background: #f8f0f5;
     border-radius: 25px;
-    box-shadow: 0 3px 10px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 3px 10px rgba(230, 220, 230, 0.1);
     padding: 20px;
     animation: fadeIn 0.6s ease-in-out;
 }
@@ -557,12 +557,12 @@ button {
     flex-wrap: nowrap;
     gap: 12px;
     margin-bottom: 20px;
-    background: #f5eef5;
+    background: #f0f5e8; /* Mint */
     padding: 12px;
     border-radius: 15px;
-    box-shadow: 0 2px 5px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 2px 5px rgba(230, 220, 230, 0.1);
     justify-content: flex-start;
-    border: 1px solid rgba(200, 210, 230, 0.2);
+    border: 1px solid rgba(230, 220, 230, 0.2);
     overflow-x: auto;
     white-space: nowrap;
 }
@@ -576,7 +576,7 @@ button {
 .toolbar-label {
     font-size: 0.75em;
     font-weight: 500;
-    color: #d0d0e0;
+    color: #e8d8f0; /* Lavender */
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -586,27 +586,27 @@ button {
     gap: 5px;
     padding: 5px;
     border-radius: 10px;
-    background: #f8f2f8;
-    box-shadow: 0 1px 2px rgba(200, 210, 230, 0.1);
-    border: 0.5px solid rgba(200, 210, 230, 0.2);
+    background: #f8f0f5;
+    box-shadow: 0 1px 2px rgba(230, 220, 230, 0.1);
+    border: 0.5px solid rgba(230, 220, 230, 0.2);
     transition: all 0.4s ease;
 }
 
 .toolbar-group:hover {
-    box-shadow: 0 2px 5px rgba(200, 210, 230, 0.15);
+    box-shadow: 0 2px 5px rgba(230, 220, 230, 0.15);
 }
 
 .tool-btn, .edit-btn, .exit-btn, .table-tool-btn {
     padding: 6px;
-    background: #f8f2f8;
-    border: 0.5px solid rgba(200, 210, 230, 0.3);
+    background: #f8f0f5;
+    border: 0.5px solid rgba(230, 220, 230, 0.3);
     border-radius: 8px;
     color: #6a6a7a;
     font-weight: 500;
     font-size: 0.9em;
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 1px 2px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 1px 2px rgba(230, 220, 230, 0.1);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -616,10 +616,10 @@ button {
 }
 
 .tool-btn:hover, .edit-btn:hover, .exit-btn:hover, .table-tool-btn:hover {
-    background: #d0d8e8;
+    background: #e8d8f0; /* Lavender */
     color: #fff;
-    border-color: rgba(200, 210, 230, 0.5);
-    box-shadow: 0 2px 5px rgba(200, 210, 230, 0.2);
+    border-color: rgba(230, 220, 230, 0.5);
+    box-shadow: 0 2px 5px rgba(230, 220, 230, 0.2);
 }
 
 .tool-btn:active, .edit-btn:active, .exit-btn:active, .table-tool-btn:active {
@@ -627,47 +627,47 @@ button {
 }
 
 .edit-btn {
-    background: #e8f0e8;
-    border-color: rgba(200, 210, 230, 0.3);
+    background: #e8f0ed; /* Mint */
+    border-color: rgba(230, 220, 230, 0.3);
     color: #6a6a7a;
 }
 
 .edit-btn:hover {
-    background: #f0f8f0;
-    border-color: rgba(200, 210, 230, 0.5);
+    background: #f0f5e8;
+    border-color: rgba(230, 220, 230, 0.5);
 }
 
 .exit-btn {
-    background: #f0e0e8;
-    border-color: rgba(200, 210, 230, 0.3);
+    background: #f0e0e8; /* Peach */
+    border-color: rgba(230, 220, 230, 0.3);
     color: #6a6a7a;
 }
 
 .exit-btn:hover {
-    background: #f8e8f0;
-    border-color: rgba(200, 210, 230, 0.5);
+    background: #f5e8ef;
+    border-color: rgba(230, 220, 230, 0.5);
 }
 
 .table-tool-btn.add-row-btn, .table-tool-btn.add-col-btn {
-    background-color: #e8f0e8;
-    border-color: rgba(200, 210, 230, 0.3);
+    background-color: #e8f0ed; /* Mint */
+    border-color: rgba(230, 220, 230, 0.3);
     color: #6a6a7a;
 }
 
 .table-tool-btn.add-row-btn:hover, .table-tool-btn.add-col-btn:hover {
-    background-color: #f0f8f0;
-    border-color: rgba(200, 210, 230, 0.5);
+    background-color: #f0f5e8;
+    border-color: rgba(230, 220, 230, 0.5);
 }
 
 .table-tool-btn.delete-row-btn, .table-tool-btn.delete-col-btn {
-    background-color: #f0e0e8;
-    border-color: rgba(200, 210, 230, 0.3);
+    background-color: #f0e0e8; /* Peach */
+    border-color: rgba(230, 220, 230, 0.3);
     color: #6a6a7a;
 }
 
 .table-tool-btn.delete-row-btn:hover, .table-tool-btn.delete-col-btn:hover {
-    background-color: #f8e8f0;
-    border-color: rgba(200, 210, 230, 0.5);
+    background-color: #f5e8ef;
+    border-color: rgba(230, 220, 230, 0.5);
 }
 
 .table-tool-btn {
@@ -685,9 +685,9 @@ button {
 /* Category Select */
 .category-select {
     padding: 8px 12px;
-    border: 1px solid rgba(200, 210, 230, 0.3);
+    border: 1px solid rgba(230, 220, 230, 0.3);
     border-radius: 12px;
-    background: #f8f2f8;
+    background: #f8f0f5;
     color: #6a6a7a;
     font-size: 0.9em;
     font-weight: 500;
@@ -697,17 +697,17 @@ button {
 }
 
 .category-select:focus {
-    border-color: rgba(200, 210, 230, 0.5);
-    box-shadow: 0 0 4px rgba(200, 210, 230, 0.2);
+    border-color: rgba(230, 220, 230, 0.5);
+    box-shadow: 0 0 4px rgba(230, 220, 230, 0.2);
     outline: none;
 }
 
 /* Calc Mode Select */
 .calc-mode-select {
     padding: 6px 10px;
-    border: 1px solid rgba(200, 210, 230, 0.3);
+    border: 1px solid rgba(230, 220, 230, 0.3);
     border-radius: 8px;
-    background: #f8f2f8;
+    background: #f8f0f5;
     color: #6a6a7a;
     font-size: 0.85em;
     font-weight: 500;
@@ -716,8 +716,8 @@ button {
 }
 
 .calc-mode-select:focus {
-    border-color: rgba(200, 210, 230, 0.5);
-    box-shadow: 0 0 4px rgba(200, 210, 230, 0.2);
+    border-color: rgba(230, 220, 230, 0.5);
+    box-shadow: 0 0 4px rgba(230, 220, 230, 0.2);
     outline: none;
 }
 
@@ -725,19 +725,19 @@ button {
 .note-title {
     width: 100%;
     padding: 10px 12px;
-    background: #f5eef5;
-    border: 1px solid rgba(200, 210, 230, 0.2);
+    background: #f0f5e8; /* Mint */
+    border: 1px solid rgba(230, 220, 230, 0.2);
     border-radius: 12px;
     color: #6a6a7a;
     font-size: 1.1em;
     font-weight: 500;
     transition: all 0.4s ease;
-    box-shadow: 0 1px 2px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 1px 2px rgba(230, 220, 230, 0.1);
 }
 
 .note-title:focus {
-    border-color: rgba(200, 210, 230, 0.5);
-    box-shadow: 0 2px 6px rgba(200, 210, 230, 0.15);
+    border-color: rgba(230, 220, 230, 0.5);
+    box-shadow: 0 2px 6px rgba(230, 220, 230, 0.15);
     outline: none;
 }
 
@@ -745,14 +745,14 @@ button {
 .note-content {
     height: 350px;
     max-height: 350px;
-    background: #f8f2f8;
+    background: #f8f0f5;
     padding: 15px;
-    border: 1px solid rgba(200, 210, 230, 0.2);
+    border: 1px solid rgba(230, 220, 230, 0.2);
     border-radius: 15px;
     color: #6a6a7a;
     font-size: 1em;
     font-weight: 400;
-    box-shadow: 0 2px 5px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 2px 5px rgba(230, 220, 230, 0.1);
     transition: all 0.4s ease;
     overflow-x: auto;
     overflow-y: auto;
@@ -768,8 +768,8 @@ button {
 }
 
 .note-content:focus {
-    border-color: rgba(200, 210, 230, 0.5);
-    box-shadow: 0 4px 10px rgba(200, 210, 230, 0.15);
+    border-color: rgba(230, 220, 230, 0.5);
+    box-shadow: 0 4px 10px rgba(230, 220, 230, 0.15);
     outline: none;
 }
 
@@ -791,27 +791,27 @@ button {
 .note-title-view {
     width: 100%;
     padding: 10px;
-    background: #f5eef5;
-    border: 1px solid rgba(200, 210, 230, 0.2);
+    background: #f0f5e8; /* Mint */
+    border: 1px solid rgba(230, 220, 230, 0.2);
     border-radius: 12px;
     color: #6a6a7a;
     font-size: 1.4em;
     font-weight: 600;
     margin-bottom: 12px;
     text-align: center;
-    box-shadow: 0 2px 5px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 2px 5px rgba(230, 220, 230, 0.1);
 }
 
 .note-content-view {
     min-height: 350px;
-    background: #f8f2f8;
+    background: #f8f0f5;
     padding: 15px;
-    border: 1px solid rgba(200, 210, 230, 0.2);
+    border: 1px solid rgba(230, 220, 230, 0.2);
     border-radius: 15px;
     color: #6a6a7a;
     font-size: 1em;
     font-weight: 400;
-    box-shadow: 0 2px 5px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 2px 5px rgba(230, 220, 230, 0.1);
     user-select: text;
     overflow-x: auto;
     word-wrap: break-word;
@@ -820,8 +820,8 @@ button {
 
 .note-content-view:focus {
     outline: none;
-    border-color: rgba(200, 210, 230, 0.5);
-    box-shadow: 0 2px 5px rgba(200, 210, 230, 0.1);
+    border-color: rgba(230, 220, 230, 0.5);
+    box-shadow: 0 2px 5px rgba(230, 220, 230, 0.1);
 }
 
 .note-content-view [contenteditable="false"] {
@@ -841,49 +841,49 @@ button {
 .save-btn {
     margin-top: 12px;
     padding: 10px 20px;
-    background: #e8f0e8;
-    border: 0.5px solid rgba(200, 210, 230, 0.3);
+    background: #e8f0ed; /* Mint */
+    border: 0.5px solid rgba(230, 220, 230, 0.3);
     border-radius: 15px;
     color: #6a6a7a;
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 1px 2px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 1px 2px rgba(230, 220, 230, 0.1);
     font-family: 'Comic Neue', sans-serif;
 }
 
 .save-btn:hover, .save-btn:active {
-    background: #f0f8f0;
-    box-shadow: 0 2px 6px rgba(200, 210, 230, 0.2);
+    background: #f0f5e8;
+    box-shadow: 0 2px 6px rgba(230, 220, 230, 0.2);
     transform: translateY(-2px);
 }
 
 .done {
     text-decoration: line-through;
-    color: #d0d8e8;
+    color: #e8f0ed; /* Mint */
     transition: all 0.4s ease;
 }
 
 .no-notes {
     text-align: center;
-    color: #d0d0e0;
+    color: #e8d8f0; /* Lavender */
     font-size: 1em;
     font-weight: 400;
     padding: 15px;
 }
 
 .copyable {
-    background-color: #f5eef5;
+    background-color: #f0f5e8; /* Mint */
     padding: 2px 5px;
     border-radius: 6px;
-    color: #d0d0e0;
+    color: #e8d8f0; /* Lavender */
     cursor: pointer;
     transition: all 0.4s ease;
 }
 
 .copyable:hover {
-    background-color: #d0d8e8;
+    background-color: #e8d8f0; /* Lavender */
     color: #fff;
 }
 
@@ -907,7 +907,7 @@ button {
 .note-content .regular-table td,
 .note-content-view .regular-table th,
 .note-content-view .regular-table td {
-    border: 1px solid rgba(200, 210, 230, 0.2);
+    border: 1px solid rgba(230, 220, 230, 0.2);
     padding: 6px;
     text-align: left;
     min-width: 90px;
@@ -915,14 +915,14 @@ button {
 
 .note-content .regular-table th,
 .note-content-view .regular-table th {
-    background-color: #f5eef5;
+    background-color: #f0f5e8; /* Mint */
     font-weight: 500;
     color: #6a6a7a;
 }
 
 .note-content .regular-table tr:nth-child(even),
 .note-content-view .regular-table tr:nth-child(even) {
-    background-color: #f8f2f8;
+    background-color: #f8f0f5;
 }
 
 /* Financial Table Styles */
@@ -936,26 +936,26 @@ button {
 .finance-table {
     border-collapse: collapse;
     width: 280px;
-    background: #f8f2f8;
-    border: 1px solid rgba(200, 210, 230, 0.2);
+    background: #f8f0f5;
+    border: 1px solid rgba(230, 220, 230, 0.2);
     border-radius: 8px;
     overflow: hidden;
     min-height: 140px;
-    box-shadow: 0 2px 5px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 2px 5px rgba(230, 220, 230, 0.1);
 }
 
 .finance-table th {
-    background: #f5eef5;
-    color: #d0d0e0;
+    background: #f0f5e8; /* Mint */
+    color: #e8d8f0; /* Lavender */
     font-weight: 500;
     padding: 6px;
-    border-bottom: 1px solid rgba(200, 210, 230, 0.2);
+    border-bottom: 1px solid rgba(230, 220, 230, 0.2);
     cursor: not-allowed;
 }
 
 .finance-table td {
     padding: 6px;
-    border-bottom: 1px solid rgba(200, 210, 230, 0.1);
+    border-bottom: 1px solid rgba(230, 220, 230, 0.1);
     color: #6a6a7a;
     word-wrap: break-word;
     white-space: normal;
@@ -964,22 +964,22 @@ button {
 }
 
 .finance-table .income {
-    background: #e8f0e8;
+    background: #e8f0ed; /* Mint */
     color: #6a6a7a;
 }
 
 .finance-table .expense {
-    background: #f0e0e8;
+    background: #f0e0e8; /* Peach */
     color: #6a6a7a;
 }
 
 .finance-table .multiply {
-    background: #e8d0e8;
+    background: #e8d8f0; /* Lavender */
     color: #6a6a7a;
 }
 
 .finance-table .divide {
-    background: #d0d8e8;
+    background: #f5eef0; /* Soft pink */
     color: #6a6a7a;
 }
 
@@ -988,10 +988,10 @@ button {
 }
 
 .finance-table tfoot td {
-    background: #f5eef5;
+    background: #f0f5e8; /* Mint */
     font-weight: 600;
-    color: #e8d0e8;
-    border-top: 1px dashed rgba(200, 210, 230, 0.2);
+    color: #f0e0e8; /* Peach */
+    border-top: 1px dashed rgba(230, 220, 230, 0.2);
     cursor: not-allowed;
 }
 
@@ -1005,75 +1005,75 @@ button {
 
 .finance-btn {
     padding: 4px 8px;
-    border: 0.5px solid rgba(200, 210, 230, 0.3);
+    border: 0.5px solid rgba(230, 220, 230, 0.3);
     border-radius: 6px;
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.4s ease;
-    background: #f8f2f8;
+    background: #f8f0f5;
     color: #6a6a7a;
-    box-shadow: 0 1px 2px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 1px 2px rgba(230, 220, 230, 0.1);
     font-family: 'Comic Neue', sans-serif;
 }
 
 .finance-btn.add-income {
-    background: #e8f0e8;
+    background: #e8f0ed; /* Mint */
 }
 
 .finance-btn.add-income:hover {
-    background: #f0f8f0;
-    box-shadow: 0 2px 4px rgba(200, 210, 230, 0.2);
+    background: #f0f5e8;
+    box-shadow: 0 2px 4px rgba(230, 220, 230, 0.2);
 }
 
 .finance-btn.subtract-expense {
-    background: #f0e0e8;
+    background: #f0e0e8; /* Peach */
 }
 
 .finance-btn.subtract-expense:hover {
-    background: #f8e8f0;
-    box-shadow: 0 2px 4px rgba(200, 210, 230, 0.2);
+    background: #f5e8ef;
+    box-shadow: 0 2px 4px rgba(230, 220, 230, 0.2);
 }
 
 .finance-btn.multiply {
-    background: #e8d0e8;
+    background: #e8d8f0; /* Lavender */
 }
 
 .finance-btn.multiply:hover {
-    background: #f0e0f0;
-    box-shadow: 0 2px 4px rgba(200, 210, 230, 0.2);
+    background: #f0e8f5;
+    box-shadow: 0 2px 4px rgba(230, 220, 230, 0.2);
 }
 
 .finance-btn.divide {
-    background: #d0d8e8;
+    background: #f5eef0; /* Soft pink */
 }
 
 .finance-btn.divide:hover {
-    background: #e0e8f0;
-    box-shadow: 0 2px 4px rgba(200, 210, 230, 0.2);
+    background: #f8f0f5;
+    box-shadow: 0 2px 4px rgba(230, 220, 230, 0.2);
 }
 
 .finance-btn.calculate {
-    background: #f5eef5;
+    background: #f0f5e8; /* Mint */
 }
 
 .finance-btn.calculate:hover {
-    background: #f8f2f8;
-    box-shadow: 0 2px 4px rgba(200, 210, 230, 0.2);
+    background: #f8f0f5;
+    box-shadow: 0 2px 4px rgba(230, 220, 230, 0.2);
 }
 
 .finance-btn.delete-last-row {
-    background: #f0e0e8;
+    background: #f0e0e8; /* Peach */
 }
 
 .finance-btn.delete-last-row:hover {
-    background: #f8e8f0;
-    box-shadow: 0 2px 4px rgba(200, 210, 230, 0.2);
+    background: #f5e8ef;
+    box-shadow: 0 2px 4px rgba(230, 220, 230, 0.2);
 }
 
 .finance-table td[contenteditable="true"][placeholder]::before {
     content: attr(placeholder);
-    color: #d0d0e0;
+    color: #e8d8f0; /* Lavender */
     font-style: italic;
 }
 
@@ -1083,8 +1083,8 @@ button {
     top: 4px;
     right: 4px;
     padding: 4px;
-    background: #d0d8e8;
-    border: 0.5px solid rgba(200, 210, 230, 0.3);
+    background: #e8d8f0; /* Lavender */
+    border: 0.5px solid rgba(230, 220, 230, 0.3);
     border-radius: 50%;
     color: #6a6a7a;
     cursor: pointer;
@@ -1094,27 +1094,27 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 1px 2px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 1px 2px rgba(230, 220, 230, 0.1);
     transition: all 0.4s ease;
     font-family: 'Comic Neue', sans-serif;
 }
 
 .finance-options-btn:hover {
-    background: #e0e8f0;
-    box-shadow: 0 2px 5px rgba(200, 210, 230, 0.2);
+    background: #f0e8f5;
+    box-shadow: 0 2px 5px rgba(230, 220, 230, 0.2);
 }
 
 .finance-popup {
     position: absolute;
-    background: #f8f2f8;
+    background: #f8f0f5;
     border-radius: 15px;
-    box-shadow: 0 3px 10px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 3px 10px rgba(230, 220, 230, 0.1);
     padding: 8px;
     display: none;
     z-index: 100;
     flex-direction: column;
     gap: 6px;
-    border: 1px solid rgba(200, 210, 230, 0.2);
+    border: 1px solid rgba(230, 220, 230, 0.2);
     min-width: 140px;
     font-family: 'Comic Neue', sans-serif;
 }
@@ -1210,15 +1210,15 @@ button {
 /* Finance Table Tools */
 .finance-tool-btn {
     padding: 6px;
-    background: #f8f2f8;
-    border: 0.5px solid rgba(200, 210, 230, 0.3);
+    background: #f8f0f5;
+    border: 0.5px solid rgba(230, 220, 230, 0.3);
     border-radius: 8px;
     color: #6a6a7a;
     font-weight: 500;
     font-size: 0.9em;
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 1px 2px rgba(200, 210, 230, 0.1);
+    box-shadow: 0 1px 2px rgba(230, 220, 230, 0.1);
     display: none;
     align-items: center;
     justify-content: center;
@@ -1227,15 +1227,15 @@ button {
     font-family: 'Comic Neue', sans-serif;
 }
 
-.finance-tool-btn.add-income-btn { background: #e8f0e8; }
-.finance-tool-btn.add-income-btn:hover { background: #f0f8f0; }
-.finance-tool-btn.subtract-expense-btn { background: #f0e0e8; }
-.finance-tool-btn.subtract-expense-btn:hover { background: #f8e8f0; }
-.finance-tool-btn.multiply-btn { background: #e8d0e8; }
-.finance-tool-btn.multiply-btn:hover { background: #f0e0f0; }
-.finance-tool-btn.divide-btn { background: #d0d8e8; }
-.finance-tool-btn.divide-btn:hover { background: #e0e8f0; }
-.finance-tool-btn.calculate-btn { background: #f5eef5; }
-.finance-tool-btn.calculate-btn:hover { background: #f8f2f8; }
-.finance-tool-btn.delete-last-row-btn { background: #f0e0e8; }
-.finance-tool-btn.delete-last-row-btn:hover { background: #f8e8f0; }
+.finance-tool-btn.add-income-btn { background: #e8f0ed; } /* Mint */
+.finance-tool-btn.add-income-btn:hover { background: #f0f5e8; }
+.finance-tool-btn.subtract-expense-btn { background: #f0e0e8; } /* Peach */
+.finance-tool-btn.subtract-expense-btn:hover { background: #f5e8ef; }
+.finance-tool-btn.multiply-btn { background: #e8d8f0; } /* Lavender */
+.finance-tool-btn.multiply-btn:hover { background: #f0e8f5; }
+.finance-tool-btn.divide-btn { background: #f5eef0; } /* Soft pink */
+.finance-tool-btn.divide-btn:hover { background: #f8f0f5; }
+.finance-tool-btn.calculate-btn { background: #f0f5e8; } /* Mint */
+.finance-tool-btn.calculate-btn:hover { background: #f8f0f5; }
+.finance-tool-btn.delete-last-row-btn { background: #f0e0e8; } /* Peach */
+.finance-tool-btn.delete-last-row-btn:hover { background: #f5e8ef; }
