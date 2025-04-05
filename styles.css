@@ -44,6 +44,7 @@ header {
     border-radius: 15px;
     box-shadow: 0 2px 5px rgba(206, 172, 147, 0.1);
     border: 1px solid rgba(206, 172, 147, 0.2);
+    position: relative;
 }
 
 .header-content {
@@ -68,6 +69,7 @@ h1 {
     flex-grow: 1;
     order: 2;
     position: relative;
+    justify-content: center;
 }
 
 .search-toggle {
@@ -79,6 +81,7 @@ h1 {
     color: #6a5545;
     cursor: pointer;
     transition: all 0.4s ease;
+    z-index: 15;
 }
 
 .search-toggle:hover {
@@ -116,18 +119,21 @@ h1 {
     width: 60px;
     height: 40px;
     order: 3;
+    z-index: 10;
 }
 
 @media (max-width: 768px) {
     .header-content {
         flex-wrap: nowrap;
         gap: 10px;
+        position: relative;
     }
     h1 {
         font-size: 1.5em;
     }
     .search-wrapper {
         flex-grow: 0;
+        margin-right: 60px; /* Memberi ruang untuk kucing */
     }
     .search-toggle {
         display: flex;
@@ -136,17 +142,19 @@ h1 {
     }
     .search-bar {
         position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        padding: 10px 20px;
-        background: #e3c9a4;
-        border-radius: 0 0 15px 15px;
+        top: calc(100% + 5px);
+        left: 20px;
+        right: 20px;
+        width: auto;
+        padding: 5px 0;
+        background: #fefbe8;
+        border: 1px solid rgba(206, 172, 147, 0.2);
+        border-radius: 12px;
         box-shadow: 0 2px 5px rgba(206, 172, 147, 0.1);
         transform: translateY(-10px);
         opacity: 0;
         visibility: hidden;
-        z-index: 10;
+        z-index: 20; /* Pastikan di atas elemen lain */
     }
     .search-bar.active {
         transform: translateY(0);
@@ -156,6 +164,10 @@ h1 {
     .sleeping-cat {
         width: 50px;
         height: 35px;
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
     }
 }
 
@@ -173,6 +185,9 @@ h1 {
     }
     .search-toggle {
         padding: 5px;
+    }
+    .search-wrapper {
+        margin-right: 50px; /* Menyesuaikan ruang untuk kucing */
     }
 }
 
@@ -1047,7 +1062,7 @@ button {
 }
 
 .finance-table tfoot td {
-    background: #e3c9a Membersihkan4;
+    background: #e3c9a4;
     font-weight: 600;
     color: #ad8b72;
     border-top: 1px dashed rgba(206, 172, 147, 0.2);
