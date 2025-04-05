@@ -32,7 +32,7 @@ function spawnRandomCat() {
     setTimeout(() => cat.remove(), 2000);
 }
 
-// Gelembung saat klik tombol
+// Gelembung dan kucing saat klik tombol
 document.querySelectorAll('button, .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn, .reset-btn, .view-more, .save-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
         spawnRandomCat();
@@ -58,7 +58,7 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Gelembung saat popup dibuka (contoh: .more-options atau .finance-popup)
+// Gelembung saat popup dibuka
 document.querySelectorAll('.more-options, .finance-popup').forEach(popup => {
     popup.addEventListener('transitionend', (e) => {
         if (popup.classList.contains('active')) {
@@ -77,28 +77,53 @@ let idleTimeout;
 function spawnIdleBubbles() {
     clearTimeout(idleTimeout);
     idleTimeout = setTimeout(() => {
-        for (let i = 0; i < 2; i++) { // Lebih sedikit gelembung
+        for (let i = 0; i < 2; i++) {
             const x = Math.random() * window.innerWidth;
             const y = Math.random() * window.innerHeight;
             createBubble(x, y);
         }
-        spawnIdleBubbles(); // Loop dengan jeda
+        spawnIdleBubbles();
     }, 10000); // Muncul setiap 10 detik saat diam
 }
 
-// Reset timer saat ada aktivitas
 document.addEventListener('mousemove', () => clearTimeout(idleTimeout));
 document.addEventListener('scroll', () => clearTimeout(idleTimeout));
 document.addEventListener('click', () => clearTimeout(idleTimeout));
-spawnIdleBubbles(); // Mulai efek default
+spawnIdleBubbles();
 
-// Animasi kucing
+// Partikel sambutan saat halaman dimuat
+function spawnWelcomeParticles() {
+    for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'welcome-particle';
+        particle.style.position = 'fixed';
+        particle.style.width = `${Math.random() * 5 + 2}px`;
+        particle.style.height = particle.style.width;
+        particle.style.background = '#e8c8d8'; /* Pastel pink tua */
+        particle.style.borderRadius = '50%';
+        particle.style.left = `${Math.random() * window.innerWidth}px`;
+        particle.style.top = `${Math.random() * window.innerHeight}px`;
+        particle.style.zIndex = '1000';
+        particle.style.animation = `particleFade ${Math.random() * 2 + 1}s ease-out forwards`;
+        document.body.appendChild(particle);
+        setTimeout(() => particle.remove(), 3000);
+    }
+}
+
+window.addEventListener('load', spawnWelcomeParticles);
+
+// Animasi untuk kucing dan partikel
 const styleSheet = document.createElement('style');
 styleSheet.textContent = `
     @keyframes catPop {
         0% { transform: scale(0); opacity: 0; }
         50% { transform: scale(1.2); opacity: 1; }
         100% { transform: scale(1); opacity: 0; }
+    }
+    @keyframes particleFade {
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.5) translateY(-20px); opacity: 0.7; }
+        100% { transform: scale(0.5) translateY(-40px); opacity: 0; }
     }
 `;
 document.head.appendChild(styleSheet);
