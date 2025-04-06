@@ -83,26 +83,27 @@ header::after {
     pointer-events: none;
 }
 
-/* Kucing tidur di header - Desain lebih realistis */
+/* Kucing tidur di header - Desain realistis dan utuh */
 .sleeping-cat {
     position: absolute;
     top: 50%;
     right: 15px;
-    width: 70px; /* Ukuran sedikit lebih besar untuk detail */
-    height: 45px;
+    width: 80px; /* Diperbesar untuk menampung semua elemen */
+    height: 50px;
     transform: translateY(-50%);
     z-index: 10;
     cursor: pointer;
+    overflow: visible; /* Pastikan elemen anak terlihat */
 }
 
 .cat-body {
     position: relative;
-    width: 55px; /* Bentuk tubuh lebih proporsional */
+    width: 55px;
     height: 30px;
-    background: #ceac93; /* Warna peach muda */
-    border-radius: 30px 20px 10px 15px; /* Bentuk lebih organik */
-    box-shadow: 0 3px 6px rgba(206, 172, 147, 0.3); /* Bayangan lembut */
-    overflow: hidden;
+    background: #ceac93; /* Peach muda */
+    border-radius: 30px 20px 10px 15px;
+    box-shadow: 0 3px 6px rgba(206, 172, 147, 0.2);
+    /* overflow: hidden dihapus agar kepala dan ekor terlihat */
 }
 
 /* Efek bulu pada tubuh */
@@ -121,22 +122,22 @@ header::after {
 
 .cat-head {
     position: absolute;
-    top: -18px;
-    left: -18px;
-    width: 30px; /* Kepala lebih besar untuk detail */
+    top: -15px; /* Disesuaikan agar tidak terlalu jauh */
+    left: -15px;
+    width: 30px;
     height: 30px;
-    background: #ceac93; /* Warna peach muda */
+    background: #ceac93; /* Peach muda */
     border-radius: 50%;
     box-shadow: inset 2px 2px 4px rgba(173, 139, 114, 0.2); /* Efek kedalaman */
 }
 
-/* Telinga kucing - Ditambahkan dengan bentuk realistis */
+/* Telinga kucing */
 .cat-ear-left,
 .cat-ear-right {
     position: absolute;
     width: 10px;
     height: 15px;
-    background: #ceac93; /* Warna peach muda */
+    background: #ceac93; /* Peach muda */
     top: -10px;
     border-radius: 5px 5px 0 0;
     transform-origin: bottom;
@@ -153,7 +154,7 @@ header::after {
     transform: rotate(25deg);
 }
 
-/* Mata kucing - Lebih realistis */
+/* Mata kucing */
 .cat-eyes {
     position: absolute;
     top: 12px;
@@ -189,14 +190,14 @@ header::after {
     background: radial-gradient(circle, #2e1f14 20%, #6a5545 80%); /* Efek pupil */
 }
 
-/* Ekor kucing - Lebih natural */
+/* Ekor kucing */
 .cat-tail {
     position: absolute;
     bottom: 5px;
     right: -15px;
     width: 25px;
     height: 8px;
-    background: #ad8b72; /* Warna peach tua */
+    background: #ad8b72; /* Peach tua */
     border-radius: 12px 0 0 12px;
     transform-origin: right center;
     animation: tailWag 2.5s ease-in-out infinite;
@@ -332,7 +333,7 @@ button, .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore
     font-family: 'Comic Neue', sans-serif !important;
 }
 
-/* Background kucing berjalan - Desain lebih realistis */
+/* Background kucing berjalan */
 body::before {
     content: '' !important;
     position: fixed !important;
