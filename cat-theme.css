@@ -130,27 +130,27 @@ header::after {
     box-shadow: inset 2px 2px 4px rgba(173, 139, 114, 0.2); /* Efek kedalaman */
 }
 
-/* Telinga kucing - lebih besar dan terlihat jelas */
+/* Telinga kucing - diperbaiki agar seperti telinga kucing */
 .cat-ear-left,
 .cat-ear-right {
     position: absolute;
-    width: 12px; /* Diperbesar */
-    height: 18px; /* Diperpanjang */
+    width: 14px; /* Lebih lebar di dasar */
+    height: 12px; /* Lebih pendek agar tidak seperti kelinci */
     background: #ceac93; /* Peach muda */
-    top: -15px; /* Dinaikkan agar lebih terlihat */
-    border-radius: 6px 6px 0 0;
+    top: -12px; /* Disesuaikan agar tetap terlihat */
+    border-radius: 50% 50% 0 0; /* Membuat dasar lebar dan ujung sedikit tumpul */
     transform-origin: bottom;
     box-shadow: inset -1px -1px 2px rgba(173, 139, 114, 0.3); /* Detail dalam telinga */
 }
 
 .cat-ear-left {
     left: 4px;
-    transform: rotate(-30deg); /* Sedikit lebih miring */
+    transform: rotate(-20deg); /* Sudut lebih landai */
 }
 
 .cat-ear-right {
     right: 4px;
-    transform: rotate(30deg); /* Sedikit lebih miring */
+    transform: rotate(20deg); /* Sudut lebih landai */
 }
 
 /* Mata kucing */
@@ -189,15 +189,15 @@ header::after {
     background: radial-gradient(circle, #2e1f14 20%, #6a5545 80%); /* Efek pupil */
 }
 
-/* Ekor kucing - melengkung */
+/* Ekor kucing - lebih mepet ke badan */
 .cat-tail {
     position: absolute;
-    bottom: 0px; /* Disesuaikan agar ekor lebih menyatu */
-    right: -25px; /* Diperpanjang ke kanan */
-    width: 35px; /* Diperpanjang untuk efek melengkung */
+    bottom: 5px; /* Disesuaikan agar lebih tinggi */
+    right: -10px; /* Lebih dekat ke badan */
+    width: 30px; /* Sedikit diperpendek */
     height: 10px;
     background: #ad8b72; /* Peach tua */
-    border-radius: 50% 10px 10px 50%; /* Membuat lengkungan */
+    border-radius: 50% 10px 10px 50%; /* Lengkungan tetap */
     transform-origin: right center;
     animation: tailWag 2.5s ease-in-out infinite;
     box-shadow: 0 1px 3px rgba(173, 139, 114, 0.2);
