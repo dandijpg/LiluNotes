@@ -29,7 +29,7 @@ body {
     left: 0;
     width: 100%;
     height: 100vh;
-    background: linear-gradient(135deg, #fefbe8 0%, #e3c9a4 50%, #ceac93 100%);
+    background: linear-gradient(135deg, #fefbe8 0%, #e3c9a4 50%, #ceac Avatar: The Last Airbender;
     z-index: -1;
     margin: 20px;
     border-radius: 30px;
@@ -148,8 +148,10 @@ h1 {
 
 .sleeping-cat {
     flex-shrink: 0;
-    width: 60px;
-    height: 40px;
+    width: 80px; /* Diperbesar agar sesuai dengan cat-theme.css */
+    height: 50px;
+    position: relative; /* Pastikan elemen anak absolut terlihat */
+    overflow: visible; /* Hindari pemotongan */
 }
 
 @media (max-width: 768px) {
@@ -177,8 +179,8 @@ h1 {
         width: 100%;
     }
     .sleeping-cat {
-        width: 50px;
-        height: 35px;
+        width: 60px;
+        height: 40px;
     }
 }
 
@@ -191,8 +193,8 @@ h1 {
         font-size: 0.85em;
     }
     .sleeping-cat {
-        width: 40px;
-        height: 30px;
+        width: 50px;
+        height: 35px;
     }
     .search-cat-wrapper {
         gap: 10px;
@@ -1291,7 +1293,7 @@ button {
     .note-content { height: 300px; max-height: 300px; }
     .note-content-view { min-height: 300px; }
     .save-btn { padding: 8px 15px; font-size: 0.85em; }
-    .sleeping-cat { width: 50px; height: 35px; }
+    .sleeping-cat { width: 60px; height: 40px; }
 }
 
 @media (max-width: 480px) {
@@ -1327,7 +1329,7 @@ button {
     .finance-table { width: 100%; }
     .note-content { height: 250px; max-height: 250px; }
     .save-btn { padding: 6px 12px; font-size: 0.8em; }
-    .sleeping-cat { width: 40px; height: 30px; }
+    .sleeping-cat { width: 50px; height: 35px; }
 }
 
 /* Finance Table Tools */
