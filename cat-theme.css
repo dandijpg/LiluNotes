@@ -88,7 +88,7 @@ header::after {
     position: absolute;
     top: 50%;
     right: 15px;
-    width: 80px; /* Diperbesar untuk menampung semua elemen */
+    width: 90px; /* Diperbesar untuk menampung ekor melengkung */
     height: 50px;
     transform: translateY(-50%);
     z-index: 10;
@@ -103,7 +103,6 @@ header::after {
     background: #ceac93; /* Peach muda */
     border-radius: 30px 20px 10px 15px;
     box-shadow: 0 3px 6px rgba(206, 172, 147, 0.2);
-    /* overflow: hidden dihapus agar kepala dan ekor terlihat */
 }
 
 /* Efek bulu pada tubuh */
@@ -122,42 +121,42 @@ header::after {
 
 .cat-head {
     position: absolute;
-    top: -15px; /* Disesuaikan agar tidak terlalu jauh */
+    top: -10px; /* Disesuaikan agar kepala lebih terintegrasi */
     left: -15px;
     width: 30px;
-    height: 30px;
+    height: 25px; /* Oval, bukan bulat sempurna */
     background: #ceac93; /* Peach muda */
-    border-radius: 50%;
+    border-radius: 50% 50% 40% 40%; /* Membuat kepala lebih oval */
     box-shadow: inset 2px 2px 4px rgba(173, 139, 114, 0.2); /* Efek kedalaman */
 }
 
-/* Telinga kucing */
+/* Telinga kucing - lebih besar dan terlihat jelas */
 .cat-ear-left,
 .cat-ear-right {
     position: absolute;
-    width: 10px;
-    height: 15px;
+    width: 12px; /* Diperbesar */
+    height: 18px; /* Diperpanjang */
     background: #ceac93; /* Peach muda */
-    top: -10px;
-    border-radius: 5px 5px 0 0;
+    top: -15px; /* Dinaikkan agar lebih terlihat */
+    border-radius: 6px 6px 0 0;
     transform-origin: bottom;
     box-shadow: inset -1px -1px 2px rgba(173, 139, 114, 0.3); /* Detail dalam telinga */
 }
 
 .cat-ear-left {
-    left: 5px;
-    transform: rotate(-25deg);
+    left: 4px;
+    transform: rotate(-30deg); /* Sedikit lebih miring */
 }
 
 .cat-ear-right {
-    right: 5px;
-    transform: rotate(25deg);
+    right: 4px;
+    transform: rotate(30deg); /* Sedikit lebih miring */
 }
 
 /* Mata kucing */
 .cat-eyes {
     position: absolute;
-    top: 12px;
+    top: 10px; /* Disesuaikan dengan kepala oval */
     left: 50%;
     transform: translateX(-50%);
     width: 20px;
@@ -190,18 +189,19 @@ header::after {
     background: radial-gradient(circle, #2e1f14 20%, #6a5545 80%); /* Efek pupil */
 }
 
-/* Ekor kucing */
+/* Ekor kucing - melengkung */
 .cat-tail {
     position: absolute;
-    bottom: 5px;
-    right: -15px;
-    width: 25px;
-    height: 8px;
+    bottom: 0px; /* Disesuaikan agar ekor lebih menyatu */
+    right: -25px; /* Diperpanjang ke kanan */
+    width: 35px; /* Diperpanjang untuk efek melengkung */
+    height: 10px;
     background: #ad8b72; /* Peach tua */
-    border-radius: 12px 0 0 12px;
+    border-radius: 50% 10px 10px 50%; /* Membuat lengkungan */
     transform-origin: right center;
     animation: tailWag 2.5s ease-in-out infinite;
     box-shadow: 0 1px 3px rgba(173, 139, 114, 0.2);
+    transform: rotate(-30deg); /* Ekor melengkung ke atas */
 }
 
 /* Efek bulu pada ekor */
@@ -376,9 +376,9 @@ body::before {
 }
 
 @keyframes tailWag {
-    0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(-10deg); }
-    75% { transform: rotate(10deg); }
+    0%, 100% { transform: rotate(-30deg); } /* Ekor tetap melengkung */
+    25% { transform: rotate(-40deg); }
+    75% { transform: rotate(-20deg); }
 }
 
 @keyframes bubbleRise {
