@@ -8,7 +8,7 @@
 }
 
 body {
-    font-family: 'Comic Neue', sans-serif;
+    font-family: 'Comic Neue', sans-serif; /* Menyesuaikan dengan index.html */
     color: #6a5545;
     padding: 0;
     line-height: 1.6;
