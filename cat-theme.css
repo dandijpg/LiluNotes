@@ -3,9 +3,9 @@
 /* Import font elegan */
 @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
 
-/* Override body dengan gradien pastel elegan */
+/* Body tetap sama */
 body {
-    background: linear-gradient(135deg, #fefbe8 0%, #e3c9a4 50%, #ceac93 100%) !important; /* Krem pucat ke krem ke peach muda */
+    background: linear-gradient(135deg, #fefbe8 0%, #e3c9a4 50%, #ceac93 100%) !important;
     background-size: 200% 200%;
     animation: gradientFlow 20s ease infinite !important;
     font-family: 'Comic Neue', sans-serif !important;
@@ -13,17 +13,11 @@ body {
     overflow-x: hidden;
 }
 
-@keyframes gradientFlow {
-    0% { background-position: 0% 0%; }
-    50% { background-position: 100% 100%; }
-    100% { background-position: 0% 0%; }
-}
-
-/* Container dengan tema kucing dan border samar */
+/* Container tetap sama */
 .container {
-    border: 1px solid rgba(206, 172, 147, 0.3) !important; /* Samar dari peach muda */
+    border: 1px solid rgba(206, 172, 147, 0.3) !important;
     border-radius: 25px !important;
-    background: #fefbe8 !important; /* Krem pucat */
+    background: #fefbe8 !important;
     position: relative;
     overflow: hidden;
     padding: 25px !important;
@@ -31,69 +25,13 @@ body {
     z-index: 1;
 }
 
-.container::before {
-    content: '' !important;
-    position: absolute !important;
-    top: -15px !important;
-    left: -15px !important;
-    width: 50px !important;
-    height: 50px !important;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 20c-10 0-15 8-15 15s5 15 15 15 15-8 15-15-5-15-15-15zm-8 15a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm16 0a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="%23e3c9a4"/></svg>') no-repeat center !important; /* Krem */
-    background-size: contain !important;
-    animation: catWiggle 4s ease-in-out infinite !important;
-    z-index: 10 !important;
-    pointer-events: none;
-}
-
-.container::after {
-    content: '' !important;
-    position: absolute !important;
-    bottom: -10px !important;
-    right: -10px !important;
-    width: 40px !important;
-    height: 40px !important;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M70 50c0 15-10 25-20 25s-20-10-20-25c0-10 5-15 10-20l5-5 5 5c5 5 10 10 10 20z" fill="%23ad8b72"/></svg>') no-repeat center !important; /* Peach tua */
-    background-size: contain !important;
-    animation: catTail 3s ease-in-out infinite !important;
-    z-index: 10 !important;
-    pointer-events: none;
-}
-
-/* Header dengan border samar dan dekorasi gelombang */
-header {
-    border: 1px solid rgba(206, 172, 147, 0.2) !important;
-    background: #e3c9a4 !important; /* Krem */
-    border-radius: 20px !important;
-    position: relative !important;
-    overflow: hidden !important;
-    box-shadow: 0 2px 8px rgba(206, 172, 147, 0.15) !important; /* Bayangan lembut */
-}
-
-header::before {
-    content: ''; /* Ikon kaki dihapus */
-}
-
-header::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 8px;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q25 0 50 5 T100 5" stroke="%23ad8b72" stroke-width="1" fill="none"/></svg>') repeat-x top;
-    background-size: 80px 8px;
-    opacity: 0.3;
-    z-index: 1;
-    pointer-events: none;
-}
-
-/* Kucing tidur di header dengan desain yang lebih baik */
+/* Kucing tidur di header - Desain lebih realistis */
 .sleeping-cat {
     position: absolute;
     top: 50%;
-    right: 10px;
-    width: 60px;
-    height: 40px;
+    right: 15px;
+    width: 70px; /* Ukuran sedikit lebih besar untuk detail */
+    height: 45px;
     transform: translateY(-50%);
     z-index: 10;
     cursor: pointer;
@@ -101,257 +39,161 @@ header::after {
 
 .cat-body {
     position: relative;
-    width: 50px;
-    height: 25px;
-    background: #ceac93; /* Peach muda */
-    border-radius: 25px 25px 10px 10px;
-    box-shadow: 0 2px 4px rgba(206, 172, 147, 0.2);
-}
-
-.cat-head {
-    position: absolute;
-    top: -15px;
-    left: -15px;
-    width: 25px;
-    height: 25px;
-    background: #ceac93; /* Peach muda */
-    border-radius: 50%;
+    width: 55px; /* Bentuk tubuh lebih proporsional */
+    height: 30px;
+    background: #ceac93; /* Warna peach muda */
+    border-radius: 30px 20px 10px 15px; /* Bentuk lebih organik */
+    box-shadow: 0 3px 6px rgba(206, 172, 147, 0.3); /* Bayangan lembut */
     overflow: hidden;
 }
 
-/* Telinga kucing */
-.cat-ear-left,
-.cat-ear-right {
-    position: absolute;
-    width: 8px;
-    height: 12px;
-    background: #ceac93; /* Peach muda */
-    top: -8px;
-    border-radius: 4px 4px 0 0;
-    transform-origin: bottom;
-}
-
-.cat-ear-left {
-    left: 2px;
-    transform: rotate(-20deg);
-}
-
-.cat-ear-right {
-    right: 2px;
-    transform: rotate(20deg);
-}
-
-/* Mata kucing */
-.cat-eyes::before,
-.cat-eyes::after {
-    content: '';
-    position: absolute;
-    top: 14px;
-    width: 5px;
-    height: 1px;
-    background: #6a5545; /* Coklat lembut */
-    transition: all 0.3s ease;
-}
-
-.cat-eyes::before {
-    left: 5px;
-}
-
-.cat-eyes::after {
-    right: 5px;
-}
-
-.sleeping-cat:hover .cat-eyes::before,
-.sleeping-cat:hover .cat-eyes::after {
-    height: 5px; /* Mata terbuka saat hover */
-    border-radius: 50%;
-}
-
-/* Ekor kucing yang lebih natural */
-.cat-tail {
-    position: absolute;
-    bottom: 2px;
-    right: -12px;
-    width: 20px;
-    height: 6px;
-    background: #ad8b72; /* Peach tua */
-    border-radius: 10px 0 0 10px;
-    transform-origin: right center;
-    animation: tailWag 2s ease-in-out infinite;
-}
-
-@keyframes tailWag {
-    0%, 100% { transform: rotate(0deg); }
-    25% { transform: rotate(-15deg); }
-    75% { transform: rotate(15deg); }
-}
-
-/* Tombol dengan efek glow pastel dan ukuran lebih kecil */
-button, .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn, .reset-btn, .view-more, .save-btn {
-    position: relative;
-    overflow: hidden;
-    border-radius: 20px !important;
-    padding: 8px 16px;
-    transition: all 0.4s ease;
-    box-shadow: 0 0 8px rgba(206, 172, 147, 0.2);
-    cursor: pointer;
-    pointer-events: auto;
-    z-index: 20;
-    font-family: 'Comic Neue', sans-serif !important;
-    font-size: 0.85em;
-    font-weight: 500;
-    border: 0.5px solid rgba(206, 172, 147, 0.3) !important;
-}
-
-/* Catatan dengan dekorasi kucing */
-.note {
-    border: 1px solid rgba(206, 172, 147, 0.2) !important;
-    border-radius: 20px !important;
-    background: #fefbe8 !important; /* Krem pucat */
-    position: relative !important;
-    overflow: hidden !important;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    animation: borderGlow 15s ease-in-out infinite;
-    z-index: 15;
-}
-
-.note:hover {
-    transform: scale(1.01) translateY(-3px);
-    box-shadow: 0 6px 15px rgba(206, 172, 147, 0.2);
-}
-
-.note::before {
-    content: '' !important;
-    position: absolute !important;
-    top: -8px !important;
-    right: -8px !important;
-    width: 25px !important;
-    height: 25px !important;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50 30c-8 0-12 8-12 12s4 12 12 12 12-8 12-12-4-12-12-12zm-6 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm12 0a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" fill="%23ceac93"/></svg>') no-repeat center !important; /* Peach muda */
-    background-size: contain !important;
-    animation: catPeek 5s ease-in-out infinite !important;
-    z-index: 10 !important;
-    pointer-events: none;
-}
-
-/* Edit container dengan border samar */
-.edit-container {
-    border: 1px solid rgba(206, 172, 147, 0.2) !important;
-    border-radius: 25px !important;
-    background: #fefbe8 !important; /* Krem pucat */
-    position: relative;
-    animation: borderGlow 15s ease-in-out infinite;
-}
-
-.edit-container::after {
-    content: '🐾' !important;
-    position: absolute !important;
-    bottom: 8px !important;
-    right: 8px !important;
-    font-size: 1.2em !important;
-    color: #ceac93 !important; /* Peach muda */
-    animation: pawFade 4s ease-in-out infinite !important;
-    pointer-events: none;
-}
-
-/* Gelembung Animasi */
-.bubble {
-    position: fixed;
-    width: 15px;
-    height: 15px;
-    background: rgba(206, 172, 147, 0.2);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 5;
-    animation: bubbleRise 4s ease-in-out forwards;
-}
-
-@keyframes bubbleRise {
-    0% { transform: translateY(0) scale(0.6); opacity: 0.6; }
-    50% { transform: translateY(-60vh) scale(1); opacity: 0.8; }
-    100% { transform: translateY(-120vh) scale(0.7); opacity: 0; }
-}
-
-/* Kategori dengan garis gelombang yang tidak kelebihan */
-.categories {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    overflow-x: auto;
-    padding: 10px;
-    background: #fefbe8;
-    border-radius: 15px;
-    position: relative;
-    white-space: nowrap;
-    z-index: 10;
-    scroll-behavior: smooth;
-}
-
-.categories::before {
+/* Efek bulu pada tubuh */
+.cat-body::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%; /* Sesuai lebar kontainer */
-    height: 8px;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q25 0 50 5 T100 5" stroke="%23ad8b72" stroke-width="1" fill="none"/></svg>') repeat-x top;
-    background-size: 80px 8px;
-    opacity: 0.2;
-    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 10%, transparent 20%),
+                linear-gradient(45deg, rgba(173, 139, 114, 0.1) 20%, transparent 30%);
+    opacity: 0.5; /* Simulasi tekstur bulu */
     pointer-events: none;
 }
 
-/* Popup dengan z-index lebih tinggi */
-.more-options, .finance-popup {
-    z-index: 100 !important;
-    background: #fefbe8 !important;
-    border: 1px solid rgba(206, 172, 147, 0.2) !important;
-    font-family: 'Comic Neue', sans-serif !important;
+.cat-head {
+    position: absolute;
+    top: -18px;
+    left: -18px;
+    width: 30px; /* Kepala lebih besar untuk detail */
+    height: 30px;
+    background: #ceac93; /* Warna peach muda */
+    border-radius: 50%;
+    box-shadow: inset 2px 2px 4px rgba(173, 139, 114, 0.2); /* Efek kedalaman */
 }
 
-/* Animasi Lembut */
-@keyframes catWiggle {
+/* Telinga kucing - Ditambahkan dengan bentuk realistis */
+.cat-ear-left,
+.cat-ear-right {
+    position: absolute;
+    width: 10px;
+    height: 15px;
+    background: #ceac93; /* Warna peach muda */
+    top: -10px;
+    border-radius: 5px 5px 0 0;
+    transform-origin: bottom;
+    box-shadow: inset -1px -1px 2px rgba(173, 139, 114, 0.3); /* Detail dalam telinga */
+}
+
+.cat-ear-left {
+    left: 5px;
+    transform: rotate(-25deg);
+}
+
+.cat-ear-right {
+    right: 5px;
+    transform: rotate(25deg);
+}
+
+/* Mata kucing - Lebih realistis */
+.cat-eyes {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 10px;
+}
+
+.cat-eyes::before,
+.cat-eyes::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 2px; /* Mata tertutup default */
+    background: #6a5545; /* Coklat lembut */
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.cat-eyes::before {
+    left: 2px;
+}
+
+.cat-eyes::after {
+    right: 2px;
+}
+
+.sleeping-cat:hover .cat-eyes::before,
+.sleeping-cat:hover .cat-eyes::after {
+    height: 6px; /* Mata terbuka saat hover */
+    border-radius: 50%;
+    background: radial-gradient(circle, #2e1f14 20%, #6a5545 80%); /* Efek pupil */
+}
+
+/* Ekor kucing - Lebih natural */
+.cat-tail {
+    position: absolute;
+    bottom: 5px;
+    right: -15px;
+    width: 25px;
+    height: 8px;
+    background: #ad8b72; /* Warna peach tua */
+    border-radius: 12px 0 0 12px;
+    transform-origin: right center;
+    animation: tailWag 2.5s ease-in-out infinite;
+    box-shadow: 0 1px 3px rgba(173, 139, 114, 0.2);
+}
+
+/* Efek bulu pada ekor */
+.cat-tail::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 10%, transparent 30%);
+    opacity: 0.4;
+}
+
+/* Animasi ekor */
+@keyframes tailWag {
     0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(3deg); }
+    25% { transform: rotate(-10deg); }
+    75% { transform: rotate(10deg); }
 }
 
-@keyframes catTail {
-    0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(5deg); }
-}
-
-@keyframes catPeek {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-3px); }
-}
-
-@keyframes pawFade {
-    0%, 100% { opacity: 0.2; }
-    50% { opacity: 0.6; }
-}
-
-@keyframes borderGlow {
-    0%, 100% { border-color: rgba(206, 172, 147, 0.3); }
-    33% { border-color: rgba(227, 201, 164, 0.3); } /* Krem */
-    66% { border-color: rgba(173, 139, 114, 0.3); } /* Peach tua */
-}
-
-/* Background kucing berjalan */
+/* Kucing berjalan di background - Desain lebih realistis */
 body::before {
     content: '' !important;
     position: fixed !important;
-    bottom: 15px !important;
+    bottom: 20px !important;
     left: -80px !important;
-    width: 60px !important;
-    height: 60px !important;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20 60h10l10-20 10 20h10l-15-30h-10zM40 30c-5 0-8 5-8 8s3 8 8 8 8-5 8-8-3-8-8-8zm-6 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm12 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" fill="%23ceac93"/></svg>') no-repeat center !important; /* Peach muda */
+    width: 70px !important;
+    height: 50px !important;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20 70c5-10 15-15 25-15s15 5 20 15c5 10 5 20-5 25s-20 0-25-10-5-15-15-15zm25-20c-5 0-8 4-8 8s3 8 8 8 8-4 8-8-3-8-8-8zm-6 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm12 0a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm-25 10l-5 10m60-10l5 10" fill="%23ceac93"/><path d="M25 40l5-10m40 10l-5-10" fill="none" stroke="%23ad8b72" stroke-width="2"/></svg>') no-repeat center !important; /* SVG kucing berjalan */
     background-size: contain !important;
-    animation: catWalk 20s ease infinite !important;
+    animation: catWalk 20s linear infinite !important;
     z-index: 5 !important;
     pointer-events: none;
 }
 
+/* Animasi kucing berjalan */
 @keyframes catWalk {
     0% { left: -80px; }
     100% { left: 100%; }
+}
+
+/* Animasi lainnya tetap sama */
+@keyframes gradientFlow {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+}
+
+@keyframes borderGlow {
+    0%, 100% { border-color: rgba(206, 172, 147, 0.3); }
+    33% { border-color: rgba(227, 201, 164, 0.3); }
+    66% { border-color: rgba(173, 139, 114, 0.3); }
 }
