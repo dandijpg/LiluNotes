@@ -7,7 +7,7 @@
     box-sizing: border-box;
 }
 
-/* Hilangkan efek biru saat klik atau hover pada semua elemen interaktif */
+/* Hilangkan efek biru saat klik atau hover pada elemen interaktif di index.html */
 button, .note, .category, .sleeping-cat {
     -webkit-tap-highlight-color: transparent;
     tap-highlight-color: transparent;
@@ -397,41 +397,14 @@ button {
     color: #6a5545;
 }
 
-.backup-btn {
-    background: #ad8b72;
-}
-
-.backup-btn:hover, .backup-btn:active {
-    background: #ceac93;
-    box-shadow: 0 5px 15px rgba(206, 172, 147, 0.3);
-}
-
-.restore-btn, .copy-backup-btn, .google-auth-btn {
-    background: #e3c9a4;
-}
-
-.restore-btn:hover, .restore-btn:active, .copy-backup-btn:hover, .copy-backup-btn:active, .google-auth-btn:hover, .google-auth-btn:active {
-    background: #fefbe8;
-    box-shadow: 0 5px 15px rgba(206, 172, 147, 0.3);
-}
-
-.backup-google-btn {
-    background: #ceac93;
-}
-
-.backup-google-btn:hover, .backup-google-btn:active {
-    background: #e3c9a4;
-    box-shadow: 0 5px 15px rgba(206, 172, 147, 0.3);
-}
-
-.google-logout-btn, .reset-btn {
-    background: #ad8b72;
-}
-
-.google-logout-btn:hover, .google-logout-btn:active, .reset-btn:hover, .reset-btn:active {
-    background: #ceac93;
-    box-shadow: 0 5px 15px rgba(206, 172, 147, 0.3);
-}
+.backup-btn { background: #ad8b72; }
+.backup-btn:hover, .backup-btn:active { background: #ceac93; box-shadow: 0 5px 15px rgba(206, 172, 147, 0.3); }
+.restore-btn, .copy-backup-btn, .google-auth-btn { background: #e3c9a4; }
+.restore-btn:hover, .restore-btn:active, .copy-backup-btn:hover, .copy-backup-btn:active, .google-auth-btn:hover, .google-auth-btn:active { background: #fefbe8; box-shadow: 0 5px 15px rgba(206, 172, 147, 0.3); }
+.backup-google-btn { background: #ceac93; }
+.backup-google-btn:hover, .backup-google-btn:active { background: #e3c9a4; box-shadow: 0 5px 15px rgba(206, 172, 147, 0.3); }
+.google-logout-btn, .reset-btn { background: #ad8b72; }
+.google-logout-btn:hover, .google-logout-btn:active, .reset-btn:hover, .reset-btn:active { background: #ceac93; box-shadow: 0 5px 15px rgba(206, 172, 147, 0.3); }
 
 .pinned-section {
     margin-bottom: 25px;
