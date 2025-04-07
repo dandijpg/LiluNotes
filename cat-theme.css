@@ -130,27 +130,28 @@ header::after {
     box-shadow: inset 2px 2px 4px rgba(173, 139, 114, 0.2); /* Efek kedalaman */
 }
 
-/* Telinga kucing - diperbaiki agar seperti telinga kucing */
+/* Telinga kucing - diperbaiki agar lebih mirip telinga kucing asli */
 .cat-ear-left,
 .cat-ear-right {
     position: absolute;
-    width: 14px; /* Lebih lebar di dasar */
-    height: 12px; /* Lebih pendek agar tidak seperti kelinci */
+    width: 10px; /* Lebih kecil dan proporsional */
+    height: 14px; /* Sedikit lebih tinggi untuk bentuk telinga kucing */
     background: #ceac93; /* Peach muda */
-    top: -12px; /* Disesuaikan agar tetap terlihat */
-    border-radius: 50% 50% 0 0; /* Membuat dasar lebar dan ujung sedikit tumpul */
+    top: -14px; /* Disesuaikan agar menempel pada kepala */
+    border-radius: 60% 60% 0 0; /* Bentuk telinga melengkung di atas, lurus di bawah */
     transform-origin: bottom;
     box-shadow: inset -1px -1px 2px rgba(173, 139, 114, 0.3); /* Detail dalam telinga */
+    border: 0.5px solid rgba(173, 139, 114, 0.2); /* Garis halus untuk definisi */
 }
 
 .cat-ear-left {
-    left: 4px;
-    transform: rotate(-20deg); /* Sudut lebih landai */
+    left: 2px; /* Posisi lebih rapat ke kepala */
+    transform: rotate(-25deg); /* Sudut lebih natural */
 }
 
 .cat-ear-right {
-    right: 4px;
-    transform: rotate(20deg); /* Sudut lebih landai */
+    right: 2px; /* Posisi lebih rapat ke kepala */
+    transform: rotate(25deg); /* Sudut lebih natural */
 }
 
 /* Mata kucing */
@@ -189,19 +190,19 @@ header::after {
     background: radial-gradient(circle, #2e1f14 20%, #6a5545 80%); /* Efek pupil */
 }
 
-/* Ekor kucing - lebih mepet ke badan */
+/* Ekor kucing - lebih kecil, melengkung, dan realistis */
 .cat-tail {
     position: absolute;
-    bottom: 5px; /* Disesuaikan agar lebih tinggi */
-    right: -10px; /* Lebih dekat ke badan */
-    width: 30px; /* Sedikit diperpendek */
-    height: 10px;
+    bottom: 8px; /* Disesuaikan agar lebih terintegrasi dengan tubuh */
+    right: -8px; /* Lebih dekat ke badan */
+    width: 25px; /* Lebih kecil dan proporsional */
+    height: 8px; /* Lebih tipis seperti ekor asli */
     background: #ad8b72; /* Peach tua */
-    border-radius: 50% 10px 10px 50%; /* Lengkungan tetap */
+    border-radius: 50% 20% 20% 50%; /* Lengkungan lebih halus dan natural */
     transform-origin: right center;
     animation: tailWag 2.5s ease-in-out infinite;
     box-shadow: 0 1px 3px rgba(173, 139, 114, 0.2);
-    transform: rotate(-30deg); /* Ekor melengkung ke atas */
+    transform: rotate(-45deg); /* Ekor melengkung ke atas lebih tajam */
 }
 
 /* Efek bulu pada ekor */
@@ -376,9 +377,9 @@ body::before {
 }
 
 @keyframes tailWag {
-    0%, 100% { transform: rotate(-30deg); } /* Ekor tetap melengkung */
-    25% { transform: rotate(-40deg); }
-    75% { transform: rotate(-20deg); }
+    0%, 100% { transform: rotate(-45deg); } /* Posisi awal melengkung */
+    25% { transform: rotate(-55deg); } /* Gerakan ke bawah */
+    75% { transform: rotate(-35deg); } /* Gerakan ke atas */
 }
 
 @keyframes bubbleRise {
