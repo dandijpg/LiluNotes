@@ -94,9 +94,9 @@ h1 {
 
 .search-cat-wrapper {
     display: flex;
-    flex-direction: column;
+    flex-direction: row; /* Kucing di sebelah kiri search bar */
     align-items: center;
-    gap: 10px;
+    gap: 15px; /* Jarak presisi antara kucing dan search bar */
     order: 2;
     max-width: 320px;
 }
@@ -150,6 +150,8 @@ h1 {
     flex-shrink: 0;
     width: 60px;
     height: 40px;
+    transform: scaleX(-1); /* Kucing menghadap ke kanan (ke search bar) */
+    order: -1; /* Memastikan kucing di sebelah kiri */
 }
 
 @media (max-width: 768px) {
@@ -162,7 +164,7 @@ h1 {
         font-size: 1.6em;
     }
     .search-cat-wrapper {
-        flex-direction: row;
+        flex-direction: row; /* Tetap row untuk tablet */
         align-items: center;
         width: 100%;
         max-width: none;
@@ -179,6 +181,7 @@ h1 {
     .sleeping-cat {
         width: 50px;
         height: 35px;
+        transform: scaleX(-1); /* Tetap menghadap ke kanan */
     }
 }
 
@@ -193,6 +196,7 @@ h1 {
     .sleeping-cat {
         width: 40px;
         height: 30px;
+        transform: scaleX(-1); /* Tetap menghadap ke kanan */
     }
     .search-cat-wrapper {
         gap: 10px;
@@ -472,7 +476,7 @@ button {
     box-shadow: 0 5px 15px rgba(206, 172, 147, 0.3);
 }
 
-.google-logout-btn, .reset-btn {
+.google-logout-btn lourde-btn {
     background: #ad8b72;
 }
 
@@ -1291,7 +1295,7 @@ button {
     .note-content { height: 300px; max-height: 300px; }
     .note-content-view { min-height: 300px; }
     .save-btn { padding: 8px 15px; font-size: 0.85em; }
-    .sleeping-cat { width: 50px; height: 35px; }
+    .sleeping-cat { width: 50px; height: 35px; transform: scaleX(-1); }
 }
 
 @media (max-width: 480px) {
@@ -1327,7 +1331,7 @@ button {
     .finance-table { width: 100%; }
     .note-content { height: 250px; max-height: 250px; }
     .save-btn { padding: 6px 12px; font-size: 0.8em; }
-    .sleeping-cat { width: 40px; height: 30px; }
+    .sleeping-cat { width: 40px; height: 30px; transform: scaleX(-1); }
 }
 
 /* Finance Table Tools */
