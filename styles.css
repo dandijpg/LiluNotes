@@ -88,12 +88,21 @@ h1 {
     color: #ad8b72;
     letter-spacing: -0.5px;
     white-space: nowrap;
+    order: 1;
     text-shadow: 0 2px 4px rgba(206, 172, 147, 0.2);
 }
 
-.search-wrapper {
-    flex-grow: 1; /* Membuat search bar mengambil ruang yang tersedia */
+.search-cat-wrapper {
+    display: flex;
+    flex-direction: column; /* Pisahkan kucing dan search bar secara vertikal di desktop */
+    align-items: flex-end; /* Posisikan elemen ke kanan */
+    gap: 15px;
+    order: 2;
     max-width: 320px;
+}
+
+.search-wrapper {
+    width: 100%;
     display: flex;
     align-items: center;
     transition: all 0.3s ease-in-out;
@@ -142,7 +151,6 @@ h1 {
     width: 60px;
     height: 40px;
     transform: scaleX(-1); /* Kucing menghadap ke kanan */
-    margin-left: 20px; /* Jarak dari search bar di desktop */
 }
 
 @media (max-width: 768px) {
@@ -154,9 +162,17 @@ h1 {
     h1 {
         font-size: 1.6em;
     }
-    .search-wrapper {
+    .search-cat-wrapper {
+        flex-direction: row; /* Kembali ke row untuk tablet dan mobile */
+        align-items: center;
         width: 100%;
         max-width: none;
+        gap: 15px;
+        justify-content: space-between;
+    }
+    .search-wrapper {
+        width: auto;
+        flex-grow: 1;
     }
     .search-bar input {
         width: 100%;
@@ -164,7 +180,7 @@ h1 {
     .sleeping-cat {
         width: 50px;
         height: 35px;
-        margin-left: 15px; /* Jarak lebih kecil di tablet */
+        transform: scaleX(-1); /* Tetap menghadap ke kanan */
     }
 }
 
@@ -179,7 +195,10 @@ h1 {
     .sleeping-cat {
         width: 40px;
         height: 30px;
-        margin-left: 10px; /* Jarak lebih kecil di mobile */
+        transform: scaleX(-1); /* Tetap menghadap ke kanan */
+    }
+    .search-cat-wrapper {
+        gap: 10px;
     }
 }
 
