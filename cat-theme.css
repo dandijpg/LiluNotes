@@ -88,7 +88,7 @@ header::after {
     position: absolute;
     top: 50%;
     right: 15px;
-    width: 90px; /* Dipertahankan untuk menampung ekor melengkung */
+    width: 90px; /* Dipertahankan untuk menampung ekor yang lebih realistis */
     height: 50px;
     transform: translateY(-50%);
     z-index: 10;
@@ -190,19 +190,19 @@ header::after {
     background: radial-gradient(circle, #2e1f14 20%, #6a5545 80%); /* Efek pupil */
 }
 
-/* Ekor kucing - melengkung seperti gelombang dan lebih natural */
+/* Ekor kucing - lebih natural dengan lengkungan seperti ekor kucing asli */
 .cat-tail {
     position: absolute;
-    bottom: 5px; /* Lebih terintegrasi dengan tubuh */
-    right: -25px; /* Ditarik keluar untuk ruang gelombang */
-    width: 40px; /* Lebih panjang untuk efek gelombang */
-    height: 8px; /* Tetap tipis seperti ekor asli */
+    bottom: 10px; /* Sedikit lebih tinggi agar terlihat menyatu dengan tubuh */
+    right: -30px; /* Diperpanjang untuk memberikan ruang lengkungan */
+    width: 35px; /* Panjang sedang untuk proporsi */
+    height: 20px; /* Lebih tinggi untuk membentuk lengkungan */
     background: #ad8b72; /* Peach tua */
-    border-radius: 50%; /* Membantu efek lengkungan */
-    transform-origin: right center;
-    animation: tailWave 3s ease-in-out infinite; /* Animasi gelombang */
+    border-radius: 50% 10% 50% 20%; /* Lengkungan lebih halus dan asimetris */
+    transform: rotate(-45deg); /* Posisi awal miring ke atas */
+    transform-origin: left center; /* Pivot di pangkal ekor */
+    animation: tailFlick 4s ease-in-out infinite; /* Animasi seperti kibasan ekor kucing */
     box-shadow: 0 1px 3px rgba(173, 139, 114, 0.2);
-    clip-path: path('M 0 4 Q 10 -2 20 4 Q 30 10 40 4'); /* Bentuk gelombang */
 }
 
 /* Efek bulu pada ekor */
@@ -215,6 +215,7 @@ header::after {
     height: 100%;
     background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 10%, transparent 30%);
     opacity: 0.4;
+    border-radius: inherit; /* Mengikuti bentuk ekor */
 }
 
 /* Tombol dengan efek glow pastel dan ukuran lebih kecil */
@@ -376,12 +377,12 @@ body::before {
     66% { border-color: rgba(173, 139, 114, 0.3); } /* Peach tua */
 }
 
-@keyframes tailWave {
-    0% { transform: translateX(0) translateY(0); }
-    25% { transform: translateX(-2px) translateY(-2px); }
-    50% { transform: translateX(0) translateY(0); }
-    75% { transform: translateX(2px) translateY(2px); }
-    100% { transform: translateX(0) translateY(0); }
+@keyframes tailFlick {
+    0%, 100% { transform: rotate(-45deg); }
+    20% { transform: rotate(-50deg); }
+    40% { transform: rotate(-40deg); }
+    60% { transform: rotate(-55deg); }
+    80% { transform: rotate(-35deg); }
 }
 
 @keyframes bubbleRise {
