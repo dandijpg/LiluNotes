@@ -83,26 +83,26 @@ header::after {
     pointer-events: none;
 }
 
-/* Kucing tidur di header - Desain realistis dan utuh */
+/* Kucing tidur di header - Desain elegan */
 .sleeping-cat {
     position: absolute;
     top: 50%;
     right: 15px;
-    width: 80px; /* Dikurangi sedikit agar proporsional dengan ekor yang lebih kecil */
+    width: 80px;
     height: 50px;
     transform: translateY(-50%);
     z-index: 10;
     cursor: pointer;
-    overflow: visible; /* Pastikan elemen anak terlihat */
+    overflow: visible;
 }
 
 .cat-body {
     position: relative;
-    width: 55px;
-    height: 30px;
-    background: #ceac93; /* Peach muda */
-    border-radius: 30px 20px 10px 15px;
-    box-shadow: 0 3px 6px rgba(206, 172, 147, 0.2);
+    width: 50px; /* Sedikit lebih kecil untuk kesan ramping */
+    height: 28px; /* Lebih halus */
+    background: linear-gradient(135deg, #e3c9a4 0%, #ceac93 100%); /* Gradasi lembut */
+    border-radius: 25px; /* Bentuk lebih bulat dan elegan */
+    box-shadow: 0 2px 6px rgba(206, 172, 147, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.4); /* Kilau halus */
 }
 
 /* Efek bulu pada tubuh */
@@ -113,66 +113,65 @@ header::after {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 10%, transparent 20%),
-                linear-gradient(45deg, rgba(173, 139, 114, 0.1) 20%, transparent 30%);
-    opacity: 0.5; /* Simulasi tekstur bulu */
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 10%, transparent 30%);
+    opacity: 0.6; /* Tekstur bulu lebih lembut */
     pointer-events: none;
 }
 
 .cat-head {
     position: absolute;
-    top: -10px; /* Disesuaikan agar kepala lebih terintegrasi */
-    left: -15px;
-    width: 30px;
-    height: 25px; /* Oval, bukan bulat sempurna */
-    background: #ceac93; /* Peach muda */
-    border-radius: 50% 50% 40% 40%; /* Membuat kepala lebih oval */
-    box-shadow: inset 2px 2px 4px rgba(173, 139, 114, 0.2); /* Efek kedalaman */
+    top: -8px; /* Sedikit lebih tinggi */
+    left: -12px;
+    width: 25px; /* Lebih kecil untuk kesan anggun */
+    height: 20px; /* Oval lebih ramping */
+    background: linear-gradient(135deg, #e3c9a4 0%, #ceac93 100%); /* Gradasi lembut */
+    border-radius: 50% 50% 45% 45%; /* Lebih halus */
+    box-shadow: inset 1px 1px 3px rgba(173, 139, 114, 0.2), 0 1px 2px rgba(206, 172, 147, 0.2); /* Bayangan lembut */
 }
 
-/* Telinga kucing - bentuk segitiga sederhana dan proporsional */
+/* Telinga kucing - lebih ramping dan elegan */
 .cat-ear-left,
 .cat-ear-right {
     position: absolute;
-    width: 8px; /* Ukuran lebih kecil dan natural */
-    height: 12px; /* Tinggi disesuaikan untuk proporsi */
-    background: #ceac93; /* Peach muda */
-    top: -12px; /* Menempel pada kepala */
-    clip-path: polygon(50% 0%, 0% 100%, 100% 100%); /* Bentuk segitiga */
+    width: 6px; /* Lebih tipis */
+    height: 14px; /* Lebih panjang untuk kesan elegan */
+    background: linear-gradient(135deg, #e3c9a4 0%, #ceac93 100%); /* Gradasi lembut */
+    top: -14px;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%); /* Segitiga ramping */
     transform-origin: bottom;
-    box-shadow: inset -1px -1px 2px rgba(173, 139, 114, 0.3); /* Detail dalam telinga */
-    border: 0.5px solid rgba(173, 139, 114, 0.2); /* Garis halus untuk definisi */
+    box-shadow: inset -0.5px -0.5px 1px rgba(173, 139, 114, 0.2);
+    border: 0.5px solid rgba(173, 139, 114, 0.1); /* Garis lebih halus */
 }
 
 .cat-ear-left {
-    left: 4px; /* Posisi lebih natural */
-    transform: rotate(-20deg); /* Sudut lebih lembut */
+    left: 4px;
+    transform: rotate(-15deg); /* Sudut lebih lembut */
 }
 
 .cat-ear-right {
-    right: 4px; /* Posisi lebih natural */
-    transform: rotate(20deg); /* Sudut lebih lembut */
+    right: 4px;
+    transform: rotate(15deg); /* Sudut lebih lembut */
 }
 
-/* Mata kucing */
+/* Mata kucing - elegan dengan kilau */
 .cat-eyes {
     position: absolute;
-    top: 10px; /* Disesuaikan dengan kepala oval */
+    top: 8px; /* Disesuaikan dengan kepala yang lebih kecil */
     left: 50%;
     transform: translateX(-50%);
-    width: 20px;
-    height: 10px;
+    width: 18px;
+    height: 8px;
 }
 
 .cat-eyes::before,
 .cat-eyes::after {
     content: '';
     position: absolute;
-    width: 6px;
-    height: 2px; /* Mata tertutup default */
+    width: 5px; /* Lebih kecil */
+    height: 1px; /* Mata tertutup lebih tipis */
     background: #6a5545; /* Coklat lembut */
     border-radius: 50%;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
 }
 
 .cat-eyes::before {
@@ -185,24 +184,24 @@ header::after {
 
 .sleeping-cat:hover .cat-eyes::before,
 .sleeping-cat:hover .cat-eyes::after {
-    height: 6px; /* Mata terbuka saat hover */
+    height: 5px; /* Mata terbuka lebih kecil */
     border-radius: 50%;
-    background: radial-gradient(circle, #2e1f14 20%, #6a5545 80%); /* Efek pupil */
+    background: radial-gradient(circle, #2e1f14 20%, #6a5545 60%, #ffffff 80%); /* Kilau putih kecil */
 }
 
-/* Ekor kucing - lebih kecil dan proporsional */
+/* Ekor kucing - lebih ramping dan elegan */
 .cat-tail {
     position: absolute;
-    bottom: 8px; /* Sedikit lebih rendah agar menyatu dengan tubuh */
-    right: -20px; /* Dikurangi untuk proporsi */
-    width: 25px; /* Lebih kecil dari sebelumnya */
-    height: 12px; /* Tinggi dikurangi untuk bentuk lebih ramping */
-    background: #ad8b72; /* Peach tua */
-    border-radius: 50% 20% 50% 30%; /* Lengkungan halus dan natural */
-    transform: rotate(-30deg); /* Sudut lebih lembut untuk kesan natural */
-    transform-origin: left center; /* Pivot di pangkal ekor */
-    animation: tailFlick 4s ease-in-out infinite; /* Animasi kibasan lembut */
-    box-shadow: 0 1px 2px rgba(173, 139, 114, 0.2); /* Bayangan lebih kecil */
+    bottom: 8px;
+    right: -18px; /* Lebih dekat ke tubuh */
+    width: 22px; /* Lebih kecil lagi */
+    height: 10px; /* Ramping */
+    background: linear-gradient(90deg, #ceac93 0%, #ad8b72 100%); /* Gradasi halus */
+    border-radius: 50% 20% 50% 40%; /* Lengkungan lebih lembut */
+    transform: rotate(-25deg); /* Sudut lebih anggun */
+    transform-origin: left center;
+    animation: tailSway 5s ease-in-out infinite; /* Animasi lebih lambat dan lembut */
+    box-shadow: 0 1px 2px rgba(173, 139, 114, 0.2);
 }
 
 /* Efek bulu pada ekor */
@@ -213,9 +212,9 @@ header::after {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 10%, transparent 30%);
-    opacity: 0.4;
-    border-radius: inherit; /* Mengikuti bentuk ekor */
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.3) 10%, transparent 40%);
+    opacity: 0.5;
+    border-radius: inherit;
 }
 
 /* Tombol dengan efek glow pastel dan ukuran lebih kecil */
@@ -353,7 +352,7 @@ body::before {
 /* Animasi Lembut */
 @keyframes catWiggle {
     0%, 100% { transform: rotate(0deg); }
-    50% { transform: rotate(3deg); }
+    50% { transform: rotate(2deg); } /* Lebih halus */
 }
 
 @keyframes catTail {
@@ -377,13 +376,12 @@ body::before {
     66% { border-color: rgba(173, 139, 114, 0.3); } /* Peach tua */
 }
 
-@keyframes tailFlick {
-    0%, 100% { transform: rotate(-30deg); }
-    20% { transform: rotate(-35deg); }
-    40% { transform: rotate(-25deg); }
-    60% { transform: rotate(-40deg); }
-    80% { transform: rotate(-20deg); }
-}
+@keyframes tailSway {
+    0%, 100% { transform: rotate(-25deg); }
+    25% { transform: rotate(-30deg); }
+    50% { transform: rotate(-20deg); }
+    75% { transform: rotate(-28deg); }
+} /* Animasi lebih lambat dan anggun */
 
 @keyframes bubbleRise {
     0% { transform: translateY(0) scale(0.6); opacity: 0.6; }
