@@ -88,7 +88,7 @@ header::after {
     position: absolute;
     top: 50%;
     right: 15px;
-    width: 90px; /* Dipertahankan untuk menampung ekor yang lebih realistis */
+    width: 80px; /* Dikurangi sedikit agar proporsional dengan ekor yang lebih kecil */
     height: 50px;
     transform: translateY(-50%);
     z-index: 10;
@@ -190,19 +190,19 @@ header::after {
     background: radial-gradient(circle, #2e1f14 20%, #6a5545 80%); /* Efek pupil */
 }
 
-/* Ekor kucing - lebih natural dengan lengkungan seperti ekor kucing asli */
+/* Ekor kucing - lebih kecil dan proporsional */
 .cat-tail {
     position: absolute;
-    bottom: 10px; /* Sedikit lebih tinggi agar terlihat menyatu dengan tubuh */
-    right: -30px; /* Diperpanjang untuk memberikan ruang lengkungan */
-    width: 35px; /* Panjang sedang untuk proporsi */
-    height: 20px; /* Lebih tinggi untuk membentuk lengkungan */
+    bottom: 8px; /* Sedikit lebih rendah agar menyatu dengan tubuh */
+    right: -20px; /* Dikurangi untuk proporsi */
+    width: 25px; /* Lebih kecil dari sebelumnya */
+    height: 12px; /* Tinggi dikurangi untuk bentuk lebih ramping */
     background: #ad8b72; /* Peach tua */
-    border-radius: 50% 10% 50% 20%; /* Lengkungan lebih halus dan asimetris */
-    transform: rotate(-45deg); /* Posisi awal miring ke atas */
+    border-radius: 50% 20% 50% 30%; /* Lengkungan halus dan natural */
+    transform: rotate(-30deg); /* Sudut lebih lembut untuk kesan natural */
     transform-origin: left center; /* Pivot di pangkal ekor */
-    animation: tailFlick 4s ease-in-out infinite; /* Animasi seperti kibasan ekor kucing */
-    box-shadow: 0 1px 3px rgba(173, 139, 114, 0.2);
+    animation: tailFlick 4s ease-in-out infinite; /* Animasi kibasan lembut */
+    box-shadow: 0 1px 2px rgba(173, 139, 114, 0.2); /* Bayangan lebih kecil */
 }
 
 /* Efek bulu pada ekor */
@@ -378,11 +378,11 @@ body::before {
 }
 
 @keyframes tailFlick {
-    0%, 100% { transform: rotate(-45deg); }
-    20% { transform: rotate(-50deg); }
-    40% { transform: rotate(-40deg); }
-    60% { transform: rotate(-55deg); }
-    80% { transform: rotate(-35deg); }
+    0%, 100% { transform: rotate(-30deg); }
+    20% { transform: rotate(-35deg); }
+    40% { transform: rotate(-25deg); }
+    60% { transform: rotate(-40deg); }
+    80% { transform: rotate(-20deg); }
 }
 
 @keyframes bubbleRise {
