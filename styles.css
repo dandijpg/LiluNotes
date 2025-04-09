@@ -94,9 +94,9 @@ h1 {
 
 .search-cat-wrapper {
     display: flex;
-    flex-direction: row; /* Kucing di sebelah kiri search bar */
-    align-items: center;
-    gap: 15px; /* Jarak presisi antara kucing dan search bar */
+    flex-direction: column; /* Pisahkan kucing dan search bar secara vertikal di desktop */
+    align-items: flex-end; /* Posisikan elemen ke kanan */
+    gap: 15px;
     order: 2;
     max-width: 320px;
 }
@@ -150,8 +150,7 @@ h1 {
     flex-shrink: 0;
     width: 60px;
     height: 40px;
-    transform: scaleX(-1); /* Kucing menghadap ke kanan (ke search bar) */
-    order: -1; /* Memastikan kucing di sebelah kiri */
+    transform: scaleX(-1); /* Kucing menghadap ke kanan */
 }
 
 @media (max-width: 768px) {
@@ -164,7 +163,7 @@ h1 {
         font-size: 1.6em;
     }
     .search-cat-wrapper {
-        flex-direction: row; /* Tetap row untuk tablet */
+        flex-direction: row; /* Kembali ke row untuk tablet dan mobile */
         align-items: center;
         width: 100%;
         max-width: none;
