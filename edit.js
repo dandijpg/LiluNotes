@@ -3,7 +3,7 @@ let categories = JSON.parse(localStorage.getItem('categories') || '[]');
 const urlParams = new URLSearchParams(window.location.search);
 const noteId = urlParams.get('id');
 const searchQuery = urlParams.get('search') || '';
-let calcMode = 'financial'; // Default mode
+let calcMode = 'financial'; // Mode default
 
 document.addEventListener('DOMContentLoaded', () => {
     setupCategorySelect();
@@ -70,6 +70,7 @@ function setupEventListeners() {
     document.getElementById('underlineBtn').addEventListener('click', () => applyCommand('underline'));
     document.getElementById('markDoneBtn').addEventListener('click', markAsDone);
     document.getElementById('linkBtn').addEventListener('click', insertLink);
+    document.getElementById('imageBtn').addEventListener('click', importImage);
     document.getElementById('numberedListBtn').addEventListener('click', () => applyCommand('insertOrderedList'));
     document.getElementById('bulletListBtn').addEventListener('click', () => applyCommand('insertUnorderedList'));
     document.getElementById('arrowListBtn').addEventListener('click', insertArrowList);
@@ -98,6 +99,34 @@ function setupEventListeners() {
     noteContent.addEventListener('click', handleTableClick);
     noteContent.addEventListener('input', checkAmountInput);
     noteContent.addEventListener('focusout', updateFinancialTable);
+}
+
+function importImage() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const img = document.createElement('img');
+                img.src = event.target.result;
+                img.style.maxWidth = '100%';
+                const noteContent = document.getElementById('noteContent');
+                const range = saveCursorPosition(noteContent);
+                if (range) {
+                    range.deleteContents();
+                    range.insertNode(img);
+                    restoreCursorPosition(range);
+                } else {
+                    noteContent.appendChild(img);
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+    input.click();
 }
 
 function markAsDone() {
@@ -131,7 +160,7 @@ function markAsDone() {
 function insertLink() {
     const noteContent = document.getElementById('noteContent');
     const range = saveCursorPosition(noteContent);
-    const url = prompt('Enter the URL:');
+    const url = prompt('Masukkan URL:');
     if (url && range) {
         const selectedText = range.toString();
         const a = document.createElement('a');
@@ -207,8 +236,8 @@ function insertFinancialTable() {
             <table class="finance-table" data-mode="${calcMode}">
                 <thead>
                     <tr>
-                        <th contenteditable="false">Description</th>
-                        <th contenteditable="false">Amount</th>
+                        <th contenteditable="false">Deskripsi</th>
+                        <th contenteditable="false">Jumlah</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -300,7 +329,7 @@ function checkAmountInput(event) {
             const warning = document.createElement('span');
             warning.className = 'warning';
             warning.innerHTML = '⚠️';
-            warning.title = 'Only numbers are supported';
+            warning.title = 'Hanya angka yang didukung';
             target.parentElement.appendChild(warning);
         } else if (isValid || value === '') {
             if (existingWarning) target.parentElement.removeChild(target.nextElementSibling);
@@ -368,7 +397,7 @@ function addRow() {
     if (table && !table.classList.contains('finance-table')) {
         const row = table.insertRow(-1);
         const cellCount = table.rows[0].cells.length;
-        for (let i = 0; i < cellCount; i++) row.insertCell(-1).textContent = 'New Cell';
+        for (let i = 0; i < cellCount; i++) row.insertCell(-1).textContent = 'Sel Baru';
     }
 }
 
@@ -377,7 +406,7 @@ function addColumn() {
     if (table && !table.classList.contains('finance-table')) {
         Array.from(table.rows).forEach(row => {
             const cell = row.insertCell(-1);
-            cell.textContent = row.cells[0].tagName === 'TH' ? 'New Header' : 'New Cell';
+            cell.textContent = row.cells[0].tagName === 'TH' ? 'Header Baru' : 'Sel Baru';
         });
     }
 }
@@ -471,7 +500,7 @@ function copyFormattedText() {
     selection.addRange(range);
     document.execCommand('copy');
     selection.removeAllRanges();
-    alert('Formatted text copied to clipboard!');
+    alert('Teks terformat telah disalin ke clipboard!');
 }
 
 function saveNote() {
@@ -480,7 +509,7 @@ function saveNote() {
     const category = document.getElementById('categorySelect').value;
 
     if (!noteTitle) {
-        alert('Please enter a title for your note.');
+        alert('Silakan masukkan judul untuk catatan Anda.');
         return;
     }
 
