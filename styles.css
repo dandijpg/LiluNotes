@@ -152,7 +152,30 @@ h1 {
     height: 40px;
     transform: scaleX(-1); /* Kucing menghadap ke kanan */
 }
+/* Image Styles */
+.note-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(206, 172, 147, 0.2);
+    margin: 10px 0;
+    display: block;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
 
+.note-content img:hover {
+    transform: scale(1.02);
+}
+
+.note-content-view img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(206, 172, 147, 0.2);
+    margin: 10px 0;
+    display: block;
+}
 @media (max-width: 768px) {
     .header-content {
         flex-direction: column;
