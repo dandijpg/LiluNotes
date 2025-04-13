@@ -32,9 +32,14 @@ function setupView() {
         
         noteContent.innerHTML = tempDiv.innerHTML;
         highlightSearchTerms(noteContent, searchQuery);
+
+        // Tambahkan event listener untuk semua gambar
+        noteContent.querySelectorAll('img').forEach(img => {
+            img.addEventListener('click', () => openImageModal(img.src));
+        });
     } else {
-        noteTitle.textContent = 'Note Not Found';
-        noteContent.innerHTML = '<p>The requested note could not be found. It may have been deleted or the ID is invalid.</p>';
+        noteTitle.textContent = 'Catatan Tidak Ditemukan';
+        noteContent.innerHTML = '<p>Catatan yang diminta tidak ditemukan. Mungkin telah dihapus atau ID tidak valid.</p>';
     }
 }
 
@@ -61,10 +66,10 @@ function copyFormattedText(element) {
             'text/plain': new Blob([textContent], { type: 'text/plain' })
         })
     ]).then(() => {
-        alert('Formatted text copied to clipboard!');
+        alert('Teks terformat disalin ke clipboard!');
     }).catch(err => {
-        console.error('Failed to copy: ', err);
-        alert('Failed to copy formatted text.');
+        console.error('Gagal menyalin: ', err);
+        alert('Gagal menyalin teks terformat.');
     });
 }
 
@@ -89,4 +94,37 @@ function highlightSearchTerms(element, query) {
             }
         });
     });
+}
+
+// Fungsi untuk membuka modal gambar
+function openImageModal(src) {
+    let modal = document.querySelector('.image-modal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.className = 'image-modal';
+        modal.innerHTML = `
+            <span class="close-btn">×</span>
+            <img src="${src}">
+        `;
+        document.body.appendChild(modal);
+    } else {
+        modal.querySelector('img').src = src;
+    }
+
+    modal.style.display = 'flex';
+    modal.classList.add('active');
+
+    // Tutup modal saat klik tombol close atau di luar gambar
+    modal.querySelector('.close-btn').onclick = () => closeImageModal(modal);
+    modal.onclick = (e) => {
+        if (e.target === modal) closeImageModal(modal);
+    };
+}
+
+// Fungsi untuk menutup modal
+function closeImageModal(modal) {
+    modal.classList.remove('active');
+    setTimeout(() => {
+        modal.style.display = 'none';
+    }, 300);
 }
