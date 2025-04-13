@@ -17,7 +17,7 @@ let accessToken = localStorage.getItem('googleAccessToken');
 
 function normalizeNotes() {
     notes = notes.map((note, index) => ({
-        title: note.title || 'Untitled',
+        title: note.title || 'Tanpa Judul',
         content: note.content || '',
         category: note.category || 'Uncategorized',
         timestamp: note.timestamp || new Date().toISOString(),
@@ -50,7 +50,7 @@ function initGoogleAPI() {
                         accessToken = response.access_token;
                         localStorage.setItem('googleAccessToken', accessToken);
                         updateGoogleAuthUI(true);
-                        alert('Successfully signed in with Google!');
+                        alert('Berhasil masuk dengan Google!');
                     }
                 },
             });
@@ -117,9 +117,9 @@ function renderCategories() {
         div.innerHTML = `${category} <span class="count">${count}</span>`;
         div.addEventListener('click', () => {
             if (categoryPins[category]) {
-                const pin = prompt(`Enter PIN for ${category}:`);
+                const pin = prompt(`Masukkan PIN untuk ${category}:`);
                 if (pin !== categoryPins[category]) {
-                    alert('Incorrect PIN!');
+                    alert('PIN salah!');
                     return;
                 }
             }
@@ -176,7 +176,7 @@ function renderNotes() {
 
     viewMoreBtn.style.display = regular.length > end ? 'block' : 'none';
     if (filteredNotes.length === 0) {
-        notesList.innerHTML = '<div class="no-notes">No notes found.</div>';
+        notesList.innerHTML = '<div class="no-notes">Tidak ada catatan ditemukan.</div>';
     }
 
     notesList.className = `notes-list ${isListMode ? 'list-mode' : ''}`;
@@ -188,23 +188,23 @@ function createNoteElement(note) {
     const isBlurred = categoryPins[note.category] && currentCategory !== note.category && !unlockedNotes.has(note.originalIndex);
     div.className = `note ${isBlurred ? 'blurred' : ''}`;
     const date = new Date(note.timestamp);
-    const formattedDate = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) + ', ' + 
-                         date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+    const formattedDate = date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) + ', ' + 
+                         date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
     const previewText = note.content.replace(/<[^>]+>/g, '').substring(0, 50) + (note.content.length > 50 ? '...' : '');
     div.innerHTML = `
         <div class="title">${note.title}</div>
         <div class="category">${note.category}</div>
         <div class="timestamp">${formattedDate}</div>
-        <div class="preview">${previewText || 'No content'}</div>
+        <div class="preview">${previewText || 'Tidak ada konten'}</div>
     `;
     div.addEventListener('click', () => {
         if (isBlurred) {
-            const pin = prompt(`Enter PIN for ${note.category} to view this note:`);
+            const pin = prompt(`Masukkan PIN untuk ${note.category} untuk melihat catatan ini:`);
             if (pin === categoryPins[note.category]) {
                 unlockedNotes.add(note.originalIndex);
                 window.location.href = `view.html?id=${note.originalIndex}&search=${encodeURIComponent(searchQuery)}`;
             } else {
-                alert('Incorrect PIN!');
+                alert('PIN salah!');
             }
         } else {
             window.location.href = `view.html?id=${note.originalIndex}&search=${encodeURIComponent(searchQuery)}`;
@@ -215,7 +215,7 @@ function createNoteElement(note) {
 }
 
 function addCategory() {
-    const category = prompt('Enter new category:').trim();
+    const category = prompt('Masukkan kategori baru:').trim();
     if (category && !categories.includes(category)) {
         categories.push(category);
         localStorage.setItem('categories', JSON.stringify(categories));
@@ -230,7 +230,7 @@ function toggleMode() {
     modeIcon.innerHTML = isListMode 
         ? '<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/>'
         : '<rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/>';
-    toggleBtn.lastChild.nodeValue = isListMode ? ' Grid Mode' : ' List Mode';
+    toggleBtn.lastChild.nodeValue = isListMode ? ' Mode Kotak' : ' Mode Daftar';
     renderNotes();
 }
 
@@ -258,7 +258,7 @@ function backupNotes() {
 
 function backupToGoogleDrive() {
     if (!accessToken) {
-        alert('Please sign in with Google first!');
+        alert('Silakan masuk dengan Google terlebih dahulu!');
         return;
     }
 
@@ -281,15 +281,15 @@ function backupToGoogleDrive() {
     .then(response => response.json())
     .then(data => {
         if (data.id) {
-            alert('Backup successfully uploaded to Google Drive!');
+            alert('Cadangan berhasil diunggah ke Google Drive!');
             hideMoreOptions();
         } else {
-            throw new Error('Upload failed');
+            throw new Error('Pengunggahan gagal');
         }
     })
     .catch(error => {
-        console.error('Error uploading to Google Drive:', error);
-        alert('Failed to backup to Google Drive. Please try again.');
+        console.error('Kesalahan saat mengunggah ke.Google Drive:', error);
+        alert('Gagal mencadangkan ke Google Drive. Silakan coba lagi.');
     });
 }
 
@@ -298,12 +298,12 @@ function copyBackupToClipboard() {
     const jsonString = JSON.stringify(data);
     navigator.clipboard.writeText(jsonString)
         .then(() => {
-            alert('Backup copied to clipboard. Paste it into a new file in Google Drive or any text editor.');
+            alert('Cadangan disalin ke clipboard. Tempelkan ke file baru di Google Drive atau editor teks apa pun.');
             hideMoreOptions();
         })
         .catch(err => {
-            console.error('Error copying to clipboard:', err);
-            alert('Failed to copy to clipboard. Please try again.');
+            console.error('Kesalahan saat menyalin ke clipboard:', err);
+            alert('Gagal menyalin ke clipboard. Silakan coba lagi.');
         });
 }
 
@@ -315,16 +315,22 @@ function restoreNotes() {
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.onload = (event) => {
-            const data = JSON.parse(event.target.result);
-            notes = data.notes || [];
-            categories = data.categories || ['All', 'Uncategorized'];
-            categoryPins = data.categoryPins || {};
-            normalizeNotes();
-            localStorage.setItem('notes', JSON.stringify(notes));
-            localStorage.setItem('categories', JSON.stringify(categories));
-            localStorage.setItem('categoryPins', JSON.stringify(categoryPins));
-            renderCategories();
-            renderNotes();
+            try {
+                const data = JSON.parse(event.target.result);
+                notes = data.notes || [];
+                categories = data.categories || ['All', 'Uncategorized'];
+                categoryPins = data.categoryPins || {};
+                normalizeNotes();
+                localStorage.setItem('notes', JSON.stringify(notes));
+                localStorage.setItem('categories', JSON.stringify(categories));
+                localStorage.setItem('categoryPins', JSON.stringify(categoryPins));
+                renderCategories();
+                renderNotes();
+                alert('Catatan berhasil dipulihkan!');
+            } catch (err) {
+                alert('Gagal memulihkan catatan. Pastikan file JSON valid.');
+                console.error('Kesalahan saat memulihkan:', err);
+            }
         };
         reader.readAsText(file);
     };
@@ -333,7 +339,7 @@ function restoreNotes() {
 }
 
 function resetNotes() {
-    if (confirm('Are you sure you want to reset all notes and categories?')) {
+    if (confirm('Apakah Anda yakin ingin mengatur ulang semua catatan dan kategori?')) {
         notes = [];
         categories = ['All', 'Uncategorized'];
         categoryPins = {};
@@ -349,7 +355,7 @@ function logoutFromGoogle() {
     accessToken = null;
     localStorage.removeItem('googleAccessToken');
     updateGoogleAuthUI(false);
-    alert('Signed out from Google.');
+    alert('Keluar dari Google.');
     hideMoreOptions();
 }
 
@@ -364,11 +370,11 @@ function showContextMenu(e, category) {
         </div>
         <div class="menu-item" onclick="deleteCategory('${category}')">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M4 6l1 14a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1l1-14"/></svg>
-            Delete
+            Hapus
         </div>
         <div class="menu-item" onclick="setCategoryPin('${category}')">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-5"/><path d="M18 5l-6-3-6 3v12l6 3 6-3z"/></svg>
-            ${categoryPins[category] ? 'Change/Remove PIN' : 'Set PIN'}
+            ${categoryPins[category] ? 'Ubah/Hapus PIN' : 'Atur PIN'}
         </div>
     `;
 
@@ -398,11 +404,11 @@ function showNoteContextMenu(e, originalIndex) {
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 ${note.pinned ? '<path d="M12 17v5"/><path d="M10 3h4v14h-4z"/>' : '<path d="M12 22v-5"/><path d="M18 5l-6-3-6 3v12l6 3 6-3z"/>'}
             </svg>
-            ${note.pinned ? 'Unpin' : 'Pin'}
+            ${note.pinned ? 'Lepas Pin' : 'Pin'}
         </div>
         <div class="menu-item" onclick="deleteNote(${originalIndex})">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M4 6l1 14a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1l1-14"/></svg>
-            Delete
+            Hapus
         </div>
     `;
 
@@ -437,7 +443,7 @@ function hideContextMenus() {
 }
 
 function editCategory(oldCategory) {
-    const newCategory = prompt('Edit category name:', oldCategory).trim();
+    const newCategory = prompt('Edit nama kategori:', oldCategory).trim();
     if (newCategory && newCategory !== oldCategory && !categories.includes(newCategory)) {
         const index = categories.indexOf(oldCategory);
         categories[index] = newCategory;
@@ -472,23 +478,23 @@ function deleteCategory(category) {
 function setCategoryPin(category) {
     const currentPin = categoryPins[category];
     if (currentPin) {
-        const oldPin = prompt(`Enter current PIN for ${category} to change or remove it:`);
+        const oldPin = prompt(`Masukkan PIN saat ini untuk ${category} untuk mengubah atau menghapusnya:`);
         if (oldPin === null) return;
         if (oldPin !== currentPin) {
-            alert('Incorrect current PIN!');
+            alert('PIN saat ini salah!');
             return;
         }
     }
 
-    const action = currentPin ? 'Enter new PIN (leave blank to remove):' : 'Set PIN for category:';
+    const action = currentPin ? 'Masukkan PIN baru (kosongkan untuk menghapus):' : 'Atur PIN untuk kategori:';
     const pin = prompt(action, '');
     if (pin === null) return;
     if (pin.trim() === '') {
         delete categoryPins[category];
-        alert(`PIN removed from ${category}`);
+        alert(`PIN dihapus dari ${category}`);
     } else {
         categoryPins[category] = pin.trim();
-        alert(`PIN ${currentPin ? 'changed for' : 'set for'} ${category}`);
+        alert(`PIN ${currentPin ? 'diubah untuk' : 'diatur untuk'} ${category}`);
     }
     localStorage.setItem('categoryPins', JSON.stringify(categoryPins));
     hideContextMenus();
