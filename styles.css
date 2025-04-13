@@ -240,6 +240,29 @@ h1 {
     margin-top: 5px;
     font-style: italic;
 }
+/* Gaya untuk tombol tab */
+#tabBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    margin: 0 2px;
+    transition: background 0.3s ease;
+}
+
+#tabBtn:hover {
+    background: rgba(206, 172, 147, 0.2);
+    border-radius: 4px;
+}
+
+#tabBtn svg {
+    vertical-align: middle;
+}
+
+/* Pastikan tab terlihat di catatan */
+.note-content {
+    white-space: pre-wrap; /* Menjaga spasi dan tab */
+}
 @media (max-width: 768px) {
     .header-content {
         flex-direction: column;
