@@ -108,25 +108,88 @@ function importImage() {
     input.onchange = (e) => {
         const file = e.target.files[0];
         if (file) {
+            // Validasi ukuran file (maks 2MB)
+            if (file.size > 2 * 1024 * 1024) {
+                alert('Ukuran gambar terlalu besar. Maksimum 2MB.');
+                return;
+            }
+
             const reader = new FileReader();
             reader.onload = (event) => {
+                const container = document.createElement('div');
+                container.style.textAlign = 'center';
+
                 const img = document.createElement('img');
+                img.classList.add('loading'); // Efek loading
                 img.src = event.target.result;
-                img.style.maxWidth = '100%';
+
+                // Hapus efek loading saat gambar selesai dimuat
+                img.onload = () => {
+                    img.classList.remove('loading');
+                };
+
+                // Tanyakan caption (opsional)
+                const captionText = prompt('Masukkan keterangan gambar (kosongkan jika tidak perlu):') || '';
+                if (captionText) {
+                    const caption = document.createElement('div');
+                    caption.className = 'image-caption';
+                    caption.textContent = captionText;
+                    container.appendChild(img);
+                    container.appendChild(caption);
+                } else {
+                    container.appendChild(img);
+                }
+
                 const noteContent = document.getElementById('noteContent');
                 const range = saveCursorPosition(noteContent);
                 if (range) {
                     range.deleteContents();
-                    range.insertNode(img);
+                    range.insertNode(container);
                     restoreCursorPosition(range);
                 } else {
-                    noteContent.appendChild(img);
+                    noteContent.appendChild(container);
                 }
+
+                // Tambahkan event listener untuk modal
+                img.addEventListener('click', () => openImageModal(event.target.result));
             };
             reader.readAsDataURL(file);
         }
     };
     input.click();
+}
+
+// Fungsi untuk membuka modal gambar
+function openImageModal(src) {
+    let modal = document.querySelector('.image-modal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.className = 'image-modal';
+        modal.innerHTML = `
+            <span class="close-btn">×</span>
+            <img src="${src}">
+        `;
+        document.body.appendChild(modal);
+    } else {
+        modal.querySelector('img').src = src;
+    }
+
+    modal.style.display = 'flex';
+    modal.classList.add('active');
+
+    // Tutup modal saat klik tombol close atau di luar gambar
+    modal.querySelector('.close-btn').onclick = () => closeImageModal(modal);
+    modal.onclick = (e) => {
+        if (e.target === modal) closeImageModal(modal);
+    };
+}
+
+// Fungsi untuk menutup modal
+function closeImageModal(modal) {
+    modal.classList.remove('active');
+    setTimeout(() => {
+        modal.style.display = 'none';
+    }, 300);
 }
 
 function markAsDone() {
