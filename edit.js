@@ -1,3 +1,5 @@
+// edit.js
+
 let notes = JSON.parse(localStorage.getItem('notes') || '[]');
 let categories = JSON.parse(localStorage.getItem('categories') || '[]');
 const urlParams = new URLSearchParams(window.location.search);
@@ -101,49 +103,85 @@ function setupEventListeners() {
     noteContent.addEventListener('input', checkAmountInput);
     noteContent.addEventListener('focusout', updateFinancialTable);
 
-    // Tangkap pintasan keyboard untuk daftar dan tab
+    // Tangkap pintasan keyboard
     noteContent.addEventListener('keydown', (e) => {
         if (e.key === 'Tab') {
             e.preventDefault();
-            insertTab();
+            insertTab(e.shiftKey);
         } else if (e.key === 'Enter') {
             handleEnterKey(e);
+        } else if (e.ctrlKey && e.shiftKey && e.key === '7') {
+            e.preventDefault();
+            insertNumberedList();
+        }
+    });
+
+    // Pintasan keyboard lainnya
+    document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey) {
+            switch (e.key) {
+                case 'b': e.preventDefault(); document.getElementById('boldBtn').click(); break;
+                case 'i': e.preventDefault(); document.getElementById('italicBtn').click(); break;
+                case 'u': e.preventDefault(); document.getElementById('underlineBtn').click(); break;
+                case 's': e.preventDefault(); saveNote(); break;
+            }
         }
     });
 }
 
-function insertTab() {
+function insertTab(isShift = false) {
     const noteContent = document.getElementById('noteContent');
     const range = saveCursorPosition(noteContent);
-    if (range) {
-        const selectedNode = range.commonAncestorContainer;
-        const parentLi = selectedNode.nodeType === 3 ? selectedNode.parentElement.closest('li') : selectedNode.closest('li');
-        if (parentLi && parentLi.parentElement.tagName === 'OL') {
-            // Tambah indentasi untuk daftar
-            let currentIndent = parseInt(parentLi.dataset.indent || '0');
-            currentIndent++;
-            parentLi.dataset.indent = currentIndent;
-            parentLi.style.marginLeft = `${currentIndent * 16}px`; // 16px = 4 spasi
-            restoreCursorPosition(range);
+    if (!range) return;
+
+    const selectedNode = range.commonAncestorContainer;
+    const parentLi = selectedNode.nodeType === Node.TEXT_NODE ? selectedNode.parentElement.closest('li') : selectedNode.closest('li');
+
+    if (parentLi && parentLi.parentElement.tagName === 'OL') {
+        // Tangani indentasi untuk daftar
+        let currentIndent = parseInt(parentLi.dataset.indent || '0');
+        if (isShift) {
+            // Kurangi indentasi
+            if (currentIndent > 0) {
+                currentIndent--;
+                if (currentIndent === 0) {
+                    parentLi.removeAttribute('data-indent');
+                } else {
+                    parentLi.setAttribute('data-indent', currentIndent);
+                }
+            }
         } else {
-            // Sisipkan tab normal
-            const tabNode = document.createTextNode('\u00A0\u00A0\u00A0\u00A0');
-            range.deleteContents();
-            range.insertNode(tabNode);
-            const newRange = document.createRange();
-            newRange.setStartAfter(tabNode);
-            newRange.setEndAfter(tabNode);
-            restoreCursorPosition(newRange);
+            // Tambah indentasi (maksimum 3 level)
+            if (currentIndent < 3) {
+                currentIndent++;
+                parentLi.setAttribute('data-indent', currentIndent);
+            }
         }
+        // Pindahkan kursor kembali ke dalam <li>
+        const newRange = document.createRange();
+        newRange.selectNodeContents(parentLi);
+        newRange.collapse(false); // Kursor di akhir
+        restoreCursorPosition(newRange);
+    } else {
+        // Sisipkan 4 spasi untuk tab normal
+        const tabNode = document.createTextNode('\u00A0\u00A0\u00A0\u00A0');
+        range.deleteContents();
+        range.insertNode(tabNode);
+        const newRange = document.createRange();
+        newRange.setStartAfter(tabNode);
+        newRange.setEndAfter(tabNode);
+        restoreCursorPosition(newRange);
     }
 }
 
 function handleEnterKey(e) {
     const noteContent = document.getElementById('noteContent');
     const selection = window.getSelection();
+    if (!selection.rangeCount) return;
+
     const range = selection.getRangeAt(0);
     const selectedNode = range.commonAncestorContainer;
-    const parentLi = selectedNode.nodeType === 3 ? selectedNode.parentElement.closest('li') : selectedNode.closest('li');
+    const parentLi = selectedNode.nodeType === Node.TEXT_NODE ? selectedNode.parentElement.closest('li') : selectedNode.closest('li');
 
     if (parentLi && parentLi.parentElement.tagName === 'OL') {
         e.preventDefault();
@@ -151,8 +189,9 @@ function handleEnterKey(e) {
         const isEmpty = parentLi.textContent.trim() === '';
 
         if (isEmpty) {
-            // Jika item daftar kosong, hentikan daftar
+            // Hentikan daftar jika kosong
             const p = document.createElement('p');
+            p.innerHTML = '<br>'; // Pastikan paragraf tidak benar-benar kosong
             ol.parentNode.insertBefore(p, ol.nextSibling);
             ol.removeChild(parentLi);
             if (ol.children.length === 0) {
@@ -163,19 +202,21 @@ function handleEnterKey(e) {
             newRange.setEnd(p, 0);
             selection.removeAllRanges();
             selection.addRange(newRange);
-            p.focus();
+            noteContent.focus();
         } else {
             // Lanjutkan daftar
             const newLi = document.createElement('li');
-            newLi.dataset.indent = parentLi.dataset.indent || '0';
-            newLi.style.marginLeft = parentLi.style.marginLeft || '0px';
+            const currentIndent = parentLi.dataset.indent || '0';
+            if (currentIndent !== '0') {
+                newLi.setAttribute('data-indent', currentIndent);
+            }
             parentLi.parentElement.insertBefore(newLi, parentLi.nextSibling);
             const newRange = document.createRange();
-            newRange.setStart(newLi, 0);
-            newRange.setEnd(newLi, 0);
+            newRange.selectNodeContents(newLi);
+            newRange.collapse(true); // Kursor di awal <li> baru
             selection.removeAllRanges();
             selection.addRange(newRange);
-            newLi.focus();
+            noteContent.focus();
         }
     }
 }
@@ -183,41 +224,41 @@ function handleEnterKey(e) {
 function insertNumberedList() {
     const noteContent = document.getElementById('noteContent');
     const range = saveCursorPosition(noteContent);
-    if (range) {
-        const selectedNode = range.commonAncestorContainer;
-        const parentLi = selectedNode.nodeType === 3 ? selectedNode.parentElement.closest('li') : selectedNode.closest('li');
-        const parentOl = parentLi ? parentLi.parentElement : null;
+    if (!range) return;
 
-        if (parentOl && parentOl.tagName === 'OL') {
-            // Jika sudah di dalam daftar, hentikan daftar
-            const p = document.createElement('p');
-            parentOl.parentNode.insertBefore(p, parentOl.nextSibling);
-            if (parentLi.textContent.trim() === '') {
-                parentOl.removeChild(parentLi);
-                if (parentOl.children.length === 0) {
-                    parentOl.parentNode.removeChild(parentOl);
-                }
-            }
-            const newRange = document.createRange();
-            newRange.setStart(p, 0);
-            newRange.setEnd(p, 0);
-            restoreCursorPosition(newRange);
-            p.focus();
-        } else {
-            // Buat daftar baru
-            const ol = document.createElement('ol');
-            ol.className = 'custom-numbered';
-            const li = document.createElement('li');
-            li.dataset.indent = '0';
-            ol.appendChild(li);
-            range.deleteContents();
-            range.insertNode(ol);
-            const newRange = document.createRange();
-            newRange.setStart(li, 0);
-            newRange.setEnd(li, 0);
-            restoreCursorPosition(newRange);
-            li.focus();
+    const selectedNode = range.commonAncestorContainer;
+    const parentLi = selectedNode.nodeType === Node.TEXT_NODE ? selectedNode.parentElement.closest('li') : selectedNode.closest('li');
+    const parentOl = parentLi ? parentLi.parentElement : null;
+
+    if (parentOl && parentOl.tagName === 'OL') {
+        // Keluar dari daftar
+        const p = document.createElement('p');
+        p.innerHTML = parentLi.textContent || '<br>';
+        parentOl.parentNode.insertBefore(p, parentOl.nextSibling);
+        parentOl.removeChild(parentLi);
+        if (parentOl.children.length === 0) {
+            parentOl.parentNode.removeChild(parentOl);
         }
+        const newRange = document.createRange();
+        newRange.selectNodeContents(p);
+        newRange.collapse(true);
+        restoreCursorPosition(newRange);
+        noteContent.focus();
+    } else {
+        // Buat daftar baru
+        const ol = document.createElement('ol');
+        ol.className = 'custom-numbered';
+        const li = document.createElement('li');
+        ol.appendChild(li);
+        range.deleteContents();
+        range.insertNode(ol);
+        // Tambahkan <br> untuk memastikan kursor bisa mengetik
+        li.innerHTML = '<br>';
+        const newRange = document.createRange();
+        newRange.selectNodeContents(li);
+        newRange.collapse(true); // Kursor di dalam <li>
+        restoreCursorPosition(newRange);
+        noteContent.focus();
     }
 }
 
@@ -262,7 +303,10 @@ function importImage() {
                 if (range) {
                     range.deleteContents();
                     range.insertNode(container);
-                    restoreCursorPosition(range);
+                    const newRange = document.createRange();
+                    newRange.setStartAfter(container);
+                    newRange.setEndAfter(container);
+                    restoreCursorPosition(newRange);
                 } else {
                     noteContent.appendChild(container);
                 }
@@ -310,7 +354,7 @@ function markAsDone() {
     const range = saveCursorPosition(noteContent);
     if (range) {
         const selectedNode = range.commonAncestorContainer;
-        const parentElement = selectedNode.nodeType === 3 ? selectedNode.parentElement : selectedNode;
+        const parentElement = selectedNode.nodeType === Node.TEXT_NODE ? selectedNode.parentElement : selectedNode;
 
         if (parentElement.classList && parentElement.classList.contains('done')) {
             const textNode = document.createTextNode(parentElement.textContent);
@@ -327,7 +371,10 @@ function markAsDone() {
                 span.textContent = selectedText;
                 range.deleteContents();
                 range.insertNode(span);
-                restoreCursorPosition(range);
+                const newRange = document.createRange();
+                newRange.setStartAfter(span);
+                newRange.setEndAfter(span);
+                restoreCursorPosition(newRange);
             }
         }
     }
@@ -346,7 +393,10 @@ function insertLink() {
         a.className = 'copyable';
         range.deleteContents();
         range.insertNode(a);
-        restoreCursorPosition(range);
+        const newRange = document.createRange();
+        newRange.setStartAfter(a);
+        newRange.setEndAfter(a);
+        restoreCursorPosition(newRange);
     }
 }
 
@@ -357,13 +407,15 @@ function insertArrowList() {
         const ul = document.createElement('ul');
         ul.style.listStyleType = '"➜ "';
         const li = document.createElement('li');
+        li.innerHTML = '<br>';
         ul.appendChild(li);
         range.deleteContents();
         range.insertNode(ul);
         const newRange = document.createRange();
-        newRange.setStart(li, 0);
-        newRange.setEnd(li, 0);
+        newRange.selectNodeContents(li);
+        newRange.collapse(true);
         restoreCursorPosition(newRange);
+        noteContent.focus();
     }
 }
 
@@ -372,7 +424,7 @@ function applyFloat(direction) {
     const range = saveCursorPosition(noteContent);
     if (range) {
         const selectedNode = range.commonAncestorContainer;
-        const parentElement = selectedNode.nodeType === 3 ? selectedNode.parentElement : selectedNode;
+        const parentElement = selectedNode.nodeType === Node.TEXT_NODE ? selectedNode.parentElement : selectedNode;
         if (parentElement && parentElement !== noteContent) {
             parentElement.style.float = direction;
             if (direction === 'none') {
@@ -400,7 +452,10 @@ function insertTable() {
             </table>
         </div>`;
     document.execCommand('insertHTML', false, tableHtml);
-    restoreCursorPosition(range);
+    const newRange = document.createRange();
+    newRange.setStartAfter(noteContent.querySelector('.table-wrapper:last-child'));
+    newRange.setEndAfter(noteContent.querySelector('.table-wrapper:last-child'));
+    restoreCursorPosition(newRange);
     toggleTableButtons();
 }
 
@@ -431,7 +486,10 @@ function insertFinancialTable() {
             </table>
         </div>`;
     document.execCommand('insertHTML', false, financeHtml);
-    restoreCursorPosition(range);
+    const newRange = document.createRange();
+    newRange.setStartAfter(noteContent.querySelector('.finance-table-wrapper:last-child'));
+    newRange.setEndAfter(noteContent.querySelector('.finance-table-wrapper:last-child'));
+    restoreCursorPosition(newRange);
     toggleFinanceButtons();
 }
 
@@ -727,14 +785,3 @@ function highlightSearchTerms(element, query) {
         node.parentNode.replaceChild(span, node);
     });
 }
-
-document.addEventListener('keydown', (e) => {
-    if (e.ctrlKey) {
-        switch (e.key) {
-            case 'b': e.preventDefault(); document.getElementById('boldBtn').click(); break;
-            case 'i': e.preventDefault(); document.getElementById('italicBtn').click(); break;
-            case 'u': e.preventDefault(); document.getElementById('underlineBtn').click(); break;
-            case 's': e.preventDefault(); saveNote(); break;
-        }
-    }
-});
