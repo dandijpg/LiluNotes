@@ -160,7 +160,7 @@ function insertTab(isShift = false) {
         // Pindahkan kursor kembali ke dalam <li>
         const newRange = document.createRange();
         newRange.selectNodeContents(parentLi);
-        newRange.collapse(false); // Kursor di akhir
+        newRange.collapse(false); // Kursor di akhir konten <li>
         restoreCursorPosition(newRange);
     } else {
         // Sisipkan 4 spasi untuk tab normal
@@ -180,19 +180,26 @@ function handleEnterKey(e) {
     if (!selection.rangeCount) return;
 
     const range = selection.getRangeAt(0);
-    const selectedNode = range.commonAncestorContainer;
-    const parentLi = selectedNode.nodeType === Node.TEXT_NODE ? selectedNode.parentElement.closest('li') : selectedNode.closest('li');
+    let selectedNode = range.commonAncestorContainer;
+    if (selectedNode.nodeType === Node.TEXT_NODE) {
+        selectedNode = selectedNode.parentElement;
+    }
+    const parentLi = selectedNode.closest('li');
 
     if (parentLi && parentLi.parentElement.tagName === 'OL') {
         e.preventDefault();
         const ol = parentLi.parentElement;
-        const isEmpty = parentLi.textContent.trim() === '';
+        const isEmpty = parentLi.innerText.trim() === '' && !parentLi.querySelector('img, table, div');
 
         if (isEmpty) {
             // Hentikan daftar jika kosong
             const p = document.createElement('p');
-            p.innerHTML = '<br>'; // Pastikan paragraf tidak benar-benar kosong
-            ol.parentNode.insertBefore(p, ol.nextSibling);
+            p.innerHTML = '<br>'; // Pastikan paragraf bisa diketik
+            if (ol.nextSibling) {
+                ol.parentNode.insertBefore(p, ol.nextSibling);
+            } else {
+                ol.parentNode.appendChild(p);
+            }
             ol.removeChild(parentLi);
             if (ol.children.length === 0) {
                 ol.parentNode.removeChild(ol);
@@ -210,7 +217,14 @@ function handleEnterKey(e) {
             if (currentIndent !== '0') {
                 newLi.setAttribute('data-indent', currentIndent);
             }
-            parentLi.parentElement.insertBefore(newLi, parentLi.nextSibling);
+            // Masukkan <li> baru setelah <li> saat ini
+            if (parentLi.nextSibling) {
+                ol.insertBefore(newLi, parentLi.nextSibling);
+            } else {
+                ol.appendChild(newLi);
+            }
+            // Pindahkan kursor ke <li> baru
+            newLi.innerHTML = '<br>'; // Pastikan <li> bisa diketik
             const newRange = document.createRange();
             newRange.selectNodeContents(newLi);
             newRange.collapse(true); // Kursor di awal <li> baru
@@ -233,8 +247,12 @@ function insertNumberedList() {
     if (parentOl && parentOl.tagName === 'OL') {
         // Keluar dari daftar
         const p = document.createElement('p');
-        p.innerHTML = parentLi.textContent || '<br>';
-        parentOl.parentNode.insertBefore(p, parentOl.nextSibling);
+        p.innerHTML = parentLi.innerText || '<br>';
+        if (parentOl.nextSibling) {
+            parentOl.parentNode.insertBefore(p, parentOl.nextSibling);
+        } else {
+            parentOl.parentNode.appendChild(p);
+        }
         parentOl.removeChild(parentLi);
         if (parentOl.children.length === 0) {
             parentOl.parentNode.removeChild(parentOl);
@@ -249,14 +267,21 @@ function insertNumberedList() {
         const ol = document.createElement('ol');
         ol.className = 'custom-numbered';
         const li = document.createElement('li');
+        li.innerHTML = '<br>'; // Pastikan <li> bisa diketik
         ol.appendChild(li);
         range.deleteContents();
         range.insertNode(ol);
-        // Tambahkan <br> untuk memastikan kursor bisa mengetik
-        li.innerHTML = '<br>';
+        // Tambahkan <p> kosong setelah <ol> untuk mencegah kursor tersangkut
+        const p = document.createElement('p');
+        p.innerHTML = '<br>';
+        if (ol.nextSibling) {
+            ol.parentNode.insertBefore(p, ol.nextSibling);
+        } else {
+            ol.parentNode.appendChild(p);
+        }
         const newRange = document.createRange();
         newRange.selectNodeContents(li);
-        newRange.collapse(true); // Kursor di dalam <li>
+        newRange.collapse(true); // Kursor di dalam <li> pertama
         restoreCursorPosition(newRange);
         noteContent.focus();
     }
