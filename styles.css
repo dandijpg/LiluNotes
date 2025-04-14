@@ -94,8 +94,8 @@ h1 {
 
 .search-cat-wrapper {
     display: flex;
-    flex-direction: column; /* Pisahkan kucing dan search bar secara vertikal di desktop */
-    align-items: flex-end; /* Posisikan elemen ke kanan */
+    flex-direction: column;
+    align-items: flex-end;
     gap: 15px;
     order: 2;
     max-width: 320px;
@@ -150,26 +150,27 @@ h1 {
     flex-shrink: 0;
     width: 60px;
     height: 40px;
-    transform: scaleX(-1); /* Kucing menghadap ke kanan */
+    transform: scaleX(-1);
 }
+
 /* Image Styles */
 .note-content img, .note-content-view img {
     display: block;
-    height: 200px; /* Tinggi tetap */
-    width: auto; /* Lebar otomatis menjaga rasio */
-    max-width: 100%; /* Tidak melebihi lebar kontainer */
-    margin: 15px auto; /* Pusatkan gambar */
-    border-radius: 12px; /* Sudut membulat */
-    box-shadow: 0 6px 20px rgba(206, 172, 147, 0.3); /* Bayangan lembut */
-    transition: all 0.3s ease; /* Transisi halus */
-    background: linear-gradient(145deg, rgba(255, 245, 230, 0.5), rgba(235, 210, 180, 0.5)); /* Latar elegan */
-    padding: 8px; /* Ruang di sekitar gambar */
-    cursor: pointer; /* Menunjukkan bisa diklik */
+    height: 200px;
+    width: auto;
+    max-width: 100%;
+    margin: 15px auto;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(206, 172, 147, 0.3);
+    transition: all 0.3s ease;
+    background: linear-gradient(145deg, rgba(255, 245, 230, 0.5), rgba(235, 210, 180, 0.5));
+    padding: 8px;
+    cursor: pointer;
 }
 
 .note-content img:hover, .note-content-view img:hover {
-    transform: scale(1.05); /* Zoom halus saat hover */
-    box-shadow: 0 8px 25px rgba(206, 172, 147, 0.4); /* Bayangan lebih dalam */
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(206, 172, 147, 0.4);
 }
 
 /* Modal untuk zoom gambar */
@@ -214,12 +215,6 @@ h1 {
     transform: rotate(90deg);
 }
 
-/* Animasi fade-in untuk modal */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
 /* Loading placeholder */
 .note-content img.loading, .note-content-view img.loading {
     background: linear-gradient(90deg, #f0e4d7 25%, #f5ece0 50%, #f0e4d7 75%);
@@ -240,6 +235,7 @@ h1 {
     margin-top: 5px;
     font-style: italic;
 }
+
 /* Gaya untuk tombol tab */
 #tabBtn {
     background: none;
@@ -260,59 +256,11 @@ h1 {
 }
 
 /* Pastikan tab terlihat di catatan */
-.note-content {
+.note-content, .note-content-view {
     white-space: pre-wrap; /* Menjaga spasi dan tab */
 }
-@media (max-width: 768px) {
-    .header-content {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-    }
-    h1 {
-        font-size: 1.6em;
-    }
-    .search-cat-wrapper {
-        flex-direction: row; /* Kembali ke row untuk tablet dan mobile */
-        align-items: center;
-        width: 100%;
-        max-width: none;
-        gap: 15px;
-        justify-content: space-between;
-    }
-    .search-wrapper {
-        width: auto;
-        flex-grow: 1;
-    }
-    .search-bar input {
-        width: 100%;
-    }
-    .sleeping-cat {
-        width: 50px;
-        height: 35px;
-        transform: scaleX(-1); /* Tetap menghadap ke kanan */
-    }
-}
 
-@media (max-width: 480px) {
-    h1 {
-        font-size: 1.3em;
-    }
-    .search-bar input {
-        padding: 8px 12px;
-        font-size: 0.85em;
-    }
-    .sleeping-cat {
-        width: 40px;
-        height: 30px;
-        transform: scaleX(-1); /* Tetap menghadap ke kanan */
-    }
-    .search-cat-wrapper {
-        gap: 10px;
-    }
-}
-
-/* Categories dengan scrollbar tersembunyi */
+/* Categories */
 .categories {
     display: flex;
     gap: 10px;
@@ -321,18 +269,17 @@ h1 {
     padding: 12px;
     background: #fefbe8;
     border-radius: 20px;
-    position: relative;
     white-space: nowrap;
     scroll-behavior: smooth;
     box-shadow: 0 4px 15px rgba(206, 172, 147, 0.15);
     transition: box-shadow 0.3s ease;
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling di iOS */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE dan Edge */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .categories::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, dan browser berbasis Webkit */
+    display: none;
 }
 
 .categories:hover {
@@ -407,6 +354,7 @@ h1 {
     background: rgba(255, 255, 255, 0.35);
 }
 
+/* Controls */
 .controls-wrapper {
     background: #fefbe8;
     padding: 15px;
@@ -440,84 +388,76 @@ button {
     gap: 6px;
 }
 
-.add-category {
+.add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn, .reset-btn {
     padding: 10px 20px;
     border-radius: 25px;
     border: 1px solid rgba(206, 172, 147, 0.3);
-    background: #e3c9a4;
-    color: #6a5545;
     font-size: 0.9em;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.4s ease;
     box-shadow: 0 3px 10px rgba(206, 172, 147, 0.2);
     font-family: 'Comic Neue', sans-serif;
+    color: #6a5545;
+}
+
+.add-category {
+    background: #e3c9a4;
 }
 
 .add-category:hover, .add-category:active {
     background: #fefbe8;
-    box-shadow: 0 5px 15px rgba(206, 172, 147, 0.3);
     transform: translateY(-3px);
 }
 
 .add-note {
-    padding: 10px 20px;
-    border-radius: 25px;
-    border: 1px solid rgba(206, 172, 147, 0.3);
     background: #ceac93;
-    color: #6a5545;
-    font-size: 0.9em;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    box-shadow: 0 3px 10px rgba(206, 172, 147, 0.2);
-    font-family: 'Comic Neue', sans-serif;
 }
 
 .add-note:hover, .add-note:active {
     background: #e3c9a4;
-    box-shadow: 0 5px 15px rgba(206, 172, 147, 0.3);
     transform: translateY(-3px);
 }
 
-.toggle-mode {
-    padding: 10px 20px;
-    border-radius: 25px;
-    border: 1px solid rgba(206, 172, 147, 0.3);
+.toggle-mode, .more-btn {
     background: #fefbe8;
-    color: #6a5545;
-    font-size: 0.9em;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    box-shadow: 0 3px 10px rgba(206, 172, 147, 0.2);
-    font-family: 'Comic Neue', sans-serif;
 }
 
-.toggle-mode:hover, .toggle-mode:active {
+.toggle-mode:hover, .toggle-mode:active, .more-btn:hover, .more-btn:active {
     background: #e3c9a4;
-    color: #ad8b72;
-    box-shadow: 0 5px 15px rgba(206, 172, 147, 0.3);
+    transform: translateY(-3px);
 }
 
-.more-btn {
-    padding: 10px 20px;
-    border-radius: 25px;
-    border: 1px solid rgba(206, 172, 147, 0.3);
+.backup-btn {
+    background: #ad8b72;
+}
+
+.backup-btn:hover, .backup-btn:active {
+    background: #ceac93;
+}
+
+.restore-btn, .copy-backup-btn, .google-auth-btn {
+    background: #e3c9a4;
+}
+
+.restore-btn:hover, .restore-btn:active, .copy-backup-btn:hover, .copy-backup-btn:active, .google-auth-btn:hover, .google-auth-btn:active {
     background: #fefbe8;
-    color: #6a5545;
-    font-size: 0.9em;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    box-shadow: 0 3px 10px rgba(206, 172, 147, 0.2);
-    font-family: 'Comic Neue', sans-serif;
 }
 
-.more-btn:hover, .more-btn:active {
+.backup-google-btn {
+    background: #ceac93;
+}
+
+.backup-google-btn:hover, .backup-google-btn:active {
     background: #e3c9a4;
-    color: #ad8b72;
-    box-shadow: 0 5px 15px rgba(206, 172, 147, 0.3);
+}
+
+.google-logout-btn, .reset-btn {
+    background: #ad8b72;
+}
+
+.google-logout-btn:hover, .google-logout-btn:active, .reset-btn:hover, .reset-btn:active {
+    background: #ceac93;
 }
 
 .more-options {
@@ -545,55 +485,7 @@ button {
     transform: translateY(0);
 }
 
-.backup-btn, .restore-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn, .reset-btn {
-    padding: 10px 20px;
-    border-radius: 25px;
-    border: 1px solid rgba(206, 172, 147, 0.3);
-    font-size: 0.9em;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    box-shadow: 0 3px 10px rgba(206, 172, 147, 0.2);
-    font-family: 'Comic Neue', sans-serif;
-    color: #6a5545;
-}
-
-.backup-btn {
-    background: #ad8b72;
-}
-
-.backup-btn:hover, .backup-btn:active {
-    background: #ceac93;
-    box-shadow: 0 5px 15px rgba(206, 172, 147, 0.3);
-}
-
-.restore-btn, .copy-backup-btn, .google-auth-btn {
-    background: #e3c9a4;
-}
-
-.restore-btn:hover, .restore-btn:active, .copy-backup-btn:hover, .copy-backup-btn:active, .google-auth-btn:hover, .google-auth-btn:active {
-    background: #fefbe8;
-    box-shadow: 0 5px 15px rgba(206, 172, 147, 0.3);
-}
-
-.backup-google-btn {
-    background: #ceac93;
-}
-
-.backup-google-btn:hover, .backup-google-btn:active {
-    background: #e3c9a4;
-    box-shadow: 0 5px 15px rgba(206, 172, 147, 0.3);
-}
-
-.google-logout-btn lourde-btn {
-    background: #ad8b72;
-}
-
-.google-logout-btn:hover, .google-logout-btn:active, .reset-btn:hover, .reset-btn:active {
-    background: #ceac93;
-    box-shadow: 0 5px 15px rgba(206, 172, 147, 0.3);
-}
-
+/* Notes */
 .pinned-section {
     margin-bottom: 25px;
     display: none;
@@ -609,7 +501,6 @@ button {
     color: #ad8b72;
     margin-bottom: 15px;
     text-align: center;
-    transition: all 0.4s ease;
     text-shadow: 0 2px 4px rgba(206, 172, 147, 0.2);
 }
 
@@ -621,7 +512,6 @@ button {
     display: grid;
     gap: 15px;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    transition: all 0.4s ease;
 }
 
 .notes-list.list-mode {
@@ -650,7 +540,7 @@ button {
     pointer-events: auto;
 }
 
-.note:hover, .note:active {
+.note:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(206, 172, 147, 0.3);
     background: #e3c9a4;
@@ -663,7 +553,6 @@ button {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 100%;
 }
 
 .note .category {
@@ -682,81 +571,42 @@ button {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 100%;
 }
 
 .note .preview {
     font-size: 0.9em;
-    color: #ad8b72;
+    color: #6a5545;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-    max-width: 100%;
-    word-break: break-word;
+    line-height: 1.4;
+    max-height: 3.6em;
+}
+
+.note:hover .category {
+    background: #ceac93;
+    color: #fff;
+}
+
+.note.pinned {
+    border: 2px solid #ad8b72;
+    position: relative;
+}
+
+.note.pinned::before {
+    content: '📌';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.2em;
 }
 
 .notes-list.list-mode .note {
     width: 100%;
     border-radius: 15px;
     padding: 12px;
-    box-shadow: 0 4px 15px rgba(206, 172, 147, 0.2);
-}
-
-.view-more {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin: 20px auto 0;
-    padding: 10px 20px;
-    background: #ceac93;
-    border: 1px solid rgba(206, 172, 147, 0.3);
-    border-radius: 25px;
-    color: #6a5545;
-    font-size: 0.9em;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    box-shadow: 0 3px 10px rgba(206, 172, 147, 0.2);
-    font-family: 'Comic Neue', sans-serif;
-}
-
-.view-more:hover, .view-more:active {
-    background: #e3c9a4;
-    box-shadow: 0 5px 15px rgba(206, 172, 147, 0.3);
-    transform: translateY(-3px);
-}
-
-.context-menu, .note-context-menu {
-    position: absolute;
-    background: #fefbe8;
-    border-radius: 20px;
-    box-shadow: 0 5px 15px rgba(206, 172, 147, 0.25);
-    display: none;
-    z-index: 100;
-    transition: opacity 0.3s ease;
-    min-width: 150px;
-    border: 1px solid rgba(206, 172, 147, 0.25);
-    font-family: 'Comic Neue', sans-serif;
-}
-
-.menu-item {
-    padding: 8px 15px;
-    color: #6a5545;
-    font-weight: 400;
-    font-size: 0.95em;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.menu-item:hover {
-    background: #ceac93;
-    color: #fff;
-    border-radius: 15px;
 }
 
 /* Edit Container */
@@ -770,7 +620,7 @@ button {
     animation: fadeIn 0.8s ease-in-out;
 }
 
-/* Toolbar dengan scrollbar tersembunyi */
+/* Toolbar */
 .toolbar {
     display: flex;
     flex-wrap: nowrap;
@@ -780,17 +630,16 @@ button {
     padding: 15px;
     border-radius: 20px;
     box-shadow: 0 4px 15px rgba(206, 172, 147, 0.15);
-    justify-content: flex-start;
     border: 1px solid rgba(206, 172, 147, 0.25);
     overflow-x: auto;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE dan Edge */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .toolbar::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, dan browser berbasis Webkit */
+    display: none;
 }
 
 .toolbar-section {
@@ -805,7 +654,6 @@ button {
     color: #ad8b72;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    text-shadow: 0 1px 2px rgba(206, 172, 147, 0.15);
 }
 
 .toolbar-group {
@@ -816,14 +664,13 @@ button {
     background: #fefbe8;
     box-shadow: 0 2px 8px rgba(206, 172, 147, 0.15);
     border: 1px solid rgba(206, 172, 147, 0.25);
-    transition: all 0.4s ease;
 }
 
 .toolbar-group:hover {
     box-shadow: 0 4px 12px rgba(206, 172, 147, 0.25);
 }
 
-.tool-btn, .edit-btn, .exit-btn, .table-tool-btn {
+.tool-btn, .edit-btn, .exit-btn, .table-tool-btn, .finance-tool-btn {
     padding: 8px;
     background: #fefbe8;
     border: 1px solid rgba(206, 172, 147, 0.3);
@@ -842,15 +689,11 @@ button {
     font-family: 'Comic Neue', sans-serif;
 }
 
-.tool-btn:hover, .edit-btn:hover, .exit-btn:hover, .table-tool-btn:hover {
+.tool-btn:hover, .edit-btn:hover, .exit-btn:hover, .table-tool-btn:hover, .finance-tool-btn:hover {
     background: #ceac93;
     color: #fff;
     box-shadow: 0 4px 12px rgba(206, 172, 147, 0.25);
     transform: translateY(-2px);
-}
-
-.tool-btn:active, .edit-btn:active, .exit-btn:active, .table-tool-btn:active {
-    transform: scale(0.95);
 }
 
 .edit-btn {
@@ -869,6 +712,10 @@ button {
     background: #ceac93;
 }
 
+.table-tool-btn {
+    display: none;
+}
+
 .table-tool-btn.add-row-btn, .table-tool-btn.add-col-btn {
     background-color: #e3c9a4;
 }
@@ -885,9 +732,22 @@ button {
     background-color: #ceac93;
 }
 
-.table-tool-btn {
+.finance-tool-btn {
     display: none;
 }
+
+.finance-tool-btn.add-income-btn { background: #e3c9a4; }
+.finance-tool-btn.add-income-btn:hover { background: #fefbe8; }
+.finance-tool-btn.subtract-expense-btn { background: #ad8b72; color: #fff; }
+.finance-tool-btn.subtract-expense-btn:hover { background: #ceac93; }
+.finance-tool-btn.multiply-btn { background: #ceac93; }
+.finance-tool-btn.multiply-btn:hover { background: #e3c9a4; }
+.finance-tool-btn.divide-btn { background: #fefbe8; }
+.finance-tool-btn.divide-btn:hover { background: #e3c9a4; }
+.finance-tool-btn.calculate-btn { background: #e3c9a4; }
+.finance-tool-btn.calculate-btn:hover { background: #fefbe8; }
+.finance-tool-btn.delete-last-row-btn { background: #ad8b72; color: #fff; }
+.finance-tool-btn.delete-last-row-btn:hover { background: #ceac93; }
 
 /* Editor Header */
 .editor-header {
@@ -897,7 +757,6 @@ button {
     margin-bottom: 20px;
 }
 
-/* Category Select */
 .category-select {
     padding: 10px 15px;
     border: 1px solid rgba(206, 172, 147, 0.3);
@@ -918,7 +777,6 @@ button {
     outline: none;
 }
 
-/* Calc Mode Select */
 .calc-mode-select {
     padding: 8px 12px;
     border: 1px solid rgba(206, 172, 147, 0.3);
@@ -938,7 +796,6 @@ button {
     outline: none;
 }
 
-/* Note Title */
 .note-title {
     width: 100%;
     padding: 12px 15px;
@@ -958,7 +815,7 @@ button {
     outline: none;
 }
 
-/* Note Content dengan scrollbar tersembunyi */
+/* Note Content */
 .note-content {
     height: 350px;
     max-height: 350px;
@@ -976,19 +833,17 @@ button {
     position: relative;
     cursor: text;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE dan Edge */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    white-space: pre-wrap; /* Mendukung tab dan spasi */
 }
 
 .note-content::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, dan browser berbasis Webkit */
+    display: none;
 }
 
 .note-content[contenteditable="true"] {
     user-select: text;
-    -webkit-user-select: text;
-    -moz-user-select: text;
-    -ms-user-select: text;
 }
 
 .note-content:focus {
@@ -997,15 +852,109 @@ button {
     outline: none;
 }
 
-.note-content ul,
-.note-content ol {
-    margin: 0 auto;
-    padding-left: 35px;
-    max-width: 80%;
-    list-style-position: outside;
+/* Custom Numbered List */
+.note-content ol.custom-numbered {
+    list-style: none;
+    counter-reset: custom-counter;
+    padding-left: 16px; /* Indentasi dasar 4 spasi */
+    margin: 10px 0;
+}
+
+.note-content ol.custom-numbered li {
+    counter-increment: custom-counter;
+    position: relative;
+    padding-left: 24px; /* Ruang untuk nomor */
+    margin-bottom: 8px;
+}
+
+.note-content ol.custom-numbered li::before {
+    content: counter(custom-counter) " "; /* Nomor tanpa titik */
+    position: absolute;
+    left: 0;
+    color: #6a5545;
+    font-weight: 500;
+}
+
+.note-content ol.custom-numbered li[data-indent="1"] { margin-left: 16px; }
+.note-content ol.custom-numbered li[data-indent="2"] { margin-left: 32px; }
+.note-content ol.custom-numbered li[data-indent="3"] { margin-left: 48px; }
+/* Tambahkan lebih banyak level jika diperlukan */
+
+.note-content ul {
+    padding-left: 20px;
+    margin: 10px 0;
+}
+
+.note-content li {
+    margin-bottom: 8px;
 }
 
 /* View Mode Styles */
+.note-content-view {
+    min-height: 350px;
+    background: #fefbe8;
+    padding: 20px;
+    border: 1px solid rgba(206, 172, 147, 0.25);
+    border-radius: 20px;
+    color: #6a5545;
+    font-size: 1em;
+    font-weight: 400;
+    box-shadow: 0 4px 15px rgba(206, 172, 147, 0.2);
+    user-select: text;
+    overflow-x: auto;
+    word-wrap: break-word;
+    cursor: default;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    white-space: pre-wrap; /* Mendukung tab dan spasi */
+}
+
+.note-content-view::-webkit-scrollbar {
+    display: none;
+}
+
+.note-content-view:focus {
+    outline: none;
+    border-color: rgba(206, 172, 147, 0.5);
+    box-shadow: 0 6px 20px rgba(206, 172, 147, 0.3);
+}
+
+.note-content-view ol.custom-numbered {
+    list-style: none;
+    counter-reset: custom-counter;
+    padding-left: 16px;
+    margin: 10px 0;
+}
+
+.note-content-view ol.custom-numbered li {
+    counter-increment: custom-counter;
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 8px;
+}
+
+.note-content-view ol.custom-numbered li::before {
+    content: counter(custom-counter) " ";
+    position: absolute;
+    left: 0;
+    color: #6a5545;
+    font-weight: 500;
+}
+
+.note-content-view ol.custom-numbered li[data-indent="1"] { margin-left: 16px; }
+.note-content-view ol.custom-numbered li[data-indent="2"] { margin-left: 32px; }
+.note-content-view ol.custom-numbered li[data-indent="3"] { margin-left: 48px; }
+
+.note-content-view ul {
+    padding-left: 20px;
+    margin: 10px 0;
+}
+
+.note-content-view li {
+    margin-bottom: 8px;
+}
+
 .view-header {
     display: flex;
     justify-content: flex-end;
@@ -1026,50 +975,6 @@ button {
     box-shadow: 0 4px 15px rgba(206, 172, 147, 0.2);
 }
 
-/* Note Content View dengan scrollbar tersembunyi */
-.note-content-view {
-    min-height: 350px;
-    background: #fefbe8;
-    padding: 20px;
-    border: 1px solid rgba(206, 172, 147, 0.25);
-    border-radius: 20px;
-    color: #6a5545;
-    font-size: 1em;
-    font-weight: 400;
-    box-shadow: 0 4px 15px rgba(206, 172, 147, 0.2);
-    user-select: text;
-    overflow-x: auto;
-    word-wrap: break-word;
-    cursor: default;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE dan Edge */
-}
-
-.note-content-view::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, dan browser berbasis Webkit */
-}
-
-.note-content-view:focus {
-    outline: none;
-    border-color: rgba(206, 172, 147, 0.5);
-    box-shadow: 0 6px 20px rgba(206, 172, 147, 0.3);
-}
-
-.note-content-view [contenteditable="false"] {
-    cursor: default;
-    background: transparent;
-    border: none;
-}
-
-.note-content-view ul,
-.note-content-view ol {
-    margin: 0 auto;
-    padding-left: 35px;
-    max-width: 80%;
-    list-style-position: outside;
-}
-
 .save-btn {
     margin-top: 15px;
     padding: 10px 20px;
@@ -1082,19 +987,16 @@ button {
     cursor: pointer;
     transition: all 0.4s ease;
     box-shadow: 0 3px 10px rgba(206, 172, 147, 0.2);
-    font-family: 'Comic Neue', sans-serif;
 }
 
-.save-btn:hover, .save-btn:active {
+.save-btn:hover {
     background: #fefbe8;
-    box-shadow: 0 5px 15px rgba(206, 172, 147, 0.3);
     transform: translateY(-3px);
 }
 
 .done {
     text-decoration: line-through;
     color: #ceac93;
-    transition: all 0.4s ease;
 }
 
 .no-notes {
@@ -1120,7 +1022,7 @@ button {
     color: #fff;
 }
 
-/* Table Styles dengan scrollbar tersembunyi */
+/* Table Styles */
 .table-wrapper {
     position: relative;
     display: block;
@@ -1128,12 +1030,12 @@ button {
     overflow-x: auto;
     max-width: 100%;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE dan Edge */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .table-wrapper::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, dan browser berbasis Webkit */
+    display: none;
 }
 
 .regular-table {
@@ -1253,64 +1155,20 @@ button {
     background: #fefbe8;
     color: #6a5545;
     box-shadow: 0 2px 8px rgba(206, 172, 147, 0.15);
-    font-family: 'Comic Neue', sans-serif;
 }
 
-.finance-btn.add-income {
-    background: #e3c9a4;
-}
-
-.finance-btn.add-income:hover {
-    background: #fefbe8;
-    box-shadow: 0 4px 12px rgba(206, 172, 147, 0.25);
-}
-
-.finance-btn.subtract-expense {
-    background: #ad8b72;
-    color: #fff;
-}
-
-.finance-btn.subtract-expense:hover {
-    background: #ceac93;
-    box-shadow: 0 4px 12px rgba(206, 172, 147, 0.25);
-}
-
-.finance-btn.multiply {
-    background: #ceac93;
-}
-
-.finance-btn.multiply:hover {
-    background: #e3c9a4;
-    box-shadow: 0 4px 12px rgba(206, 172, 147, 0.25);
-}
-
-.finance-btn.divide {
-    background: #fefbe8;
-}
-
-.finance-btn.divide:hover {
-    background: #e3c9a4;
-    box-shadow: 0 4px 12px rgba(206, 172, 147, 0.25);
-}
-
-.finance-btn.calculate {
-    background: #e3c9a4;
-}
-
-.finance-btn.calculate:hover {
-    background: #fefbe8;
-    box-shadow: 0 4px 12px rgba(206, 172, 147, 0.25);
-}
-
-.finance-btn.delete-last-row {
-    background: #ad8b72;
-    color: #fff;
-}
-
-.finance-btn.delete-last-row:hover {
-    background: #ceac93;
-    box-shadow: 0 4px 12px rgba(206, 172, 147, 0.25);
-}
+.finance-btn.add-income { background: #e3c9a4; }
+.finance-btn.add-income:hover { background: #fefbe8; }
+.finance-btn.subtract-expense { background: #ad8b72; color: #fff; }
+.finance-btn.subtract-expense:hover { background: #ceac93; }
+.finance-btn.multiply { background: #ceac93; }
+.finance-btn.multiply:hover { background: #e3c9a4; }
+.finance-btn.divide { background: #fefbe8; }
+.finance-btn.divide:hover { background: #e3c9a4; }
+.finance-btn.calculate { background: #e3c9a4; }
+.finance-btn.calculate:hover { background: #fefbe8; }
+.finance-btn.delete-last-row { background: #ad8b72; color: #fff; }
+.finance-btn.delete-last-row:hover { background: #ceac93; }
 
 .finance-table td[contenteditable="true"][placeholder]::before {
     content: attr(placeholder);
@@ -1318,7 +1176,6 @@ button {
     font-style: italic;
 }
 
-/* Financial Table Popup Styles */
 .finance-options-btn {
     position: absolute;
     top: 6px;
@@ -1336,13 +1193,10 @@ button {
     align-items: center;
     justify-content: center;
     box-shadow: 0 2px 8px rgba(206, 172, 147, 0.15);
-    transition: all 0.4s ease;
-    font-family: 'Comic Neue', sans-serif;
 }
 
 .finance-options-btn:hover {
     background: #e3c9a4;
-    box-shadow: 0 4px 12px rgba(206, 172, 147, 0.25);
 }
 
 .finance-popup {
@@ -1357,18 +1211,81 @@ button {
     gap: 8px;
     border: 1px solid rgba(206, 172, 147, 0.25);
     min-width: 150px;
-    font-family: 'Comic Neue', sans-serif;
 }
 
 .finance-popup.active {
     display: flex;
 }
 
-/* Media Queries untuk Responsivitas */
+/* Context Menu */
+.context-menu, .note-context-menu {
+    position: absolute;
+    background: #fefbe8;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(206, 172, 147, 0.25);
+    display: none;
+    z-index: 100;
+    min-width: 150px;
+    border: 1px solid rgba(206, 172, 147, 0.25);
+}
+
+.menu-item {
+    padding: 8px 15px;
+    color: #6a5545;
+    font-weight: 400;
+    font-size: 0.95em;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.menu-item:hover {
+    background: #ceac93;
+    color: #fff;
+    border-radius: 15px;
+}
+
+.view-more {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 20px auto 0;
+    padding: 10px 20px;
+    background: #ceac93;
+    border: 1px solid rgba(206, 172, 147, 0.3);
+    border-radius: 25px;
+    color: #6a5545;
+    font-size: 0.9em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    box-shadow: 0 3px 10px rgba(206, 172, 147, 0.2);
+}
+
+.view-more:hover {
+    background: #e3c9a4;
+    transform: translateY(-3px);
+}
+
+/* Media Queries */
 @media (max-width: 768px) {
     .container { padding: 20px; border-radius: 25px; margin: 20px auto; }
     .background-gradient { margin: 10px; }
+    .header-content { flex-direction: column; align-items: flex-start; gap: 12px; }
     h1 { font-size: 1.6em; }
+    .search-cat-wrapper {
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        max-width: none;
+        gap: 15px;
+        justify-content: space-between;
+    }
+    .search-wrapper { width: auto; flex-grow: 1; }
+    .search-bar input { width: 100%; }
+    .sleeping-cat { width: 50px; height: 35px; }
     .controls { justify-content: center; gap: 10px; }
     .categories { gap: 8px; }
     .category { padding: 6px 15px; font-size: 0.9em; }
@@ -1376,13 +1293,7 @@ button {
         padding: 8px 15px;
         font-size: 0.85em;
     }
-    .more-options { 
-        right: auto; 
-        left: 50%; 
-        transform: translateX(-50%); 
-        width: 180px;
-        top: calc(100% + 5px);
-    }
+    .more-options { right: auto; left: 50%; transform: translateX(-50%); width: 180px; top: calc(100% + 5px); }
     .more-options.active { transform: translateX(-50%) translateY(0); }
     .pinned-section h2, .notes-section h2 { font-size: 1.3em; }
     .notes-list { grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -1396,7 +1307,7 @@ button {
     .context-menu, .note-context-menu { width: 150px; }
     .toolbar { padding: 12px; gap: 10px; }
     .toolbar-group { padding: 5px; }
-    .tool-btn, .edit-btn, .exit-btn, .table-tool-btn { padding: 6px; min-width: 34px; height: 34px; }
+    .tool-btn, .edit-btn, .exit-btn, .table-tool-btn, .finance-tool-btn { padding: 6px; min-width: 34px; height: 34px; }
     .toolbar-label { font-size: 0.75em; }
     .calc-mode-select { padding: 6px 10px; font-size: 0.85em; width: 110px; }
     .category-select { max-width: none; }
@@ -1404,24 +1315,21 @@ button {
     .note-content { height: 300px; max-height: 300px; }
     .note-content-view { min-height: 300px; }
     .save-btn { padding: 8px 15px; font-size: 0.85em; }
-    .sleeping-cat { width: 50px; height: 35px; transform: scaleX(-1); }
 }
 
 @media (max-width: 480px) {
     .container { padding: 15px; margin: 15px auto; }
     .background-gradient { margin: 5px; }
     h1 { font-size: 1.3em; }
+    .search-bar input { padding: 8px 12px; font-size: 0.85em; }
+    .sleeping-cat { width: 40px; height: 30px; }
+    .search-cat-wrapper { gap: 10px; }
     .category { padding: 5px 12px; font-size: 0.85em; }
     .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .reset-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn {
         padding: 6px 12px;
         font-size: 0.8em;
     }
-    .more-options { 
-        width: 160px;
-        left: 50%;
-        transform: translateX(-50%);
-        top: calc(100% + 5px);
-    }
+    .more-options { width: 160px; left: 50%; transform: translateX(-50%); top: calc(100% + 5px); }
     .more-options.active { transform: translateX(-50%) translateY(0); }
     .pinned-section h2, .notes-section h2 { font-size: 1.1em; }
     .note { padding: 10px; }
@@ -1433,45 +1341,11 @@ button {
     .view-more { padding: 6px 12px; font-size: 0.8em; }
     .context-menu, .note-context-menu { width: 140px; }
     .toolbar-label { font-size: 0.7em; }
-    .tool-btn, .edit-btn, .exit-btn, .table-tool-btn { padding: 5px; min-width: 32px; height: 32px; }
+    .tool-btn, .edit-btn, .exit-btn, .table-tool-btn, .finance-tool-btn { padding: 5px; min-width: 32px; height: 32px; }
     .calc-mode-select { padding: 5px 8px; font-size: 0.8em; width: 100px; }
     .note-title-view { font-size: 1.2em; padding: 10px; }
     .note-content-view { padding: 15px; min-height: 250px; }
     .finance-table { width: 100%; }
     .note-content { height: 250px; max-height: 250px; }
     .save-btn { padding: 6px 12px; font-size: 0.8em; }
-    .sleeping-cat { width: 40px; height: 30px; transform: scaleX(-1); }
 }
-
-/* Finance Table Tools */
-.finance-tool-btn {
-    padding: 8px;
-    background: #fefbe8;
-    border: 1px solid rgba(206, 172, 147, 0.3);
-    border-radius: 15px;
-    color: #6a5545;
-    font-weight: 500;
-    font-size: 0.95em;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    box-shadow: 0 2px 8px rgba(206, 172, 147, 0.15);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    min-width: 36px;
-    height: 36px;
-    font-family: 'Comic Neue', sans-serif;
-}
-
-.finance-tool-btn.add-income-btn { background: #e3c9a4; }
-.finance-tool-btn.add-income-btn:hover { background: #fefbe8; }
-.finance-tool-btn.subtract-expense-btn { background: #ad8b72; color: #fff; }
-.finance-tool-btn.subtract-expense-btn:hover { background: #ceac93; }
-.finance-tool-btn.multiply-btn { background: #ceac93; }
-.finance-tool-btn.multiply-btn:hover { background: #e3c9a4; }
-.finance-tool-btn.divide-btn { background: #fefbe8; }
-.finance-tool-btn.divide-btn:hover { background: #e3c9a4; }
-.finance-tool-btn.calculate-btn { background: #e3c9a4; }
-.finance-tool-btn.calculate-btn:hover { background: #fefbe8; }
-.finance-tool-btn.delete-last-row-btn { background: #ad8b72; color: #fff; }
-.finance-tool-btn.delete-last-row-btn:hover { background: #ceac93; }
