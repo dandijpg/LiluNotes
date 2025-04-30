@@ -95,7 +95,7 @@ function setupEventListeners() {
     document.getElementById('divideBtn').addEventListener('click', () => addFinanceRow(getSelectedFinanceTableWrapper(), '/'));
     document.getElementById('calculateBtn').addEventListener('click', () => calculateTotal(getSelectedFinanceTableWrapper()));
     document.getElementById('deleteLastRowBtn').addEventListener('click', () => deleteLastRow(getSelectedFinanceTableWrapper()));
-    document.getElementById('copyFormattedBtn').addEventListener('click', copyFormattedText);
+    document.getElementById('copyFormattedBtn').addEventListener('click', makeTextCopyable);
     document.getElementById('tabBtn').addEventListener('click', insertTab);
     document.getElementById('saveBtn').addEventListener('click', saveNote);
     document.getElementById('exitBtn').addEventListener('click', () => window.location.href = `index.html?search=${encodeURIComponent(searchQuery)}`);
@@ -750,16 +750,36 @@ function toggleFinanceButtons() {
     document.getElementById('deleteLastRowBtn').style.display = isFinanceTable ? 'inline-block' : 'none';
 }
 
-function copyFormattedText() {
+function makeTextCopyable() {
     const noteContent = document.getElementById('noteContent');
-    const range = document.createRange();
-    range.selectNodeContents(noteContent);
-    const selection = window.getSelection();
-    selection.removeAllRanges();
-    selection.addRange(range);
-    document.execCommand('copy');
-    selection.removeAllRanges();
-    alert('Teks terformat telah disalin ke clipboard!');
+    const range = window.getSelection().getRangeAt(0);
+
+    if (range && !range.collapsed) {
+        const selectedText = range.extractContents();
+        const span = document.createElement('span');
+        span.className = 'copyable';
+        span.appendChild(selectedText);
+        range.insertNode(span);
+
+        // Remove selection
+        window.getSelection().removeAllRanges();
+
+        // Add event listener for the new span (event delegation)
+        noteContent.addEventListener('click', handleCopyableClick);
+    } else {
+        alert('Pilih teks yang ingin dijadikan dapat disalin.');
+    }
+}
+
+function handleCopyableClick(event) {
+    if (event.target.classList.contains('copyable')) {
+        const text = event.target.innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            alert(`Teks "${text}" telah disalin!`);
+        }).catch(err => {
+            console.error('Gagal menyalin teks: ', err);
+        });
+    }
 }
 
 function saveNote() {
