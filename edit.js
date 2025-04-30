@@ -11,6 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
     setupCategorySelect();
     setupEditor();
     setupEventListeners();
+
+    // Setup toolbar folding
+    const foldButton = document.getElementById('foldToolbarBtn');
+    const toolbarContent = document.getElementById('toolbarContent');
+    if (foldButton && toolbarContent) {
+        foldButton.addEventListener('click', () => {
+            toolbarContent.classList.toggle('folded');
+        });
+    }
 });
 
 function saveCursorPosition(element) {
