@@ -26,10 +26,10 @@ body {
 
 .container {
     max-width: 1200px;
-    margin: 20px auto; /* Reduced top and bottom margin */
+    margin: 15px auto; /* Reduced top and bottom margin */
     background: rgba(255, 255, 255, 0.95);
-    border-radius: 25px; /* Slightly reduced border radius */
-    box-shadow: 0 4px 15px rgba(206, 172, 147, 0.2); /* Reduced shadow */
+    border-radius: 20px; /* Slightly reduced border radius */
+    box-shadow: 0 2px 8px rgba(206, 172, 147, 0.1); /* Reduced shadow */
     padding: 15px; /* Reduced padding */
     animation: fadeIn 0.8s ease-in-out;
     user-select: none;
@@ -53,7 +53,7 @@ header {
     padding: 15px;
     border-radius: 15px;
     box-shadow: 0 2px 8px rgba(206, 172, 147, 0.1);
-    border: 1px solid rgba(206, 172, 147, 0.2);
+    border: 1px solid rgba(206, 172, 147, 0.15);
     position: relative;
     transition: box-shadow 0.3s ease;
 }
@@ -104,8 +104,8 @@ h1 {
 
 .search-bar input {
     padding: 8px 10px;
-    border: 1px solid rgba(206, 172, 147, 0.2);
-    border-radius: 15px;
+    border: 1px solid rgba(206, 172, 147, 0.15);
+    border-radius: 12px;
     background: #fefbe8;
     color: #6a5545;
     font-size: 0.9em;
@@ -114,12 +114,12 @@ h1 {
     max-width: 100%;
     transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
     user-select: text;
-    box-shadow: 0 1px 4px rgba(206, 172, 147, 0.1);
+    box-shadow: 0 1px 4px rgba(206, 172, 147, 0.08);
 }
 
 .search-bar input:focus {
-    border-color: rgba(206, 172, 147, 0.4);
-    box-shadow: 0 2px 6px rgba(206, 172, 147, 0.2);
+    border-color: rgba(206, 172, 147, 0.3);
+    box-shadow: 0 2px 6px rgba(206, 172, 147, 0.15);
     outline: none;
     transform: scale(1.02);
 }
@@ -149,7 +149,7 @@ h1 {
     max-width: 100%;
     margin: 10px auto;
     border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(206, 172, 147, 0.2);
+    box-shadow: 0 2px 6px rgba(206, 172, 147, 0.1);
     transition: all 0.3s ease;
     background: linear-gradient(145deg, rgba(255, 245, 230, 0.5), rgba(235, 210, 180, 0.5));
     padding: 6px;
@@ -158,7 +158,7 @@ h1 {
 
 .note-content img:hover, .note-content-view img:hover {
     transform: scale(1.03);
-    box-shadow: 0 6px 18px rgba(206, 172, 147, 0.3);
+    box-shadow: 0 4px 10px rgba(206, 172, 147, 0.2);
 }
 
 /* Modal untuk zoom gambar */
@@ -180,7 +180,7 @@ h1 {
     max-width: 90%;
     max-height: 90%;
     border-radius: 6px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
     transform: scale(0.95);
     transition: transform 0.3s ease;
 }
@@ -194,7 +194,7 @@ h1 {
     top: 15px;
     right: 15px;
     color: white;
-    font-size: 24px;
+    font-size: 20px;
     cursor: pointer;
     transition: transform 0.3s ease;
 }
@@ -218,7 +218,7 @@ h1 {
 /* Caption gambar */
 .image-caption {
     text-align: center;
-    font-size: 0.8em;
+    font-size: 0.7em;
     color: #666;
     margin-top: 3px;
     font-style: italic;
@@ -229,7 +229,7 @@ h1 {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 6px;
+    padding: 5px;
     margin: 0 1px;
     transition: background 0.3s ease;
     border-radius: 6px;
@@ -247,7 +247,7 @@ h1 {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 6px;
+    padding: 5px;
     margin: 0 1px;
     transition: background 0.3s ease;
     border-radius: 6px;
@@ -269,15 +269,15 @@ h1 {
 /* Categories */
 .categories {
     display: flex;
-    gap: 8px;
-    margin-bottom: 15px;
+    gap: 6px;
+    margin-bottom: 10px;
     overflow-x: auto;
-    padding: 10px;
+    padding: 8px;
     background: #fefbe8;
-    border-radius: 15px;
+    border-radius: 12px;
     white-space: nowrap;
     scroll-behavior: smooth;
-    box-shadow: 0 2px 8px rgba(206, 172, 147, 0.1);
+    box-shadow: 0 1px 4px rgba(206, 172, 147, 0.05);
     transition: box-shadow 0.3s ease;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
@@ -289,7 +289,7 @@ h1 {
 }
 
 .categories:hover {
-    box-shadow: 0 4px 12px rgba(206, 172, 147, 0.2);
+    box-shadow: 0 2px 6px rgba(206, 172, 147, 0.15);
 }
 
 .categories::before {
@@ -298,10 +298,10 @@ h1 {
     top: 0;
     left: 0;
     width: 200%;
-    height: 8px;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q25 0 50 5 T100 5" stroke="%23ad8b72" stroke-width="3" fill="none" stroke-linecap="round"/></svg>') repeat-x;
-    background-size: 80px 8px;
-    animation: waveFlow 5s linear infinite;
+    height: 6px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q25 0 50 5 T100 5" stroke="%23ad8b72" stroke-width="2" fill="none" stroke-linecap="round"/></svg>') repeat-x;
+    background-size: 60px 6px;
+    animation: waveFlow 4s linear infinite;
     z-index: 1;
     mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
     -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
@@ -316,68 +316,68 @@ h1 {
 .category {
     display: flex;
     align-items: center;
-    gap: 4px;
-    padding: 6px 12px;
+    gap: 3px;
+    padding: 5px 10px;
     background: #e3c9a4;
-    border-radius: 15px;
+    border-radius: 12px;
     color: #ad8b72;
     font-weight: 500;
-    font-size: 0.85em;
+    font-size: 0.75em;
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 2px 6px rgba(206, 172, 147, 0.1);
+    box-shadow: 0 1px 4px rgba(206, 172, 147, 0.05);
     position: relative;
     z-index: 2;
-    border: 1px solid rgba(206, 172, 147, 0.2);
+    border: 1px solid rgba(206, 172, 147, 0.15);
 }
 
 .category .count {
-    background: rgba(206, 172, 147, 0.2);
-    border-radius: 8px;
-    padding: 2px 4px;
-    font-size: 0.75em;
-    box-shadow: 0 1px 2px rgba(206, 172, 147, 0.1);
+    background: rgba(206, 172, 147, 0.15);
+    border-radius: 6px;
+    padding: 1px 3px;
+    font-size: 0.7em;
+    box-shadow: 0 0px 1px rgba(206, 172, 147, 0.03);
 }
 
 .category.active {
     background: #ceac93;
     color: #fff;
-    box-shadow: 0 3px 8px rgba(206, 172, 147, 0.2);
+    box-shadow: 0 2px 6px rgba(206, 172, 147, 0.15);
 }
 
 .category.active .count {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .category:hover {
     background: #ceac93;
     color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(206, 172, 147, 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(206, 172, 147, 0.15);
 }
 
 .category:hover .count {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.2);
 }
 
 /* Controls */
 .controls-wrapper {
     background: #fefbe8;
-    padding: 10px;
-    border-radius: 15px;
-    box-shadow: 0 2px 8px rgba(206, 172, 147, 0.1);
-    margin-bottom: 15px;
-    border: 1px solid rgba(206, 172, 147, 0.2);
+    padding: 8px;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(206, 172, 147, 0.05);
+    margin-bottom: 10px;
+    border: 1px solid rgba(206, 172, 147, 0.15);
     transition: box-shadow 0.3s ease;
 }
 
 .controls-wrapper:hover {
-    box-shadow: 0 4px 12px rgba(206, 172, 147, 0.2);
+    box-shadow: 0 2px 6px rgba(206, 172, 147, 0.15);
 }
 
 .controls {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     justify-content: space-between;
     flex-wrap: wrap;
     position: relative;
@@ -385,24 +385,24 @@ h1 {
 
 .creation-controls, .utility-controls {
     display: flex;
-    gap: 8px;
+    gap: 6px;
 }
 
 button {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
 }
 
 .add-category, .add-note, .toggle-mode, .more-btn, .backup-btn, .restore-btn, .copy-backup-btn, .google-auth-btn, .backup-google-btn, .google-logout-btn, .reset-btn {
-    padding: 8px 15px;
-    border-radius: 15px;
-    border: 1px solid rgba(206, 172, 147, 0.2);
-    font-size: 0.85em;
+    padding: 6px 12px;
+    border-radius: 12px;
+    border: 1px solid rgba(206, 172, 147, 0.15);
+    font-size: 0.75em;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 2px 6px rgba(206, 172, 147, 0.1);
+    box-shadow: 0 1px 3px rgba(206, 172, 147, 0.05);
     font-family: 'Comic Neue', sans-serif;
     color: #6a5545;
 }
@@ -413,7 +413,7 @@ button {
 
 .add-category:hover, .add-category:active {
     background: #fefbe8;
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 }
 
 .add-note {
@@ -422,7 +422,7 @@ button {
 
 .add-note:hover, .add-note:active {
     background: #e3c9a4;
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 }
 
 .toggle-mode, .more-btn {
@@ -431,7 +431,7 @@ button {
 
 .toggle-mode:hover, .toggle-mode:active, .more-btn:hover, .more-btn:active {
     background: #e3c9a4;
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 }
 
 .backup-btn {
@@ -469,20 +469,20 @@ button {
 .more-options {
     display: none;
     position: absolute;
-    top: calc(100% + 5px);
+    top: calc(100% + 3px);
     right: 0;
     background: #fefbe8;
-    border-radius: 15px;
-    box-shadow: 0 3px 8px rgba(206, 172, 147, 0.2);
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(206, 172, 147, 0.08);
     padding: 6px;
     flex-direction: column;
-    gap: 4px;
+    gap: 3px;
     z-index: 100;
     opacity: 0;
-    transform: translateY(-5px);
+    transform: translateY(-3px);
     transition: opacity 0.3s ease, transform 0.3s ease;
-    border: 1px solid rgba(206, 172, 147, 0.2);
-    font-family: 'Comic Neue', sans-serif;
+    border: 1px solid rgba(206, 172, 147, 0.15);
+    font-size: 0.7em;
 }
 
 .more-options.active {
@@ -493,7 +493,7 @@ button {
 
 /* Notes */
 .pinned-section {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     display: none;
 }
 
@@ -502,41 +502,41 @@ button {
 }
 
 .pinned-section h2, .notes-section h2 {
-    font-size: 1.3em;
+    font-size: 1.1em;
     font-weight: 500;
     color: #ad8b72;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     text-align: center;
-    text-shadow: 0 1px 2px rgba(206, 172, 147, 0.2);
+    text-shadow: 0 0px 1px rgba(206, 172, 147, 0.1);
 }
 
 .notes-section {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .notes-list {
     display: grid;
-    gap: 10px;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
 }
 
 .notes-list.list-mode {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
 }
 
 .note {
     background: #fefbe8;
-    padding: 12px;
-    border-radius: 15px;
-    border: 1px solid rgba(206, 172, 147, 0.2);
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(206, 172, 147, 0.15);
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 2px 8px rgba(206, 172, 147, 0.1);
+    box-shadow: 0 1px 3px rgba(206, 172, 147, 0.05);
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 4px;
     max-width: 100%;
     overflow: hidden;
 }
@@ -547,14 +547,14 @@ button {
 }
 
 .note:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(206, 172, 147, 0.2);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(206, 172, 147, 0.15);
     background: #e3c9a4;
 }
 
 .note .title {
     font-weight: 600;
-    font-size: 0.95em;
+    font-size: 0.9em;
     color: #6a5545;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -562,17 +562,17 @@ button {
 }
 
 .note .category {
-    font-size: 0.8em;
+    font-size: 0.7em;
     color: #ad8b72;
     background: #e3c9a4;
-    padding: 2px 6px;
-    border-radius: 10px;
+    padding: 1px 4px;
+    border-radius: 8px;
     align-self: flex-start;
-    box-shadow: 0 1px 3px rgba(206, 172, 147, 0.08);
+    box-shadow: 0 0px 1px rgba(206, 172, 147, 0.03);
 }
 
 .note .timestamp {
-    font-size: 0.75em;
+    font-size: 0.7em;
     color: #ceac93;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -580,7 +580,7 @@ button {
 }
 
 .note .preview {
-    font-size: 0.8em;
+    font-size: 0.75em;
     color: #6a5545;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -604,15 +604,15 @@ button {
 .note.pinned::before {
     content: '📌';
     position: absolute;
-    top: 8px;
-    right: 8px;
-    font-size: 1em;
+    top: 6px;
+    right: 6px;
+    font-size: 0.9em;
 }
 
 .notes-list.list-mode .note {
     width: 100%;
-    border-radius: 10px;
-    padding: 10px;
+    border-radius: 8px;
+    padding: 8px;
 }
 
 /* Edit Container */
@@ -621,7 +621,7 @@ button {
     margin: 15px auto; /* Reduced top and bottom margin */
     background: #fefbe8;
     border-radius: 20px; /* Slightly reduced border radius */
-    box-shadow: 0 2px 8px rgba(206, 172, 147, 0.1); /* Reduced shadow */
+    box-shadow: 0 1px 4px rgba(206, 172, 147, 0.05); /* Reduced shadow */
     padding: 15px; /* Reduced padding */
     animation: fadeIn 0.8s ease-in-out;
     display: flex;
@@ -633,8 +633,8 @@ button {
     background: #e3c9a4;
     padding: 8px; /* Reduced padding */
     border-radius: 12px; /* Reduced border radius */
-    box-shadow: 0 1px 4px rgba(206, 172, 147, 0.05); /* Reduced shadow */
-    border: 1px solid rgba(206, 172, 147, 0.15); /* Slightly lighter border */
+    box-shadow: 0 0px 2px rgba(206, 172, 147, 0.04); /* Reduced shadow */
+    border: 1px solid rgba(206, 172, 147, 0.1); /* Slightly lighter border */
     margin-bottom: 10px; /* Reduced margin */
 }
 
@@ -645,14 +645,14 @@ button {
 }
 
 .fold-toolbar-btn {
-    padding: 6px 8px;
-    margin-right: 8px;
+    padding: 5px 7px;
+    margin-right: 6px;
     background: #e3c9a4;
     color: #6a5545;
-    border: 1px solid rgba(206, 172, 147, 0.2);
+    border: 1px solid rgba(206, 172, 147, 0.15);
     border-radius: 6px;
     cursor: pointer;
-    font-size: 1em;
+    font-size: 0.9em;
     line-height: 1;
     display: none; /* Sembunyikan secara default */
     align-self: center;
@@ -666,13 +666,13 @@ button {
 .toolbar-content {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 4px;
     overflow-x: auto;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    padding: 3px 0;
+    padding: 2px 0;
 }
 
 .toolbar-content.folded {
@@ -686,12 +686,12 @@ button {
 .toolbar-section {
     display: flex;
     flex-direction: column;
-    gap: 2px; /* Reduced gap in section */
-    margin-right: 8px; /* Reduced right margin */
+    gap: 1px; /* Reduced gap in section */
+    margin-right: 6px; /* Reduced right margin */
 }
 
 .toolbar-label {
-    font-size: 0.7em; /* Slightly smaller label */
+    font-size: 0.65em; /* Slightly smaller label */
     font-weight: 500;
     color: #ad8b72;
     text-transform: uppercase;
@@ -701,41 +701,41 @@ button {
 
 .toolbar-group {
     display: flex;
-    gap: 2px; /* Reduced gap in group */
-    padding: 2px; /* Reduced padding */
-    border-radius: 8px; /* Reduced border radius */
+    gap: 1px; /* Reduced gap in group */
+    padding: 1px; /* Reduced padding */
+    border-radius: 6px; /* Reduced border radius */
     background: #fefbe8;
-    box-shadow: 0 0px 2px rgba(206, 172, 147, 0.04); /* Reduced shadow */
+    box-shadow: 0 0px 1px rgba(206, 172, 147, 0.03); /* Reduced shadow */
     border: 1px solid rgba(206, 172, 147, 0.1); /* Lighter border */
 }
 
 .toolbar-group:hover {
-    box-shadow: 0 1px 4px rgba(206, 172, 147, 0.1); /* Reduced hover shadow */
+    box-shadow: 0 1px 3px rgba(206, 172, 147, 0.05); /* Reduced hover shadow */
 }
 
 .tool-btn, .edit-btn, .exit-btn, .table-tool-btn, .finance-tool-btn {
-    padding: 5px; /* Reduced padding */
+    padding: 4px; /* Reduced padding */
     background: #fefbe8;
-    border: 1px solid rgba(206, 172, 147, 0.15); /* Lighter border */
-    border-radius: 8px; /* Reduced border radius */
+    border: 1px solid rgba(206, 172, 147, 0.1); /* Lighter border */
+    border-radius: 6px; /* Reduced border radius */
     color: #6a5545;
     font-weight: 500;
-    font-size: 0.8em; /* Slightly smaller font */
+    font-size: 0.7em; /* Slightly smaller font */
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 0px 2px rgba(206, 172, 147, 0.04); /* Reduced shadow */
+    box-shadow: 0 0px 1px rgba(206, 172, 147, 0.03); /* Reduced shadow */
     display: flex;
     align-items: center;
     justify-content: center;
-    min-width: 24px; /* Reduced min width */
-    height: 24px; /* Reduced height */
+    min-width: 20px; /* Reduced min width */
+    height: 20px; /* Reduced height */
     font-family: 'Comic Neue', sans-serif;
 }
 
 .tool-btn:hover, .table-tool-btn:hover, .finance-tool-btn:hover {
     background: #ceac93;
     color: #fff;
-    box-shadow: 0 1px 4px rgba(206, 172, 147, 0.1); /* Reduced hover shadow */
+    box-shadow: 0 1px 3px rgba(206, 172, 147, 0.05); /* Reduced hover shadow */
     transform: translateY(-1px); /* Reduced hover transform */
 }
 
@@ -796,80 +796,80 @@ button {
 .editor-header {
     display: flex;
     flex-direction: column;
-    gap: 8px; /* Reduced gap */
-    margin-bottom: 10px; /* Reduced margin */
+    gap: 6px; /* Reduced gap */
+    margin-bottom: 8px; /* Reduced margin */
 }
 
 .category-select {
-    padding: 6px 10px; /* Reduced padding */
-    border: 1px solid rgba(206, 172, 147, 0.15); /* Lighter border */
-    border-radius: 12px; /* Reduced border radius */
+    padding: 5px 8px; /* Reduced padding */
+    border: 1px solid rgba(206, 172, 147, 0.1); /* Lighter border */
+    border-radius: 10px; /* Reduced border radius */
     background: #fefbe8;
     color: #6a5545;
-    font-size: 0.85em; /* Slightly smaller font */
+    font-size: 0.75em; /* Slightly smaller font */
     font-weight: 500;
     width: 100%;
     max-width: none; /* Take full width on small screens */
     transition: all 0.4s ease;
-    box-shadow: 0 0px 2px rgba(206, 172, 147, 0.04); /* Reduced shadow */
+    box-shadow: 0 0px 1px rgba(206, 172, 147, 0.03); /* Reduced shadow */
 }
 
 .category-select:focus {
-    border-color: rgba(206, 172, 147, 0.3); /* Slightly darker focus border */
-    box-shadow: 0 1px 4px rgba(206, 172, 147, 0.1); /* Reduced focus shadow */
+    border-color: rgba(206, 172, 147, 0.2); /* Slightly darker focus border */
+    box-shadow: 0 1px 3px rgba(206, 172, 147, 0.05); /* Reduced focus shadow */
     outline: none;
 }
 
 .calc-mode-select {
-    padding: 5px 8px; /* Reduced padding */
-    border: 1px solid rgba(206, 172, 147, 0.15); /* Lighter border */
-    border-radius: 8px; /* Reduced border radius */
+    padding: 4px 6px; /* Reduced padding */
+    border: 1px solid rgba(206, 172, 147, 0.1); /* Lighter border */
+    border-radius: 6px; /* Reduced border radius */
     background: #fefbe8;
     color: #6a5545;
-    font-size: 0.75em; /* Smaller font */
+    font-size: 0.7em; /* Smaller font */
     font-weight: 500;
     width: auto; /* Adjust width based on content */
     transition: all 0.4s ease;
-    box-shadow: 0 0px 2px rgba(206, 172, 147, 0.04); /* Reduced shadow */
+    box-shadow: 0 0px 1px rgba(206, 172, 147, 0.03); /* Reduced shadow */
 }
 
 .calc-mode-select:focus {
-    border-color: rgba(206, 172, 147, 0.3); /* Slightly darker focus border */
-    box-shadow: 0 1px 4px rgba(206, 172, 147, 0.1); /* Reduced focus shadow */
+    border-color: rgba(206, 172, 147, 0.2); /* Slightly darker focus border */
+    box-shadow: 0 1px 3px rgba(206, 172, 147, 0.05); /* Reduced focus shadow */
     outline: none;
 }
 
 .note-title {
     width: 100%;
-    padding: 8px 10px; /* Reduced padding */
+    padding: 6px 8px; /* Reduced padding */
     background: #e3c9a4;
-    border: 1px solid rgba(206, 172, 147, 0.15); /* Lighter border */
-    border-radius: 12px; /* Reduced border radius */
+    border: 1px solid rgba(206, 172, 147, 0.1); /* Lighter border */
+    border-radius: 10px; /* Reduced border radius */
     color: #6a5545;
-    font-size: 1em; /* Slightly smaller font */
+    font-size: 0.9em; /* Slightly smaller font */
     font-weight: 500;
     transition: all 0.4s ease;
-    box-shadow: 0 1px 4px rgba(206, 172, 147, 0.08); /* Reduced shadow */
+    box-shadow: 0 0px 2px rgba(206, 172, 147, 0.04); /* Reduced shadow */
 }
 
 .note-title:focus {
-    border-color: rgba(206, 172, 147, 0.3); /* Slightly darker focus border */
-    box-shadow: 0 2px 6px rgba(206, 172, 147, 0.15); /* Reduced focus shadow */
+    border-color: rgba(206, 172, 147, 0.2); /* Slightly darker focus border */
+    box-shadow: 0 1px 3px rgba(206, 172, 147, 0.05); /* Reduced focus shadow */
     outline: none;
 }
 
 /* Note Content */
 .note-content {
-    height: 250px; /* Reduced height */
-    max-height: 250px; /* Reduced max height */
+    height: 200px; /* Reduced height */
+    max-height: 200px; /* Reduced max height */
     background: #fefbe8;
-    padding: 12px; /* Reduced padding */
-    border: 1px solid rgba(206, 172, 147, 0.15); /* Lighter border */
-    border-radius: 12px; /* Reduced border radius */
+    padding: 10px; /* Reduced padding */
+    border: 1px solid rgba(206, 172, 147, 0.1); /* Lighter border */
+    border-radius: 10px; /* Reduced border radius */
     color: #6a5545;
-    font-size: 0.9em; /* Slightly smaller font */
+    font-size: 0.8em; /* Slightly smaller font */
     font-weight: 400;
-    box-shadow: 0 1px 4px rgba(206, 172, 147, 0.08); /* Reduced shadow */
+    box-shadow: 0 0px 2px rgba(206, 172, 147, 0.04); /* Reduced shadow */
     transition: all 0.4s ease;
     overflow-x: auto;
     overflow-y: auto;
@@ -890,8 +890,8 @@ button {
 }
 
 .note-content:focus {
-    border-color: rgba(206, 172, 147, 0.3); /* Slightly darker focus border */
-    box-shadow: 0 2px 6px rgba(206, 172, 147, 0.15); /* Reduced focus shadow */
+    border-color: rgba(206, 172, 147, 0.2); /* Slightly darker focus border */
+    box-shadow: 0 1px 3px rgba(206, 172, 147, 0.05); /* Reduced focus shadow */
     outline: none;
 }
 
@@ -899,15 +899,15 @@ button {
 .note-content ol.custom-numbered {
     list-style: none;
     counter-reset: custom-counter;
-    padding-left: 12px; /* Reduced indent */
-    margin: 6px 0; /* Reduced margin */
+    padding-left: 10px; /* Reduced indent */
+    margin: 4px 0; /* Reduced margin */
 }
 
 .note-content ol.custom-numbered li {
     counter-increment: custom-counter;
     position: relative;
-    padding-left: 18px; /* Reduced padding */
-    margin-bottom: 4px; /* Reduced margin */
+    padding-left: 16px; /* Reduced padding */
+    margin-bottom: 3px; /* Reduced margin */
 }
 
 .note-content ol.custom-numbered li::before {
@@ -916,34 +916,34 @@ button {
     left: 0;
     color: #6a5545;
     font-weight: 500;
-    font-size: 0.85em; /* Matching font size */
+    font-size: 0.75em; /* Matching font size */
 }
 
-.note-content ol.custom-numbered li[data-indent="1"] { margin-left: 10px; }
-.note-content ol.custom-numbered li[data-indent="2"] { margin-left: 20px; }
-.note-content ol.custom-numbered li[data-indent="3"] { margin-left: 30px; }
+.note-content ol.custom-numbered li[data-indent="1"] { margin-left: 8px; }
+.note-content ol.custom-numbered li[data-indent="2"] { margin-left: 16px; }
+.note-content ol.custom-numbered li[data-indent="3"] { margin-left: 24px; }
 /* Tambahkan lebih banyak level jika diperlukan */
 
 .note-content ul {
-    padding-left: 16px; /* Reduced indent */
-    margin: 6px 0; /* Reduced margin */
+    padding-left: 14px; /* Reduced indent */
+    margin: 4px 0; /* Reduced margin */
 }
 
 .note-content li {
-    margin-bottom: 4px; /* Reduced margin */
+    margin-bottom: 3px; /* Reduced margin */
 }
 
 /* View Mode Styles */
 .note-content-view {
-    min-height: 250px;
+    min-height: 200px;
     background: #fefbe8;
-    padding: 12px;
-    border: 1px solid rgba(206, 172, 147, 0.15);
-    border-radius: 12px;
+    padding: 10px;
+    border: 1px solid rgba(206, 172, 147, 0.1);
+    border-radius: 10px;
     color: #6a5545;
-    font-size: 0.9em;
+    font-size: 0.8em;
     font-weight: 400;
-    box-shadow: 0 1px 4px rgba(206, 172, 147, 0.08);
+    box-shadow: 0 1px 4px rgba(206, 172, 147, 0.05);
     user-select: text;
     overflow-x: auto;
     word-wrap: break-word;
@@ -960,22 +960,22 @@ button {
 
 .note-content-view:focus {
     outline: none;
-    border-color: rgba(206, 172, 147, 0.3);
-    box-shadow: 0 2px 6px rgba(206, 172, 147, 0.15);
+    border-color: rgba(206, 172, 147, 0.2);
+    box-shadow: 0 1px 3px rgba(206, 172, 147, 0.05);
 }
 
 .note-content-view ol.custom-numbered {
     list-style: none;
     counter-reset: custom-counter;
-    padding-left: 12px;
-    margin: 6px 0;
+    padding-left: 10px;
+    margin: 4px 0;
 }
 
 .note-content-view ol.custom-numbered li {
     counter-increment: custom-counter;
     position: relative;
-    padding-left: 18px;
-    margin-bottom: 4px;
+    padding-left: 16px;
+    margin-bottom: 3px;
 }
 
 .note-content-view ol.custom-numbered li::before {
@@ -984,54 +984,54 @@ button {
     left: 0;
     color: #6a5545;
     font-weight: 500;
-    font-size: 0.9em;
+    font-size: 0.8em;
 }
 
-.note-content-view ol.custom-numbered li[data-indent="1"] { margin-left: 10px; }
-.note-content-view ol.custom-numbered li[data-indent="2"] { margin-left: 20px; }
-.note-content-view ol.custom-numbered li[data-indent="3"] { margin-left: 30px; }
+.note-content-view ol.custom-numbered li[data-indent="1"] { margin-left: 8px; }
+.note-content-view ol.custom-numbered li[data-indent="2"] { margin-left: 16px; }
+.note-content-view ol.custom-numbered li[data-indent="3"] { margin-left: 24px; }
 
 .note-content-view ul {
-    padding-left: 16px;
-    margin: 6px 0;
+    padding-left: 14px;
+    margin: 4px 0;
 }
 
 .note-content-view li {
-    margin-bottom: 4px;
+    margin-bottom: 3px;
 }
 
 .view-header {
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .note-title-view {
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     background: #e3c9a4;
     border: 1px solid rgba(206, 172, 147, 0.15);
-    border-radius: 12px;
+    border-radius: 10px;
     color: #6a5545;
-    font-size: 1.2em;
+    font-size: 1em;
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     text-align: center;
-    box-shadow: 0 2px 8px rgba(206, 172, 147, 0.1);
+    box-shadow: 0 1px 4px rgba(206, 172, 147, 0.05);
 }
 
 .save-btn {
     margin-top: 10px;
-    padding: 8px 15px;
+    padding: 8px 12px;
     background: #e3c9a4;
     border: 1px solid rgba(206, 172, 147, 0.2);
-    border-radius: 15px;
+    border-radius: 12px;
     color: #6a5545;
-    font-size: 0.85em;
+    font-size: 0.8em;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 2px 6px rgba(206, 172, 147, 0.1);
+    box-shadow: 0 1px 3px rgba(206, 172, 147, 0.05);
 }
 
 .save-btn:hover {
@@ -1047,20 +1047,20 @@ button {
 .no-notes {
     text-align: center;
     color: #ad8b72;
-    font-size: 0.9em;
+    font-size: 0.8em;
     font-weight: 400;
-    padding: 15px;
+    padding: 10px;
 }
 
 .copyable {
     background-color: #e3c9a4;
-    padding: 2px 4px;
-    border-radius: 8px;
+    padding: 1px 3px;
+    border-radius: 6px;
     color: #ad8b72;
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 1px 3px rgba(206, 172, 147, 0.08);
-    font-size: 0.85em;
+    box-shadow: 0 0px 1px rgba(206, 172, 147, 0.03);
+    font-size: 0.7em;
 }
 
 .copyable:hover {
@@ -1072,7 +1072,7 @@ button {
 .table-wrapper {
     position: relative;
     display: block;
-    margin: 8px 0;
+    margin: 6px 0;
     overflow-x: auto;
     max-width: 100%;
     -webkit-overflow-scrolling: touch;
@@ -1095,11 +1095,11 @@ button {
 .note-content .regular-table td,
 .note-content-view .regular-table th,
 .note-content-view .regular-table td {
-    border: 1px solid rgba(206, 172, 147, 0.15);
-    padding: 6px;
+    border: 1px solid rgba(206, 172, 147, 0.1);
+    padding: 4px;
     text-align: left;
-    min-width: 80px;
-    font-size: 0.85em;
+    min-width: 60px;
+    font-size: 0.7em;
 }
 
 .note-content .regular-table th,
@@ -1118,39 +1118,39 @@ button {
 .finance-table-wrapper {
     position: relative;
     display: inline-block;
-    margin: 8px 0;
+    margin: 6px 0;
     max-width: 100%;
 }
 
 .finance-table {
     border-collapse: collapse;
-    width: 280px;
+    width: 240px;
     background: #fefbe8;
-    border: 1px solid rgba(206, 172, 147, 0.15);
-    border-radius: 10px;
+    border: 1px solid rgba(206, 172, 147, 0.1);
+    border-radius: 8px;
     overflow: hidden;
-    min-height: 100px;
-    box-shadow: 0 2px 6px rgba(206, 172, 147, 0.1);
+    min-height: 80px;
+    box-shadow: 0 1px 3px rgba(206, 172, 147, 0.05);
 }
 
 .finance-table th {
     background: #e3c9a4;
     color: #ad8b72;
     font-weight: 500;
-    padding: 6px;
-    border-bottom: 1px solid rgba(206, 172, 147, 0.15);
+    padding: 4px;
+    border-bottom: 1px solid rgba(206, 172, 147, 0.1);
     cursor: not-allowed;
-    font-size: 0.8em;
+    font-size: 0.7em;
 }
 
 .finance-table td {
-    padding: 6px;
-    border-bottom: 1px solid rgba(206, 172, 147, 0.1);
+    padding: 4px;
+    border-bottom: 1px solid rgba(206, 172, 147, 0.08);
     color: #6a5545;
     word-wrap: break-word;
     white-space: normal;
-    max-width: 120px;
-    font-size: 0.8em;
+    max-width: 100px;
+    font-size: 0.7em;
 }
 
 .finance-table .income {
@@ -1181,9 +1181,9 @@ button {
     background: #e3c9a4;
     font-weight: 600;
     color: #ad8b72;
-    border-top: 1px dashed rgba(206, 172, 147, 0.15);
+    border-top: 1px dashed rgba(206, 172, 147, 0.08);
     cursor: not-allowed;
-    font-size: 0.8em;
+    font-size: 0.7em;
 }
 
 .finance-table tfoot .total {
@@ -1195,16 +1195,16 @@ button {
 }
 
 .finance-btn {
-    padding: 5px 8px;
-    border: 1px solid rgba(206, 172, 147, 0.2);
-    border-radius: 10px;
-    font-size: 0.85em;
+    padding: 4px 6px;
+    border: 1px solid rgba(206, 172, 147, 0.15);
+    border-radius: 8px;
+    font-size: 0.75em;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.4s ease;
     background: #fefbe8;
     color: #6a5545;
-    box-shadow: 0 0px 2px rgba(206, 172, 147, 0.04);
+    box-shadow: 0 0px 1px rgba(206, 172, 147, 0.03);
 }
 
 .finance-btn.add-income { background: #e3c9a4; }
@@ -1224,26 +1224,26 @@ button {
     content: attr(placeholder);
     color: #ad8b72;
     font-style: italic;
-    font-size: 0.8em;
+    font-size: 0.7em;
 }
 
 .finance-options-btn {
     position: absolute;
-    top: 4px;
-    right: 4px;
-    padding: 4px;
+    top: 3px;
+    right: 3px;
+    padding: 3px;
     background: #ceac93;
-    border: 1px solid rgba(206, 172, 147, 0.2);
+    border: 1px solid rgba(206, 172, 147, 0.15);
     border-radius: 50%;
     color: #6a5545;
     cursor: pointer;
-    font-size: 0.85em;
-    width: 20px;
-    height: 20px;
+    font-size: 0.75em;
+    width: 18px;
+    height: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 0px 2px rgba(206, 172, 147, 0.04);
+    box-shadow: 0 0px 1px rgba(206, 172, 147, 0.03);
 }
 
 .finance-options-btn:hover {
@@ -1253,16 +1253,16 @@ button {
 .finance-popup {
     position: absolute;
     background: #fefbe8;
-    border-radius: 15px;
-    box-shadow: 0 2px 6px rgba(206, 172, 147, 0.1);
-    padding: 8px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(206, 172, 147, 0.05);
+    padding: 6px;
     display: none;
     z-index: 100;
     flex-direction: column;
-    gap: 4px;
-    border: 1px solid rgba(206, 172, 147, 0.2);
-    min-width: 120px;
-    font-size: 0.8em;
+    gap: 3px;
+    border: 1px solid rgba(206, 172, 147, 0.15);
+    min-width: 100px;
+    font-size: 0.7em;
 }
 
 .finance-popup.active {
@@ -1273,26 +1273,26 @@ button {
 .context-menu, .note-context-menu {
     position: absolute;
     background: #fefbe8;
-    border-radius: 15px;
-    box-shadow: 0 2px 6px rgba(206, 172, 147, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(206, 172, 147, 0.05);
     display: none;
     z-index: 100;
-    min-width: 120px;
-    border: 1px solid rgba(206, 172, 147, 0.2);
-    font-size: 0.8em;
+    min-width: 100px;
+    border: 1px solid rgba(206, 172, 147, 0.15);
+    font-size: 0.7em;
 }
 
 .menu-item {
-    padding: 6px 12px;
+    padding: 5px 10px;
     color: #6a5545;
     font-weight: 400;
-    font-size: 0.85em;
+    font-size: 0.8em;
     cursor: pointer;
     transition: all 0.4s ease;
     display: flex;
     align-items: center;
-    gap: 4px;
-    border-radius: 10px;
+    gap: 3px;
+    border-radius: 8px;
 }
 
 .menu-item:hover {
@@ -1303,18 +1303,18 @@ button {
 .view-more {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 3px;
     margin: 15px auto 0;
-    padding: 8px 15px;
+    padding: 8px 12px;
     background: #ceac93;
-    border: 1px solid rgba(206, 172, 147, 0.2);
-    border-radius: 15px;
+    border: 1px solid rgba(206, 172, 147, 0.15);
+    border-radius: 12px;
     color: #6a5545;
-    font-size: 0.85em;
+    font-size: 0.8em;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.4s ease;
-    box-shadow: 0 2px 6px rgba(206, 172, 147, 0.1);
+    box-shadow: 0 1px 3px rgba(206, 172, 147, 0.05);
 }
 
 .view-more:hover {
@@ -1337,6 +1337,16 @@ button {
     .toolbar-content.folded {
         display: none;
     }
+    .editor-footer {
+        gap: 6px;
+        margin-top: 15px;
+        padding: 8px 0;
+    }
+    .editor-footer button {
+        padding: 10px 12px;
+        font-size: 0.9em;
+        border-radius: 10px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1344,7 +1354,15 @@ button {
         display: inline-flex;
         margin-right: 6px;
         padding: 4px 8px;
-        font-size: 0.9em;
+        font-size: 0.8em;
         border-radius: 6px;
+    }
+    .editor-footer {
+        flex-direction: column; /* Stack buttons vertically on very small screens */
+    }
+    .editor-footer button {
+        padding: 10px;
+        font-size: 0.9em;
+        border-radius: 8px;
     }
 }
