@@ -21,19 +21,7 @@ body {
     position: relative;
     min-height: 100vh;
     overflow-x: hidden;
-}
-
-.background-gradient {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
     background: linear-gradient(135deg, #fefbe8 0%, #e3c9a4 50%, #ceac93 100%);
-    z-index: -1;
-    margin: 20px;
-    border-radius: 30px;
-    box-shadow: 0 4px 20px rgba(206, 172, 147, 0.15);
 }
 
 .container {
@@ -252,6 +240,24 @@ h1 {
 }
 
 #tabBtn svg {
+    vertical-align: middle;
+}
+
+.copy-formatted-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    margin: 0 2px;
+    transition: background 0.3s ease;
+}
+
+.copy-formatted-btn:hover {
+    background: rgba(206, 172, 147, 0.2);
+    border-radius: 4px;
+}
+
+.copy-formatted-btn svg {
     vertical-align: middle;
 }
 
@@ -618,19 +624,24 @@ button {
     box-shadow: 0 6px 25px rgba(206, 172, 147, 0.2);
     padding: 25px;
     animation: fadeIn 0.8s ease-in-out;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Toolbar */
-.toolbar {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 15px;
-    margin-bottom: 25px;
+.toolbar-wrapper {
     background: #e3c9a4;
     padding: 15px;
     border-radius: 20px;
     box-shadow: 0 4px 15px rgba(206, 172, 147, 0.15);
     border: 1px solid rgba(206, 172, 147, 0.25);
+    margin-bottom: 25px;
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
     overflow-x: auto;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
@@ -645,7 +656,8 @@ button {
 .toolbar-section {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 5px;
+    margin-right: 15px;
 }
 
 .toolbar-label {
@@ -654,12 +666,13 @@ button {
     color: #ad8b72;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    margin-bottom: 3px;
 }
 
 .toolbar-group {
     display: flex;
-    gap: 6px;
-    padding: 6px;
+    gap: 5px;
+    padding: 5px;
     border-radius: 15px;
     background: #fefbe8;
     box-shadow: 0 2px 8px rgba(206, 172, 147, 0.15);
@@ -689,7 +702,7 @@ button {
     font-family: 'Comic Neue', sans-serif;
 }
 
-.tool-btn:hover, .edit-btn:hover, .exit-btn:hover, .table-tool-btn:hover, .finance-tool-btn:hover {
+.tool-btn:hover, .table-tool-btn:hover, .finance-tool-btn:hover {
     background: #ceac93;
     color: #fff;
     box-shadow: 0 4px 12px rgba(206, 172, 147, 0.25);
@@ -1305,16 +1318,18 @@ button {
     .note .preview { font-size: 0.85em; }
     .view-more { padding: 8px 15px; font-size: 0.85em; }
     .context-menu, .note-context-menu { width: 150px; }
-    .toolbar { padding: 12px; gap: 10px; }
-    .toolbar-group { padding: 5px; }
-    .tool-btn, .edit-btn, .exit-btn, .table-tool-btn, .finance-tool-btn { padding: 6px; min-width: 34px; height: 34px; }
+    .toolbar-wrapper { margin-bottom: 20px; padding: 10px; }
+    .toolbar { gap: 8px; }
+    .toolbar-group { padding: 4px; }
+    .tool-btn, .edit-btn, .exit-btn, .table-tool-btn, .finance-tool-btn { padding: 6px; min-width: 32px; height: 32px; font-size: 0.9em; }
     .toolbar-label { font-size: 0.75em; }
-    .calc-mode-select { padding: 6px 10px; font-size: 0.85em; width: 110px; }
+    .calc-mode-select { padding: 6px 10px; font-size: 0.8em; width: 110px; }
     .category-select { max-width: none; }
     .note-title { font-size: 1.1em; }
-    .note-content { height: 300px; max-height: 300px; }
-    .note-content-view { min-height: 300px; }
+    .note-content { height: 300px; max-height: 300px; padding: 15px; }
+    .note-content-view { min-height: 300px; padding: 15px; }
     .save-btn { padding: 8px 15px; font-size: 0.85em; }
+    .editor-footer { flex-direction: column; gap: 10px; align-items: stretch; }
 }
 
 @media (max-width: 480px) {
@@ -1340,12 +1355,16 @@ button {
     .notes-list.list-mode .note { padding: 10px; }
     .view-more { padding: 6px 12px; font-size: 0.8em; }
     .context-menu, .note-context-menu { width: 140px; }
+    .toolbar-wrapper { margin-bottom: 15px; padding: 8px; }
+    .toolbar { gap: 6px; }
+    .toolbar-group { padding: 3px; }
+    .tool-btn, .edit-btn, .exit-btn, .table-tool-btn, .finance-tool-btn { padding: 5px; min-width: 30px; height: 30px; font-size: 0.85em; }
     .toolbar-label { font-size: 0.7em; }
-    .tool-btn, .edit-btn, .exit-btn, .table-tool-btn, .finance-tool-btn { padding: 5px; min-width: 32px; height: 32px; }
-    .calc-mode-select { padding: 5px 8px; font-size: 0.8em; width: 100px; }
+    .calc-mode-select { padding: 5px 8px; font-size: 0.75em; width: 90px; }
     .note-title-view { font-size: 1.2em; padding: 10px; }
-    .note-content-view { padding: 15px; min-height: 250px; }
+    .note-content-view { padding: 10px; min-height: 200px; }
     .finance-table { width: 100%; }
-    .note-content { height: 250px; max-height: 250px; }
+    .note-content { height: 200px; max-height: 200px; padding: 10px; font-size: 0.95em; }
     .save-btn { padding: 6px 12px; font-size: 0.8em; }
+    .editor-footer { flex-direction: column; gap: 8px; align-items: stretch; }
 }
