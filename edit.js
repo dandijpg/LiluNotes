@@ -7,20 +7,56 @@ const noteId = urlParams.get('id');
 const searchQuery = urlParams.get('search') || '';
 let calcMode = 'financial'; // Mode default
 
+const history = [];
+let historyIndex = -1;
+const redoStack = [];
+
 document.addEventListener('DOMContentLoaded', () => {
     setupCategorySelect();
     setupEditor();
     setupEventListeners();
-
-    // Setup toolbar folding
-    const foldButton = document.getElementById('foldToolbarBtn');
-    const toolbarContent = document.getElementById('toolbarContent');
-    if (foldButton && toolbarContent) {
-        foldButton.addEventListener('click', () => {
-            toolbarContent.classList.toggle('folded');
-        });
-    }
+    initializeHistory();
 });
+
+function initializeHistory() {
+    const noteContent = document.getElementById('noteContent');
+    saveContentToHistory(noteContent.innerHTML);
+}
+
+function saveContentToHistory(content) {
+    history.length = historyIndex + 1; // Remove future history
+    history.push(content);
+    historyIndex++;
+    redoStack.length = 0; // Clear redo stack on new action
+    updateUndoRedoButtons();
+}
+
+function undo() {
+    if (historyIndex > 0) {
+        redoStack.push(history[historyIndex]);
+        historyIndex--;
+        const noteContent = document.getElementById('noteContent');
+        noteContent.innerHTML = history[historyIndex];
+        updateUndoRedoButtons();
+    }
+}
+
+function redo() {
+    if (redoStack.length > 0) {
+        historyIndex++;
+        history[historyIndex] = redoStack.pop();
+        const noteContent = document.getElementById('noteContent');
+        noteContent.innerHTML = history[historyIndex];
+        updateUndoRedoButtons();
+    }
+}
+
+function updateUndoRedoButtons() {
+    const undoBtn = document.getElementById('undoBtn');
+    const redoBtn = document.getElementById('redoBtn');
+    if (undoBtn) undoBtn.disabled = historyIndex <= 0;
+    if (redoBtn) redoBtn.disabled = redoStack.length === 0;
+}
 
 function saveCursorPosition(element) {
     const selection = window.getSelection();
@@ -74,6 +110,7 @@ function setupEventListeners() {
         const range = saveCursorPosition(noteContent);
         document.execCommand(command, false, value);
         restoreCursorPosition(range);
+        saveContentToHistory(noteContent.innerHTML);
     };
 
     document.getElementById('boldBtn').addEventListener('click', () => applyCommand('bold'));
@@ -111,8 +148,6 @@ function setupEventListeners() {
     noteContent.addEventListener('click', handleTableClick);
     noteContent.addEventListener('input', checkAmountInput);
     noteContent.addEventListener('focusout', updateFinancialTable);
-
-    // Tangkap pintasan keyboard
     noteContent.addEventListener('keydown', (e) => {
         if (e.key === 'Tab') {
             e.preventDefault();
@@ -124,8 +159,8 @@ function setupEventListeners() {
             insertNumberedList();
         }
     });
+    noteContent.addEventListener('input', () => saveContentToHistory(noteContent.innerHTML));
 
-    // Pintasan keyboard lainnya
     document.addEventListener('keydown', (e) => {
         if (e.ctrlKey) {
             switch (e.key) {
@@ -133,9 +168,25 @@ function setupEventListeners() {
                 case 'i': e.preventDefault(); document.getElementById('italicBtn').click(); break;
                 case 'u': e.preventDefault(); document.getElementById('underlineBtn').click(); break;
                 case 's': e.preventDefault(); saveNote(); break;
+                case 'z': e.preventDefault(); undo(); break;
+                case 'y': e.preventDefault(); redo(); break;
             }
         }
     });
+
+    const foldButton = document.getElementById('foldToolbarBtn');
+    const toolbarContent = document.getElementById('toolbarContent');
+    if (foldButton && toolbarContent) {
+        foldButton.addEventListener('click', () => {
+            toolbarContent.classList.toggle('folded');
+        });
+    }
+
+    const undoBtn = document.getElementById('undoBtn');
+    const redoBtn = document.getElementById('redoBtn');
+    if (undoBtn) undoBtn.addEventListener('click', undo);
+    if (redoBtn) redoBtn.addEventListener('click', redo);
+    updateUndoRedoButtons();
 }
 
 function insertTab(isShift = false) {
@@ -147,10 +198,8 @@ function insertTab(isShift = false) {
     const parentLi = selectedNode.nodeType === Node.TEXT_NODE ? selectedNode.parentElement.closest('li') : selectedNode.closest('li');
 
     if (parentLi && parentLi.parentElement.tagName === 'OL') {
-        // Tangani indentasi untuk daftar
         let currentIndent = parseInt(parentLi.dataset.indent || '0');
         if (isShift) {
-            // Kurangi indentasi
             if (currentIndent > 0) {
                 currentIndent--;
                 if (currentIndent === 0) {
@@ -160,19 +209,17 @@ function insertTab(isShift = false) {
                 }
             }
         } else {
-            // Tambah indentasi (maksimum 3 level)
             if (currentIndent < 3) {
                 currentIndent++;
                 parentLi.setAttribute('data-indent', currentIndent);
             }
         }
-        // Pindahkan kursor kembali ke dalam <li>
         const newRange = document.createRange();
         newRange.selectNodeContents(parentLi);
-        newRange.collapse(false); // Kursor di akhir konten <li>
+        newRange.collapse(false);
         restoreCursorPosition(newRange);
+        saveContentToHistory(noteContent.innerHTML);
     } else {
-        // Sisipkan 4 spasi untuk tab normal
         const tabNode = document.createTextNode('\u00A0\u00A0\u00A0\u00A0');
         range.deleteContents();
         range.insertNode(tabNode);
@@ -180,6 +227,7 @@ function insertTab(isShift = false) {
         newRange.setStartAfter(tabNode);
         newRange.setEndAfter(tabNode);
         restoreCursorPosition(newRange);
+        saveContentToHistory(noteContent.innerHTML);
     }
 }
 
@@ -201,9 +249,8 @@ function handleEnterKey(e) {
         const isEmpty = parentLi.innerText.trim() === '' && !parentLi.querySelector('img, table, div');
 
         if (isEmpty) {
-            // Hentikan daftar jika kosong
             const p = document.createElement('p');
-            p.innerHTML = '<br>'; // Pastikan paragraf bisa diketik
+            p.innerHTML = '<br>';
             if (ol.nextSibling) {
                 ol.parentNode.insertBefore(p, ol.nextSibling);
             } else {
@@ -220,27 +267,25 @@ function handleEnterKey(e) {
             selection.addRange(newRange);
             noteContent.focus();
         } else {
-            // Lanjutkan daftar
             const newLi = document.createElement('li');
             const currentIndent = parentLi.dataset.indent || '0';
             if (currentIndent !== '0') {
                 newLi.setAttribute('data-indent', currentIndent);
             }
-            // Masukkan <li> baru setelah <li> saat ini
             if (parentLi.nextSibling) {
                 ol.insertBefore(newLi, parentLi.nextSibling);
             } else {
                 ol.appendChild(newLi);
             }
-            // Pindahkan kursor ke <li> baru
-            newLi.innerHTML = '<br>'; // Pastikan <li> bisa diketik
+            newLi.innerHTML = '<br>';
             const newRange = document.createRange();
             newRange.selectNodeContents(newLi);
-            newRange.collapse(true); // Kursor di awal <li> baru
+            newRange.collapse(true);
             selection.removeAllRanges();
             selection.addRange(newRange);
             noteContent.focus();
         }
+        saveContentToHistory(noteContent.innerHTML);
     }
 }
 
@@ -254,7 +299,6 @@ function insertNumberedList() {
     const parentOl = parentLi ? parentLi.parentElement : null;
 
     if (parentOl && parentOl.tagName === 'OL') {
-        // Keluar dari daftar
         const p = document.createElement('p');
         p.innerHTML = parentLi.innerText || '<br>';
         if (parentOl.nextSibling) {
@@ -272,15 +316,13 @@ function insertNumberedList() {
         restoreCursorPosition(newRange);
         noteContent.focus();
     } else {
-        // Buat daftar baru
         const ol = document.createElement('ol');
         ol.className = 'custom-numbered';
         const li = document.createElement('li');
-        li.innerHTML = '<br>'; // Pastikan <li> bisa diketik
+        li.innerHTML = '<br>';
         ol.appendChild(li);
         range.deleteContents();
         range.insertNode(ol);
-        // Tambahkan <p> kosong setelah <ol> untuk mencegah kursor tersangkut
         const p = document.createElement('p');
         p.innerHTML = '<br>';
         if (ol.nextSibling) {
@@ -290,10 +332,11 @@ function insertNumberedList() {
         }
         const newRange = document.createRange();
         newRange.selectNodeContents(li);
-        newRange.collapse(true); // Kursor di dalam <li> pertama
+        newRange.collapse(true);
         restoreCursorPosition(newRange);
         noteContent.focus();
     }
+    saveContentToHistory(noteContent.innerHTML);
 }
 
 function importImage() {
@@ -346,6 +389,7 @@ function importImage() {
                 }
 
                 img.addEventListener('click', () => openImageModal(event.target.result));
+                saveContentToHistory(noteContent.innerHTML);
             };
             reader.readAsDataURL(file);
         }
@@ -411,6 +455,7 @@ function markAsDone() {
                 restoreCursorPosition(newRange);
             }
         }
+        saveContentToHistory(noteContent.innerHTML);
     }
 }
 
@@ -431,6 +476,7 @@ function insertLink() {
         newRange.setStartAfter(a);
         newRange.setEndAfter(a);
         restoreCursorPosition(newRange);
+        saveContentToHistory(noteContent.innerHTML);
     }
 }
 
@@ -450,6 +496,7 @@ function insertArrowList() {
         newRange.collapse(true);
         restoreCursorPosition(newRange);
         noteContent.focus();
+        saveContentToHistory(noteContent.innerHTML);
     }
 }
 
@@ -471,6 +518,7 @@ function applyFloat(direction) {
                 parentElement.style.marginRight = direction === 'right' ? '0' : 'auto';
             }
             restoreCursorPosition(range);
+            saveContentToHistory(noteContent.innerHTML);
         }
     }
 }
@@ -491,6 +539,7 @@ function insertTable() {
     newRange.setEndAfter(noteContent.querySelector('.table-wrapper:last-child'));
     restoreCursorPosition(newRange);
     toggleTableButtons();
+    saveContentToHistory(noteContent.innerHTML);
 }
 
 function insertFinancialTable() {
@@ -525,6 +574,7 @@ function insertFinancialTable() {
     newRange.setEndAfter(noteContent.querySelector('.finance-table-wrapper:last-child'));
     restoreCursorPosition(newRange);
     toggleFinanceButtons();
+    saveContentToHistory(noteContent.innerHTML);
 }
 
 function addFinanceRow(wrapper, operation) {
@@ -547,6 +597,7 @@ function addFinanceRow(wrapper, operation) {
     }, 10);
 
     newRow.querySelector('.amount').focus();
+    saveContentToHistory(noteContent.innerHTML);
 }
 
 function deleteLastRow(wrapper) {
@@ -561,6 +612,7 @@ function deleteLastRow(wrapper) {
         } else {
             calculateTotal(wrapper);
         }
+        saveContentToHistory(noteContent.innerHTML);
     }
 }
 
@@ -666,6 +718,7 @@ function addRow() {
         const row = table.insertRow(-1);
         const cellCount = table.rows[0].cells.length;
         for (let i = 0; i < cellCount; i++) row.insertCell(-1).textContent = 'Sel Baru';
+        saveContentToHistory(noteContent.innerHTML);
     }
 }
 
@@ -676,6 +729,7 @@ function addColumn() {
             const cell = row.insertCell(-1);
             cell.textContent = row.cells[0].tagName === 'TH' ? 'Header Baru' : 'Sel Baru';
         });
+        saveContentToHistory(noteContent.innerHTML);
     }
 }
 
@@ -684,6 +738,7 @@ function deleteRow() {
     if (table && !table.classList.contains('finance-table') && table.rows.length > 1) {
         const rowIndex = getSelectedRowIndex();
         if (rowIndex !== -1) table.deleteRow(rowIndex);
+        saveContentToHistory(noteContent.innerHTML);
     }
 }
 
@@ -692,6 +747,7 @@ function deleteColumn() {
     if (table && !table.classList.contains('finance-table') && table.rows[0].cells.length > 1) {
         const colIndex = getSelectedColumnIndex();
         if (colIndex !== -1) Array.from(table.rows).forEach(row => row.deleteCell(colIndex));
+        saveContentToHistory(noteContent.innerHTML);
     }
 }
 
@@ -775,6 +831,7 @@ function makeTextCopyable() {
 
         // Add event listener for the new span (event delegation)
         noteContent.addEventListener('click', handleCopyableClick);
+        saveContentToHistory(noteContent.innerHTML);
     } else {
         alert('Pilih teks yang ingin dijadikan dapat disalin.');
     }
