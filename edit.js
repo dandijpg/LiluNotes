@@ -99,7 +99,7 @@ function setupEditor() {
         highlightSearchTerms(noteContent, searchQuery);
     } else {
         categorySelect.value = categories[1] || 'Uncategorized';
-        noteContent.innerHTML = '';
+        noteContent.innerHTML = '<p><br></p>'; // Inisialisasi dengan elemen <p> kosong
     }
 }
 
@@ -159,7 +159,13 @@ function setupEventListeners() {
             insertNumberedList();
         }
     });
-    noteContent.addEventListener('input', () => saveContentToHistory(noteContent.innerHTML));
+    noteContent.addEventListener('input', () => {
+        saveContentToHistory(noteContent.innerHTML);
+        if (noteContent.innerHTML.trim() === '') {
+            noteContent.innerHTML = '<p><br></p>';
+            setCaretAtStart(noteContent);
+        }
+    });
 
     document.addEventListener('keydown', (e) => {
         if (e.ctrlKey) {
@@ -187,6 +193,15 @@ function setupEventListeners() {
     if (undoBtn) undoBtn.addEventListener('click', undo);
     if (redoBtn) redoBtn.addEventListener('click', redo);
     updateUndoRedoButtons();
+}
+
+function setCaretAtStart(element) {
+    const range = document.createRange();
+    const selection = window.getSelection();
+    range.selectNode(element.firstChild);
+    range.collapse(true);
+    selection.removeAllRanges();
+    selection.addRange(range);
 }
 
 function insertTab(isShift = false) {
@@ -250,7 +265,7 @@ function handleEnterKey(e) {
 
         if (isEmpty) {
             const p = document.createElement('p');
-            p.innerHTML = '<br>';
+            p.innerHTML = '<br>'; // Pertahankan <br> di dalam list item kosong
             if (ol.nextSibling) {
                 ol.parentNode.insertBefore(p, ol.nextSibling);
             } else {
@@ -286,6 +301,19 @@ function handleEnterKey(e) {
             noteContent.focus();
         }
         saveContentToHistory(noteContent.innerHTML);
+    } else {
+        // Jika bukan di dalam list, buat baris baru dengan <p><br></p>
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            const p = document.createElement('p');
+            p.innerHTML = '<br>';
+            range.deleteContents();
+            range.insertNode(p);
+            range.collapse(false);
+            selection.removeAllRanges();
+            selection.addRange(range);
+            saveContentToHistory(noteContent.innerHTML);
+        }
     }
 }
 
