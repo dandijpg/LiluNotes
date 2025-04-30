@@ -1322,47 +1322,78 @@ button {
     transform: translateY(-1px);
 }
 
-/* Media Queries */
+/* Editor Footer */
+.editor-footer {
+    display: flex;
+    gap: 15px; /* Increased gap */
+    margin-top: 25px; /* Increased top margin */
+    padding: 15px 10px; /* Adjusted padding */
+    border-top: 1px solid rgba(206, 172, 147, 0.15);
+    align-items: center; /* Vertically align items */
+    justify-content: flex-end; /* Push buttons to the right */
+}
+
+.editor-footer button {
+    padding: 12px 20px; /* Increased padding */
+    border-radius: 15px; /* More rounded */
+    border: 2px solid transparent; /* Initially transparent border */
+    font-family: 'Comic Neue', sans-serif;
+    font-size: 1.1em; /* Increased font size */
+    font-weight: 700; /* More prominent font weight */
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow */
+    outline: none; /* Remove default focus outline */
+}
+
+.editor-footer .edit-btn {
+    background-color: #5cb85c; /* Success green */
+    color: #fff;
+}
+
+.editor-footer .edit-btn:hover {
+    background-color: #4cae4c;
+    border-color: #4cae4c;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+}
+
+.editor-footer .exit-btn {
+    background-color: #d9534f; /* Danger red */
+    color: #fff;
+}
+
+.editor-footer .exit-btn:hover {
+    background-color: #c9302c;
+    border-color: #c9302c;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive adjustments */
 @media (max-width: 768px) {
-    .fold-toolbar-btn {
-        display: inline-flex; /* Tampilkan tombol lipat pada layar kecil */
-    }
-    .toolbar-content {
-        flex-direction: row;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        white-space: nowrap;
-        width: 100%; /* Agar bisa di-scroll jika dilipat */
-    }
-    .toolbar-content.folded {
-        display: none;
-    }
     .editor-footer {
-        gap: 6px;
-        margin-top: 15px;
-        padding: 8px 0;
+        gap: 10px;
+        margin-top: 20px;
+        padding: 10px;
     }
     .editor-footer button {
-        padding: 10px 12px;
-        font-size: 0.9em;
-        border-radius: 10px;
+        padding: 10px 18px;
+        font-size: 1em;
+        border-radius: 12px;
     }
 }
 
 @media (max-width: 480px) {
-    .fold-toolbar-btn {
-        display: inline-flex;
-        margin-right: 6px;
-        padding: 4px 8px;
-        font-size: 0.8em;
-        border-radius: 6px;
-    }
     .editor-footer {
-        flex-direction: column; /* Stack buttons vertically on very small screens */
+        gap: 10px;
+        margin-top: 15px;
+        padding: 8px;
+        flex-direction: column; /* Stack buttons */
+        align-items: stretch; /* Make buttons take full width */
+        justify-content: flex-start; /* Align items to the start */
     }
     .editor-footer button {
-        padding: 10px;
-        font-size: 0.9em;
-        border-radius: 8px;
+        padding: 12px;
+        font-size: 0.95em;
+        border-radius: 10px;
     }
 }
