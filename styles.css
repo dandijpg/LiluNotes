@@ -642,6 +642,12 @@ button {
     display: flex; /* Pastikan tombol fold dan konten ada dalam satu baris */
     align-items: center;
     overflow-x: auto; /* Tetap aktifkan scroll horizontal sebagai fallback */
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+}
+
+.toolbar::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
 }
 
 .fold-toolbar-btn {
@@ -670,16 +676,10 @@ button {
     overflow-x: auto;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
     padding: 2px 0;
 }
 
 .toolbar-content.folded {
-    display: none;
-}
-
-.toolbar::-webkit-scrollbar {
     display: none;
 }
 
@@ -730,6 +730,7 @@ button {
     min-width: 20px; /* Reduced min width */
     height: 20px; /* Reduced height */
     font-family: 'Comic Neue', sans-serif;
+    margin: 0 1px;
 }
 
 .tool-btn:hover, .table-tool-btn:hover, .finance-tool-btn:hover {
@@ -759,38 +760,9 @@ button {
     display: none;
 }
 
-.table-tool-btn.add-row-btn, .table-tool-btn.add-col-btn {
-    background-color: #e3c9a4;
-}
-
-.table-tool-btn.add-row-btn:hover, .table-tool-btn.add-col-btn:hover {
-    background-color: #fefbe8;
-}
-
-.table-tool-btn.delete-row-btn, .table-tool-btn.delete-col-btn {
-    background-color: #ad8b72;
-}
-
-.table-tool-btn.delete-row-btn:hover, .table-tool-btn.delete-col-btn:hover {
-    background-color: #ceac93;
-}
-
 .finance-tool-btn {
     display: none;
 }
-
-.finance-tool-btn.add-income-btn { background: #e3c9a4; }
-.finance-tool-btn.add-income-btn:hover { background: #fefbe8; }
-.finance-tool-btn.subtract-expense-btn { background: #ad8b72; color: #fff; }
-.finance-tool-btn.subtract-expense-btn:hover { background: #ceac93; }
-.finance-tool-btn.multiply-btn { background: #ceac93; }
-.finance-tool-btn.multiply-btn:hover { background: #e3c9a4; }
-.finance-tool-btn.divide-btn { background: #fefbe8; }
-.finance-tool-btn.divide-btn:hover { background: #e3c9a4; }
-.finance-tool-btn.calculate-btn { background: #e3c9a4; }
-.finance-tool-btn.calculate-btn:hover { background: #fefbe8; }
-.finance-tool-btn.delete-last-row-btn { background: #ad8b72; color: #fff; }
-.finance-tool-btn.delete-last-row-btn:hover { background: #ceac93; }
 
 /* Editor Header */
 .editor-header {
