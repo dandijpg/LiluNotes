@@ -3,7 +3,7 @@
 :root {
     --hue-color: 210; /* Keeping a neutral hue for black variations */
 
-    --skin-color: hsl(47, 90%, 65%); /* Gold */
+    --skin-color: linear-gradient(135deg, hsl(47, 90%, 65%), hsl(45, 80%, 55%)); /* Gold gradient */
     --mirage-color: hsl(210, 10%, 15%); /* Darker Black */
     --title-color: hsl(0, 0%, 90%); /* Light Gold/Off-White for Titles */
     --text-color: hsl(0, 0%, 70%); /* Light Gold/Off-White for Text */
@@ -68,7 +68,7 @@ button { cursor: pointer; }
     display: inline-flex;
     align-items: center;
     column-gap: .5rem;
-    background-color: var(--skin-color);
+    background-image: var(--skin-color); /* Use gradient as background image */
     color: var(--mirage-color); /* Changed button text color */
     padding: 0.75rem 1.4rem;
     border-radius: .25rem;
@@ -101,7 +101,7 @@ button { cursor: pointer; }
 /* Sidebar */
 
 .sidebar { position: fixed; width: 100px; height: 100vh; background-color: var(--body-color); border-right: 1px solid var(--box-color); }
-.nav-logo { position: absolute; left: 0; right: 0; top: 1.8rem; width: 40px; height: 40px; border-radius: 50%; background-color: var(--skin-color); text-align: center; margin: auto; }
+.nav-logo { position: absolute; left: 0; right: 0; top: 1.8rem; width: 40px; height: 40px; border-radius: 50%; background-image: var(--skin-color); text-align: center; margin: auto; }
 .nav-logo-text { font-size: 1.125rem; color: var(--mirage-color); font-weight: var(--font-bold); line-height: 40px; }
 .nav-menu { position: fixed; transform: rotate(-90deg) translateX(-100%); transform-origin: left top; width: 100vh; }
 .menu { display: flex; }
@@ -116,7 +116,7 @@ button { cursor: pointer; }
     top: 2rem;
     font-size: 1.2rem;
     border-radius: .25rem;
-    background-color: var(--skin-color);
+    background-image: var(--skin-color);
     color: var(--mirage-color);
     display: none;
     justify-content: center;
@@ -130,7 +130,7 @@ button { cursor: pointer; }
             content: '';
             width: 6px;
             height: 6px;
-            background-color: var(--skin-color);
+            background-image: var(--skin-color);
             border-radius: 50%;
             bottom: 1.8rem;
             left: 0;
@@ -179,8 +179,8 @@ button { cursor: pointer; }
 .qualification-title { font-size: var(--h3-font-size); font-weight: var(--font-medium); margin-bottom: var(--mb2); color: var(--title-color); }
 .timeline-item { position: relative; margin-bottom: var(--mb25); padding-left: 3rem; }
     .timeline-item:last-child { margin-bottom: 0; }
-    .timeline-item::before { content: ''; width: 1px; position: absolute; left: 0.48rem; top: 0; height: 100%; background-color: var(--skin-color); }
-.circle-dot { position: absolute; left: 0; top: 0; height: 1rem; width: 1rem; border: 2px solid var(--skin-color); border-radius: 50%; background-color: var(--skin-color); transition: .4s; }
+    .timeline-item::before { content: ''; width: 1px; position: absolute; left: 0.48rem; top: 0; height: 100%; background-image: var(--skin-color); }
+.circle-dot { position: absolute; left: 0; top: 0; height: 1rem; width: 1rem; border: 2px solid var(--skin-color); border-radius: 50%; background-image: var(--skin-color); transition: .4s; }
     .timeline-item:hover .circle-dot { background-color: var(--body-color); }
 .timeline-title { font-size: var(--normal-font-size); font-weight: var(--font-medium); margin-bottom: var(--mb025); color: var(--title-color); }
 .timeline-text { font-size: var(--smaller-font-size); margin-bottom: var(--mb1); color: var(--text-color); }
@@ -202,7 +202,7 @@ button { cursor: pointer; }
 .skills-name { font-size: var(--normal-font-size); font-weight: var(--font-medium); color: var(--title-color); }
 .skills-bar, .skills-percentage { height: 5px; border-radius: .25rem; }
     .skills-bar { background-color: var(--box-color); }
-    .skills-percentage { display: block; background-color: var(--skin-color); }
+    .skills-percentage { display: block; background-image: var(--skin-color); }
 .skills [data-content] { display: none; }
     .skills-active[data-content] { display: block; }
 
@@ -218,7 +218,7 @@ button { cursor: pointer; }
 .work-button { color: var(--skin-color); font-size: var(--small-font-size); display: flex; align-items: center; column-gap: .25rem; cursor: pointer; }
 .work-button-icon { font-size: 1rem; transition: .4s; }
     .work-button:hover .work-button-icon { transform: translateX(.25rem); }
-.active-work { background-color: var(--skin-color); color: var(--mirage-color); }
+.active-work { background-image: var(--skin-color); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-fill-color: transparent; }
 
 .portfolio-popup {
     position: fixed;
